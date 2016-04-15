@@ -2,7 +2,7 @@ package grupo4;
 
 import org.uqbar.geodds.Point;
 
-public class Poi{
+public abstract class Poi{
 	Point coordenadas;
 	String nombre;
 	String calle;
@@ -28,5 +28,6 @@ public class Poi{
 		}
 		return false;
 	}
+	//public abstract boolean estaDisponible();
 
 }
