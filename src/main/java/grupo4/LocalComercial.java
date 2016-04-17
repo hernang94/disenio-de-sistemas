@@ -2,10 +2,7 @@ package grupo4;
 
 import org.uqbar.geodds.Point;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetTime;
+
 
 public class LocalComercial extends Poi {
 	private Rubro rubro;
@@ -19,22 +16,15 @@ public class LocalComercial extends Poi {
 	}
 	
 	public boolean estaCerca(Point unPunto) {
-		if (super.calcularDistancia(unPunto) <= rubro.getRadio()) {
-			return true;
-		}
-		return false;
+		return (super.calcularDistancia(unPunto) <= rubro.getRadio());
+			
 	}
 	public boolean coincideCon(String criterio){
-		if((criterio.equalsIgnoreCase(rubro.getNombre()))||super.coincideCon(criterio)){
-			return true;
-		}
-		return false;
+		return((criterio.equalsIgnoreCase(rubro.getNombre()))||super.coincideCon(criterio));
 	}
 	public boolean estaDisponible(){
-		LocalTime horarioactual= LocalTime.now();
-		LocalDate diaactual=LocalDate.now();
-		boolean criterio1=(horario_m.estaEnHorario(horarioactual)||horario_t.estaEnHorario(horarioactual));
-		boolean criterio2=(horario_m.estaEnDia(diaactual)&&horario_t.estaEnDia(diaactual));
+		boolean criterio1=(horario_m.estaEnHorario()||horario_t.estaEnHorario());
+		boolean criterio2=(horario_m.estaEnDia()&&horario_t.estaEnDia());
 		return (criterio1&&criterio2);
 	}
 }

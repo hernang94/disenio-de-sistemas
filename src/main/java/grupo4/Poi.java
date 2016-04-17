@@ -17,17 +17,11 @@ public abstract class Poi{
 		return this.coordenadas.distance(punto);
 	}
 	public boolean estaCerca(Point unPunto){
-		if (calcularDistancia(unPunto)<0.5) {
-			return true;
-		}
-		return false;
+		return (calcularDistancia(unPunto)<0.5);
 	}
 	public boolean coincideCon(String criterio){
-		if(criterio.equalsIgnoreCase(nombre)){
-			return true;
-		}
-		return false;
+		return(criterio.equalsIgnoreCase(nombre));
 	}
-	//public abstract boolean estaDisponible();
+	public abstract boolean estaDisponible();
 
 }
