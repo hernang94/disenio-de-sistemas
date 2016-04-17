@@ -10,6 +10,8 @@ public class Pruebas {
 		// TODO Auto-generated method stub
 		LocalTime fechainicio= LocalTime.of(11, 55);
 		LocalTime fechainicio2= LocalTime.of(11, 54);
+		LocalDateTime fecha= LocalDateTime.of(2016, 4, 18, 0, 1);
+		System.out.println(fecha.getDayOfWeek().getValue());
 		if(fechainicio2.getMinute()<fechainicio.getMinute()){
 			System.out.println("Eureka(?");
 			System.out.println(fechainicio);
