@@ -11,7 +11,7 @@ public class CGP extends Poi {
 	List<Servicio> servicios = new ArrayList<>();
 	private Polygon comuna;
 
-	public CGP(Polygon comuna,String unnombre) {
+	public CGP(Polygon comuna, String unnombre) {
 		this.nombre = unnombre;
 		this.comuna = comuna;
 	}
@@ -24,13 +24,14 @@ public class CGP extends Poi {
 		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(hora_consulta));
 	}
 
-	public boolean estaDisponible(String nombre,LocalDateTime hora_consulta) {
-		return servicios.stream()
-				.anyMatch(servicio -> ((servicio.estaDisponible(hora_consulta)) && (nombre.equalsIgnoreCase(servicio.getNombre()))));
+	public boolean estaDisponible(String nombre, LocalDateTime hora_consulta) {
+		return servicios.stream().anyMatch(servicio -> ((servicio.estaDisponible(hora_consulta))
+				&& (nombre.equalsIgnoreCase(servicio.getNombre()))));
 	}
-	public boolean coincideCon(String criterio){
+
+	public boolean coincideCon(String criterio) {
 		return servicios.stream()
 				.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase()));
 	}
-	
+
 }

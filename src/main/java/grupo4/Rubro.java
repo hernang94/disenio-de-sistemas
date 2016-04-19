@@ -1,12 +1,20 @@
 package grupo4;
 
-public class Rubro{
+public class Rubro {
 	private String nombre;
 	private double radio;
-	public double getRadio(){
+
+	public double getRadio() {
 		return this.radio;
 	}
-	public String getNombre(){
+
+	public Rubro(String nombre, double radio) {
+		super();
+		this.nombre = nombre;
+		this.radio = radio;
+	}
+
+	public String getNombre() {
 		return this.nombre;
 	}
 }

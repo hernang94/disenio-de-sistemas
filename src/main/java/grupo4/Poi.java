@@ -4,26 +4,44 @@ import java.time.LocalDateTime;
 
 import org.uqbar.geodds.Point;
 
-public abstract class Poi{
+public abstract class Poi {
 	Point coordenadas;
 	String nombre;
 	String calle;
 	int altura;
+
 	public Point getCoordenadas() {
 		return coordenadas;
 	}
+
+	public double calcularDistancia(Point punto) {
+		return this.coordenadas.distance(punto);
+	}
+
 	public void setCoordenadas(Point coordenadas) {
 		this.coordenadas = coordenadas;
 	}
-	public double calcularDistancia(Point punto){
-		return this.coordenadas.distance(punto);
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-	public boolean estaCerca(Point unPunto){
-		return (calcularDistancia(unPunto)<0.5);
+
+	public void setCalle(String calle) {
+		this.calle = calle;
 	}
-	public boolean coincideCon(String criterio){
-		return(criterio.equalsIgnoreCase(nombre));
+
+	public void setAltura(int altura) {
+		this.altura = altura;
 	}
+
+	public boolean estaCerca(Point unPunto) {
+		return (calcularDistancia(unPunto) < 0.5);
+	}
+
+	public boolean coincideCon(String criterio) {
+		return (criterio.equalsIgnoreCase(nombre));
+	}
+
 	public abstract boolean estaDisponible(LocalDateTime hora_consulta);
 
 }
