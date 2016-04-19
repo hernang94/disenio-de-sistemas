@@ -42,6 +42,10 @@ public abstract class Poi {
 		return (criterio.equalsIgnoreCase(nombre));
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
 	public abstract boolean estaDisponible(LocalDateTime hora_consulta);
 
 }

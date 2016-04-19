@@ -11,12 +11,12 @@ import java.util.ArrayList;
 public class Terminal {
 	List<Poi> lista_de_pois = new ArrayList<>();
 	Point ubicacion_terminal;
-	
-	public void setUnbicacionTerminal(Point ubicacion){
-		this.ubicacion_terminal=ubicacion;
+
+	public void setUnbicacionTerminal(Point ubicacion) {
+		this.ubicacion_terminal = ubicacion;
 	}
-	
-	public void agregarPoi(Poi unPoi){
+
+	public void agregarPoi(Poi unPoi) {
 		lista_de_pois.add(unPoi);
 	}
 
@@ -32,14 +32,28 @@ public class Terminal {
 		return poi_aux.estaDisponible(fecha);
 	}
 
+	public boolean consultaDisponibilidad(LocalDateTime fecha) {// Consideramos
+																// que todos los
+																// CGP por
+																// defecto tiene
+																// un formato de
+																// nombre de
+																// tipo:
+																// "CGP(Nro de
+																// CGP)"
+		List<Poi> lista_CGP = lista_de_pois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP"))
+				.collect(Collectors.toList());
+		return lista_CGP.stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));
+	}
+
 	public List<Poi> filtrarPorCriterio(String criterio) {
 		return lista_de_pois.stream().filter(unPoi -> unPoi.coincideCon(criterio)).collect(Collectors.toList());
 	}
 
-	public boolean consultaCercania(Point punto, String x) {
+	public boolean consultaCercania(String x) {
 		Poi poi_aux;
 		poi_aux = obtenerSegunCriterio(x);
-		return poi_aux.estaCerca(punto);
+		return poi_aux.estaCerca(this.ubicacion_terminal);
 
 	}
 
