@@ -1,5 +1,7 @@
 package grupo4;
 
+import java.time.LocalDateTime;
+
 import org.uqbar.geodds.Point;
 
 
@@ -22,9 +24,9 @@ public class LocalComercial extends Poi {
 	public boolean coincideCon(String criterio){
 		return((criterio.equalsIgnoreCase(rubro.getNombre()))||super.coincideCon(criterio));
 	}
-	public boolean estaDisponible(){
-		boolean criterio1=(horario_m.estaEnHorario()||horario_t.estaEnHorario());
-		boolean criterio2=(horario_m.estaEnDia()&&horario_t.estaEnDia());
+	public boolean estaDisponible(LocalDateTime hora_consulta){
+		boolean criterio1=(horario_m.estaEnHorario(hora_consulta)||horario_t.estaEnHorario(hora_consulta));
+		boolean criterio2=(horario_m.estaEnDia(hora_consulta)&&horario_t.estaEnDia(hora_consulta));
 		return (criterio1&&criterio2);
 	}
 }

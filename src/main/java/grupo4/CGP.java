@@ -1,5 +1,6 @@
 package grupo4;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +20,13 @@ public class CGP extends Poi {
 		return comuna.isInside(unaCoordenada);
 	}
 
-	public boolean estaDisponible() {
-		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible());
+	public boolean estaDisponible(LocalDateTime hora_consulta) {
+		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(hora_consulta));
 	}
 
-	public boolean estaDisponible(String nombre) {
+	public boolean estaDisponible(String nombre,LocalDateTime hora_consulta) {
 		return servicios.stream()
-				.anyMatch(servicio -> ((servicio.estaDisponible()) && (nombre.equalsIgnoreCase(servicio.getNombre()))));
+				.anyMatch(servicio -> ((servicio.estaDisponible(hora_consulta)) && (nombre.equalsIgnoreCase(servicio.getNombre()))));
 	}
 	public boolean coincideCon(String criterio){
 		return servicios.stream()

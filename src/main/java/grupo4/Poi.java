@@ -1,5 +1,7 @@
 package grupo4;
 
+import java.time.LocalDateTime;
+
 import org.uqbar.geodds.Point;
 
 public abstract class Poi{
@@ -22,6 +24,6 @@ public abstract class Poi{
 	public boolean coincideCon(String criterio){
 		return(criterio.equalsIgnoreCase(nombre));
 	}
-	public abstract boolean estaDisponible();
+	public abstract boolean estaDisponible(LocalDateTime hora_consulta);
 
 }

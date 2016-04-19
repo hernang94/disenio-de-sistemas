@@ -1,5 +1,6 @@
 package grupo4;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Horario {
@@ -13,14 +14,12 @@ public class Horario {
 		this.diadesde=diadesde;
 		this.diahasta=diahasta;
 	}
-	public boolean estaEnHorario(){
-		LocalTime hora= LocalTime.now();
-		return (hora.isAfter(desde)&&hora.isBefore(hasta));
+	public boolean estaEnHorario(LocalDateTime fecha_consulta){
+		return (fecha_consulta.toLocalTime().isAfter(desde)&&fecha_consulta.toLocalTime().isBefore(hasta));
 		
 	}
-	public boolean estaEnDia(){
-		LocalDate dia= LocalDate.now();
-		int undia= dia.getDayOfWeek().getValue();
+	public boolean estaEnDia(LocalDateTime fecha_consulta){
+		int undia= fecha_consulta.toLocalDate().getDayOfWeek().getValue();
 		return (undia>=diadesde&&undia<=diahasta);
 	}
 	

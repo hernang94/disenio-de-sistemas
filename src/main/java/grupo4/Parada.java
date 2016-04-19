@@ -1,5 +1,7 @@
 package grupo4;
 
+import java.time.LocalDateTime;
+
 import org.uqbar.geodds.Point;
 
 public class Parada extends Poi {
@@ -15,7 +17,7 @@ public class Parada extends Poi {
 		return false;
 	}
 
-	public boolean estaDisponible() {
+	public boolean estaDisponible(LocalDateTime hora_consulta) {
 		return true;
 	}
 	public boolean coincideCon(String criterio){
