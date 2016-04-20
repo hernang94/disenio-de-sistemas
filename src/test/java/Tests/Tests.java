@@ -23,6 +23,7 @@ public class Tests {
 	Servicio pagoFacil;
 	Servicio timbrado;
 	Banco banco;
+	Banco banco2;
 	CGP cgp;
 	LocalComercial local;
 
@@ -53,6 +54,13 @@ public class Tests {
 		local.setCalle("Alberdi");
 		local.setCoordenadas(punto3);
 		local.setNombre("Blaisten");
+		
+		Point punto4= new Point(-34.6383669,-58.4773822);
+		banco2 = new Banco ("10:00","15:00",1,5);
+		banco2.setAltura(480);
+		banco2.setCalle("Mariano Acosta");
+		banco2.setNombre("Santander Rio");
+		banco2.setCoordenadas(punto4);		
 
 		Polygon comuna10 = new Polygon();
 		comuna10.add(new Point(-34.637466, -58.476939));
@@ -70,6 +78,7 @@ public class Tests {
 		cgp.setNombre("CGP10");
 
 		terminal.agregarPoi(banco);
+		terminal.agregarPoi(banco2);
 		terminal.agregarPoi(parada114);
 		terminal.agregarPoi(local);
 		terminal.agregarPoi(cgp);
@@ -144,7 +153,7 @@ public class Tests {
 
 	@Test
 	public void pruebaBusquedaLibrexBanco() {
-		Assert.assertEquals(1, terminal.busquedaLibre("santander rio").size());
+		Assert.assertEquals(2, terminal.busquedaLibre("santander rio").size());
 	}
 
 	@Test
