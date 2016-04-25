@@ -111,7 +111,7 @@ public class Tests {
 
 	@Test
 	public void estaDisponibleBanco() {
-		Assert.assertEquals(false, terminal.consultaDisponibilidad(LocalDateTime.now(), "santander rio"));
+		Assert.assertEquals(false, terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00), "santander rio"));
 	}
 
 	@Test
