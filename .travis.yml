@@ -1,0 +1,16 @@
+language: java
+
+jdk:
+  - oraclejdk8
+  
+install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcobertura.skip=true -B -V
+script: mvn clean cobertura:check -B -V
+
+notifications:
+  email:
+    recipients:
+      - corvaro.mauro@gmail.com
+      - mika_2195@hotmail.com
+      - hernangallo@outlook.com
+      - tomasmazzocchi@est.frba.utn.edu.ar
+      - jaecisneros@gmail.com
