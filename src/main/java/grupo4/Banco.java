@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 public class Banco extends Poi {
 	private Horario horario;
 
-	public Banco(String hora_desde, String hora_hasta, int dia_desde, int dia_hasta) {
-		this.horario = new Horario(hora_desde, hora_hasta, dia_desde, dia_hasta);
+	public Banco(String horaDesde, String horaHasta, int diaDesde, int diaHasta) {
+		this.horario = new Horario(horaDesde, horaHasta, diaDesde, diaHasta);
 	}
 
-	public boolean estaDisponible(LocalDateTime hora_consulta) {
-		return (horario.estaEnDia(hora_consulta) && horario.estaEnHorario(hora_consulta));
+	public boolean estaDisponible(LocalDateTime horaConsulta) {
+		return (horario.estaEnDia(horaConsulta) && horario.estaEnHorario(horaConsulta));
 	}
 }

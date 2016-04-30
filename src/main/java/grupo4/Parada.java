@@ -6,11 +6,11 @@ import org.uqbar.geodds.Point;
 
 public class Parada extends Poi {
 
-	public Parada(String linea_asociada) {
-		this.linea_asociada = linea_asociada;
+	public Parada(String lineaAsociada) {
+		this.lineaAsociada = lineaAsociada;
 	}
 
-	private String linea_asociada;
+	private String lineaAsociada;
 
 	public boolean estaCerca(Point unPunto) {
 		if (super.calcularDistancia(unPunto) <= 0.1) {
@@ -19,12 +19,12 @@ public class Parada extends Poi {
 		return false;
 	}
 
-	public boolean estaDisponible(LocalDateTime hora_consulta) {
+	public boolean estaDisponible(LocalDateTime horaConsulta) {
 		return true;
 	}
 
 	public boolean coincideCon(String criterio) {
-		if (criterio.equals(linea_asociada)) {
+		if (criterio.equals(lineaAsociada)) {
 			return true;
 		}
 		return false;

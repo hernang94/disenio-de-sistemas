@@ -6,14 +6,14 @@ import org.uqbar.geodds.Point;
 
 public class LocalComercial extends Poi {
 	private Rubro rubro;
-	private Horario horario_m;
-	private Horario horario_t;
+	private Horario horarioM;
+	private Horario horarioT;
 
-	public LocalComercial(Rubro rubro, String desde_m, String hasta_m, String desde_t, String hasta_t, int diadesde,
-			int diahasta) {
+	public LocalComercial(Rubro rubro, String desdeM, String hastaM, String desdeT, String hastaT, int diaDesde,
+			int diaHasta) {
 		this.rubro = rubro;
-		horario_m = new Horario(desde_m, hasta_m, diadesde, diahasta);
-		horario_t = new Horario(desde_t, hasta_t, diadesde, diahasta);
+		horarioM = new Horario(desdeM, hastaM, diaDesde, diaHasta);
+		horarioT = new Horario(desdeT, hastaT, diaDesde, diaHasta);
 	}
 
 	public boolean estaCerca(Point unPunto) {
@@ -25,9 +25,9 @@ public class LocalComercial extends Poi {
 		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.coincideCon(criterio));
 	}
 
-	public boolean estaDisponible(LocalDateTime hora_consulta) {
-		boolean criterio1 = (horario_m.estaEnHorario(hora_consulta) || horario_t.estaEnHorario(hora_consulta));
-		boolean criterio2 = (horario_m.estaEnDia(hora_consulta) && horario_t.estaEnDia(hora_consulta));
+	public boolean estaDisponible(LocalDateTime horaConsulta) {
+		boolean criterio1 = (horarioM.estaEnHorario(horaConsulta) || horarioT.estaEnHorario(horaConsulta));
+		boolean criterio2 = (horarioM.estaEnDia(horaConsulta) && horarioT.estaEnDia(horaConsulta));
 		return (criterio1 && criterio2);
 	}
 }

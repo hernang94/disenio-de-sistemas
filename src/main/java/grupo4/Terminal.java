@@ -9,27 +9,27 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Terminal {
-	List<Poi> lista_de_pois = new ArrayList<>();
-	Point ubicacion_terminal;
+	List<Poi> listaDePois = new ArrayList<>();
+	Point ubicacionTerminal;
 
 	public void setUnbicacionTerminal(Point ubicacion) {
-		this.ubicacion_terminal = ubicacion;
+		this.ubicacionTerminal = ubicacion;
 	}
 
 	public void agregarPoi(Poi unPoi) {
-		lista_de_pois.add(unPoi);
+		listaDePois.add(unPoi);
 	}
 
 	public List<Poi> busquedaLibre(String criterio) {
-		List<Poi> lista_aux = new ArrayList<>();
-		lista_aux = filtrarPorCriterio(criterio);
-		return lista_aux;
+		List<Poi> listaAux = new ArrayList<>();
+		listaAux = filtrarPorCriterio(criterio);
+		return listaAux;
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String x) {
-		Poi poi_aux;
-		poi_aux = obtenerSegunCriterio(x);
-		return poi_aux.estaDisponible(fecha);
+		Poi poiAux;
+		poiAux = obtenerSegunCriterio(x);
+		return poiAux.estaDisponible(fecha);
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha) {// Consideramos
@@ -41,23 +41,23 @@ public class Terminal {
 																// tipo:
 																// "CGP(Nro de
 																// CGP)"
-		List<Poi> lista_CGP = lista_de_pois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP"))
+		List<Poi> lista_CGP = listaDePois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP"))
 				.collect(Collectors.toList());
 		return lista_CGP.stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
-		return lista_de_pois.stream().filter(unPoi -> unPoi.coincideCon(criterio)).collect(Collectors.toList());
+		return listaDePois.stream().filter(unPoi -> unPoi.coincideCon(criterio)).collect(Collectors.toList());
 	}
 
 	public boolean consultaCercania(String x) {
 		Poi poi_aux;
 		poi_aux = obtenerSegunCriterio(x);
-		return poi_aux.estaCerca(this.ubicacion_terminal);
+		return poi_aux.estaCerca(this.ubicacionTerminal);
 
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
-		return lista_de_pois.stream().filter(unPoi -> unPoi.coincideCon(criterio)).findFirst().get();
+		return listaDePois.stream().filter(unPoi -> unPoi.coincideCon(criterio)).findFirst().get();
 	}
 }

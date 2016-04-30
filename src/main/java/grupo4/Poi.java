@@ -46,6 +46,6 @@ public abstract class Poi {
 		return nombre;
 	}
 
-	public abstract boolean estaDisponible(LocalDateTime hora_consulta);
+	public abstract boolean estaDisponible(LocalDateTime horaConsulta);
 
 }

@@ -15,16 +15,16 @@ public class CGP extends Poi {
 		this.comuna = comuna;
 	}
 
-	public void addServicio(Servicio unservicio) {
-		this.servicios.add(unservicio);
+	public void addServicio(Servicio unServicio) {
+		this.servicios.add(unServicio);
 	}
 
 	public boolean estaCerca(Point unaCoordenada) {
 		return comuna.isInsideOld(unaCoordenada);
 	}
 
-	public boolean estaDisponible(LocalDateTime hora_consulta) {
-		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(hora_consulta));
+	public boolean estaDisponible(LocalDateTime horaConsulta) {
+		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(horaConsulta));
 	}
 
 	public boolean coincideCon(String criterio) {
