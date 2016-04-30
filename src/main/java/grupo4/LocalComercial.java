@@ -21,8 +21,8 @@ public class LocalComercial extends Poi {
 
 	}
 
-	public boolean coincideCon(String criterio) {
-		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.coincideCon(criterio));
+	public boolean encuentraNombre(String criterio) {
+		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.encuentraNombre(criterio));
 	}
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {

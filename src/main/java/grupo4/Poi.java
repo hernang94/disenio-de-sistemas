@@ -38,7 +38,7 @@ public abstract class Poi {
 		return (calcularDistancia(unPunto) < 0.5);
 	}
 
-	public boolean coincideCon(String criterio) {
+	public boolean encuentraNombre(String criterio) {
 		return (criterio.equalsIgnoreCase(nombre));
 	}
 

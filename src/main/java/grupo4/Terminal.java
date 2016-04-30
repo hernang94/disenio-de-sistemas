@@ -47,7 +47,7 @@ public class Terminal {
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
-		return listaDePois.stream().filter(unPoi -> unPoi.coincideCon(criterio)).collect(Collectors.toList());
+		return listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).collect(Collectors.toList());
 	}
 
 	public boolean consultaCercania(String x) {
@@ -58,6 +58,6 @@ public class Terminal {
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
-		return listaDePois.stream().filter(unPoi -> unPoi.coincideCon(criterio)).findFirst().get();
+		return listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).findFirst().get();
 	}
 }

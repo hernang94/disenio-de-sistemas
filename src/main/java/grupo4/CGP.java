@@ -28,11 +28,10 @@ public class CGP extends Poi {
 	}
 
 	public boolean coincideCon(String criterio) {
-		if (criterio.equals(this.nombre)) {
-			return true;
-		}
-		return servicios.stream()
-				.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase()));
+		return (criterio.equals(this.nombre)) || (servicios.stream()
+				.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase())));
 	}
+	
+	
 
 }
