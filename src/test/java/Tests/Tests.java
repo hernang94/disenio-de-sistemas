@@ -106,7 +106,7 @@ public class Tests {
 
 	@Test
 	public void estaDisponibleColectivo() {
-		Assert.assertTrue(terminal.consultaDisponibilidad(LocalDateTime.now(), "114"));
+		Assert.assertTrue(terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
 	}
 
 	@Test
