@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Terminal {
-	List<Poi> listaDePois = new ArrayList<>();
-	Point ubicacionTerminal;
+	private List<Poi> listaDePois = new ArrayList<>();
+	private Point ubicacionTerminal;
 
 	public void setUnbicacionTerminal(Point ubicacion) {
 		this.ubicacionTerminal = ubicacion;

@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 import org.uqbar.geodds.Point;
 
 public abstract class Poi {
-	Point coordenadas;
-	String nombre;
-	String calle;
-	int altura;
+	private Point coordenadas;
+	protected String nombre;
+	private String calle;
+	private int altura;
 
 	public Point getCoordenadas() {
 		return coordenadas;
