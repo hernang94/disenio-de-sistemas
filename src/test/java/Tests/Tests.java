@@ -86,54 +86,54 @@ public class Tests {
 
 	@Test
 	public void cercaniaAParada() {
-		Assert.assertEquals(false, terminal.consultaCercania("114"));
+		Assert.assertFalse(terminal.consultaCercania("114"));
 	}
 
 	@Test
 	public void cercaniaABanco() {
-		Assert.assertEquals(true, terminal.consultaCercania("santander rio"));
+		Assert.assertTrue(terminal.consultaCercania("santander rio"));
 	}
 
 	@Test
 	public void cercaniaACGP() {
-		Assert.assertEquals(true, terminal.consultaCercania("CGP10"));
+		Assert.assertTrue(terminal.consultaCercania("CGP10"));
 	}
 
 	@Test
 	public void cercaniaALocal() {
-		Assert.assertEquals(true, terminal.consultaCercania("Blaisten"));
+		Assert.assertTrue(terminal.consultaCercania("Blaisten"));
 	}
 
 	@Test
 	public void estaDisponibleColectivo() {
-		Assert.assertEquals(true, terminal.consultaDisponibilidad(LocalDateTime.now(), "114"));
+		Assert.assertTrue(terminal.consultaDisponibilidad(LocalDateTime.now(), "114"));
 	}
 
 	@Test
 	public void estaDisponibleBanco() {
-		Assert.assertEquals(false, terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00), "santander rio"));
+		Assert.assertTrue(terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
 	}
 
 	@Test
 	public void estaDisponibleCGP() {
-		Assert.assertEquals(true, terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00), "pagoFacil"));
+		Assert.assertTrue( terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00), "pagoFacil"));
 	}
 
 	@Test
 	public void estaDisponibleCGPSinServicio() {
-		Assert.assertEquals(true, terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00)));
+		Assert.assertTrue(terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00)));
 	}
 
 	@Test
 	public void estaDisponibleLocal() {
 		boolean a = terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 17, 00), "Blaisten");
-		Assert.assertEquals(true, a);
+		Assert.assertTrue(a);
 	}
 
 	@Test
 	public void pruebaHorario() {
 		Horario nuevo = new Horario("09:00", "18:00", 1, 5);
-		Assert.assertEquals(true, nuevo.estaEnHorario(LocalDateTime.of(2016, 04, 19, 17, 00)));
+		Assert.assertTrue(nuevo.estaEnHorario(LocalDateTime.of(2016, 04, 19, 17, 00)));
 	}
 
 	@Test
@@ -158,6 +158,6 @@ public class Tests {
 
 	@Test
 	public void pruebaPoligono() {
-		Assert.assertEquals(true, cgp.estaCerca(new Point(-34.638116, -58.4794967)));
+		Assert.assertTrue(cgp.estaCerca(new Point(-34.638116, -58.4794967)));
 	}
 }
