@@ -32,15 +32,8 @@ public class Terminal {
 		return poiAux.estaDisponible(fecha);
 	}
 
-	public boolean consultaDisponibilidad(LocalDateTime fecha) {// Consideramos
-																// que todos los
-																// CGP por
-																// defecto tiene
-																// un formato de
-																// nombre de
-																// tipo:
-																// "CGP(Nro de
-																// CGP)"
+	public boolean consultaDisponibilidad(LocalDateTime fecha) {// Consideramos que todos los CGP por defecto tiene
+																// un formato de nombre de tipo: "CGP(Nro de CGP)"
 		List<Poi> lista_CGP = listaDePois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP"))
 				.collect(Collectors.toList());
 		return lista_CGP.stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));

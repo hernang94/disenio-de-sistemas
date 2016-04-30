@@ -31,7 +31,5 @@ public class CGP extends Poi {
 		return (criterio.equals(this.nombre)) || (servicios.stream()
 				.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase())));
 	}
-	
-	
 
 }

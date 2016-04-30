@@ -9,16 +9,7 @@ public class Horario {
 	private LocalTime desde;
 	private LocalTime hasta;
 
-	public Horario(String desde, String hasta, int diaDesde, int diaHasta) { 	// El
-																				// formato
-																				// de
-																				// las
-																				// horas
-																				// limites
-																				// de
-																				// trabajo
-																				// son:
-																				// "HH:MM"
+	public Horario(String desde, String hasta, int diaDesde, int diaHasta) { // El formato de las horas limites de trabajo son:"HH:MM"
 		this.desde = LocalTime.of(Integer.parseInt(desde.substring(0, 2)), Integer.parseInt(desde.substring(3, 5)));
 		this.hasta = LocalTime.of(Integer.parseInt(hasta.substring(0, 2)), Integer.parseInt(hasta.substring(3, 5)));
 		this.diaDesde = diaDesde;
