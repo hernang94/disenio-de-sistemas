@@ -27,9 +27,15 @@ public class CGP extends Poi {
 		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(fechaConsulta));
 	}
 
+	public boolean estaDisponible(LocalDateTime fechaConsulta,Servicio servicio) {
+		return encontrarServicio(servicio).estaDisponible(fechaConsulta);
+	}
+
 	public boolean encuentraNombre(String criterio) {
 		return (criterio.equals(this.nombre)) || (servicios.stream()
 				.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase())));
 	}
-
+	public Servicio encontrarServicio(Servicio servicio){
+		 return servicios.stream().filter(unServicio -> unServicio.getNombre().equalsIgnoreCase((servicio.getNombre()))).findFirst().get();
+	}
 }

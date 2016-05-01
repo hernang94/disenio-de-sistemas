@@ -48,4 +48,8 @@ public abstract class Poi {
 
 	public abstract boolean estaDisponible(LocalDateTime fechaConsulta);
 
+	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio){
+		return false;
+	}
+
 }

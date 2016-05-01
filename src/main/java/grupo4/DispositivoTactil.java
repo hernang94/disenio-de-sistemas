@@ -21,16 +21,21 @@ public class DispositivoTactil {
 		return listaAux;
 	}
 
-	public boolean consultaDisponibilidad(LocalDateTime fecha, String x) {
+	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
-		poiAux = obtenerSegunCriterio(x);
+		poiAux = obtenerSegunCriterio(criterio);
 		return poiAux.estaDisponible(fecha);
 	}
 
-	public boolean consultaDisponibilidad(LocalDateTime fecha) {// Consideramos que todos los CGP por defecto tiene
-																// un formato de nombre de tipo: "CGP(Nro de CGP)"
-		List<Poi> listaCGP = listaDePois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP")).collect(Collectors.toList());
-		return listaCGP.stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));
+	public boolean consultaDisponibilidad(LocalDateTime fecha, Servicio servicio){
+		Poi poiAux =obtenerSegunCriterio(servicio.getNombre());
+		return poiAux.estaDisponible(fecha,servicio);
+	}
+	public boolean consultaDisponibilidad(LocalDateTime fecha) {
+		return encontrarCGPS().stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));
+	}
+	public List<Poi> encontrarCGPS(){//Consideramos que todos los CGP por defecto tiene un formato de nombre de tipo: "CGP(Nro de CGP)"
+		return listaDePois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP")).collect(Collectors.toList());
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {

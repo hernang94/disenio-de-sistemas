@@ -29,7 +29,9 @@ public class Tests {
 	CGP cgp;
 	LocalComercial local;
 	Point unPuntoABuscar;
+	Rubro rubro;
 
+	@SuppressWarnings("static-access")
 	@Before
 	public void init() {
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
@@ -50,7 +52,7 @@ public class Tests {
 		parada114.setNombre("Parada114");
 
 		Point punto3 = new Point(-34.6383056, -58.4814007);
-		Rubro rubro = new Rubro("muebleria", 3.2);
+		rubro = rubro.MUEBLERIA;
 		local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00", 1, 6);
 		local.setAltura(1690);
 		local.setCalle("Alberdi");
@@ -118,7 +120,7 @@ public class Tests {
 
 	@Test
 	public void estaDisponibleCGP() {
-		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), "pagoFacil"));
+		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), pagoFacil));
 	}
 
 	@Test
@@ -166,5 +168,9 @@ public class Tests {
 	public boolean coincideCon(List<Poi> listaEncontrada, String criterio)
 	{
 		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(criterio));
+	}
+	public boolean coincideCon(List<Poi> listaEncontrada, Servicio servicio)
+	{
+		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(servicio.getNombre()));
 	}
 }
