@@ -1,6 +1,7 @@
 package Tests;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,12 +14,13 @@ import grupo4.CGP;
 import grupo4.Horario;
 import grupo4.LocalComercial;
 import grupo4.Parada;
+import grupo4.Poi;
 import grupo4.Rubro;
 import grupo4.Servicio;
-import grupo4.Terminal;
+import grupo4.DispositivoTactil;
 
 public class Tests {
-	Terminal terminal;
+	DispositivoTactil dispositivoTactil;
 	Parada parada114;
 	Servicio pagoFacil;
 	Servicio timbrado;
@@ -26,12 +28,12 @@ public class Tests {
 	Banco banco2;
 	CGP cgp;
 	LocalComercial local;
+	Point unPuntoABuscar;
 
 	@Before
 	public void init() {
-		Point unPunto = new Point(-34.638116, -58.4794967);
-		terminal = new Terminal();
-		terminal.setUnbicacionTerminal(unPunto);
+		unPuntoABuscar = new Point(-34.638116, -58.4794967);
+		dispositivoTactil = new DispositivoTactil();
 
 		Point punto1 = new Point(-34.6409182, -58.4758827);
 		banco = new Banco("10:00", "15:00", 1, 5);
@@ -77,56 +79,56 @@ public class Tests {
 		cgp.setCalle("Bacacay");
 		cgp.setNombre("CGP10");
 
-		terminal.agregarPoi(banco);
-		terminal.agregarPoi(banco2);
-		terminal.agregarPoi(parada114);
-		terminal.agregarPoi(local);
-		terminal.agregarPoi(cgp);
+		dispositivoTactil.agregarPoi(banco);
+		dispositivoTactil.agregarPoi(banco2);
+		dispositivoTactil.agregarPoi(parada114);
+		dispositivoTactil.agregarPoi(local);
+		dispositivoTactil.agregarPoi(cgp);
 	}
 
 	@Test
 	public void cercaniaAParada() {
-		Assert.assertFalse(terminal.consultaCercania("114"));
+		Assert.assertFalse(dispositivoTactil.consultaCercania("114",unPuntoABuscar));
 	}
 
 	@Test
 	public void cercaniaABanco() {
-		Assert.assertTrue(terminal.consultaCercania("santander rio"));
+		Assert.assertTrue(dispositivoTactil.consultaCercania("santander rio",unPuntoABuscar));
 	}
 
 	@Test
 	public void cercaniaACGP() {
-		Assert.assertTrue(terminal.consultaCercania("CGP10"));
+		Assert.assertTrue(dispositivoTactil.consultaCercania("CGP10",unPuntoABuscar));
 	}
 
 	@Test
 	public void cercaniaALocal() {
-		Assert.assertTrue(terminal.consultaCercania("Blaisten"));
+		Assert.assertTrue(dispositivoTactil.consultaCercania("Blaisten",unPuntoABuscar));
 	}
 
 	@Test
 	public void estaDisponibleColectivo() {
-		Assert.assertTrue(terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
+		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
 	}
 
 	@Test
 	public void estaDisponibleBanco() {
-		Assert.assertTrue(terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
+		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
 	}
 
 	@Test
 	public void estaDisponibleCGP() {
-		Assert.assertTrue( terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00), "pagoFacil"));
+		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), "pagoFacil"));
 	}
 
 	@Test
 	public void estaDisponibleCGPSinServicio() {
-		Assert.assertTrue(terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00)));
+		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00)));
 	}
 
 	@Test
 	public void estaDisponibleLocal() {
-		boolean a = terminal.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 17, 00), "Blaisten");
+		boolean a = dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 17, 00), "Blaisten");
 		Assert.assertTrue(a);
 	}
 
@@ -138,26 +140,31 @@ public class Tests {
 
 	@Test
 	public void pruebaBusquedaLibrexRubro() {
-		Assert.assertEquals(1, terminal.busquedaLibre("muebleria").size());
+		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("muebleria"),"Blaisten"));
 	}
 
 	@Test
 	public void pruebaBusquedaLibrexLinea() {
-		Assert.assertEquals(1, terminal.busquedaLibre("114").size());
+		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("114"),"Parada114"));
 	}
 
 	@Test
 	public void pruebaBusquedaLibrexCGPxServicio() {
-		Assert.assertEquals(1, terminal.busquedaLibre("timbrado").size());
+		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("timbrado"),"CGP10"));
 	}
 
 	@Test
 	public void pruebaBusquedaLibrexBanco() {
-		Assert.assertEquals(2, terminal.busquedaLibre("santander rio").size());
+		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("santander rio"),"Santander rio"));
 	}
 
 	@Test
 	public void pruebaPoligono() {
 		Assert.assertTrue(cgp.estaCerca(new Point(-34.638116, -58.4794967)));
+	}
+	
+	public boolean coincideCon(List<Poi> listaEncontrada, String criterio)
+	{
+		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(criterio));
 	}
 }

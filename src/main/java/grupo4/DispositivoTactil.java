@@ -8,13 +8,8 @@ import org.uqbar.geodds.Point;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Terminal {
+public class DispositivoTactil {
 	private List<Poi> listaDePois = new ArrayList<>();
-	private Point ubicacionTerminal;
-
-	public void setUnbicacionTerminal(Point ubicacion) {
-		this.ubicacionTerminal = ubicacion;
-	}
 
 	public void agregarPoi(Poi unPoi) {
 		listaDePois.add(unPoi);
@@ -34,19 +29,18 @@ public class Terminal {
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha) {// Consideramos que todos los CGP por defecto tiene
 																// un formato de nombre de tipo: "CGP(Nro de CGP)"
-		List<Poi> lista_CGP = listaDePois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP"))
-				.collect(Collectors.toList());
-		return lista_CGP.stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));
+		List<Poi> listaCGP = listaDePois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP")).collect(Collectors.toList());
+		return listaCGP.stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
 		return listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).collect(Collectors.toList());
 	}
 
-	public boolean consultaCercania(String x) {
+	public boolean consultaCercania(String criterio, Point ubicacionSolicitada) {
 		Poi poi_aux;
-		poi_aux = obtenerSegunCriterio(x);
-		return poi_aux.estaCerca(this.ubicacionTerminal);
+		poi_aux = obtenerSegunCriterio(criterio);
+		return poi_aux.estaCerca(ubicacionSolicitada);
 
 	}
 

@@ -11,8 +11,8 @@ public class Servicio {
 		this.horario = new Horario(horaDesde, horaHasta, diaDesde, diaHasta);
 	}
 
-	public boolean estaDisponible(LocalDateTime horaConsulta) {
-		return (horario.estaEnDia(horaConsulta) && horario.estaEnHorario(horaConsulta));
+	public boolean estaDisponible(LocalDateTime fechaConsulta) {
+		return (horario.estaEnDia(fechaConsulta) && horario.estaEnHorario(fechaConsulta));
 	}
 
 	public String getNombre() {

@@ -23,11 +23,11 @@ public class CGP extends Poi {
 		return comuna.isInsideOld(unaCoordenada);
 	}
 
-	public boolean estaDisponible(LocalDateTime horaConsulta) {
-		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(horaConsulta));
+	public boolean estaDisponible(LocalDateTime fechaConsulta) {
+		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(fechaConsulta));
 	}
 
-	public boolean coincideCon(String criterio) {
+	public boolean encuentraNombre(String criterio) {
 		return (criterio.equals(this.nombre)) || (servicios.stream()
 				.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase())));
 	}
