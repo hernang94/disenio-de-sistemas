@@ -38,7 +38,7 @@ public class Tests {
 		dispositivoTactil = new DispositivoTactil();
 
 		Point punto1 = new Point(-34.6409182, -58.4758827);
-		banco = new Banco("10:00", "15:00", 1, 5);
+		banco = new Banco("10:00", "15:00");
 		banco.setAltura(1200);
 		banco.setCalle("Corrientes");
 		banco.setNombre("Santander Rio");
@@ -53,14 +53,22 @@ public class Tests {
 
 		Point punto3 = new Point(-34.6383056, -58.4814007);
 		rubro = rubro.MUEBLERIA;
-		local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00", 1, 6);
+		//local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00", 1, 6);
+		local = new LocalComercial(rubro);
+		local.cargarHorariosMañana(1, "09:00", "13:00");
+		local.cargarHorariosTarde(1, "14:00", "18:00");
+		local.cargarHorariosMañana(2, "09:00", "13:00");
+		local.cargarHorariosTarde(2, "14:00", "20:00");
+		local.cargarHorariosMañana(3, "09:00", "13:00");
+		local.cargarHorariosMañana(4, "09:00", "13:00");
+		local.cargarHorariosTarde(4, "14:00", "19:00");
 		local.setAltura(1690);
 		local.setCalle("Alberdi");
 		local.setCoordenadas(punto3);
 		local.setNombre("Blaisten");
 		
 		Point punto4= new Point(-34.6383669,-58.4773822);
-		banco2 = new Banco ("10:00","15:00",1,5);
+		banco2 = new Banco ("10:00","15:00");
 		banco2.setAltura(480);
 		banco2.setCalle("Mariano Acosta");
 		banco2.setNombre("Santander Rio");
@@ -136,7 +144,7 @@ public class Tests {
 
 	@Test
 	public void pruebaHorario() {
-		Horario nuevo = new Horario("09:00", "18:00", 1, 5);
+		Horario nuevo = new Horario("09:00", "18:00");
 		Assert.assertTrue(nuevo.estaEnHorario(LocalDateTime.of(2016, 04, 19, 17, 00)));
 	}
 

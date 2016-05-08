@@ -11,15 +11,17 @@ public class Banco extends Poi {
 	public Banco(String horaDesde, String horaHasta) {
 		this.horario = new Horario(horaDesde, horaHasta);
 		this.hashHorario= new HashMap<>();
+		inicializarHash(hashHorario);
 		cargarHash(this.hashHorario,this.horario);
 	}
+
 	public void cargarHash(Map<Integer,Horario> hashmap,Horario horario){
 		for(int i=0; i<5;i++){
-			hashmap.put(i+1,horario);
+			hashmap.replace(i+1,horario);
 		}
 	}
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
 		int dia = horaConsulta.getDayOfWeek().getValue();
-		return (hashHorario.get(dia).estaEnHorario(horaConsulta));
+		return (hashHorario.get(dia)!=null)&&(hashHorario.get(dia).estaEnHorario(horaConsulta));
 	}
 }

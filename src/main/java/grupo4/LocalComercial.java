@@ -16,6 +16,8 @@ public class LocalComercial extends Poi {
 		this.rubro = rubro;
 		this.hashMañana=new HashMap<>();
 		this.hashTarde=new HashMap<>();
+		inicializarHash(hashMañana);
+		inicializarHash(hashTarde);
 	}
 
 	public boolean estaCerca(Point unPunto) {
@@ -26,13 +28,14 @@ public class LocalComercial extends Poi {
 	public boolean encuentraNombre(String criterio) {
 		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.encuentraNombre(criterio));
 	}
+	
 	public void cargarHorariosMañana(int dia,String horaDesde, String horaHasta){
 		horarioM= new Horario(horaDesde, horaHasta);
-		hashMañana.put(dia, horarioM);
+		hashMañana.replace(dia, horarioM);
 	}
 	public void cargarHorariosTarde(int dia,String horaDesde, String horaHasta){
 		horarioT= new Horario(horaDesde, horaHasta);
-		hashTarde.put(dia, horarioT);
+		hashTarde.replace(dia, horarioT);
 	}
 
 
@@ -40,6 +43,8 @@ public class LocalComercial extends Poi {
 		int dia=horaConsulta.getDayOfWeek().getValue();
 		boolean criterio1 = (hashMañana.get(dia).estaEnHorario(horaConsulta));
 		boolean criterio2 = (hashTarde.get(dia).estaEnHorario(horaConsulta));
-		return (criterio1 || criterio2);
+		boolean criterio3 = (hashMañana.get(dia)!=null);
+		boolean criterio4 = (hashTarde.get(dia)!=null);
+		return criterio3&&criterio4&&(criterio1 || criterio2);
 	}
 }
