@@ -164,7 +164,27 @@ public class Tests {
 	public void pruebaPoligono() {
 		Assert.assertTrue(cgp.estaCerca(new Point(-34.638116, -58.4794967)));
 	}
-	
+	@Test
+	public void pruebaServicioNoDisponible(){
+		Assert.assertFalse(pagoFacil.estaDisponible(LocalDateTime.of(2016, 05, 8, 10, 00)));
+	}
+	@Test
+	public void pruebaBusquedaDeServicioCuandoNoTiene(){
+		Assert.assertFalse(banco.estaDisponible(LocalDateTime.of(2016, 04, 19, 11, 00), pagoFacil));
+	}
+	@Test
+	public void consultarCercaniaABanco(){
+		Assert.assertFalse(banco.estaCerca(new Point(-40.638116, -58.4794967)));
+	}
+	@Test
+	public void bancoNoDisponible(){
+		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 05, 8, 11, 00), "santander rio"));
+			
+	}
+	@Test
+	public void paradaCerca(){
+		Assert.assertTrue(parada114.estaCerca(new Point(-34.6417164, -58.4792636)));		
+	}
 	public boolean coincideCon(List<Poi> listaEncontrada, String criterio)
 	{
 		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(criterio));
