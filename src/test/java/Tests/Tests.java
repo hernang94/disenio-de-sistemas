@@ -55,12 +55,12 @@ public class Tests {
 		rubro = rubro.MUEBLERIA;
 		//local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00", 1, 6);
 		local = new LocalComercial(rubro);
-		local.cargarHorariosMañana(1, "09:00", "13:00");
+		local.cargarHorariosManana(1, "09:00", "13:00");
 		local.cargarHorariosTarde(1, "14:00", "18:00");
-		local.cargarHorariosMañana(2, "09:00", "13:00");
+		local.cargarHorariosManana(2, "09:00", "13:00");
 		local.cargarHorariosTarde(2, "14:00", "20:00");
-		local.cargarHorariosMañana(3, "09:00", "13:00");
-		local.cargarHorariosMañana(4, "09:00", "13:00");
+		local.cargarHorariosManana(3, "09:00", "13:00");
+		local.cargarHorariosManana(4, "09:00", "13:00");
 		local.cargarHorariosTarde(4, "14:00", "19:00");
 		local.setAltura(1690);
 		local.setCalle("Alberdi");

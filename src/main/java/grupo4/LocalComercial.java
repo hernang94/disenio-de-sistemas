@@ -10,13 +10,13 @@ public class LocalComercial extends Poi {
 	private Rubro rubro;
 	private Horario horarioM;
 	private Horario horarioT;
-	private Map<Integer,Horario> hashMañana;
+	private Map<Integer,Horario> hashManana;
 	private Map<Integer,Horario> hashTarde;
 	public LocalComercial(Rubro rubro) {
 		this.rubro = rubro;
-		this.hashMañana=new HashMap<>();
+		this.hashManana=new HashMap<>();
 		this.hashTarde=new HashMap<>();
-		inicializarHash(hashMañana);
+		inicializarHash(hashManana);
 		inicializarHash(hashTarde);
 	}
 
@@ -29,9 +29,9 @@ public class LocalComercial extends Poi {
 		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.encuentraNombre(criterio));
 	}
 	
-	public void cargarHorariosMañana(int dia,String horaDesde, String horaHasta){
+	public void cargarHorariosManana(int dia,String horaDesde, String horaHasta){
 		horarioM= new Horario(horaDesde, horaHasta);
-		hashMañana.replace(dia, horarioM);
+		hashManana.replace(dia, horarioM);
 	}
 	public void cargarHorariosTarde(int dia,String horaDesde, String horaHasta){
 		horarioT= new Horario(horaDesde, horaHasta);
@@ -41,9 +41,9 @@ public class LocalComercial extends Poi {
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
 		int dia=horaConsulta.getDayOfWeek().getValue();
-		boolean criterio1 = (hashMañana.get(dia).estaEnHorario(horaConsulta));
+		boolean criterio1 = (hashManana.get(dia).estaEnHorario(horaConsulta));
 		boolean criterio2 = (hashTarde.get(dia).estaEnHorario(horaConsulta));
-		boolean criterio3 = (hashMañana.get(dia)!=null);
+		boolean criterio3 = (hashManana.get(dia)!=null);
 		boolean criterio4 = (hashTarde.get(dia)!=null);
 		return criterio3&&criterio4&&(criterio1 || criterio2);
 	}
