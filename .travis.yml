@@ -2,15 +2,24 @@ language: java
 
 jdk:
   - oraclejdk8
-  
+
 install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcobertura.skip=true -B -V
+
 script: mvn clean cobertura:check -B -V
+
+after_success:
+  - mvn clean  cobertura:cobertura
+  - "./.utility/.coverage.sh"
 
 notifications:
   email:
     recipients:
-      - corvaro.mauro@gmail.com
-      - mika_2195@hotmail.com
-      - hernangallo@outlook.com
-      - tomasmazzocchi@est.frba.utn.edu.ar
-      - jaecisneros@gmail.com
+    - corvaro.mauro@gmail.com
+    - mika_2195@hotmail.com
+    - hernangallo@outlook.com
+    - tomasmazzocchi@est.frba.utn.edu.ar
+    - jaecisneros@gmail.com
+
+env:
+  global:
+    secure: oeBpzefXBzItOTA03k5Qfw1iYcTh0NRAhwAqmYqPU3oi8R3J+8obXZvyS82Lf921e8NIAC4sO5+SfdqgrblPcSg32aCSHUeYzxqvDpnZ3DFpPbYcsnyJvguIQaabYNhj71HE6dsU6/IX5rnISa/R39r1iUfw/se73rB6L8XRER9TpgoOrJJXxzVgjk1yyFv6cBpQLxkqfDlbcKC5e00m6ZHMdRIhRCB1qYeHHG41rU8wLYzxombSXX17oLEyFLhkX3sor2eoBL3HR1Kw05hpdvOvHTzrHzHso9sN70S9tweoxAkm3GqCViam1bwe65akmdFTCrWsdGMUcpb05HyF3BFsS+tQGURGfrYIaM1XATEPRjKDl/Uwr2OJ+RJZVw6HXbYeoraezjJR+u7TbuZZjdCGy6tFp9dpayqyib1BaExXuhmdKgpZdTvnMtvMQqTDA3ss2N6aoLepLe9BgE04X6DNTtQU2gA1ZMPRSPey5ik7UE8WOGVWz0Jm8WBvxr9I2aEW0DlgG+Tar4qGHuqyxsjKtTMOmDXJHAP6rVKQp/asH41QFc722TzyjxvoKU6V/EXdbwjGufCSZvtoi5IXg+Mhky3PIgVlnp/FmxScNS/Eqzijn+uJhko4YxzA+9v8P4GXnw2JPK2O8DYCoVLCwScJ/Hr+KFzzo/cJC8uO0/A=
