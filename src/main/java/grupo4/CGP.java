@@ -10,12 +10,11 @@ import org.uqbar.geodds.Polygon;
 public class CGP extends Poi {
 	private List<Servicio> servicios = new ArrayList<>();
 	private Polygon comuna;
-	private int numero;
 
-	public CGP(Polygon comuna, int numero) {
+	public CGP(Polygon comuna) {
 		this.comuna = comuna;
-		this.numero = numero;
 	}
+	
 
 	public void addServicio(Servicio unServicio) {
 		this.servicios.add(unServicio);

@@ -15,7 +15,32 @@ public class DispositivoTactil {
 		listaDePois.add(unPoi);
 	}
 	
-	public void quitarPoi (Poi unPoi){
+	public void altaCGP(String criterio){
+		List<CGP>listaAux= new CGPAdapter().solicitarCGPs(criterio);
+		listaAux.stream().forEach(cgp->aniadirCriterioso(cgp));
+	}
+	
+	public void modificacionCGP(String criterio){
+		List<CGP>listaAux= new CGPAdapter().solicitarCGPs(criterio);
+		listaAux.stream().forEach(cgp->modificarCriterioso(cgp));
+	}
+	
+	private void modificarCriterioso(CGP cgp) {
+		List<Poi>listaAux = listaDePois.stream().filter(cgpAux->cgpAux.getNombre().equalsIgnoreCase(cgp.getNombre())).collect(Collectors.toList());
+		if (!(listaAux.isEmpty())) {
+			bajaPoi(listaAux.get(0));
+			agregarPoi(cgp);
+		}
+	}
+	
+
+	private void aniadirCriterioso(CGP cgp) {
+		if (!(listaDePois.stream().anyMatch(cgpAux->cgpAux.getNombre().equalsIgnoreCase(cgp.getNombre())))) {
+			listaDePois.add(cgp);
+		}
+	}
+
+	public void bajaPoi (Poi unPoi){
 		listaDePois.remove(unPoi);
 	}
 	
