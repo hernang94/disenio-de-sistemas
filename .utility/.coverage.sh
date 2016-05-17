@@ -12,6 +12,7 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
   cd gh-pages
   git rm -rf *
   cp -Rf $TRAVIS_BUILD_DIR/target/site/jacoco/{.,}* .
+  touch .nojekyll
   git add -f .
   git commit -m "Lastest cobertura report on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
