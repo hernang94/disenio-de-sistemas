@@ -14,7 +14,11 @@ public class DispositivoTactil {
 	public void agregarPoi(Poi unPoi) {
 		listaDePois.add(unPoi);
 	}
-
+	
+	public void quitarPoi (Poi unPoi){
+		listaDePois.remove(unPoi);
+	}
+	
 	public List<Poi> busquedaLibre(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();
 		listaAux = filtrarPorCriterio(criterio);
@@ -53,3 +57,4 @@ public class DispositivoTactil {
 		return listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).findFirst().get();
 	}
 }
+	 
