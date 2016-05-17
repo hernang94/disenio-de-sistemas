@@ -9,5 +9,30 @@ public class CentroDTO {
 	private String director;
 	private String domicilio;
 	private String telefono;
-	private List<ServicioDTO> serviciosDTO= new ArrayList<>();
+	private List<ServicioDTO> serviciosDTO = new ArrayList<>();
+
+	public int getComuna() {
+		return comuna;
+	}
+
+	public String getZonas() {
+		return zonas;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public String getDomicilio() {
+		return domicilio;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public List<ServicioDTO> getServiciosDTO() {
+		return serviciosDTO;
+	}
+
 }
