@@ -10,6 +10,26 @@ public abstract class Poi {
 	protected String nombre;
 	private String calle;
 	private int altura;
+	private double x;
+	private double y;
+	
+	
+
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
 
 	public Point getCoordenadas() {
 		return coordenadas;
@@ -19,9 +39,10 @@ public abstract class Poi {
 		return this.coordenadas.distance(punto);
 	}
 
-	public void setCoordenadas(Point coordenadas) {
-		this.coordenadas = coordenadas;
+	public void setCoordenadas() {
+		this.coordenadas = new Point(x, y);
 	}
+	
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
