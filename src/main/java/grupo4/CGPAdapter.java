@@ -17,6 +17,10 @@ public class CGPAdapter {
 
 	private ComponenteCGPS componente;
 
+	public void setComponente(ComponenteCGPS componente) {
+		this.componente = componente;
+	}
+
 	public List<CGP> solicitarCGPs(String valor) {
 		return adaptarObjetos(this.componente.buscarCGPs(valor));
 	}

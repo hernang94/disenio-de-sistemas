@@ -6,11 +6,16 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
 import grupo4.Banco;
+import grupo4.BancoTransformer;
 import grupo4.CGP;
+import grupo4.CGPAdapter;
+import grupo4.ComponenteBanco;
+import grupo4.ComponenteCGPS;
 import grupo4.Horario;
 import grupo4.LocalComercial;
 import grupo4.Parada;
@@ -30,12 +35,29 @@ public class Tests {
 	LocalComercial local;
 	Point unPuntoABuscar;
 	Rubro rubro;
-
+	ComponenteCGPS componente;
+	CGPAdapter adaptador;
+	ComponenteBanco componenteBanco;
+	BancoTransformer optimus;
+	
 	@SuppressWarnings("static-access")
 	@Before
 	public void init() {
+		
+		
+		componente = Mockito.mock(ComponenteCGPS.class);
+		adaptador = new CGPAdapter();
+		adaptador.setComponente(componente);
+		
+		
+		componenteBanco=Mockito.mock(ComponenteBanco.class);
+		optimus = new BancoTransformer();
+		optimus.setComponente(componenteBanco);
+		
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
 		dispositivoTactil = new DispositivoTactil();
+		dispositivoTactil.setAdaptador(adaptador);
+		dispositivoTactil.setBancoTransformer(optimus);
 
 		banco = new Banco();
 		banco.setAltura(1200);
@@ -205,4 +227,29 @@ public class Tests {
 	{
 		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(servicio.getNombre()));
 	}
+	
+	
+	
+	@Test
+	public void pruebaAltaCGP(){
+		dispositivoTactil.altaCGP("Alberdi");
+		Mockito.verify(componente).buscarCGPs("Alberdi");
+	}
+	@Test
+	public void pruebaModificacionCGP(){
+		dispositivoTactil.modificacionCGP("Alberdi");
+		Mockito.verify(componente).buscarCGPs("Alberdi");
+	}
+	@Test
+	public void pruebaAltaBanco(){
+		dispositivoTactil.altaBanco("Santander Rio", "Deposito");
+		Mockito.verify(componenteBanco).getJsonBanco("Santander Rio", "Deposito");
+	}
+	@Test
+	public void pruebaModificacionBanco(){
+		dispositivoTactil.modificacionBanco("Santander Rio", "Deposito");
+		Mockito.verify(componenteBanco).getJsonBanco("Santander Rio", "Deposito");
+	}
+	
+	
 }

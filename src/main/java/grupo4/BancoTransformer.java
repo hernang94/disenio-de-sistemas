@@ -31,5 +31,10 @@ public class BancoTransformer {
 		List<String>jsons= componente.getJsonBanco(nombre, servicio);
 		return jsons.stream().map(json->desdeJson(json, Banco.class)).collect(Collectors.toList());
 	}
+
+	public void setComponente(ComponenteBanco componenteBanco) {
+		this.componente=componenteBanco;
+		
+	}
 	
 }

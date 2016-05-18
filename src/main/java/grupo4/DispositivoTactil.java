@@ -10,18 +10,27 @@ import java.util.ArrayList;
 
 public class DispositivoTactil {
 	private List<Poi> listaDePois = new ArrayList<>();
+	private CGPAdapter adaptador = new CGPAdapter();
+	private BancoTransformer bancoAdaptador= new BancoTransformer();
+	
+	public void setBancoTransformer(BancoTransformer bancoAdaptador){
+		this.bancoAdaptador=bancoAdaptador;
+	}
 
+	public void setAdaptador(CGPAdapter adaptador){
+		this.adaptador=adaptador;
+	}
 	public void agregarPoi(Poi unPoi) {
 		listaDePois.add(unPoi);
 	}
 
 	public void altaBanco(String nombre,String servicio){
-		List<Banco>listaAux=new BancoTransformer().obternerBancos(nombre, servicio);
+		List<Banco>listaAux=bancoAdaptador.obternerBancos(nombre, servicio);
 		listaAux.stream().forEach(banco->aniadirCriteriosoBanco(banco));
 	}
 	
 	public void modificacionBanco(String nombre, String servicio){
-		List<Banco>listaAux=new BancoTransformer().obternerBancos(nombre, servicio);
+		List<Banco>listaAux=bancoAdaptador.obternerBancos(nombre, servicio);
 		listaAux.stream().forEach(banco->modificarCriteriosoBanco(banco));
 	}
 	
@@ -41,12 +50,12 @@ public class DispositivoTactil {
 	}
 
 	public void altaCGP(String criterio) {
-		List<CGP> listaAux = new CGPAdapter().solicitarCGPs(criterio);
+		List<CGP> listaAux = adaptador.solicitarCGPs(criterio);
 		listaAux.stream().forEach(cgp -> aniadirCriterioso(cgp));
 	}
 	
 	public void modificacionCGP(String criterio) {
-		List<CGP> listaAux = new CGPAdapter().solicitarCGPs(criterio);
+		List<CGP> listaAux = adaptador.solicitarCGPs(criterio);
 		listaAux.stream().forEach(cgp -> modificarCriterioso(cgp));
 	}
 
