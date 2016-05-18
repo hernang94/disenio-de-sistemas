@@ -5,3 +5,4 @@ import java.util.List;
 public interface ComponenteBanco {
 	public List<String> getJsonBanco(String nombre,String servicio);
 }
+
