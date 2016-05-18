@@ -28,7 +28,6 @@ public class Banco extends Poi {
 		}
 	}
 	
-	
 	public List<Servicio> getListaServicios() {
 		return listaServicios;
 	}

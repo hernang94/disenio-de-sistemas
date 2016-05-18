@@ -37,21 +37,22 @@ public class Tests {
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
 		dispositivoTactil = new DispositivoTactil();
 
-		Point punto1 = new Point(-34.6409182, -58.4758827);
-		banco = new Banco("10:00", "15:00");
+		banco = new Banco();
 		banco.setAltura(1200);
 		banco.setCalle("Corrientes");
 		banco.setNombre("Santander Rio");
-		banco.setCoordenadas(punto1);
+		banco.setX(-34.6409182);
+		banco.setY(-58.4758827);
+		banco.setCoordenadas();
 
-		Point punto2 = new Point(-34.6417364, -58.4792636);
 		parada114 = new Parada("114");
 		parada114.setAltura(1590);
 		parada114.setCalle("Alberdi");
-		parada114.setCoordenadas(punto2);
+		parada114.setX(-34.6417364);
+		parada114.setY(-58.4792636);
+		parada114.setCoordenadas();
 		parada114.setNombre("Parada114");
 
-		Point punto3 = new Point(-34.6383056, -58.4814007);
 		rubro = rubro.MUEBLERIA;
 		//local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00", 1, 6);
 		local = new LocalComercial(rubro);
@@ -64,15 +65,18 @@ public class Tests {
 		local.cargarHorariosTarde(4, "14:00", "19:00");
 		local.setAltura(1690);
 		local.setCalle("Alberdi");
-		local.setCoordenadas(punto3);
+		local.setX(-34.6383056);
+		local.setY(-58.4814007);
+		local.setCoordenadas();
 		local.setNombre("Blaisten");
 		
-		Point punto4= new Point(-34.6383669,-58.4773822);
-		banco2 = new Banco ("10:00","15:00");
+		banco2 = new Banco ();
 		banco2.setAltura(480);
 		banco2.setCalle("Mariano Acosta");
 		banco2.setNombre("Santander Rio");
-		banco2.setCoordenadas(punto4);		
+		banco2.setX(-34.6383669);
+		banco2.setY(-58.4773822);
+		banco2.setCoordenadas();		
 
 		Polygon comuna10 = new Polygon();
 		comuna10.add(new Point(-34.637466, -58.476939));
@@ -80,10 +84,10 @@ public class Tests {
 		comuna10.add(new Point(-34.6417364, -58.4792636));
 		comuna10.add(new Point(-34.6409182, -58.4758827));
 		comuna10.add(new Point(-34.6383056, -58.4814007));
-		pagoFacil = new Servicio("PagoFacil", "09:00", "11:00", 1, 5);
-		timbrado = new Servicio("timbrado", "12:00", "13:30", 4, 5);
+		timbrado = new Servicio("timbrado");
+		timbrado.cargarHorario(4, "12:00", "13:30");
+		timbrado.cargarHorario(5, "12:00", "13:30");
 		cgp = new CGP(comuna10);
-		cgp.addServicio(pagoFacil);
 		cgp.addServicio(timbrado);
 		cgp.setAltura(3968);
 		cgp.setCalle("Bacacay");
@@ -128,12 +132,12 @@ public class Tests {
 
 	@Test
 	public void estaDisponibleCGP() {
-		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), pagoFacil));
+		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), timbrado));
 	}
 
 	@Test
 	public void estaDisponibleCGPSinServicio() {
-		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00)));
+		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00)));
 	}
 
 	@Test
@@ -174,7 +178,7 @@ public class Tests {
 	}
 	@Test
 	public void pruebaServicioNoDisponible(){
-		Assert.assertFalse(pagoFacil.estaDisponible(LocalDateTime.of(2016, 05, 8, 10, 00)));
+		Assert.assertFalse(timbrado.estaDisponible(LocalDateTime.of(2016, 05, 8, 10, 00)));
 	}
 	@Test
 	public void pruebaBusquedaDeServicioCuandoNoTiene(){

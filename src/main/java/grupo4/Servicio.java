@@ -16,7 +16,7 @@ public class Servicio {
 	}
 
 	public void inicializarHash(Map<Integer,Horario> hashmap){
-		for (int i = 0; i < 7; i++) {
+		for (int i = 1; i < 8; i++) {
 			hashmap.put(i, null);
 		}
 	}
@@ -27,8 +27,11 @@ public class Servicio {
 	}
 	
 	public boolean estaDisponible(LocalDateTime fechaConsulta) {
-		int dia = fechaConsulta.getDayOfWeek().getValue();
-		return (hashHorario.get(dia)!=null)&&(hashHorario.get(dia).estaEnHorario(fechaConsulta));
+		int dia=fechaConsulta.getDayOfWeek().getValue();
+		if(hashHorario.get(dia)!=null){
+			return hashHorario.get(dia).estaEnHorario(fechaConsulta);
+		}
+		return false;
 	}
 
 	public String getNombre() {
