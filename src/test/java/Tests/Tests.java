@@ -25,20 +25,20 @@ import grupo4.Servicio;
 import grupo4.DispositivoTactil;
 
 public class Tests {
-	DispositivoTactil dispositivoTactil;
-	Parada parada114;
-	Servicio pagoFacil;
-	Servicio timbrado;
-	Banco banco;
-	Banco banco2;
-	CGP cgp;
-	LocalComercial local;
-	Point unPuntoABuscar;
-	Rubro rubro;
-	ComponenteCGPS componente;
-	CGPAdapter adaptador;
-	ComponenteBanco componenteBanco;
-	BancoTransformer optimus;
+	private DispositivoTactil dispositivoTactil;
+	private Parada parada114;
+	private Servicio pagoFacil;
+	private Servicio timbrado;
+	private Banco banco;
+	private Banco banco2;
+	private CGP cgp;
+	private LocalComercial local;
+	private Point unPuntoABuscar;
+	private Rubro rubro;
+	private ComponenteCGPS componente;
+	private CGPAdapter adaptador;
+	private ComponenteBanco componenteBanco;
+	private BancoTransformer optimus;
 	
 	@SuppressWarnings("static-access")
 	@Before
@@ -60,16 +60,12 @@ public class Tests {
 		dispositivoTactil.setBancoTransformer(optimus);
 
 		banco = new Banco();
-		banco.setAltura(1200);
-		banco.setCalle("Corrientes");
 		banco.setNombre("Santander Rio");
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
 		banco.setCoordenadas();
 
 		parada114 = new Parada("114");
-		parada114.setAltura(1590);
-		parada114.setCalle("Alberdi");
 		parada114.setX(-34.6417364);
 		parada114.setY(-58.4792636);
 		parada114.setCoordenadas();
@@ -85,16 +81,12 @@ public class Tests {
 		local.cargarHorariosManana(3, "09:00", "13:00");
 		local.cargarHorariosManana(4, "09:00", "13:00");
 		local.cargarHorariosTarde(4, "14:00", "19:00");
-		local.setAltura(1690);
-		local.setCalle("Alberdi");
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
 		local.setCoordenadas();
 		local.setNombre("Blaisten");
 		
 		banco2 = new Banco ();
-		banco2.setAltura(480);
-		banco2.setCalle("Mariano Acosta");
 		banco2.setNombre("Santander Rio");
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
@@ -111,8 +103,6 @@ public class Tests {
 		timbrado.cargarHorario(5, "12:00", "13:30");
 		cgp = new CGP(comuna10);
 		cgp.addServicio(timbrado);
-		cgp.setAltura(3968);
-		cgp.setCalle("Bacacay");
 		cgp.setNombre("CGP10");
 
 		dispositivoTactil.agregarPoi(banco);

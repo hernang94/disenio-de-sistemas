@@ -8,8 +8,6 @@ import org.uqbar.geodds.Point;
 public abstract class Poi {
 	private Point coordenadas;
 	protected String nombre;
-	private String calle;
-	private int altura;
 	private double x;
 	private double y;
 	
@@ -48,13 +46,6 @@ public abstract class Poi {
 		this.nombre = nombre;
 	}
 
-	public void setCalle(String calle) {
-		this.calle = calle;
-	}
-
-	public void setAltura(int altura) {
-		this.altura = altura;
-	}
 
 	public boolean estaCerca(Point unPunto) {
 		return (calcularDistancia(unPunto) < 0.5);

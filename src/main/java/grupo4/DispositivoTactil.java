@@ -99,9 +99,8 @@ public class DispositivoTactil {
 		return encontrarCGPS().stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));
 	}
 
-	public List<Poi> encontrarCGPS() {// Consideramos que todos los CGP por
-										// defecto tiene un formato de nombre de
-										// tipo: "CGP(Nro de CGP)"
+	public List<Poi> encontrarCGPS() {// Consideramos que 
+//todos los CGP por defecto tiene un formato de nombre de tipo: "CGP(Nro de CGP)"
 		return listaDePois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP")).collect(Collectors.toList());
 	}
 

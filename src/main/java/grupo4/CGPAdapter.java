@@ -34,7 +34,6 @@ public class CGPAdapter {
 		hashComunas = inicializarHashComunas();
 		CGP aux = new CGP(hashComunas.get(unCentro.getComuna()));
 		aux.setNombre(Integer.toString(unCentro.getComuna()));
-		aux.setCalle(unCentro.getDomicilio());
 		unCentro.getServiciosDTO().stream().forEach(servicio -> aux.addServicio(adaptarServicio(servicio)));
 		return aux;
 
