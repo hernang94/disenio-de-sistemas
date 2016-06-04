@@ -6,6 +6,17 @@ public class RangoServicioDTO {
 	private int minutoDesde;
 	private int horaHasta;
 	private int minutoHasta;
+	
+	
+
+	public RangoServicioDTO(int dia, int horaDesde, int minutoDesde, int horaHasta, int minutoHasta) {
+		super();
+		this.dia = dia;
+		this.horaDesde = horaDesde;
+		this.minutoDesde = minutoDesde;
+		this.horaHasta = horaHasta;
+		this.minutoHasta = minutoHasta;
+	}
 
 	public int getDia() {
 		return dia;

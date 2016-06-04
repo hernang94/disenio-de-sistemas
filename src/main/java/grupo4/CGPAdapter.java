@@ -24,7 +24,7 @@ public class CGPAdapter implements Adaptadores{
 		return adaptarObjetos(this.componente.buscarCGPs(valor));
 	}
 
-	private List<Poi> adaptarObjetos(List<CentroDTO> listaExterna) {
+	public List<Poi> adaptarObjetos(List<CentroDTO> listaExterna) {
 		return listaExterna.stream().map(unCentro -> adaptar(unCentro)).collect(Collectors.toList());
 	}
 

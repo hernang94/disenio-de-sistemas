@@ -11,6 +11,15 @@ public class CentroDTO {
 	private String telefono;
 	private List<ServicioDTO> serviciosDTO = new ArrayList<>();
 
+	public CentroDTO(int comuna, String zonas, String director, String domicilio, String telefono) {
+		super();
+		this.comuna = comuna;
+		this.zonas = zonas;
+		this.director = director;
+		this.domicilio = domicilio;
+		this.telefono = telefono;
+	}
+
 	public int getComuna() {
 		return comuna;
 	}
@@ -33,6 +42,9 @@ public class CentroDTO {
 
 	public List<ServicioDTO> getServiciosDTO() {
 		return serviciosDTO;
+	}
+	public void agregarServicio(ServicioDTO servicio){
+		this.serviciosDTO.add(servicio);
 	}
 
 }

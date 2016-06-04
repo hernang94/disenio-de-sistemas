@@ -2,6 +2,7 @@ package Tests;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,10 @@ import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
+import externo.CentroDTO;
+import externo.RangoServicioDTO;
+import externo.ServicioDTO;
+import grupo4.Adaptadores;
 import grupo4.Banco;
 import grupo4.BancoTransformer;
 import grupo4.CGP;
@@ -28,10 +33,14 @@ import grupo4.Servicio;
 import grupo4.RepositorioDePois;
 
 public class Tests {
+	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
 	private Servicio pagoFacil;
 	private Servicio timbrado;
+	private CentroDTO centroPrueba;
+	private ServicioDTO servicioPrueba;
+	private RangoServicioDTO rangoPrueba;
 	private Banco banco;
 	private Banco banco2;
 	private CGP cgp;
@@ -51,6 +60,18 @@ public class Tests {
 	@SuppressWarnings("static-access")
 	@Before
 	public void init() {
+		listaCentroAAdaptar=new ArrayList<>();
+		
+		
+		rangoPrueba= new RangoServicioDTO(1,9,0,18,0);
+		
+		servicioPrueba=new ServicioDTO("Prueba");
+		servicioPrueba.agregarRango(rangoPrueba);
+		
+		
+		centroPrueba= new CentroDTO(9, "Mataderos,Parque Avellaneda", "Mauro Corvaro", "Calle Falsa 123", "4597-9684");
+		centroPrueba.agregarServicio(servicioPrueba);
+		listaCentroAAdaptar.add(centroPrueba);
 		
 		componente = Mockito.mock(ComponenteCGPS.class);
 		adaptador = new CGPAdapter();
@@ -236,25 +257,15 @@ public class Tests {
 	
 	
 	@Test
-	public void pruebaAltaCGP(){
-		dispositivoTactil.agregarPoi(cgp);
-		Mockito.verify(componente).buscarCGPs("Alberdi");
+	public void busquedaExterna(){
+		dispositivoTactil.busquedaLibre("HSBC");
+		Mockito.verify(componente).buscarCGPs("HSBC");
+		Mockito.verify(componenteBanco).getJsonBanco("HSBC");
 	}
-	@Test
-	public void pruebaModificacionCGP(){
-		dispositivoTactil.modificarPoi(cgp);
-		Mockito.verify(componente).buscarCGPs("Alberdi");
-	}
-	//@Test
-	/*public void pruebaAltaBanco(){
-		dispositivoTactil.altaBanco("Santander Rio", "Deposito");
-		Mockito.verify(componenteBanco).getJsonBanco("Santander Rio", "Deposito");
-	}
-	@Test
-	public void pruebaModificacionBanco(){
-		dispositivoTactil.modificacionBanco("Santander Rio", "Deposito");
-		Mockito.verify(componenteBanco).getJsonBanco("Santander Rio", "Deposito");
-	}*/
 	
+	@Test
+	public void pruebaAdaptador(){
+		Assert.assertTrue(adaptador.adaptarObjetos(listaCentroAAdaptar).get(0).getNombre().equalsIgnoreCase("9"));
+	}
 	
 }
