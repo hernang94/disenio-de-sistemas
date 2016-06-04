@@ -11,10 +11,10 @@ public class CGP extends Poi {
 	private List<Servicio> servicios = new ArrayList<>();
 	private Polygon comuna;
 
-	public CGP(Polygon comuna) {
+	public CGP(Polygon comuna, String nombre) {
+		super(nombre);
 		this.comuna = comuna;
 	}
-	
 
 	public void addServicio(Servicio unServicio) {
 		this.servicios.add(unServicio);
@@ -36,6 +36,7 @@ public class CGP extends Poi {
 		return (criterio.equals(this.nombre)) || (servicios.stream()
 				.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase())));
 	}
+	
 	public Servicio encontrarServicio(Servicio servicio){
 		 return servicios.stream().filter(unServicio -> unServicio.getNombre().equalsIgnoreCase((servicio.getNombre()))).findFirst().get();
 	}

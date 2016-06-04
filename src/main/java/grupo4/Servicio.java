@@ -1,29 +1,15 @@
 package grupo4;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Servicio {
 	private String nombre;
-	private Horario horario;
 	private Map<Integer,Horario>hashHorario;
 
-	public Servicio(String unNombre) {
+	public Servicio(String unNombre, Map<Integer,Horario> horarios) {
 		this.nombre = unNombre;
-		hashHorario=new HashMap<>();
-		inicializarHash(hashHorario);
-	}
-
-	public void inicializarHash(Map<Integer,Horario> hashmap){
-		for (int i = 1; i < 8; i++) {
-			hashmap.put(i, null);
-		}
-	}
-		
-	public void cargarHorario(int dia,String horaDesde, String horaHasta){
-		horario= new Horario(horaDesde, horaHasta);
-		hashHorario.replace(dia, horario);
+		hashHorario=horarios;
 	}
 	
 	public boolean estaDisponible(LocalDateTime fechaConsulta) {

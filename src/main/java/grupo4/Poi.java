@@ -1,8 +1,6 @@
 package grupo4;
 
 import java.time.LocalDateTime;
-import java.util.Map;
-
 import org.uqbar.geodds.Point;
 
 public abstract class Poi {
@@ -12,6 +10,10 @@ public abstract class Poi {
 	private double y;
 	
 	
+
+	public Poi(String nombre) {
+		this.nombre = nombre;
+	}
 
 	public double getX() {
 		return x;
@@ -58,11 +60,7 @@ public abstract class Poi {
 	public String getNombre() {
 		return nombre;
 	}
-	protected void inicializarHash(Map<Integer,Horario> hashmap){
-		for (int i = 1; i <= 7; i++) {
-			hashmap.put(i, null);
-		}
-	}
+
 	public abstract boolean estaDisponible(LocalDateTime fechaConsulta);
 
 	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio){

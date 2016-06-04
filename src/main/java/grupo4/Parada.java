@@ -4,13 +4,11 @@ import java.time.LocalDateTime;
 
 import org.uqbar.geodds.Point;
 
-public class Parada extends Poi {
-
+public class Parada extends Poi {	
+	
 	public Parada(String lineaAsociada) {
-		this.lineaAsociada = lineaAsociada;
+		super(lineaAsociada);
 	}
-
-	private String lineaAsociada;
 
 	public boolean estaCerca(Point unPunto) {
 		return (super.calcularDistancia(unPunto) <= 0.1);
@@ -21,6 +19,6 @@ public class Parada extends Poi {
 	}
 
 	public boolean encuentraNombre(String criterio) {
-		return (criterio.equals(lineaAsociada));
+		return (criterio.equals(super.getNombre()));
 	}
 }

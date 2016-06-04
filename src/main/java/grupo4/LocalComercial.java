@@ -1,23 +1,19 @@
 package grupo4;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.uqbar.geodds.Point;
 
 public class LocalComercial extends Poi {
 	private Rubro rubro;
-	private Horario horarioM;
-	private Horario horarioT;
 	private Map<Integer,Horario> hashManana;
 	private Map<Integer,Horario> hashTarde;
-	public LocalComercial(Rubro rubro) {
+	public LocalComercial(Rubro rubro,Map<Integer,Horario> horariosManiana, Map<Integer,Horario> horariosTarde,String nombre) {
+		super(nombre);
 		this.rubro = rubro;
-		this.hashManana=new HashMap<>();
-		this.hashTarde=new HashMap<>();
-		inicializarHash(hashManana);
-		inicializarHash(hashTarde);
+		this.hashManana=horariosManiana;
+		this.hashTarde=horariosTarde;
 	}
 
 	public boolean estaCerca(Point unPunto) {
@@ -28,16 +24,6 @@ public class LocalComercial extends Poi {
 	public boolean encuentraNombre(String criterio) {
 		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.encuentraNombre(criterio));
 	}
-	
-	public void cargarHorariosManana(int dia,String horaDesde, String horaHasta){
-		horarioM= new Horario(horaDesde, horaHasta);
-		hashManana.replace(dia, horarioM);
-	}
-	public void cargarHorariosTarde(int dia,String horaDesde, String horaHasta){
-		horarioT= new Horario(horaDesde, horaHasta);
-		hashTarde.replace(dia, horarioT);
-	}
-
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
 		int dia=horaConsulta.getDayOfWeek().getValue();

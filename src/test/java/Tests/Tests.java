@@ -22,10 +22,10 @@ import grupo4.Parada;
 import grupo4.Poi;
 import grupo4.Rubro;
 import grupo4.Servicio;
-import grupo4.DispositivoTactil;
+import grupo4.RepositorioDePois;
 
 public class Tests {
-	private DispositivoTactil dispositivoTactil;
+	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
 	private Servicio pagoFacil;
 	private Servicio timbrado;
@@ -44,7 +44,6 @@ public class Tests {
 	@Before
 	public void init() {
 		
-		
 		componente = Mockito.mock(ComponenteCGPS.class);
 		adaptador = new CGPAdapter();
 		adaptador.setComponente(componente);
@@ -55,7 +54,7 @@ public class Tests {
 		optimus.setComponente(componenteBanco);
 		
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
-		dispositivoTactil = new DispositivoTactil();
+		dispositivoTactil = new RepositorioDePois();
 		dispositivoTactil.setAdaptador(adaptador);
 		dispositivoTactil.setBancoTransformer(optimus);
 
