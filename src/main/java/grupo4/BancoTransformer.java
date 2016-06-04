@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class BancoTransformer {
+public class BancoTransformer implements Adaptadores{
 	private ComponenteBanco componente;
 	private ObjectMapper objectMapper;
 
@@ -27,8 +27,8 @@ public class BancoTransformer {
 		}
 	}
 	
-	public List<Banco>obternerBancos(String nombre,String servicio){
-		List<String>jsons= componente.getJsonBanco(nombre, servicio);
+	public List<Poi>buscarPois(String criterio){
+		List<String>jsons= componente.getJsonBanco(criterio);
 		return jsons.stream().map(json->desdeJson(json, Banco.class)).collect(Collectors.toList());
 	}
 

@@ -10,15 +10,16 @@ import java.util.ArrayList;
 
 public class RepositorioDePois {
 	private List<Poi> listaDePois = new ArrayList<>();
-	private List<Componente> listaComponentes= new ArrayList<>();
+	private List<Adaptadores> listaAdaptadores= new ArrayList<>();
 	
-	public void setBancoTransformer(BancoTransformer bancoAdaptador){
-		this.bancoAdaptador=bancoAdaptador;
+	public void agregarAdaptador(Adaptadores adaptador){
+		listaAdaptadores.add(adaptador);
 	}
-
-	public void setAdaptador(CGPAdapter adaptador){
-		this.adaptador=adaptador;
+	
+	public void quitarAdaptador(Adaptadores adaptador){
+		listaAdaptadores.remove(adaptador);
 	}
+	
 	public void agregarPoi(Poi unPoi) {
 		if(!repositorioContienePoi(unPoi.getNombre())){			
 			listaDePois.add(unPoi);
@@ -73,7 +74,7 @@ public class RepositorioDePois {
 	public List<Poi> filtrarPorCriterio(String criterio) {
 		List<Poi> listaFiltrada= listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).collect(Collectors.toList());
 		if(listaFiltrada.isEmpty()){
-			listaComponentes.stream().forEach(unComponente-> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
+			listaAdaptadores.stream().forEach(unComponente-> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
 		}
 		return listaFiltrada;
 	}

@@ -1,7 +1,10 @@
 package Tests;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,7 +42,12 @@ public class Tests {
 	private CGPAdapter adaptador;
 	private ComponenteBanco componenteBanco;
 	private BancoTransformer optimus;
-	
+	private Map<Integer,Horario> hashMapBanco;
+	private Horario horarioBanco;
+	private LocalDateTime fechaAux;
+	private Map<Integer,Horario> hashMapLocalComercialManiana;
+	private Map<Integer,Horario> hashMapLocalComercialTarde;
+	private Map<Integer,Horario> hashMapServicio; 
 	@SuppressWarnings("static-access")
 	@Before
 	public void init() {
@@ -55,11 +63,20 @@ public class Tests {
 		
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
 		dispositivoTactil = new RepositorioDePois();
-		dispositivoTactil.setAdaptador(adaptador);
-		dispositivoTactil.setBancoTransformer(optimus);
-
-		banco = new Banco();
-		banco.setNombre("Santander Rio");
+		dispositivoTactil.agregarAdaptador(adaptador);
+		dispositivoTactil.agregarAdaptador(optimus);
+		
+		horarioBanco= new Horario("10:00", "15:00");
+		
+		fechaAux= LocalDateTime.now();
+		
+		hashMapBanco = new HashMap<>();
+		hashMapBanco.put(fechaAux.getDayOfWeek().MONDAY.getValue(), horarioBanco);
+		hashMapBanco.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), horarioBanco);
+		hashMapBanco.put(fechaAux.getDayOfWeek().WEDNESDAY.getValue(), horarioBanco);
+		hashMapBanco.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), horarioBanco);
+		hashMapBanco.put(fechaAux.getDayOfWeek().FRIDAY.getValue(), horarioBanco);
+		banco= new Banco(hashMapBanco, "Santander Rio");
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
 		banco.setCoordenadas();
@@ -68,41 +85,40 @@ public class Tests {
 		parada114.setX(-34.6417364);
 		parada114.setY(-58.4792636);
 		parada114.setCoordenadas();
-		parada114.setNombre("Parada114");
 
 		rubro = rubro.MUEBLERIA;
 		//local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00", 1, 6);
-		local = new LocalComercial(rubro);
-		local.cargarHorariosManana(1, "09:00", "13:00");
-		local.cargarHorariosTarde(1, "14:00", "18:00");
-		local.cargarHorariosManana(2, "09:00", "13:00");
-		local.cargarHorariosTarde(2, "14:00", "20:00");
-		local.cargarHorariosManana(3, "09:00", "13:00");
-		local.cargarHorariosManana(4, "09:00", "13:00");
-		local.cargarHorariosTarde(4, "14:00", "19:00");
+		hashMapLocalComercialManiana=new HashMap<>();
+		hashMapLocalComercialManiana.put(fechaAux.getDayOfWeek().MONDAY.getValue(), new Horario("09:00", "13:00"));
+		hashMapLocalComercialManiana.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), new Horario("09:00", "13:00"));
+		hashMapLocalComercialManiana.put(fechaAux.getDayOfWeek().WEDNESDAY.getValue(), new Horario("09:00", "13:00"));
+		hashMapLocalComercialManiana.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("09:00", "13:00"));
+		hashMapLocalComercialTarde=new HashMap<>();
+		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().MONDAY.getValue(), new Horario("14:00", "18:00"));
+		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), new Horario("14:00", "20:00"));
+		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("14:00", "19:00"));
+		local = new LocalComercial(rubro,hashMapLocalComercialManiana,hashMapLocalComercialTarde,"Blaisten");
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
 		local.setCoordenadas();
-		local.setNombre("Blaisten");
 		
-		banco2 = new Banco ();
-		banco2.setNombre("Santander Rio");
+		banco2 = new Banco (hashMapBanco,"Santander Rio");
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 		banco2.setCoordenadas();		
 
+		hashMapServicio= new HashMap<>();
+		hashMapServicio.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("12:00", "13:30"));
+		hashMapServicio.put(fechaAux.getDayOfWeek().FRIDAY.getValue(), new Horario("12:00", "13:30"));
 		Polygon comuna10 = new Polygon();
 		comuna10.add(new Point(-34.637466, -58.476939));
 		comuna10.add(new Point(-34.6350677, -58.4810659));
 		comuna10.add(new Point(-34.6417364, -58.4792636));
 		comuna10.add(new Point(-34.6409182, -58.4758827));
 		comuna10.add(new Point(-34.6383056, -58.4814007));
-		timbrado = new Servicio("timbrado");
-		timbrado.cargarHorario(4, "12:00", "13:30");
-		timbrado.cargarHorario(5, "12:00", "13:30");
-		cgp = new CGP(comuna10);
+		timbrado = new Servicio("timbrado",hashMapServicio);
+		cgp = new CGP(comuna10,"CGP10");
 		cgp.addServicio(timbrado);
-		cgp.setNombre("CGP10");
 
 		dispositivoTactil.agregarPoi(banco);
 		dispositivoTactil.agregarPoi(banco2);
@@ -170,7 +186,7 @@ public class Tests {
 
 	@Test
 	public void pruebaBusquedaLibrexLinea() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("114"),"Parada114"));
+		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("114"),"114"));
 	}
 
 	@Test
@@ -221,16 +237,16 @@ public class Tests {
 	
 	@Test
 	public void pruebaAltaCGP(){
-		dispositivoTactil.altaCGP("Alberdi");
+		dispositivoTactil.agregarPoi(cgp);
 		Mockito.verify(componente).buscarCGPs("Alberdi");
 	}
 	@Test
 	public void pruebaModificacionCGP(){
-		dispositivoTactil.modificacionCGP("Alberdi");
+		dispositivoTactil.modificarPoi(cgp);
 		Mockito.verify(componente).buscarCGPs("Alberdi");
 	}
-	@Test
-	public void pruebaAltaBanco(){
+	//@Test
+	/*public void pruebaAltaBanco(){
 		dispositivoTactil.altaBanco("Santander Rio", "Deposito");
 		Mockito.verify(componenteBanco).getJsonBanco("Santander Rio", "Deposito");
 	}
@@ -238,7 +254,7 @@ public class Tests {
 	public void pruebaModificacionBanco(){
 		dispositivoTactil.modificacionBanco("Santander Rio", "Deposito");
 		Mockito.verify(componenteBanco).getJsonBanco("Santander Rio", "Deposito");
-	}
+	}*/
 	
 	
 }

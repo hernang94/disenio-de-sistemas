@@ -12,7 +12,7 @@ import externo.CentroDTO;
 import externo.RangoServicioDTO;
 import externo.ServicioDTO;
 
-public class CGPAdapter {
+public class CGPAdapter implements Adaptadores{
 
 	private Map<Integer, Polygon> hashComunas;
 	private ComponenteCGPS componente;
@@ -20,7 +20,7 @@ public class CGPAdapter {
 		this.componente = componente;
 	}
 
-	public List<Poi> solicitarCGPs(String valor) {
+	public List<Poi> buscarPois(String valor) {
 		return adaptarObjetos(this.componente.buscarCGPs(valor));
 	}
 

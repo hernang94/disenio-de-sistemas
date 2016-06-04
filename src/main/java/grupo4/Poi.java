@@ -42,11 +42,6 @@ public abstract class Poi {
 	public void setCoordenadas() {
 		this.coordenadas = new Point(x, y);
 	}
-	
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
 
 	public boolean estaCerca(Point unPunto) {

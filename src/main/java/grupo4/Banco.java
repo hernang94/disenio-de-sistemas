@@ -14,7 +14,6 @@ public class Banco extends Poi {
 
 	public Banco(Map<Integer,Horario> horarios,String nombre) {
 		super(nombre);
-		super.setCoordenadas();
 		this.hashHorario= horarios;
 	}
 	
