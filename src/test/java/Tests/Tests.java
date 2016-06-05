@@ -1,6 +1,6 @@
 package Tests;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import org.uqbar.geodds.Polygon;
 import externo.CentroDTO;
 import externo.RangoServicioDTO;
 import externo.ServicioDTO;
-import grupo4.Adaptadores;
+
 import grupo4.Banco;
 import grupo4.BancoTransformer;
 import grupo4.CGP;
@@ -83,7 +83,7 @@ public class Tests {
 		optimus.setComponente(componenteBanco);
 		
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
-		dispositivoTactil = new RepositorioDePois();
+		dispositivoTactil = new RepositorioDePois("terminalAbasto",30);
 		dispositivoTactil.agregarAdaptador(adaptador);
 		dispositivoTactil.agregarAdaptador(optimus);
 		
