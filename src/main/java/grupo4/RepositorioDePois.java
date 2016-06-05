@@ -5,6 +5,11 @@ import java.util.stream.Collectors;
 
 import org.uqbar.geodds.Point;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -77,7 +82,7 @@ public class RepositorioDePois {
 
 	}
 
-	private long calcularDiferenciaYNotificar(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
+	public long calcularDiferenciaYNotificar(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
 		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);
 		if (diferencia > tiempoEstipulado) {
 			notificarAlAdministrador();
@@ -85,8 +90,11 @@ public class RepositorioDePois {
 		return diferencia;
 	}
 
-	private void notificarAlAdministrador() {
-		System.out.println("Mail enviado al adminisitrador");
+	public String notificarAlAdministrador() {
+		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outContent));
+		System.out.print("Mail enviado al adminisitrador");
+		return outContent.toString();
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
@@ -131,12 +139,14 @@ public class RepositorioDePois {
 	}
 	
 	public void ReportarBusquedas(){
-	System.out.println("Fecha\t\tCantidad Búsquedas\n");
-	listaDeResultados.stream().forEach(resultado->imprimirResultado(resultado));
+	PrintWriter writer=crearArchivo();
+	writer.println("Fecha\t\tCantidad Búsquedas");
+	listaDeResultados.stream().forEach(resultado->imprimirResultado(resultado,writer));
+	writer.close();
 	}
 
-	private void imprimirResultado(ResultadosDeBusquedas resultado) {
-		System.out.println(""+fechaFormateada(resultado.getFechaDeBusqueda())+"\t\t"+resultado.getCantidadDeResultados()+"\n");
+	private void imprimirResultado(ResultadosDeBusquedas resultado,PrintWriter writer) {
+		writer.println(""+fechaFormateada(resultado.getFechaDeBusqueda())+"\t\t"+resultado.getCantidadDeResultados());
 	}
 	private String fechaFormateada(LocalDateTime fecha){
 		return fecha.getDayOfMonth()+"/"+fecha.getMonthValue()+"/"+fecha.getYear();
@@ -146,13 +156,25 @@ public class RepositorioDePois {
 		return listaDeResultados.stream().mapToInt(resultado->resultado.getCantidadDeResultados()).sum();
 	}
 
-	public void ReportarBusquedasPorTipo() {
-		System.out.println("Cantidad Busquedas Parciales\n");
-		listaDeResultados.stream().forEach(resultado->reportarCantidad(resultado));
+	public void ReportarBusquedasPorTipo(PrintWriter writer) {
+		writer.println("Cantidad Busquedas Parciales");
+		listaDeResultados.stream().forEach(resultado->reportarCantidad(resultado,writer));
 	}
 
-	private void reportarCantidad(ResultadosDeBusquedas resultado) {
-		System.out.println(resultado.getCantidadDeResultados()+"\n");
+	private void reportarCantidad(ResultadosDeBusquedas resultado,PrintWriter writer) {
+		writer.println(resultado.getCantidadDeResultados());
+	}
+	
+	private PrintWriter crearArchivo(){
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter("ReporteBusquedas.txt", "UTF-8");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return writer;
 	}
 	
 }

@@ -1,12 +1,15 @@
 package Tests;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +34,7 @@ import grupo4.Poi;
 import grupo4.Rubro;
 import grupo4.Servicio;
 import grupo4.RepositorioDePois;
+import grupo4.RepositorioDeTerminales;
 
 public class Tests {
 	private List<CentroDTO> listaCentroAAdaptar;
@@ -57,7 +61,9 @@ public class Tests {
 	private Map<Integer,Horario> hashMapLocalComercialManiana;
 	private Map<Integer,Horario> hashMapLocalComercialTarde;
 	private Map<Integer,Horario> hashMapServicio; 
+	private RepositorioDeTerminales repo;
 	@SuppressWarnings("static-access")
+	
 	@Before
 	public void init() {
 		listaCentroAAdaptar=new ArrayList<>();
@@ -83,7 +89,7 @@ public class Tests {
 		optimus.setComponente(componenteBanco);
 		
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
-		dispositivoTactil = new RepositorioDePois("terminalAbasto",30);
+		dispositivoTactil = new RepositorioDePois("terminalAbasto",0);
 		dispositivoTactil.agregarAdaptador(adaptador);
 		dispositivoTactil.agregarAdaptador(optimus);
 		
@@ -146,8 +152,11 @@ public class Tests {
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
+		
+		repo=new RepositorioDeTerminales();
+		repo.agregarTerminal(dispositivoTactil);
 	}
-
+	
 	@Test
 	public void cercaniaAParada() {
 		Assert.assertFalse(dispositivoTactil.consultaCercania("114",unPuntoABuscar));
@@ -253,9 +262,7 @@ public class Tests {
 	{
 		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(servicio.getNombre()));
 	}
-	
-	
-	
+			
 	@Test
 	public void busquedaExterna(){
 		dispositivoTactil.busquedaLibre("HSBC");
@@ -268,4 +275,31 @@ public class Tests {
 		Assert.assertTrue(adaptador.adaptarObjetos(listaCentroAAdaptar).get(0).getNombre().equalsIgnoreCase("9"));
 	}
 	
+	@Test
+	public void notificadorArministrador(){
+		Assert.assertEquals("Mail enviado al adminisitrador", dispositivoTactil.notificarAlAdministrador());
+	}
+	
+	@Test
+	public void calcularDiferencia(){
+		Assert.assertEquals(10, dispositivoTactil.calcularDiferenciaYNotificar(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));
+	}
+	
+	@Test
+	public void reportarCantidadBusquedas(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		dispositivoTactil.ReportarBusquedas();		
+	}
+	
+	@Test
+	public void reportePorTerminal(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		repo.reportePorTerminal();
+	}
+	
+	@Test
+	public void reporteParcialesporTerminal(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		repo.reportarParcialesTerminal("terminalAbasto");
+	}
 }

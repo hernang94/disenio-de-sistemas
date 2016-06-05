@@ -1,0 +1,3 @@
+Usuario		Cantidad Resultados Totales
+
+terminalAbasto		1
