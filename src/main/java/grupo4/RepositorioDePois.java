@@ -14,16 +14,13 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-public class RepositorioDePois {
-	private long tiempoEstipulado;
+public class RepositorioDePois implements Busqueda {
 	private String nombre;
 	private List<Poi> listaDePois = new ArrayList<>();
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
-	private List<ResultadosDeBusquedas> listaDeResultados = new ArrayList<>();
 
-	public RepositorioDePois(String unNombre,long tiemp) {
+	public RepositorioDePois(String unNombre) {
 		this.nombre = unNombre;
-		this.tiempoEstipulado=tiemp;
 	}
 
 	public String getNombre() {
@@ -64,39 +61,12 @@ public class RepositorioDePois {
 	}
 
 	public List<Poi> busquedaLibre(String criterio) {
-		LocalDateTime tiempoinicio = LocalDateTime.now();
 		List<Poi> listaAux = new ArrayList<>();
 		listaAux = filtrarPorCriterio(criterio);
 		listaDePois.addAll(listaAux);
-		LocalDateTime tiempofin = LocalDateTime.now();
-		long diferencia = calcularDiferenciaYNotificar(tiempoinicio, tiempofin);
-		cargarResultados(diferencia, criterio, tiempoinicio, listaAux.size());
 		return listaAux;
 	}
-
-	private void cargarResultados(long tiempoDeBusqueda, String fraseBuscada, LocalDateTime fechaDeBusqueda,
-			int cantidadDeResultados) {
-		ResultadosDeBusquedas resultado = new ResultadosDeBusquedas(tiempoDeBusqueda, fraseBuscada, fechaDeBusqueda,
-				cantidadDeResultados);
-		listaDeResultados.add(resultado);
-
-	}
-
-	public long calcularDiferenciaYNotificar(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
-		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);
-		if (diferencia > tiempoEstipulado) {
-			notificarAlAdministrador();
-		}
-		return diferencia;
-	}
-
-	public String notificarAlAdministrador() {
-		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(outContent));
-		System.out.print("Mail enviado al adminisitrador");
-		return outContent.toString();
-	}
-
+	
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
 		poiAux = obtenerSegunCriterio(criterio);
@@ -138,20 +108,6 @@ public class RepositorioDePois {
 		return listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).findFirst().get();
 	}
 	
-	public void ReportarBusquedas(){
-	PrintWriter writer=crearArchivo();
-	writer.println("Fecha\t\tCantidad Búsquedas");
-	listaDeResultados.stream().forEach(resultado->imprimirResultado(resultado,writer));
-	writer.close();
-	}
-
-	private void imprimirResultado(ResultadosDeBusquedas resultado,PrintWriter writer) {
-		writer.println(""+fechaFormateada(resultado.getFechaDeBusqueda())+"\t\t"+resultado.getCantidadDeResultados());
-	}
-	private String fechaFormateada(LocalDateTime fecha){
-		return fecha.getDayOfMonth()+"/"+fecha.getMonthValue()+"/"+fecha.getYear();
-	}
-	
 	public int cantidadTotalDeResultados(){
 		return listaDeResultados.stream().mapToInt(resultado->resultado.getCantidadDeResultados()).sum();
 	}
@@ -175,6 +131,10 @@ public class RepositorioDePois {
 			e.printStackTrace();
 		}
 		return writer;
+	}
+	
+	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
+		return 0;
 	}
 	
 }

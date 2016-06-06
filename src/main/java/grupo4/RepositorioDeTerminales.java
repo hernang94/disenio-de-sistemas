@@ -6,10 +6,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositorioDeTerminales {
+public class RepositorioDeTerminales{
 
-	private List<RepositorioDePois> listaDeTerminales= new ArrayList<>();
+	private List<RepositorioDePois> listaDeTerminales;
 	
+	public RepositorioDeTerminales(List<RepositorioDePois> listaDeTerminales) {
+		this.listaDeTerminales = listaDeTerminales;
+	}
+
 	public void agregarTerminal(RepositorioDePois unTerminal){
 		this.listaDeTerminales.add(unTerminal);
 	}
@@ -44,8 +48,3 @@ public class RepositorioDeTerminales {
 		return writer;
 	}
 }
-
-/*PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8"); 
-writer.println("The first line"); 
-writer.println("The second line"); 
-writer.close();*/
