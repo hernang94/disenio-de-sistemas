@@ -8,13 +8,13 @@ import java.util.List;
 
 public class RepositorioDeTerminales{
 
-	private List<RepositorioDePois> listaDeTerminales;
+	private List<DecoratorBusquedas> listaDeTerminales;
 	
-	public RepositorioDeTerminales(List<RepositorioDePois> listaDeTerminales) {
+	public RepositorioDeTerminales(List<DecoratorBusquedas> listaDeTerminales) {
 		this.listaDeTerminales = listaDeTerminales;
 	}
 
-	public void agregarTerminal(RepositorioDePois unTerminal){
+	public void agregarTerminal(DecoratorBusquedas unTerminal){
 		this.listaDeTerminales.add(unTerminal);
 	}
 	
@@ -25,12 +25,12 @@ public class RepositorioDeTerminales{
 		writer.close();
 	}
 
-	private void reportarTotales(RepositorioDePois terminal,PrintWriter writer) {
+	private void reportarTotales(DecoratorBusquedas terminal,PrintWriter writer) {
 		writer.println(terminal.getNombre()+"\t\t"+terminal.cantidadTotalDeResultados());
 	}
 	public void reportarParcialesTerminal(String nombreTerminal){
 		PrintWriter writer=crearArchivo("ReportarParcialesTerminal");
-		RepositorioDePois terminalAux=listaDeTerminales.stream().filter(terminal->terminal.getNombre().equalsIgnoreCase(nombreTerminal)).findFirst().get();
+		DecoratorBusquedas terminalAux=listaDeTerminales.stream().filter(terminal->terminal.getNombre().equalsIgnoreCase(nombreTerminal)).findFirst().get();
 		writer.println("Usuario: "+terminalAux.getNombre()+"\n");
 		terminalAux.ReportarBusquedasPorTipo(writer);
 		writer.close();

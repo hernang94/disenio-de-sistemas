@@ -108,33 +108,4 @@ public class RepositorioDePois implements Busqueda {
 		return listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).findFirst().get();
 	}
 	
-	public int cantidadTotalDeResultados(){
-		return listaDeResultados.stream().mapToInt(resultado->resultado.getCantidadDeResultados()).sum();
-	}
-
-	public void ReportarBusquedasPorTipo(PrintWriter writer) {
-		writer.println("Cantidad Busquedas Parciales");
-		listaDeResultados.stream().forEach(resultado->reportarCantidad(resultado,writer));
-	}
-
-	private void reportarCantidad(ResultadosDeBusquedas resultado,PrintWriter writer) {
-		writer.println(resultado.getCantidadDeResultados());
-	}
-	
-	private PrintWriter crearArchivo(){
-		PrintWriter writer = null;
-		try {
-			writer = new PrintWriter("ReporteBusquedas.txt", "UTF-8");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return writer;
-	}
-	
-	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
-		return 0;
-	}
-	
 }
