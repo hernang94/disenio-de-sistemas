@@ -18,9 +18,13 @@ public class RepositorioDePois implements Busqueda {
 	private String nombre;
 	private List<Poi> listaDePois = new ArrayList<>();
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
+	private List<Observers> listaObservers = new ArrayList<>();
+	long tiempoEstipulado;
+	
 
-	public RepositorioDePois(String unNombre) {
+	public RepositorioDePois(String unNombre, long tiempoEstipulado) {
 		this.nombre = unNombre;
+		this.tiempoEstipulado= tiempoEstipulado;
 	}
 
 	public String getNombre() {
@@ -62,11 +66,24 @@ public class RepositorioDePois implements Busqueda {
 
 	public List<Poi> busquedaLibre(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();
+		long diferencia;
+		LocalDateTime tiempoInicio = LocalDateTime.now();
 		listaAux = filtrarPorCriterio(criterio);
+		LocalDateTime tiempoFin = LocalDateTime.now();
+		diferencia=calcularDiferencia(tiempoInicio, tiempoFin);
+		if(diferencia>tiempoEstipulado){
+			listaObservers.stream().forEach(observer->observer.notificar());
+		}
+		int cantBuscada= listaAux.size();
+		listaObservers.stream().forEach(observer->observer.agregarBusqueda(diferencia,criterio,tiempoInicio,cantBuscada));
 		listaDePois.addAll(listaAux);
 		return listaAux;
 	}
 	
+	public void obtenerReporteTotalPorFecha(){
+		listaObservers.stream().forEach(unObserver->unObserver.reporteTotalPorFecha());
+	}
+
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
 		poiAux = obtenerSegunCriterio(criterio);
@@ -106,6 +123,11 @@ public class RepositorioDePois implements Busqueda {
 
 	public Poi obtenerSegunCriterio(String criterio) {
 		return listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).findFirst().get();
+	}
+	
+	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
+		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);
+		return diferencia;
 	}
 	
 }

@@ -20,18 +20,13 @@ public class DecoratorNotificacion extends Decorator{
 		List<Poi> listaAux=new ArrayList<>();
 		long diferencia;
 		LocalDateTime tiempoinicio = LocalDateTime.now();
-		listaAux=decorado.busquedaLibre(criterio);
 		LocalDateTime tiempofin = LocalDateTime.now();
 		diferencia=calcularDiferencia(tiempoinicio, tiempofin);
 		if(diferencia>tiempoEstipulado){
 			notificarAlAdministrador();
 		}
+		listaAux=decorado.busquedaLibre(criterio);
 		return listaAux;
-	}
-
-	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
-		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);
-		return diferencia;
 	}
 	
 	public String notificarAlAdministrador() {
