@@ -1,16 +1,17 @@
 package grupo4;
 
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 public interface Observers {
 
-	public void notificar();
+	public void notificar(PrintWriter writer);
 
 	public void agregarBusqueda(long diferencia, String criterio, LocalDateTime tiempoInicio, int size);
 
-	public void reporteTotalPorFecha();
+	public void reporteTotalPorFecha(PrintWriter writer);
 	
-	public void reporteParcial();
+	public void reporteParcial(PrintWriter writer);
 	
-	public void reporteTotal();
+	public void reporteTotal(PrintWriter writer);
 }

@@ -20,17 +20,26 @@ public class RepositorioDePois implements Busqueda {
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
 	private List<Observers> listaObservers = new ArrayList<>();
 	long tiempoEstipulado;
-	
+	PrintWriter writer;
 
-	public RepositorioDePois(String unNombre, long tiempoEstipulado) {
+	public RepositorioDePois(String unNombre, long tiempoEstipulado, PrintWriter writer) {
 		this.nombre = unNombre;
 		this.tiempoEstipulado= tiempoEstipulado;
+		this.writer=writer;
 	}
 
 	public String getNombre() {
 		return nombre;
 	}
 
+	public void agregarObserver(Observers unObserver){
+		listaObservers.add(unObserver);
+	}
+	
+	public void quitarObserver (Observers unObserver){
+		listaObservers.remove(unObserver);
+	}
+	
 	public void agregarAdaptador(Adaptadores adaptador) {
 		listaAdaptadores.add(adaptador);
 	}
@@ -72,7 +81,7 @@ public class RepositorioDePois implements Busqueda {
 		LocalDateTime tiempoFin = LocalDateTime.now();
 		diferencia=calcularDiferencia(tiempoInicio, tiempoFin);
 		if(diferencia>tiempoEstipulado){
-			listaObservers.stream().forEach(observer->observer.notificar());
+			listaObservers.stream().forEach(observer->observer.notificar(writer));
 		}
 		int cantBuscada= listaAux.size();
 		listaObservers.stream().forEach(observer->observer.agregarBusqueda(diferencia,criterio,tiempoInicio,cantBuscada));
@@ -81,7 +90,7 @@ public class RepositorioDePois implements Busqueda {
 	}
 	
 	public void obtenerReporteTotalPorFecha(){
-		listaObservers.stream().forEach(unObserver->unObserver.reporteTotalPorFecha());
+		listaObservers.stream().forEach(unObserver->unObserver.reporteTotalPorFecha(writer));
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
@@ -129,11 +138,11 @@ public class RepositorioDePois implements Busqueda {
 		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);
 		return diferencia;
 	}
-	public void reporteParcial(){
-		listaObservers.stream().forEach(observer->observer.reporteParcial());
+	public void reporteParcial(PrintWriter writer){
+		listaObservers.stream().forEach(observer->observer.reporteParcial(writer));
 	}
-	public void reporteTotal(){
-		listaObservers.stream().forEach(observer->observer.reporteTotal());
+	public void reporteTotal(PrintWriter writer){
+		listaObservers.stream().forEach(observer->observer.reporteTotal(writer));
 	}
 	
 }

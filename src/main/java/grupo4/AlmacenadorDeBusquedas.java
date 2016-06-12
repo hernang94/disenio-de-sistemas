@@ -1,5 +1,6 @@
 package grupo4;
 
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class AlmacenadorDeBusquedas implements Observers {
 		this.almacen = almacen;
 	}
 
-	public void notificar(){
+	public void notificar(PrintWriter writer){
 		
 	}
 
@@ -20,13 +21,13 @@ public class AlmacenadorDeBusquedas implements Observers {
 		almacen.agregarBusqueda(newResult);
 	}
 
-	public void reporteTotalPorFecha(){
+	public void reporteTotalPorFecha(PrintWriter writer){
 		
 	}
-	public void reporteParcial(){
+	public void reporteParcial(PrintWriter writer){
 		
 	}
-	public void reporteTotal(){
+	public void reporteTotal(PrintWriter writer){
 	
 	}
 }

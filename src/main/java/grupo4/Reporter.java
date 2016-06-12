@@ -1,5 +1,6 @@
 package grupo4;
 
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,12 +9,11 @@ import java.util.stream.Collectors;
 
 public class Reporter implements Observers{
 	RepositorioDeBusquedas almacen;
-	
-	public Reporter(RepositorioDeBusquedas almacen) {
+	public Reporter(RepositorioDeBusquedas almacen, PrintWriter writer) {
 		this.almacen = almacen;
 	}
 
-	public void notificar(){
+	public void notificar(PrintWriter writer){
 		
 	}
 
@@ -21,27 +21,27 @@ public class Reporter implements Observers{
 		
 	}
 
-	public void reporteTotalPorFecha(){
-		System.out.println("Fecha\t\tCantidad Total");
+	public void reporteTotalPorFecha(PrintWriter writer){
+		writer.println("Fecha\t\tCantidad Total");
 		List<ResultadosDeBusquedas>listaResulAux=almacen.getlistaBusquedas();
 		Set<LocalDate>listaFechasAux=almacen.getlistaFechas();
-		listaFechasAux.stream().forEach(fecha->imprimirReporteFecha(fecha,listaResulAux));
+		listaFechasAux.stream().forEach(fecha->imprimirReporteFecha(fecha,listaResulAux,writer));
 	}
 
-	private void imprimirReporteFecha(LocalDate fecha,List<ResultadosDeBusquedas>listaResulAux) {
+	private void imprimirReporteFecha(LocalDate fecha,List<ResultadosDeBusquedas>listaResulAux,PrintWriter writer) {
 		List<ResultadosDeBusquedas>auxiliar=listaResulAux.stream().filter(resultado->resultado.getFechaDeBusqueda().toLocalDate().equals(fecha)).collect(Collectors.toList());
 		int cantidadTotal=auxiliar.stream().mapToInt(resultado->resultado.getCantidadDeResultados()).sum();
-		System.out.println(fecha.toString()+"     \t\t"+cantidadTotal);
+		writer.println(fecha.toString()+"     \t\t"+cantidadTotal);
 	}
-	public void reporteParcial(){
-		System.out.println("Cantidad Resultados Parciales");
+	public void reporteParcial(PrintWriter writer){
+		writer.println("Cantidad Resultados Parciales");
 		List<ResultadosDeBusquedas>listaResulAux=almacen.getlistaBusquedas();
-		listaResulAux.stream().forEach(resultado->System.out.println(resultado.getCantidadDeResultados()));
+		listaResulAux.stream().forEach(resultado->writer.println(resultado.getCantidadDeResultados()));
 	}
-	public void reporteTotal(){
+	public void reporteTotal(PrintWriter writer){
 		List<ResultadosDeBusquedas>listaResulAux=almacen.getlistaBusquedas();
 		int cantidadTotal=listaResulAux.stream().mapToInt(resultado->resultado.getCantidadDeResultados()).sum();
-		System.out.print(cantidadTotal);
+		writer.print(cantidadTotal);
 	}
 
 }

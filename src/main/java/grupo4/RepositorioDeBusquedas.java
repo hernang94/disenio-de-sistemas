@@ -2,6 +2,7 @@ package grupo4;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ public class RepositorioDeBusquedas {
 	
 	public RepositorioDeBusquedas() {
 		listaBusquedas = new ArrayList<>();
+		listafechas= new HashSet<>();
 	}
 
 	public void agregarBusqueda(ResultadosDeBusquedas newResult) {

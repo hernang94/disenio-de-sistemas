@@ -1,11 +1,18 @@
 package grupo4;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioDeTerminales {
-	private List<RepositorioDePois> listaDeTerminales=new ArrayList<>();
+	private List<RepositorioDePois> listaDeTerminales;
+	PrintWriter writer;
 	
+	public RepositorioDeTerminales(PrintWriter writer) {
+		super();
+		listaDeTerminales=new ArrayList<>();
+		this.writer = writer;
+	}
 	public void agregarTerminal(RepositorioDePois unTerminal){
 		listaDeTerminales.add(unTerminal);
 	}
@@ -13,15 +20,15 @@ public class RepositorioDeTerminales {
 		listaDeTerminales.stream().forEach(terminal->reportarFormateado(terminal));
 	}
 	private void reportarFormateado(RepositorioDePois terminal) {
-		System.out.println("Usuario: "+terminal.getNombre());
-		terminal.reporteParcial();
+		writer.println("Usuario: "+terminal.getNombre());
+		terminal.reporteParcial(writer);
 	}
 	public void reporteTotalporTerminal(){
-		System.out.println("Usuario\t\tCantidad Resultados Totales");
+		writer.println("Usuario\t\tCantidad Resultados Totales");
 		listaDeTerminales.stream().forEach(terminal->reportarTotalFormateado(terminal));
 	}
 	private void reportarTotalFormateado(RepositorioDePois terminal) {
-		System.out.println(terminal.getNombre()+"\t\t");
-		terminal.reporteTotal();
+		writer.println(terminal.getNombre()+"\t\t");
+		terminal.reporteTotal(writer);
 	}
 }

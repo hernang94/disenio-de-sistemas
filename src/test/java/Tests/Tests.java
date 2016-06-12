@@ -3,6 +3,7 @@ package Tests;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ import org.uqbar.geodds.Polygon;
 import externo.CentroDTO;
 import externo.RangoServicioDTO;
 import externo.ServicioDTO;
-
+import grupo4.AlmacenadorDeBusquedas;
 import grupo4.Banco;
 import grupo4.BancoTransformer;
 import grupo4.CGP;
@@ -29,12 +30,15 @@ import grupo4.ComponenteBanco;
 import grupo4.ComponenteCGPS;
 import grupo4.Horario;
 import grupo4.LocalComercial;
+import grupo4.Notificador;
 import grupo4.Parada;
 import grupo4.Poi;
+import grupo4.Reporter;
+import grupo4.RepositorioDeBusquedas;
 import grupo4.Rubro;
 import grupo4.Servicio;
 import grupo4.RepositorioDePois;
-import grupo4.RepositorioDeTerminalesOld;
+import grupo4.RepositorioDeTerminales;
 
 public class Tests {
 	private List<CentroDTO> listaCentroAAdaptar;
@@ -61,19 +65,29 @@ public class Tests {
 	private Map<Integer,Horario> hashMapLocalComercialManiana;
 	private Map<Integer,Horario> hashMapLocalComercialTarde;
 	private Map<Integer,Horario> hashMapServicio; 
-	private RepositorioDeTerminalesOld repo;
+	private RepositorioDeTerminales repo;
+	private PrintWriter writer;
+	private Notificador notificador;
+	private Reporter reporter;
+	private AlmacenadorDeBusquedas almacenador;
+	private RepositorioDeBusquedas almacen;
 	@SuppressWarnings("static-access")
 	
 	@Before
 	public void init() {
-		listaCentroAAdaptar=new ArrayList<>();
+		almacen= new RepositorioDeBusquedas();
+		notificador=new Notificador();
+		reporter=new Reporter(almacen,writer);
+		almacenador= new AlmacenadorDeBusquedas(almacen);
 		
+		listaCentroAAdaptar=new ArrayList<>();
 		
 		rangoPrueba= new RangoServicioDTO(1,9,0,18,0);
 		
 		servicioPrueba=new ServicioDTO("Prueba");
 		servicioPrueba.agregarRango(rangoPrueba);
 		
+		writer=Mockito.mock(PrintWriter.class);
 		
 		centroPrueba= new CentroDTO(9, "Mataderos,Parque Avellaneda", "Mauro Corvaro", "Calle Falsa 123", "4597-9684");
 		centroPrueba.agregarServicio(servicioPrueba);
@@ -89,10 +103,12 @@ public class Tests {
 		optimus.setComponente(componenteBanco);
 		
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
-		dispositivoTactil = new RepositorioDePois("terminalAbasto",0);
+		dispositivoTactil = new RepositorioDePois("terminalAbasto",-1,writer);
 		dispositivoTactil.agregarAdaptador(adaptador);
 		dispositivoTactil.agregarAdaptador(optimus);
-		
+		dispositivoTactil.agregarObserver(notificador);
+		dispositivoTactil.agregarObserver(reporter);
+		dispositivoTactil.agregarObserver(almacenador);	
 		horarioBanco= new Horario("10:00", "15:00");
 		
 		fechaAux= LocalDateTime.now();
@@ -153,7 +169,7 @@ public class Tests {
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
 		
-		repo=new RepositorioDeTerminalesOld();
+		repo=new RepositorioDeTerminales(writer);
 		repo.agregarTerminal(dispositivoTactil);
 	}
 	
@@ -277,29 +293,33 @@ public class Tests {
 	
 	@Test
 	public void notificadorArministrador(){
-		Assert.assertEquals("Mail enviado al adminisitrador", dispositivoTactil.notificarAlAdministrador());
+		dispositivoTactil.busquedaLibre("HSBC");
+		Mockito.verify(writer).println("Mail enviado al adminisitrador");
 	}
 	
 	@Test
 	public void calcularDiferencia(){
-		Assert.assertEquals(10, dispositivoTactil.calcularDiferenciaYNotificar(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));
+		Assert.assertEquals(10, dispositivoTactil.calcularDiferencia(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));
 	}
 	
 	@Test
 	public void reportarCantidadBusquedas(){
 		dispositivoTactil.busquedaLibre("muebleria");
-		dispositivoTactil.ReportarBusquedas();		
+		dispositivoTactil.obtenerReporteTotalPorFecha();
+		Mockito.verify(writer).println("Fecha\t\tCantidad Total");	
 	}
 	
 	@Test
 	public void reportePorTerminal(){
 		dispositivoTactil.busquedaLibre("muebleria");
-		repo.reportePorTerminal();
+		repo.reporteTotalporTerminal();
+		Mockito.verify(writer).println("Usuario\t\tCantidad Resultados Totales");
 	}
 	
 	@Test
 	public void reporteParcialesporTerminal(){
 		dispositivoTactil.busquedaLibre("muebleria");
-		repo.reportarParcialesTerminal("terminalAbasto");
+		repo.reporteParcialporTerminal();
+		Mockito.verify(writer).println("Usuario: terminalAbasto");
 	}
 }
