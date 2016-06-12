@@ -34,7 +34,7 @@ import grupo4.Poi;
 import grupo4.Rubro;
 import grupo4.Servicio;
 import grupo4.RepositorioDePois;
-import grupo4.RepositorioDeTerminales;
+import grupo4.RepositorioDeTerminalesOld;
 
 public class Tests {
 	private List<CentroDTO> listaCentroAAdaptar;
@@ -61,7 +61,7 @@ public class Tests {
 	private Map<Integer,Horario> hashMapLocalComercialManiana;
 	private Map<Integer,Horario> hashMapLocalComercialTarde;
 	private Map<Integer,Horario> hashMapServicio; 
-	private RepositorioDeTerminales repo;
+	private RepositorioDeTerminalesOld repo;
 	@SuppressWarnings("static-access")
 	
 	@Before
@@ -153,7 +153,7 @@ public class Tests {
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
 		
-		repo=new RepositorioDeTerminales();
+		repo=new RepositorioDeTerminalesOld();
 		repo.agregarTerminal(dispositivoTactil);
 	}
 	

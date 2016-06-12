@@ -9,5 +9,8 @@ public interface Observers {
 	public void agregarBusqueda(long diferencia, String criterio, LocalDateTime tiempoInicio, int size);
 
 	public void reporteTotalPorFecha();
-
+	
+	public void reporteParcial();
+	
+	public void reporteTotal();
 }

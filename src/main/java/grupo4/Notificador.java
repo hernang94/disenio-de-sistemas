@@ -19,5 +19,10 @@ public class Notificador implements Observers{
 	public void reporteTotalPorFecha(){
 		
 	}
-
+	public void reporteParcial(){
+		
+	}
+	public void reporteTotal(){
+		
+	}
 }

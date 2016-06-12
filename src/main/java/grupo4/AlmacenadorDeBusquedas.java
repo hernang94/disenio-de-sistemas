@@ -23,5 +23,10 @@ public class AlmacenadorDeBusquedas implements Observers {
 	public void reporteTotalPorFecha(){
 		
 	}
+	public void reporteParcial(){
+		
+	}
+	public void reporteTotal(){
 	
+	}
 }

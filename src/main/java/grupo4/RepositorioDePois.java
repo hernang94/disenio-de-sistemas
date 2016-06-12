@@ -129,5 +129,11 @@ public class RepositorioDePois implements Busqueda {
 		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);
 		return diferencia;
 	}
+	public void reporteParcial(){
+		listaObservers.stream().forEach(observer->observer.reporteParcial());
+	}
+	public void reporteTotal(){
+		listaObservers.stream().forEach(observer->observer.reporteTotal());
+	}
 	
 }
