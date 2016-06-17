@@ -1,6 +1,9 @@
 package Tests;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,8 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,6 +40,7 @@ import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
 import grupo4.POIs.LocalComercial;
 import grupo4.POIs.Parada;
+import grupo4.POIs.Poi;
 import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Repositorios.RepositorioDeBusquedas;
@@ -72,7 +80,7 @@ public class SegundaEntregaTests {
 	private List<String> palabrasClavesCGP;
 	private List<String> palabrasClavesParada;
 	private List<String> palabrasClavesLocalComercial;
-	private CloseableHttpClient cliente;
+	private HttpClient cliente;
 	private HttpGet get;
 	@SuppressWarnings("static-access")
 	
@@ -206,7 +214,7 @@ public class SegundaEntregaTests {
 		repo=new RepositorioDeTerminales(writer);
 		repo.agregarTerminal(dispositivoTactil);
 		
-		cliente= HttpClients.createDefault();
+		cliente = new DefaultHttpClient();
 		get= new HttpGet("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
 		
 	}
@@ -215,7 +223,7 @@ public class SegundaEntregaTests {
 	public void busquedaExterna(){
 		dispositivoTactil.busquedaLibre("HSBC");
 		Mockito.verify(componente).buscarCGPs("HSBC");
-		Mockito.verify(componenteBanco).getJsonBanco("HSBC");
+		//Mockito.verify(componenteBanco).getJsonBanco("HSBC");
 	}
 	
 	@Test
@@ -223,16 +231,42 @@ public class SegundaEntregaTests {
 		Assert.assertTrue(adaptador.adaptarObjetos(listaCentroAAdaptar).get(0).getNombre().equalsIgnoreCase("9"));
 	}
 	
-	/*@Test
+	
+	@Test
 	public void pruebaConvertirJson(){
 		List<Poi>listAux=new ArrayList<>();
-		CloseableHttpResponse request= cliente.execute(get);
+		HttpResponse response = null;
 		try {
-			listAux=optimus.convertirJson(request);
+			response = cliente.execute(get);
+		} catch (ClientProtocolException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		finally{
-			request.close();
+
+    	BufferedReader rd = null;
+		try {
+			rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+		} catch (UnsupportedOperationException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-	}*/
+
+    	StringBuffer result = new StringBuffer();
+    	String line = "";
+    	try {
+			while ((line = rd.readLine()) != null) {
+			    result.append(line);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	listAux.addAll(optimus.convertirJson(result.toString()));
+    	Assert.assertEquals("Banco de la Plaza", listAux.get(0).getNombre());
+	}
 }
 	

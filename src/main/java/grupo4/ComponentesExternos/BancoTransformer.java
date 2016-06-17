@@ -1,13 +1,23 @@
 package grupo4.ComponentesExternos;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import DTOexterno.BancoExterno;
 import grupo4.POIs.Banco;
+import grupo4.POIs.Horario;
 import grupo4.POIs.Poi;
+import grupo4.POIs.Servicio;
 
 public class BancoTransformer implements Adaptadores{
 	private ComponenteBanco componente;
@@ -17,25 +27,41 @@ public class BancoTransformer implements Adaptadores{
 		this.objectMapper = new ObjectMapper();
 	}
 	
-	public ObjectMapper getObjectMapper() {
-		return objectMapper;
-	}
 	
-	public <T> T desdeJson(String json, Class<T> typeReference) {
+	public List<Poi> convertirJson(String jsons){
+		List<BancoExterno>listaParaAdaptar=new ArrayList<>();
 		try {
-			return this.objectMapper.readValue(json, typeReference);
+			listaParaAdaptar= objectMapper.readValue(jsons, TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BancoExterno.class));
 		} catch (IOException e) {
-
-			throw new RuntimeException("Error reading a json", e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		catch(NullPointerException e){
+			e.printStackTrace();
+		}
+		return adaptarListaBancosExternos(listaParaAdaptar);
 	}
 	
-	public List<Poi> convertirJson(List<String> jsons){
-		return jsons.stream().map(json->desdeJson(json, Banco.class)).collect(Collectors.toList());
+	private List<Poi> adaptarListaBancosExternos(List<BancoExterno> listaParaAdaptar) {
+		List<Poi>listaDeBancos=new ArrayList<>();
+		listaDeBancos=listaParaAdaptar.stream().map(banco->adaptarBanco(banco)).collect(Collectors.toList());
+		return listaDeBancos;
 	}
-	
+
+	private Poi adaptarBanco(BancoExterno bancoExterno) {
+		FactoryHorarioBanco horarioBanco=new FactoryHorarioBanco();
+		List<String> palabrasClavesBanco=new ArrayList<>();
+		Banco banco=new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);
+		banco.setX(bancoExterno.getX());
+		banco.setY(bancoExterno.getY());
+		List<Servicio>listaDeServicios=bancoExterno.getServicios().stream().map(nombre->new Servicio(nombre, horarioBanco.dameHorarioBanco())).collect(Collectors.toList());
+		banco.setCoordenadas();
+		banco.setListaServicios(listaDeServicios);
+		return banco;
+	}
+
 	public List<Poi>buscarPois(String criterio){
-		List<String>jsons= componente.getJsonBanco(criterio);
+		String jsons= componente.getJsonBanco(criterio);
 		return convertirJson(jsons);
 	}
 
