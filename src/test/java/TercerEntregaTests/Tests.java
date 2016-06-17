@@ -1,8 +1,6 @@
-package Tests;
+package TercerEntregaTests;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +29,6 @@ import grupo4.Horario;
 import grupo4.LocalComercial;
 import grupo4.Notificador;
 import grupo4.Parada;
-import grupo4.Poi;
 import grupo4.Reporter;
 import grupo4.RepositorioDeBusquedas;
 import grupo4.Rubro;
@@ -44,7 +40,6 @@ public class Tests {
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
-	private Servicio pagoFacil;
 	private Servicio timbrado;
 	private CentroDTO centroPrueba;
 	private ServicioDTO servicioPrueba;
@@ -53,7 +48,6 @@ public class Tests {
 	private Banco banco2;
 	private CGP cgp;
 	private LocalComercial local;
-	private Point unPuntoABuscar;
 	private Rubro rubro;
 	private ComponenteCGPS componente;
 	private CGPAdapter adaptador;
@@ -102,7 +96,6 @@ public class Tests {
 		optimus = new BancoTransformer();
 		optimus.setComponente(componenteBanco);
 		
-		unPuntoABuscar = new Point(-34.638116, -58.4794967);
 		dispositivoTactil = new RepositorioDePois("terminalAbasto",-1,writer);
 		dispositivoTactil.agregarAdaptador(adaptador);
 		dispositivoTactil.agregarAdaptador(optimus);
@@ -173,123 +166,6 @@ public class Tests {
 		repo.agregarTerminal(dispositivoTactil);
 	}
 	
-	@Test
-	public void cercaniaAParada() {
-		Assert.assertFalse(dispositivoTactil.consultaCercania("114",unPuntoABuscar));
-	}
-
-	@Test
-	public void cercaniaABanco() {
-		Assert.assertTrue(dispositivoTactil.consultaCercania("santander rio",unPuntoABuscar));
-	}
-
-	@Test
-	public void cercaniaACGP() {
-		Assert.assertTrue(dispositivoTactil.consultaCercania("CGP10",unPuntoABuscar));
-	}
-
-	@Test
-	public void cercaniaALocal() {
-		Assert.assertTrue(dispositivoTactil.consultaCercania("Blaisten",unPuntoABuscar));
-	}
-
-	@Test
-	public void estaDisponibleColectivo() {
-		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
-	}
-
-	@Test
-	public void estaDisponibleBanco() {
-		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
-	}
-
-	@Test
-	public void estaDisponibleCGP() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), timbrado));
-	}
-
-	@Test
-	public void estaDisponibleCGPSinServicio() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00)));
-	}
-
-	@Test
-	public void estaDisponibleLocal() {
-		boolean a = dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 17, 00), "Blaisten");
-		Assert.assertTrue(a);
-	}
-
-	@Test
-	public void pruebaHorario() {
-		Horario nuevo = new Horario("09:00", "18:00");
-		Assert.assertTrue(nuevo.estaEnHorario(LocalDateTime.of(2016, 04, 19, 17, 00)));
-	}
-
-	@Test
-	public void pruebaBusquedaLibrexRubro() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("muebleria"),"Blaisten"));
-	}
-
-	@Test
-	public void pruebaBusquedaLibrexLinea() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("114"),"114"));
-	}
-
-	@Test
-	public void pruebaBusquedaLibrexCGPxServicio() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("timbrado"),"CGP10"));
-	}
-
-	@Test
-	public void pruebaBusquedaLibrexBanco() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("santander rio"),"Santander rio"));
-	}
-
-	@Test
-	public void pruebaPoligono() {
-		Assert.assertTrue(cgp.estaCerca(new Point(-34.638116, -58.4794967)));
-	}
-	@Test
-	public void pruebaServicioNoDisponible(){
-		Assert.assertFalse(timbrado.estaDisponible(LocalDateTime.of(2016, 05, 8, 10, 00)));
-	}
-	@Test
-	public void pruebaBusquedaDeServicioCuandoNoTiene(){
-		Assert.assertFalse(banco.estaDisponible(LocalDateTime.of(2016, 04, 19, 11, 00), pagoFacil));
-	}
-	@Test
-	public void consultarCercaniaABanco(){
-		Assert.assertFalse(banco.estaCerca(new Point(-40.638116, -58.4794967)));
-	}
-	@Test
-	public void bancoNoDisponible(){
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 05, 8, 11, 00), "santander rio"));
-			
-	}
-	@Test
-	public void paradaCerca(){
-		Assert.assertTrue(parada114.estaCerca(new Point(-34.6417164, -58.4792636)));		
-	}
-	public boolean coincideCon(List<Poi> listaEncontrada, String criterio)
-	{
-		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(criterio));
-	}
-	public boolean coincideCon(List<Poi> listaEncontrada, Servicio servicio)
-	{
-		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(servicio.getNombre()));
-	}
-			
-	@Test
-	public void busquedaExterna(){
-		dispositivoTactil.busquedaLibre("HSBC");
-		Mockito.verify(componente).buscarCGPs("HSBC");
-		Mockito.verify(componenteBanco).getJsonBanco("HSBC");
-	}
-	
-	@Test
-	public void pruebaAdaptador(){
-		Assert.assertTrue(adaptador.adaptarObjetos(listaCentroAAdaptar).get(0).getNombre().equalsIgnoreCase("9"));
-	}
 	
 	@Test
 	public void notificadorArministrador(){
