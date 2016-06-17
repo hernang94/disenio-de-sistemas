@@ -1,7 +1,6 @@
-package SegundaEntregaTests;
+package Tests;
 
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,13 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,14 +30,13 @@ import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
 import grupo4.POIs.LocalComercial;
 import grupo4.POIs.Parada;
-import grupo4.POIs.Poi;
 import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeTerminales;
 
-public class SegundaEntregaTests {
+public class TercerEntregaTests {
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
@@ -78,8 +69,6 @@ public class SegundaEntregaTests {
 	private List<String> palabrasClavesCGP;
 	private List<String> palabrasClavesParada;
 	private List<String> palabrasClavesLocalComercial;
-	private CloseableHttpClient cliente;
-	private HttpGet get;
 	@SuppressWarnings("static-access")
 	
 	@Before
@@ -211,34 +200,38 @@ public class SegundaEntregaTests {
 		
 		repo=new RepositorioDeTerminales(writer);
 		repo.agregarTerminal(dispositivoTactil);
-		
-		cliente= HttpClients.createDefault();
-		get= new HttpGet("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
-		
 	}
-			
+	
+	
 	@Test
-	public void busquedaExterna(){
+	public void notificadorArministrador(){
 		dispositivoTactil.busquedaLibre("HSBC");
-		Mockito.verify(componente).buscarCGPs("HSBC");
-		Mockito.verify(componenteBanco).getJsonBanco("HSBC");
+		Mockito.verify(writer).println("Mail enviado al adminisitrador");
 	}
 	
 	@Test
-	public void pruebaAdaptador(){
-		Assert.assertTrue(adaptador.adaptarObjetos(listaCentroAAdaptar).get(0).getNombre().equalsIgnoreCase("9"));
+	public void calcularDiferencia(){
+		Assert.assertEquals(10, dispositivoTactil.calcularDiferencia(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));
 	}
 	
-	/*@Test
-	public void pruebaConvertirJson(){
-		List<Poi>listAux=new ArrayList<>();
-		CloseableHttpResponse request= cliente.execute(get);
-		try {
-			listAux=optimus.convertirJson(request);
-		}
-		finally{
-			request.close();
-		}
-	}*/
-}
+	@Test
+	public void reportarCantidadBusquedas(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		dispositivoTactil.obtenerReporteTotalPorFecha();
+		Mockito.verify(writer).println("Fecha\t\tCantidad Total");	
+	}
 	
+	@Test
+	public void reportePorTerminal(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		repo.reporteTotalporTerminal();
+		Mockito.verify(writer).println("Usuario\t\tCantidad Resultados Totales");
+	}
+	
+	@Test
+	public void reporteParcialesporTerminal(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		repo.reporteParcialporTerminal();
+		Mockito.verify(writer).println("Usuario: terminalAbasto");
+	}
+}
