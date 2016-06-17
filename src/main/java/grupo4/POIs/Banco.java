@@ -1,4 +1,4 @@
-package grupo4;
+package grupo4.POIs;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ public class Banco extends Poi {
 	private Map<Integer,Horario> hashHorario;
 	private List<Servicio>listaServicios= new ArrayList<>();
 
-	public Banco(Map<Integer,Horario> horarios,String nombre) {
-		super(nombre);
+	public Banco(Map<Integer,Horario> horarios,String nombre, List<String> palabrasClaves) {
+		super(nombre,palabrasClaves);
 		this.hashHorario= horarios;
 	}
 	

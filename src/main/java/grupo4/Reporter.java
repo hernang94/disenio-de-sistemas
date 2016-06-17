@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import grupo4.Repositorios.RepositorioDeBusquedas;
+import grupo4.Repositorios.ResultadosDeBusquedas;
+
 public class Reporter implements Observers{
 	RepositorioDeBusquedas almacen;
 	public Reporter(RepositorioDeBusquedas almacen, PrintWriter writer) {

@@ -1,6 +1,8 @@
-package grupo4;
+package grupo4.POIs;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,8 @@ public class CGP extends Poi {
 	private List<Servicio> servicios = new ArrayList<>();
 	private Polygon comuna;
 
-	public CGP(Polygon comuna, String nombre) {
-		super(nombre);
+	public CGP(Polygon comuna, String nombre, List<String> palabrasClaves) {
+		super(nombre,palabrasClaves);
 		this.comuna = comuna;
 	}
 
@@ -32,9 +34,14 @@ public class CGP extends Poi {
 		return encontrarServicio(servicio).estaDisponible(fechaConsulta);
 	}
 
-	public boolean encuentraNombre(String criterio) {
-		return (criterio.equals(this.nombre)) || (servicios.stream()
-				.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase())));
+	public boolean cumpleCriterio(String criterio) {
+		try{
+			LocalDateTime aux= LocalDateTime.parse(criterio); 
+			return this.estaDisponible(aux);
+		}catch(DateTimeParseException exc){
+			return (criterio.equals(this.nombre)) || (servicios.stream()
+					.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase())));
+		}
 	}
 	
 	public Servicio encontrarServicio(Servicio servicio){

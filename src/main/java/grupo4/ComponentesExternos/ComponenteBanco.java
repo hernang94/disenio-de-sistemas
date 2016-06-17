@@ -1,4 +1,4 @@
-package grupo4;
+package grupo4.ComponentesExternos;
 
 import java.util.List;
 

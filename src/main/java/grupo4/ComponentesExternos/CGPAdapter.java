@@ -1,5 +1,6 @@
-package grupo4;
+package grupo4.ComponentesExternos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +9,13 @@ import java.util.stream.Collectors;
 import org.joda.time.LocalTime;
 import org.uqbar.geodds.Polygon;
 
-import externo.CentroDTO;
-import externo.RangoServicioDTO;
-import externo.ServicioDTO;
+import DTOexterno.CentroDTO;
+import DTOexterno.RangoServicioDTO;
+import DTOexterno.ServicioDTO;
+import grupo4.POIs.CGP;
+import grupo4.POIs.Horario;
+import grupo4.POIs.Poi;
+import grupo4.POIs.Servicio;
 
 public class CGPAdapter implements Adaptadores{
 
@@ -31,7 +36,8 @@ public class CGPAdapter implements Adaptadores{
 	private Poi adaptar(CentroDTO unCentro) {
 		Comunas comunaAux= new Comunas();
 		hashComunas= comunaAux.inicializarHashComunas();
-		CGP aux = new CGP(hashComunas.get(unCentro.getComuna()),Integer.toString(unCentro.getComuna()));
+		List<String> palabrasClavesAux= new ArrayList<>();
+		CGP aux = new CGP(hashComunas.get(unCentro.getComuna()),Integer.toString(unCentro.getComuna()),palabrasClavesAux);
 		unCentro.getServiciosDTO().stream().forEach(servicio -> aux.addServicio(adaptarServicio(servicio)));
 		return aux;
 

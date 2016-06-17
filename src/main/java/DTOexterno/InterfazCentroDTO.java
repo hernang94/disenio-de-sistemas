@@ -1,4 +1,4 @@
-package externo;
+package DTOexterno;
 
 import java.util.List;
 

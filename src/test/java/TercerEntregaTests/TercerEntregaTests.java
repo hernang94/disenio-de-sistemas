@@ -15,28 +15,28 @@ import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
-import externo.CentroDTO;
-import externo.RangoServicioDTO;
-import externo.ServicioDTO;
+import DTOexterno.CentroDTO;
+import DTOexterno.RangoServicioDTO;
+import DTOexterno.ServicioDTO;
 import grupo4.AlmacenadorDeBusquedas;
-import grupo4.Banco;
-import grupo4.BancoTransformer;
-import grupo4.CGP;
-import grupo4.CGPAdapter;
-import grupo4.ComponenteBanco;
-import grupo4.ComponenteCGPS;
-import grupo4.Horario;
-import grupo4.LocalComercial;
 import grupo4.Notificador;
-import grupo4.Parada;
 import grupo4.Reporter;
-import grupo4.RepositorioDeBusquedas;
-import grupo4.Rubro;
-import grupo4.Servicio;
-import grupo4.RepositorioDePois;
-import grupo4.RepositorioDeTerminales;
+import grupo4.ComponentesExternos.BancoTransformer;
+import grupo4.ComponentesExternos.CGPAdapter;
+import grupo4.ComponentesExternos.ComponenteBanco;
+import grupo4.ComponentesExternos.ComponenteCGPS;
+import grupo4.POIs.Banco;
+import grupo4.POIs.CGP;
+import grupo4.POIs.Horario;
+import grupo4.POIs.LocalComercial;
+import grupo4.POIs.Parada;
+import grupo4.POIs.Rubro;
+import grupo4.POIs.Servicio;
+import grupo4.Repositorios.RepositorioDeBusquedas;
+import grupo4.Repositorios.RepositorioDePois;
+import grupo4.Repositorios.RepositorioDeTerminales;
 
-public class Tests {
+public class TercerEntregaTests {
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
@@ -65,6 +65,10 @@ public class Tests {
 	private Reporter reporter;
 	private AlmacenadorDeBusquedas almacenador;
 	private RepositorioDeBusquedas almacen;
+	private List<String> palabrasClavesBanco;
+	private List<String> palabrasClavesCGP;
+	private List<String> palabrasClavesParada;
+	private List<String> palabrasClavesLocalComercial;
 	@SuppressWarnings("static-access")
 	
 	@Before
@@ -112,12 +116,28 @@ public class Tests {
 		hashMapBanco.put(fechaAux.getDayOfWeek().WEDNESDAY.getValue(), horarioBanco);
 		hashMapBanco.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), horarioBanco);
 		hashMapBanco.put(fechaAux.getDayOfWeek().FRIDAY.getValue(), horarioBanco);
-		banco= new Banco(hashMapBanco, "Santander Rio");
+		palabrasClavesBanco=new ArrayList<>();
+		palabrasClavesBanco.add("Santander");
+		palabrasClavesBanco.add("Rio");
+		palabrasClavesBanco.add("Fantino");
+		palabrasClavesBanco.add("Banco");
+		palabrasClavesBanco.add("Rojo");
+		palabrasClavesBanco.add("Prestamo");
+		palabrasClavesBanco.add("Cuenta corriente");
+		palabrasClavesBanco.add("Cajero");
+		banco= new Banco(hashMapBanco, "Santander Rio",palabrasClavesBanco);
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
 		banco.setCoordenadas();
 
-		parada114 = new Parada("114");
+		palabrasClavesParada=new ArrayList<>();
+		palabrasClavesParada.add("Bondi");
+		palabrasClavesParada.add("UTN");
+		palabrasClavesParada.add("Colectivo");
+		palabrasClavesParada.add("Rojo");
+		palabrasClavesParada.add("Vidrios polarizados");
+		palabrasClavesParada.add("114");
+		parada114 = new Parada("114",palabrasClavesParada);
 		parada114.setX(-34.6417364);
 		parada114.setY(-58.4792636);
 		parada114.setCoordenadas();
@@ -133,12 +153,19 @@ public class Tests {
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().MONDAY.getValue(), new Horario("14:00", "18:00"));
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), new Horario("14:00", "20:00"));
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("14:00", "19:00"));
-		local = new LocalComercial(rubro,hashMapLocalComercialManiana,hashMapLocalComercialTarde,"Blaisten");
+		palabrasClavesLocalComercial=new ArrayList<>();
+		palabrasClavesLocalComercial.add("Muebles");
+		palabrasClavesLocalComercial.add("Madera");
+		palabrasClavesLocalComercial.add("Remaches");
+		palabrasClavesLocalComercial.add("Carpintero");
+		palabrasClavesLocalComercial.add("Mesa");
+		palabrasClavesLocalComercial.add("Silla");
+		local = new LocalComercial(rubro,hashMapLocalComercialManiana,hashMapLocalComercialTarde,"Blaisten",palabrasClavesLocalComercial);
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
 		local.setCoordenadas();
 		
-		banco2 = new Banco (hashMapBanco,"Santander Rio");
+		banco2= new Banco(hashMapBanco, "Santander Rio",palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 		banco2.setCoordenadas();		
@@ -153,7 +180,16 @@ public class Tests {
 		comuna10.add(new Point(-34.6409182, -58.4758827));
 		comuna10.add(new Point(-34.6383056, -58.4814007));
 		timbrado = new Servicio("timbrado",hashMapServicio);
-		cgp = new CGP(comuna10,"CGP10");
+		palabrasClavesCGP=new ArrayList<>();
+		palabrasClavesCGP.add("10");
+		palabrasClavesCGP.add("Floresta");
+		palabrasClavesCGP.add("Monte Castro");
+		palabrasClavesCGP.add("Velez");
+		palabrasClavesCGP.add("Versalles");
+		palabrasClavesCGP.add("Villa Luro");
+		palabrasClavesCGP.add("Villa Real");
+		palabrasClavesCGP.add("All Boys");
+		cgp = new CGP(comuna10,"CGP10",palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
 		dispositivoTactil.agregarPoi(banco);

@@ -1,10 +1,13 @@
-package grupo4;
+package grupo4.ComponentesExternos;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import grupo4.POIs.Banco;
+import grupo4.POIs.Poi;
 
 public class BancoTransformer implements Adaptadores{
 	private ComponenteBanco componente;
@@ -27,9 +30,13 @@ public class BancoTransformer implements Adaptadores{
 		}
 	}
 	
+	public List<Poi> convertirJson(List<String> jsons){
+		return jsons.stream().map(json->desdeJson(json, Banco.class)).collect(Collectors.toList());
+	}
+	
 	public List<Poi>buscarPois(String criterio){
 		List<String>jsons= componente.getJsonBanco(criterio);
-		return jsons.stream().map(json->desdeJson(json, Banco.class)).collect(Collectors.toList());
+		return convertirJson(jsons);
 	}
 
 	public void setComponente(ComponenteBanco componenteBanco) {

@@ -1,6 +1,7 @@
-package grupo4;
+package grupo4.POIs;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 import org.uqbar.geodds.Point;
@@ -9,8 +10,8 @@ public class LocalComercial extends Poi {
 	private Rubro rubro;
 	private Map<Integer,Horario> hashManana;
 	private Map<Integer,Horario> hashTarde;
-	public LocalComercial(Rubro rubro,Map<Integer,Horario> horariosManiana, Map<Integer,Horario> horariosTarde,String nombre) {
-		super(nombre);
+	public LocalComercial(Rubro rubro,Map<Integer,Horario> horariosManiana, Map<Integer,Horario> horariosTarde,String nombre, List<String> palabrasClaves) {
+		super(nombre,palabrasClaves);
 		this.rubro = rubro;
 		this.hashManana=horariosManiana;
 		this.hashTarde=horariosTarde;
@@ -22,15 +23,17 @@ public class LocalComercial extends Poi {
 	}
 
 	public boolean encuentraNombre(String criterio) {
-		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.encuentraNombre(criterio));
+		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.cumpleCriterio(criterio));
 	}
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
 		int dia=horaConsulta.getDayOfWeek().getValue();
+		return evaluarDisponibilidad(dia,horaConsulta);
+	}
+
+	private boolean evaluarDisponibilidad(int dia, LocalDateTime horaConsulta) {
 		boolean criterio1 = (hashManana.get(dia).estaEnHorario(horaConsulta));
 		boolean criterio2 = (hashTarde.get(dia).estaEnHorario(horaConsulta));
-		boolean criterio3 = (hashManana.get(dia)!=null);
-		boolean criterio4 = (hashTarde.get(dia)!=null);
-		return criterio3&&criterio4&&(criterio1 || criterio2);
+		return (criterio1 || criterio2);
 	}
 }

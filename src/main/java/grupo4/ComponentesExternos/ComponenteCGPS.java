@@ -1,8 +1,8 @@
-package grupo4;
+package grupo4.ComponentesExternos;
 
 import java.util.List;
 
-import externo.CentroDTO;
+import DTOexterno.CentroDTO;
 
 public interface ComponenteCGPS{
 	public List<CentroDTO> buscarCGPs(String valor);

@@ -1,9 +1,17 @@
-package grupo4;
+package grupo4.Repositorios;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import org.hamcrest.core.IsNull;
 import org.uqbar.geodds.Point;
+
+import grupo4.Busqueda;
+import grupo4.Observers;
+import grupo4.ComponentesExternos.Adaptadores;
+import grupo4.POIs.Poi;
+import grupo4.POIs.Servicio;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -49,14 +57,28 @@ public class RepositorioDePois implements Busqueda {
 	}
 
 	public void agregarPoi(Poi unPoi) {
-		if (!repositorioContienePoi(unPoi.getNombre())) {
-			listaDePois.add(unPoi);
-		}
+			try {
+				if (!repositorioContienePoi(unPoi.getNombre())) {
+					listaDePois.add(unPoi);
+				}
+				else{
+				throw new Exception("Poi ya existente");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 
 	public void bajaPoi(Poi unPoi) {
-		if (repositorioContienePoi(unPoi.getNombre())) {
-			listaDePois.remove(unPoi);
+		try {
+			if (!repositorioContienePoi(unPoi.getNombre())) {
+				listaDePois.remove(unPoi);
+			}
+			else{
+			throw new Exception("No existe el Poi");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -96,26 +118,28 @@ public class RepositorioDePois implements Busqueda {
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
 		poiAux = obtenerSegunCriterio(criterio);
+		if(poiAux==null){
+			return false;
+		}
 		return poiAux.estaDisponible(fecha);
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, Servicio servicio) {
 		Poi poiAux = obtenerSegunCriterio(servicio.getNombre());
+		if(poiAux==null){
+			return false;
+		}
 		return poiAux.estaDisponible(fecha, servicio);
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha) {
-		return encontrarCGPS().stream().anyMatch(unCGP -> unCGP.estaDisponible(fecha));
-	}
-
-	public List<Poi> encontrarCGPS() {// Consideramos que
-		// todos los CGP por defecto tiene un formato de nombre de tipo:
-		// "CGP(Nro de CGP)"
-		return listaDePois.stream().filter(unPoi -> unPoi.getNombre().contains("CGP")).collect(Collectors.toList());
+		Poi poiAux;
+		poiAux=obtenerSegunCriterio(fecha.toString());
+		return poiAux!=null;
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
-		List<Poi> listaFiltrada = listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio))
+		List<Poi> listaFiltrada = listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList());
 		if (listaFiltrada.isEmpty()) {
 			listaAdaptadores.stream()
@@ -131,7 +155,14 @@ public class RepositorioDePois implements Busqueda {
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
-		return listaDePois.stream().filter(unPoi -> unPoi.encuentraNombre(criterio)).findFirst().get();
+		try{
+		Poi poiAux;
+		poiAux=listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().get();
+		return poiAux;
+		}catch(NoSuchElementException excepcion){
+			return null;
+		}
+		
 	}
 	
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {

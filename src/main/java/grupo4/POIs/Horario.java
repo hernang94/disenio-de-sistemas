@@ -1,4 +1,4 @@
-package grupo4;
+package grupo4.POIs;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;

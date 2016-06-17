@@ -3,27 +3,31 @@ package PrimerEntregaTests;
 
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
-import grupo4.Banco;
-import grupo4.CGP;
-import grupo4.Horario;
-import grupo4.LocalComercial;
-import grupo4.Parada;
-import grupo4.Poi;
-import grupo4.Rubro;
-import grupo4.Servicio;
-import grupo4.RepositorioDePois;
+import grupo4.POIs.Banco;
+import grupo4.POIs.CGP;
+import grupo4.POIs.Horario;
+import grupo4.POIs.LocalComercial;
+import grupo4.POIs.Parada;
+import grupo4.POIs.Poi;
+import grupo4.POIs.Rubro;
+import grupo4.POIs.Servicio;
+import grupo4.Repositorios.RepositorioDePois;
 
-public class Tests {
+public class PrimerEntregaTests {
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
 	private Servicio pagoFacil;
@@ -59,12 +63,28 @@ public class Tests {
 		hashMapBanco.put(fechaAux.getDayOfWeek().WEDNESDAY.getValue(), horarioBanco);
 		hashMapBanco.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), horarioBanco);
 		hashMapBanco.put(fechaAux.getDayOfWeek().FRIDAY.getValue(), horarioBanco);
-		banco= new Banco(hashMapBanco, "Santander Rio");
+		List<String> palabrasClavesBanco=new ArrayList<>();
+		palabrasClavesBanco.add("Santander");
+		palabrasClavesBanco.add("Rio");
+		palabrasClavesBanco.add("Fantino");
+		palabrasClavesBanco.add("Banco");
+		palabrasClavesBanco.add("Rojo");
+		palabrasClavesBanco.add("Prestamo");
+		palabrasClavesBanco.add("Cuenta corriente");
+		palabrasClavesBanco.add("Cajero");
+		banco= new Banco(hashMapBanco, "Santander Rio",palabrasClavesBanco);
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
 		banco.setCoordenadas();
 
-		parada114 = new Parada("114");
+		List<String> palabrasClavesParada=new ArrayList<>();
+		palabrasClavesParada.add("Bondi");
+		palabrasClavesParada.add("UTN");
+		palabrasClavesParada.add("Colectivo");
+		palabrasClavesParada.add("Rojo");
+		palabrasClavesParada.add("Vidrios polarizados");
+		palabrasClavesParada.add("114");
+		parada114 = new Parada("114",palabrasClavesParada);
 		parada114.setX(-34.6417364);
 		parada114.setY(-58.4792636);
 		parada114.setCoordenadas();
@@ -80,12 +100,19 @@ public class Tests {
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().MONDAY.getValue(), new Horario("14:00", "18:00"));
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), new Horario("14:00", "20:00"));
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("14:00", "19:00"));
-		local = new LocalComercial(rubro,hashMapLocalComercialManiana,hashMapLocalComercialTarde,"Blaisten");
+		List<String> palabrasClavesLocalComercial=new ArrayList<>();
+		palabrasClavesLocalComercial.add("Muebles");
+		palabrasClavesLocalComercial.add("Madera");
+		palabrasClavesLocalComercial.add("Remaches");
+		palabrasClavesLocalComercial.add("Carpintero");
+		palabrasClavesLocalComercial.add("Mesa");
+		palabrasClavesLocalComercial.add("Silla");
+		local = new LocalComercial(rubro,hashMapLocalComercialManiana,hashMapLocalComercialTarde,"Blaisten",palabrasClavesLocalComercial);
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
 		local.setCoordenadas();
 		
-		banco2 = new Banco (hashMapBanco,"Santander Rio");
+		banco2 = new Banco (hashMapBanco,"Santander Rio",palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 		banco2.setCoordenadas();		
@@ -100,7 +127,16 @@ public class Tests {
 		comuna10.add(new Point(-34.6409182, -58.4758827));
 		comuna10.add(new Point(-34.6383056, -58.4814007));
 		timbrado = new Servicio("timbrado",hashMapServicio);
-		cgp = new CGP(comuna10,"CGP10");
+		List<String> palabrasClavesCGP=new ArrayList<>();
+		palabrasClavesCGP.add("10");
+		palabrasClavesCGP.add("Floresta");
+		palabrasClavesCGP.add("Monte Castro");
+		palabrasClavesCGP.add("Velez");
+		palabrasClavesCGP.add("Versalles");
+		palabrasClavesCGP.add("Villa Luro");
+		palabrasClavesCGP.add("Villa Real");
+		palabrasClavesCGP.add("All Boys");
+		cgp = new CGP(comuna10,"CGP10",palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
 		dispositivoTactil.agregarPoi(banco);
@@ -121,10 +157,6 @@ public class Tests {
 		Assert.assertTrue(dispositivoTactil.consultaCercania("santander rio",unPuntoABuscar));
 	}
 
-	@Test
-	public void cercaniaACGP() {
-		Assert.assertTrue(dispositivoTactil.consultaCercania("CGP10",unPuntoABuscar));
-	}
 
 	@Test
 	public void cercaniaALocal() {
@@ -148,7 +180,7 @@ public class Tests {
 
 	@Test
 	public void estaDisponibleCGPSinServicio() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 10, 00)));
+		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00)));
 	}
 
 	@Test
@@ -172,7 +204,7 @@ public class Tests {
 	public void pruebaBusquedaLibrexLinea() {
 		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("114"),"114"));
 	}
-
+	
 	@Test
 	public void pruebaBusquedaLibrexCGPxServicio() {
 		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("timbrado"),"CGP10"));
@@ -187,23 +219,27 @@ public class Tests {
 	public void pruebaPoligono() {
 		Assert.assertTrue(cgp.estaCerca(new Point(-34.638116, -58.4794967)));
 	}
+	
 	@Test
 	public void pruebaServicioNoDisponible(){
 		Assert.assertFalse(timbrado.estaDisponible(LocalDateTime.of(2016, 05, 8, 10, 00)));
 	}
+	
 	@Test
 	public void pruebaBusquedaDeServicioCuandoNoTiene(){
 		Assert.assertFalse(banco.estaDisponible(LocalDateTime.of(2016, 04, 19, 11, 00), pagoFacil));
 	}
+	
 	@Test
 	public void consultarCercaniaABanco(){
 		Assert.assertFalse(banco.estaCerca(new Point(-40.638116, -58.4794967)));
 	}
+	
 	@Test
 	public void bancoNoDisponible(){
 		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 05, 8, 11, 00), "santander rio"));
-			
 	}
+	
 	@Test
 	public void paradaCerca(){
 		Assert.assertTrue(parada114.estaCerca(new Point(-34.6417164, -58.4792636)));		
@@ -216,5 +252,38 @@ public class Tests {
 	{
 		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(servicio.getNombre()));
 	}
-			
+	
+	@Test
+	public void agregarPalabraClaveNoExistente(){
+		banco.agregarPalabraClave("Ahorro");
+		Assert.assertTrue(banco.getPalabrasClaves().contains("Ahorro"));
+	}
+	
+	@Test
+	public void agregarPalabraClaveExistente(){
+		banco.agregarPalabraClave("Fantino");
+		//La excepcion la muestra por consola, buscarla.
+	}
+	
+	@Test
+	public void quitarPalabraClaveExistente(){
+		banco.quitarPalabraClave("Fantino");
+		Assert.assertFalse(banco.getPalabrasClaves().contains("Fantino"));
+	}
+	
+	@Test
+	public void quitarPalabraClaveNoExistente(){
+		banco.quitarPalabraClave("Ahorro");
+		//La excepcion la muestra por consola, buscarla.
+	}
+	
+	@Test
+	public void encontrarNombreParadaFalso(){
+		Assert.assertFalse(parada114.encuentraNombre("101"));
+	}
+	
+	@Test
+	public void encontrarNombreParadaVerdadero(){
+		Assert.assertTrue(parada114.encuentraNombre("114"));
+	}
 }

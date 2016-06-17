@@ -1,4 +1,4 @@
-package externo;
+package DTOexterno;
 
 public class RangoServicioDTO {
 	private int dia;

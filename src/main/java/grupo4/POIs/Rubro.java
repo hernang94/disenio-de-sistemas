@@ -1,4 +1,4 @@
-package grupo4;
+package grupo4.POIs;
 
 public enum Rubro {
 	

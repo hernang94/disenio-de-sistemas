@@ -1,13 +1,14 @@
-package grupo4;
+package grupo4.POIs;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.uqbar.geodds.Point;
 
 public class Parada extends Poi {	
 	
-	public Parada(String lineaAsociada) {
-		super(lineaAsociada);
+	public Parada(String nombre, List<String> palabrasClaves) {
+		super(nombre, palabrasClaves);
 	}
 
 	public boolean estaCerca(Point unPunto) {
