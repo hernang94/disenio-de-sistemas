@@ -1,9 +1,6 @@
 package Tests;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,13 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,9 +18,9 @@ import org.uqbar.geodds.Polygon;
 import DTOexterno.CentroDTO;
 import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
-import grupo4.AlmacenadorDeBusquedas;
-import grupo4.Notificador;
-import grupo4.Reporter;
+import grupo4.Acciones.AlmacenadorDeBusquedas;
+import grupo4.Acciones.ObserverNotificador;
+import grupo4.Acciones.ObserverReporter;
 import grupo4.ComponentesExternos.BancoTransformer;
 import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
@@ -40,14 +30,13 @@ import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
 import grupo4.POIs.LocalComercial;
 import grupo4.POIs.Parada;
-import grupo4.POIs.Poi;
 import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeTerminales;
 
-public class SegundaEntregaTests {
+public class AccionesConfigurablesTest {
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
@@ -72,23 +61,21 @@ public class SegundaEntregaTests {
 	private Map<Integer,Horario> hashMapServicio; 
 	private RepositorioDeTerminales repo;
 	private PrintWriter writer;
-	private Notificador notificador;
-	private Reporter reporter;
+	private ObserverNotificador notificador;
+	private ObserverReporter reporter;
 	private AlmacenadorDeBusquedas almacenador;
 	private RepositorioDeBusquedas almacen;
 	private List<String> palabrasClavesBanco;
 	private List<String> palabrasClavesCGP;
 	private List<String> palabrasClavesParada;
 	private List<String> palabrasClavesLocalComercial;
-	private HttpClient cliente;
-	private HttpGet get;
 	@SuppressWarnings("static-access")
 	
 	@Before
 	public void init() {
 		almacen= new RepositorioDeBusquedas();
-		notificador=new Notificador();
-		reporter=new Reporter(almacen,writer);
+		notificador=new ObserverNotificador();
+		reporter=new ObserverReporter(almacen,writer);
 		almacenador= new AlmacenadorDeBusquedas(almacen);
 		
 		listaCentroAAdaptar=new ArrayList<>();
@@ -213,60 +200,38 @@ public class SegundaEntregaTests {
 		
 		repo=new RepositorioDeTerminales(writer);
 		repo.agregarTerminal(dispositivoTactil);
-		
-		cliente = new DefaultHttpClient();
-		get= new HttpGet("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
-		
 	}
-			
+	
+	
 	@Test
-	public void busquedaExterna(){
+	public void notificadorArministrador(){
 		dispositivoTactil.busquedaLibre("HSBC");
-		Mockito.verify(componente).buscarCGPs("HSBC");
-		//Mockito.verify(componenteBanco).getJsonBanco("HSBC");
+		Mockito.verify(writer).println("Mail enviado al adminisitrador");
 	}
 	
 	@Test
-	public void pruebaAdaptador(){
-		Assert.assertTrue(adaptador.adaptarObjetos(listaCentroAAdaptar).get(0).getNombre().equalsIgnoreCase("9"));
+	public void calcularDiferencia(){
+		Assert.assertEquals(10, dispositivoTactil.calcularDiferencia(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));
 	}
 	
+	@Test
+	public void reportarCantidadBusquedas(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		dispositivoTactil.obtenerReporteTotalPorFecha();
+		Mockito.verify(writer).println("Fecha\t\tCantidad Total");	
+	}
 	
 	@Test
-	public void pruebaConvertirJson(){
-		List<Poi>listAux=new ArrayList<>();
-		HttpResponse response = null;
-		try {
-			response = cliente.execute(get);
-		} catch (ClientProtocolException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-    	BufferedReader rd = null;
-		try {
-			rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		} catch (UnsupportedOperationException | IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-    	StringBuffer result = new StringBuffer();
-    	String line = "";
-    	try {
-			while ((line = rd.readLine()) != null) {
-			    result.append(line);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	listAux.addAll(optimus.convertirJson(result.toString()));
-    	Assert.assertEquals("Banco de la Plaza", listAux.get(0).getNombre());
+	public void reportePorTerminal(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		repo.reporteTotalporTerminal();
+		Mockito.verify(writer).println("Usuario\t\tCantidad Resultados Totales");
+	}
+	
+	@Test
+	public void reporteParcialesporTerminal(){
+		dispositivoTactil.busquedaLibre("muebleria");
+		repo.reporteParcialporTerminal();
+		Mockito.verify(writer).println("Usuario: terminalAbasto");
 	}
 }
-	

@@ -1,4 +1,4 @@
-package grupo4;
+package grupo4.Acciones;
 
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.ResultadosDeBusquedas;
 
-public class Reporter implements Observers{
+public class ObserverReporter implements Observers{
 	RepositorioDeBusquedas almacen;
-	public Reporter(RepositorioDeBusquedas almacen, PrintWriter writer) {
+	public ObserverReporter(RepositorioDeBusquedas almacen, PrintWriter writer) {
 		this.almacen = almacen;
 	}
 

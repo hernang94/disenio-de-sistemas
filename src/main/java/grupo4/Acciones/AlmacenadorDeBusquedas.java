@@ -1,4 +1,4 @@
-package grupo4;
+package grupo4.Acciones;
 
 import java.io.PrintWriter;
 import java.time.LocalDateTime;

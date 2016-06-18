@@ -1,6 +1,9 @@
 package Tests;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,12 +11,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
+import DTOexterno.CentroDTO;
+import DTOexterno.RangoServicioDTO;
+import DTOexterno.ServicioDTO;
+import grupo4.Acciones.AlmacenadorDeBusquedas;
+import grupo4.Acciones.ObserverNotificador;
+import grupo4.Acciones.ObserverReporter;
+import grupo4.ComponentesExternos.BancoTransformer;
+import grupo4.ComponentesExternos.CGPAdapter;
+import grupo4.ComponentesExternos.ComponenteBanco;
+import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
@@ -22,34 +43,82 @@ import grupo4.POIs.Parada;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
+import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
+import grupo4.Repositorios.RepositorioDeTerminales;
 
-public class PrimerEntregaTests {
+public class CompenetesExternosTest {
+	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
-	private Servicio pagoFacil;
 	private Servicio timbrado;
+	private CentroDTO centroPrueba;
+	private ServicioDTO servicioPrueba;
+	private RangoServicioDTO rangoPrueba;
 	private Banco banco;
 	private Banco banco2;
 	private CGP cgp;
 	private LocalComercial local;
-	private Point unPuntoABuscar;
 	private Rubro rubro;
+	private ComponenteCGPS componente;
+	private CGPAdapter adaptador;
+	private ComponenteBanco componenteBanco;
+	private BancoTransformer optimus;
 	private Map<Integer,Horario> hashMapBanco;
 	private Horario horarioBanco;
 	private LocalDateTime fechaAux;
 	private Map<Integer,Horario> hashMapLocalComercialManiana;
 	private Map<Integer,Horario> hashMapLocalComercialTarde;
 	private Map<Integer,Horario> hashMapServicio; 
+	private RepositorioDeTerminales repo;
 	private PrintWriter writer;
+	private ObserverNotificador notificador;
+	private ObserverReporter reporter;
+	private AlmacenadorDeBusquedas almacenador;
+	private RepositorioDeBusquedas almacen;
+	private List<String> palabrasClavesBanco;
+	private List<String> palabrasClavesCGP;
+	private List<String> palabrasClavesParada;
+	private List<String> palabrasClavesLocalComercial;
+	private HttpClient cliente;
+	private HttpGet get;
 	@SuppressWarnings("static-access")
 	
 	@Before
 	public void init() {
-		//Arreglar los parametros
-		dispositivoTactil = new RepositorioDePois("terminalAbasto",-1,writer);
+		almacen= new RepositorioDeBusquedas();
+		notificador=new ObserverNotificador();
+		reporter=new ObserverReporter(almacen,writer);
+		almacenador= new AlmacenadorDeBusquedas(almacen);
 		
-		unPuntoABuscar = new Point(-34.638116, -58.4794967);
+		listaCentroAAdaptar=new ArrayList<>();
+		
+		rangoPrueba= new RangoServicioDTO(1,9,0,18,0);
+		
+		servicioPrueba=new ServicioDTO("Prueba");
+		servicioPrueba.agregarRango(rangoPrueba);
+		
+		writer=Mockito.mock(PrintWriter.class);
+		
+		centroPrueba= new CentroDTO(9, "Mataderos,Parque Avellaneda", "Mauro Corvaro", "Calle Falsa 123", "4597-9684");
+		centroPrueba.agregarServicio(servicioPrueba);
+		listaCentroAAdaptar.add(centroPrueba);
+		
+		componente = Mockito.mock(ComponenteCGPS.class);
+		adaptador = new CGPAdapter();
+		adaptador.setComponente(componente);
+		
+		
+		componenteBanco=Mockito.mock(ComponenteBanco.class);
+		optimus = new BancoTransformer();
+		optimus.setComponente(componenteBanco);
+		
+		dispositivoTactil = new RepositorioDePois("terminalAbasto",-1,writer);
+		dispositivoTactil.agregarAdaptador(adaptador);
+		dispositivoTactil.agregarAdaptador(optimus);
+		dispositivoTactil.agregarObserver(notificador);
+		dispositivoTactil.agregarObserver(reporter);
+		dispositivoTactil.agregarObserver(almacenador);	
 		horarioBanco= new Horario("10:00", "15:00");
 		
 		fechaAux= LocalDateTime.now();
@@ -60,7 +129,7 @@ public class PrimerEntregaTests {
 		hashMapBanco.put(fechaAux.getDayOfWeek().WEDNESDAY.getValue(), horarioBanco);
 		hashMapBanco.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), horarioBanco);
 		hashMapBanco.put(fechaAux.getDayOfWeek().FRIDAY.getValue(), horarioBanco);
-		List<String> palabrasClavesBanco=new ArrayList<>();
+		palabrasClavesBanco=new ArrayList<>();
 		palabrasClavesBanco.add("Santander");
 		palabrasClavesBanco.add("Rio");
 		palabrasClavesBanco.add("Fantino");
@@ -74,7 +143,7 @@ public class PrimerEntregaTests {
 		banco.setY(-58.4758827);
 		banco.setCoordenadas();
 
-		List<String> palabrasClavesParada=new ArrayList<>();
+		palabrasClavesParada=new ArrayList<>();
 		palabrasClavesParada.add("Bondi");
 		palabrasClavesParada.add("UTN");
 		palabrasClavesParada.add("Colectivo");
@@ -97,7 +166,7 @@ public class PrimerEntregaTests {
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().MONDAY.getValue(), new Horario("14:00", "18:00"));
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), new Horario("14:00", "20:00"));
 		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("14:00", "19:00"));
-		List<String> palabrasClavesLocalComercial=new ArrayList<>();
+		palabrasClavesLocalComercial=new ArrayList<>();
 		palabrasClavesLocalComercial.add("Muebles");
 		palabrasClavesLocalComercial.add("Madera");
 		palabrasClavesLocalComercial.add("Remaches");
@@ -109,7 +178,7 @@ public class PrimerEntregaTests {
 		local.setY(-58.4814007);
 		local.setCoordenadas();
 		
-		banco2 = new Banco (hashMapBanco,"Santander Rio",palabrasClavesBanco);
+		banco2= new Banco(hashMapBanco, "Santander Rio",palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 		banco2.setCoordenadas();		
@@ -124,7 +193,7 @@ public class PrimerEntregaTests {
 		comuna10.add(new Point(-34.6409182, -58.4758827));
 		comuna10.add(new Point(-34.6383056, -58.4814007));
 		timbrado = new Servicio("timbrado",hashMapServicio);
-		List<String> palabrasClavesCGP=new ArrayList<>();
+		palabrasClavesCGP=new ArrayList<>();
 		palabrasClavesCGP.add("10");
 		palabrasClavesCGP.add("Floresta");
 		palabrasClavesCGP.add("Monte Castro");
@@ -142,145 +211,62 @@ public class PrimerEntregaTests {
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
 		
+		repo=new RepositorioDeTerminales(writer);
+		repo.agregarTerminal(dispositivoTactil);
+		
+		cliente = new DefaultHttpClient();
+		get= new HttpGet("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
+		
+	}
+			
+	@Test
+	public void busquedaExterna(){
+		dispositivoTactil.busquedaLibre("HSBC");
+		Mockito.verify(componente).buscarCGPs("HSBC");
+		//Mockito.verify(componenteBanco).getJsonBanco("HSBC");
 	}
 	
 	@Test
-	public void cercaniaAParada() {
-		Assert.assertFalse(dispositivoTactil.consultaCercania("114",unPuntoABuscar));
-	}
-
-	@Test
-	public void cercaniaABanco() {
-		Assert.assertTrue(dispositivoTactil.consultaCercania("santander rio",unPuntoABuscar));
-	}
-
-
-	@Test
-	public void cercaniaALocal() {
-		Assert.assertTrue(dispositivoTactil.consultaCercania("Blaisten",unPuntoABuscar));
-	}
-
-	@Test
-	public void estaDisponibleColectivo() {
-		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
-	}
-
-	@Test
-	public void estaDisponibleBanco() {
-		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
-	}
-
-	@Test
-	public void estaDisponibleCGP() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), timbrado));
-	}
-
-	@Test
-	public void estaDisponibleCGPSinServicio() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00)));
-	}
-
-	@Test
-	public void estaDisponibleLocal() {
-		boolean a = dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 17, 00), "Blaisten");
-		Assert.assertTrue(a);
-	}
-
-	@Test
-	public void pruebaHorario() {
-		Horario nuevo = new Horario("09:00", "18:00");
-		Assert.assertTrue(nuevo.estaEnHorario(LocalDateTime.of(2016, 04, 19, 17, 00)));
-	}
-
-	@Test
-	public void pruebaBusquedaLibrexRubro() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("muebleria"),"Blaisten"));
-	}
-
-	@Test
-	public void pruebaBusquedaLibrexLinea() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("114"),"114"));
+	public void pruebaAdaptador(){
+		Assert.assertTrue(adaptador.adaptarObjetos(listaCentroAAdaptar).get(0).getNombre().equalsIgnoreCase("9"));
 	}
 	
+	
 	@Test
-	public void pruebaBusquedaLibrexCGPxServicio() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("timbrado"),"CGP10"));
-	}
+	public void pruebaConvertirJson(){
+		List<Poi>listAux=new ArrayList<>();
+		HttpResponse response = null;
+		try {
+			response = cliente.execute(get);
+		} catch (ClientProtocolException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-	@Test
-	public void pruebaBusquedaLibrexBanco() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("santander rio"),"Santander rio"));
-	}
+    	BufferedReader rd = null;
+		try {
+			rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+		} catch (UnsupportedOperationException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-	@Test
-	public void pruebaPoligono() {
-		Assert.assertTrue(cgp.estaCerca(new Point(-34.638116, -58.4794967)));
-	}
-	
-	@Test
-	public void pruebaServicioNoDisponible(){
-		Assert.assertFalse(timbrado.estaDisponible(LocalDateTime.of(2016, 05, 8, 10, 00)));
-	}
-	
-	@Test
-	public void pruebaBusquedaDeServicioCuandoNoTiene(){
-		Assert.assertFalse(banco.estaDisponible(LocalDateTime.of(2016, 04, 19, 11, 00), pagoFacil));
-	}
-	
-	@Test
-	public void consultarCercaniaABanco(){
-		Assert.assertFalse(banco.estaCerca(new Point(-40.638116, -58.4794967)));
-	}
-	
-	@Test
-	public void bancoNoDisponible(){
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 05, 8, 11, 00), "santander rio"));
-	}
-	
-	@Test
-	public void paradaCerca(){
-		Assert.assertTrue(parada114.estaCerca(new Point(-34.6417164, -58.4792636)));		
-	}
-	public boolean coincideCon(List<Poi> listaEncontrada, String criterio)
-	{
-		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(criterio));
-	}
-	public boolean coincideCon(List<Poi> listaEncontrada, Servicio servicio)
-	{
-		return listaEncontrada.stream().allMatch(unPoi-> unPoi.getNombre().equalsIgnoreCase(servicio.getNombre()));
-	}
-	
-	@Test
-	public void agregarPalabraClaveNoExistente(){
-		banco.agregarPalabraClave("Ahorro");
-		Assert.assertTrue(banco.getPalabrasClaves().contains("Ahorro"));
-	}
-	
-	@Test
-	public void agregarPalabraClaveExistente(){
-		banco.agregarPalabraClave("Fantino");
-		//La excepcion la muestra por consola, buscarla.
-	}
-	
-	@Test
-	public void quitarPalabraClaveExistente(){
-		banco.quitarPalabraClave("Fantino");
-		Assert.assertFalse(banco.getPalabrasClaves().contains("Fantino"));
-	}
-	
-	@Test
-	public void quitarPalabraClaveNoExistente(){
-		banco.quitarPalabraClave("Ahorro");
-		//La excepcion la muestra por consola, buscarla.
-	}
-	
-	@Test
-	public void encontrarNombreParadaFalso(){
-		Assert.assertFalse(parada114.encuentraNombre("101"));
-	}
-	
-	@Test
-	public void encontrarNombreParadaVerdadero(){
-		Assert.assertTrue(parada114.encuentraNombre("114"));
+    	StringBuffer result = new StringBuffer();
+    	String line = "";
+    	try {
+			while ((line = rd.readLine()) != null) {
+			    result.append(line);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	listAux.addAll(optimus.convertirJson(result.toString()));
+    	Assert.assertEquals("Banco de la Plaza", listAux.get(0).getNombre());
 	}
 }
+	

@@ -1,11 +1,11 @@
-package grupo4;
+package grupo4.Acciones;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
-public class Notificador implements Observers{
+public class ObserverNotificador implements Observers{
 	
 	public void notificar(PrintWriter writer){
 		writer.println("Mail enviado al adminisitrador");

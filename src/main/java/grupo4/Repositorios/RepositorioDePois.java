@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import org.hamcrest.core.IsNull;
 import org.uqbar.geodds.Point;
 
-import grupo4.Busqueda;
-import grupo4.Observers;
+import grupo4.Acciones.ObserverBusqueda;
+import grupo4.Acciones.Observers;
 import grupo4.ComponentesExternos.Adaptadores;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-public class RepositorioDePois implements Busqueda {
+public class RepositorioDePois implements ObserverBusqueda {
 	private String nombre;
 	private List<Poi> listaDePois = new ArrayList<>();
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
