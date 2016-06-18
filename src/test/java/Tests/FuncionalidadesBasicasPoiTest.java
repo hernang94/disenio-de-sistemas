@@ -283,4 +283,52 @@ public class FuncionalidadesBasicasPoiTest {
 	public void encontrarNombreParadaVerdadero(){
 		Assert.assertTrue(parada114.encuentraNombre("114"));
 	}
+	
+	@Test
+	public void agregarUnPoiExistente(){
+		dispositivoTactil.agregarPoi(banco);
+	}
+	
+	@Test
+	public void quitarPoiNoExistente(){
+		List <String> palabrasClaves= new ArrayList<>();
+		palabrasClaves.add("Ramal Quilmes");
+		Parada parada85= new Parada("parada 85",palabrasClaves);
+		dispositivoTactil.bajaPoi(parada85);
+	}
+	
+	@Test
+	public void fallaConsultaDisponibilidadPorCriterio(){
+		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00),""));
+	}
+	
+	@Test
+	public void fallaConsultaDisponibilidadPorSerivicio(){
+		Servicio plomeria= new Servicio("plomeria", hashMapServicio);
+		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00), plomeria));
+	}
+	
+	@Test
+	public void fallaConsultaDisponibilidadPorFecha(){
+		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00)));
+	}
+	
+	/*@Test
+	public void pruebaModificacionPoi(){
+		List<String> palabrasClavesParada=new ArrayList<>();
+		palabrasClavesParada.add("Bondi");
+		palabrasClavesParada.add("UTN");
+		palabrasClavesParada.add("Colectivo");
+		palabrasClavesParada.add("Rojo");
+		palabrasClavesParada.add("Vidrios polarizados");
+		palabrasClavesParada.add("114");
+		palabrasClavesParada.add("Aire Acondicionado");
+		Parada parada114x2 = new Parada("114",palabrasClavesParada);
+		parada114x2.setX(-34.6417364);
+		parada114x2.setY(-58.4792636);
+		parada114x2.setCoordenadas();
+		dispositivoTactil.modificarPoi(parada114x2);
+		dispositivoTactil.filtrarPorCriterio(criterio)
+		Assert.assertTrue(condition);
+	}*/
 }

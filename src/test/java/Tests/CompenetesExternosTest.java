@@ -25,6 +25,7 @@ import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
+import DTOexterno.BancoExterno;
 import DTOexterno.CentroDTO;
 import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
@@ -82,6 +83,7 @@ public class CompenetesExternosTest {
 	private List<String> palabrasClavesLocalComercial;
 	private HttpClient cliente;
 	private HttpGet get;
+	private BancoExterno bancoExterno;
 	@SuppressWarnings("static-access")
 	
 	@Before
@@ -218,7 +220,15 @@ public class CompenetesExternosTest {
 		get= new HttpGet("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
 		
 	}
-			
+	@Test
+	public void instanciaciónBancoExterno(){
+		List<String> listaServicios= new ArrayList<>();
+		listaServicios.add("caja de ahorro");
+		bancoExterno=new BancoExterno("Banquito",-34.637468, -58.476936,"General Rodriguez","Jose Lopez",listaServicios);
+		Assert.assertTrue(bancoExterno.getBanco().equalsIgnoreCase("Banquito"));
+	}
+	
+	
 	@Test
 	public void busquedaExterna(){
 		dispositivoTactil.busquedaLibre("HSBC");
