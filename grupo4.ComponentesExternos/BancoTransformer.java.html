@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BancoTransformer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TPAnual</a> &gt; <a href="index.source.html" class="el_package">grupo4.ComponentesExternos</a> &gt; <span class="el_source">BancoTransformer.java</span></div><h1>BancoTransformer.java</h1><pre class="source lang-java linenums">package grupo4.ComponentesExternos;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+
+import DTOexterno.BancoExterno;
+import grupo4.POIs.Banco;
+import grupo4.POIs.Horario;
+import grupo4.POIs.Poi;
+import grupo4.POIs.Servicio;
+
+public class BancoTransformer implements Adaptadores{
+	private ComponenteBanco componente;
+	private ObjectMapper objectMapper;
+
+<span class="fc" id="L26">	public BancoTransformer() {</span>
+<span class="fc" id="L27">		this.objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L28">	}</span>
+	
+	
+	public List&lt;Poi&gt; convertirJson(String jsons){
+<span class="fc" id="L32">		List&lt;BancoExterno&gt;listaParaAdaptar=new ArrayList&lt;&gt;();</span>
+		try {
+<span class="fc" id="L34">			listaParaAdaptar= objectMapper.readValue(jsons, TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BancoExterno.class));</span>
+<span class="nc" id="L35">		} catch (IOException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L37">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L39">		catch(NullPointerException e){</span>
+<span class="fc" id="L40">			e.printStackTrace();</span>
+<span class="pc" id="L41">		}</span>
+<span class="fc" id="L42">		return adaptarListaBancosExternos(listaParaAdaptar);</span>
+	}
+	
+	private List&lt;Poi&gt; adaptarListaBancosExternos(List&lt;BancoExterno&gt; listaParaAdaptar) {
+<span class="fc" id="L46">		List&lt;Poi&gt;listaDeBancos=new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L47">		listaDeBancos=listaParaAdaptar.stream().map(banco-&gt;adaptarBanco(banco)).collect(Collectors.toList());</span>
+<span class="fc" id="L48">		return listaDeBancos;</span>
+	}
+
+	private Poi adaptarBanco(BancoExterno bancoExterno) {
+<span class="fc" id="L52">		FactoryHorarioBanco horarioBanco=new FactoryHorarioBanco();</span>
+<span class="fc" id="L53">		List&lt;String&gt; palabrasClavesBanco=new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">		Banco banco=new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);</span>
+<span class="fc" id="L55">		banco.setX(bancoExterno.getX());</span>
+<span class="fc" id="L56">		banco.setY(bancoExterno.getY());</span>
+<span class="fc" id="L57">		List&lt;Servicio&gt;listaDeServicios=bancoExterno.getServicios().stream().map(nombre-&gt;new Servicio(nombre, horarioBanco.dameHorarioBanco())).collect(Collectors.toList());</span>
+<span class="fc" id="L58">		banco.setCoordenadas();</span>
+<span class="fc" id="L59">		banco.setListaServicios(listaDeServicios);</span>
+<span class="fc" id="L60">		return banco;</span>
+	}
+
+	public List&lt;Poi&gt;buscarPois(String criterio){
+<span class="fc" id="L64">		String jsons= componente.getJsonBanco(criterio);</span>
+<span class="fc" id="L65">		return convertirJson(jsons);</span>
+	}
+
+	public void setComponente(ComponenteBanco componenteBanco) {
+<span class="fc" id="L69">		this.componente=componenteBanco;</span>
+		
+<span class="fc" id="L71">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
