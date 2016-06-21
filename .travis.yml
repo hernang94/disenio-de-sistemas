@@ -7,7 +7,7 @@ install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcobertur
 
 script: mvn clean cobertura:check -B -V
 
-after_success:
+after_script:
   - mvn clean install
   - "./.utility/.coverage.sh"
 
