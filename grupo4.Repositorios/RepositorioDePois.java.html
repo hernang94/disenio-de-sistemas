@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-public class RepositorioDePois implements ObserverBusqueda {
+public class RepositorioDePois implements ObserverBusqueda{
 	private String nombre;
 <span class="fc" id="L27">	private List&lt;Poi&gt; listaDePois = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L28">	private List&lt;Adaptadores&gt; listaAdaptadores = new ArrayList&lt;&gt;();</span>
@@ -62,9 +62,9 @@ public class RepositorioDePois implements ObserverBusqueda {
 <span class="fc" id="L62">					listaDePois.add(unPoi);</span>
 				}
 				else{
-<span class="fc" id="L65">				throw new Exception(&quot;Poi ya existente&quot;);</span>
+<span class="fc" id="L65">				throw new RuntimeException(&quot;Poi ya existente&quot;);</span>
 				}
-<span class="fc" id="L67">			}catch (Exception e) {</span>
+<span class="fc" id="L67">			}catch (RuntimeException e) {</span>
 <span class="fc" id="L68">				e.printStackTrace();</span>
 <span class="fc" id="L69">			}</span>
 <span class="fc" id="L70">	}</span>
