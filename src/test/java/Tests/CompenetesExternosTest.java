@@ -221,7 +221,7 @@ public class CompenetesExternosTest {
 		
 	}
 	@Test
-	public void instanciaciónBancoExterno(){
+	public void instanciacionBancoExterno(){
 		List<String> listaServicios= new ArrayList<>();
 		listaServicios.add("caja de ahorro");
 		bancoExterno=new BancoExterno("Banquito",-34.637468, -58.476936,"General Rodriguez","Jose Lopez",listaServicios);

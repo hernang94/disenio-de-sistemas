@@ -174,6 +174,19 @@ public class FuncionalidadesBasicasPoiTest {
 	public void estaDisponibleCGP() {
 		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), timbrado));
 	}
+	@Test
+	public void noEstaCercaLocalComercial(){
+		Assert.assertFalse(local.estaCerca(new Point(2, 4)));
+	}
+	@Test
+	public void noEncuentraNombreNiCriterioLocalComercial(){
+		Assert.assertFalse(local.encuentraNombre("blah"));
+	}
+	
+	@Test
+	public void encuentraNombrePeroNoCriterioLocalComercial(){
+		Assert.assertTrue(local.encuentraNombre("Blaisten"));
+	}
 
 	@Test
 	public void estaDisponibleCGPSinServicio() {
