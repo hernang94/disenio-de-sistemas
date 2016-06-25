@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,6 +67,7 @@ public class CompenetesExternosTest {
 	private CGPAdapter adaptador;
 	private ComponenteBanco componenteBanco;
 	private BancoTransformer optimus;
+	private BancoTransformer megatron;
 	private Map<Integer,Horario> hashMapBanco;
 	private Horario horarioBanco;
 	private LocalDateTime fechaAux;
@@ -102,6 +105,9 @@ public class CompenetesExternosTest {
 		
 		writer=Mockito.mock(PrintWriter.class);
 		
+		megatron=Mockito.mock(BancoTransformer.class);
+		megatron.setComponente(componenteBanco);
+		
 		centroPrueba= new CentroDTO(9, "Mataderos,Parque Avellaneda", "Mauro Corvaro", "Calle Falsa 123", "4597-9684");
 		centroPrueba.agregarServicio(servicioPrueba);
 		listaCentroAAdaptar.add(centroPrueba);
@@ -117,7 +123,7 @@ public class CompenetesExternosTest {
 		
 		dispositivoTactil = new RepositorioDePois("terminalAbasto",-1,writer);
 		dispositivoTactil.agregarAdaptador(adaptador);
-		dispositivoTactil.agregarAdaptador(optimus);
+		dispositivoTactil.agregarAdaptador(megatron);
 		dispositivoTactil.agregarObserver(notificador);
 		dispositivoTactil.agregarObserver(reporter);
 		dispositivoTactil.agregarObserver(almacenador);	
@@ -180,7 +186,7 @@ public class CompenetesExternosTest {
 		local.setY(-58.4814007);
 		local.setCoordenadas();
 		
-		banco2= new Banco(hashMapBanco, "Santander Rio",palabrasClavesBanco);
+		banco2= new Banco(hashMapBanco, "HSBC",palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 		banco2.setCoordenadas();		
@@ -231,9 +237,8 @@ public class CompenetesExternosTest {
 	
 	@Test
 	public void busquedaExterna(){
-		dispositivoTactil.busquedaLibre("HSBC");
-		Mockito.verify(componente).buscarCGPs("HSBC");
-		//Mockito.verify(componenteBanco).getJsonBanco("HSBC");
+		dispositivoTactil.busquedaLibre("Patagonia");
+		Mockito.verify(megatron).buscarPois("Patagonia");
 	}
 	
 	@Test
@@ -256,26 +261,17 @@ public class CompenetesExternosTest {
 			e1.printStackTrace();
 		}
 
-    	BufferedReader rd = null;
+    	String stringResponse=new String();
 		try {
-			rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		} catch (UnsupportedOperationException | IOException e1) {
+			stringResponse = EntityUtils.toString(response.getEntity());
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-    	StringBuffer result = new StringBuffer();
-    	String line = "";
-    	try {
-			while ((line = rd.readLine()) != null) {
-			    result.append(line);
-			}
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	listAux.addAll(optimus.convertirJson(result.toString()));
+    	listAux.addAll(optimus.convertirJson(stringResponse));
     	Assert.assertEquals("Banco de la Plaza", listAux.get(0).getNombre());
 	}
 }

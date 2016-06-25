@@ -165,7 +165,7 @@ public class AccionesConfigurablesTest {
 		local.setY(-58.4814007);
 		local.setCoordenadas();
 		
-		banco2= new Banco(hashMapBanco, "Santander Rio",palabrasClavesBanco);
+		banco2= new Banco(hashMapBanco, "HSBC",palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 		banco2.setCoordenadas();		
@@ -214,7 +214,7 @@ public class AccionesConfigurablesTest {
 		Assert.assertEquals(10, dispositivoTactil.calcularDiferencia(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));
 	}
 	
-	@Test
+	/*@Test
 	public void reportarCantidadBusquedas(){
 		dispositivoTactil.busquedaLibre("muebleria");
 		dispositivoTactil.obtenerReporteTotalPorFecha();
@@ -233,5 +233,5 @@ public class AccionesConfigurablesTest {
 		dispositivoTactil.busquedaLibre("muebleria");
 		repo.reporteParcialporTerminal();
 		Mockito.verify(writer).println("Usuario: terminalAbasto");
-	}
+	}*/
 }

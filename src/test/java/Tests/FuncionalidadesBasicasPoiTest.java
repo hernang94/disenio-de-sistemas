@@ -10,7 +10,9 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
@@ -109,7 +111,7 @@ public class FuncionalidadesBasicasPoiTest {
 		local.setY(-58.4814007);
 		local.setCoordenadas();
 		
-		banco2 = new Banco (hashMapBanco,"Santander Rio",palabrasClavesBanco);
+		banco2 = new Banco (hashMapBanco,"HSBC",palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 		banco2.setCoordenadas();		
@@ -271,6 +273,8 @@ public class FuncionalidadesBasicasPoiTest {
 	
 	@Test
 	public void agregarPalabraClaveExistente(){
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("Palabra clave ya existente");
 		banco.agregarPalabraClave("Fantino");
 		//La excepcion la muestra por consola, buscarla.
 	}
@@ -283,6 +287,9 @@ public class FuncionalidadesBasicasPoiTest {
 	
 	@Test
 	public void quitarPalabraClaveNoExistente(){
+		
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("Palabra clave no existente");
 		banco.quitarPalabraClave("Ahorro");
 		//La excepcion la muestra por consola, buscarla.
 	}
@@ -297,8 +304,12 @@ public class FuncionalidadesBasicasPoiTest {
 		Assert.assertTrue(parada114.encuentraNombre("114"));
 	}
 	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 	@Test
 	public void agregarUnPoiExistente(){
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("Poi ya existente");
 		dispositivoTactil.agregarPoi(banco);
 	}
 	

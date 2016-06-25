@@ -57,16 +57,13 @@ public class RepositorioDePois implements ObserverBusqueda{
 	}
 
 	public void agregarPoi(Poi unPoi) {
-			try {
+			
 				if (!repositorioContienePoi(unPoi.getNombre())) {
 					listaDePois.add(unPoi);
 				}
 				else{
 				throw new RuntimeException("Poi ya existente");
 				}
-			}catch (RuntimeException e) {
-				e.printStackTrace();
-			}
 	}
 
 	public void bajaPoi(Poi unPoi) {

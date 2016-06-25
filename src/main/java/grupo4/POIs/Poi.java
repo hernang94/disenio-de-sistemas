@@ -24,29 +24,22 @@ public abstract class Poi {
 	}
 
 	public void agregarPalabraClave(String palabraClave){
-		try {
 			if (!poiContienePalabra(palabraClave)) {
 				palabrasClaves.add(palabraClave);
 			}
 			else{
-			throw new Exception("Palabra clave ya existente");
+			throw new RuntimeException("Palabra clave ya existente");
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void quitarPalabraClave(String palabraClave){
-		try {
 			if (poiContienePalabra(palabraClave)) {
 				palabrasClaves.remove(palabraClave);
 			}
 			else{
-			throw new Exception("Palabra clave no existente");
+			throw new RuntimeException("Palabra clave no existente");
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	private boolean poiContienePalabra(String palabraClave) {
