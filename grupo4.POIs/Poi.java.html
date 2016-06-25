@@ -24,90 +24,83 @@ public abstract class Poi {
 	}
 
 	public void agregarPalabraClave(String palabraClave){
-		try {
-<span class="fc bfc" id="L28" title="All 2 branches covered.">			if (!poiContienePalabra(palabraClave)) {</span>
-<span class="fc" id="L29">				palabrasClaves.add(palabraClave);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">			if (!poiContienePalabra(palabraClave)) {</span>
+<span class="fc" id="L28">				palabrasClaves.add(palabraClave);</span>
 			}
 			else{
-<span class="fc" id="L32">			throw new Exception(&quot;Palabra clave ya existente&quot;);</span>
+<span class="fc" id="L31">			throw new RuntimeException(&quot;Palabra clave ya existente&quot;);</span>
 			}
-<span class="fc" id="L34">		}catch (Exception e) {</span>
-<span class="fc" id="L35">			e.printStackTrace();</span>
-<span class="fc" id="L36">		}</span>
-<span class="fc" id="L37">	}</span>
+<span class="fc" id="L33">	}</span>
 	
 	public void quitarPalabraClave(String palabraClave){
-		try {
-<span class="fc bfc" id="L41" title="All 2 branches covered.">			if (poiContienePalabra(palabraClave)) {</span>
-<span class="fc" id="L42">				palabrasClaves.remove(palabraClave);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">			if (poiContienePalabra(palabraClave)) {</span>
+<span class="fc" id="L37">				palabrasClaves.remove(palabraClave);</span>
 			}
 			else{
-<span class="fc" id="L45">			throw new Exception(&quot;Palabra clave no existente&quot;);</span>
+<span class="fc" id="L40">			throw new RuntimeException(&quot;Palabra clave no existente&quot;);</span>
 			}
-<span class="fc" id="L47">		}catch (Exception e) {</span>
-<span class="fc" id="L48">			e.printStackTrace();</span>
-<span class="fc" id="L49">		}</span>
-<span class="fc" id="L50">	}</span>
+		
+<span class="fc" id="L43">	}</span>
 	
 	private boolean poiContienePalabra(String palabraClave) {
-<span class="fc" id="L53">		return palabrasClaves.stream().anyMatch(unaPalabra-&gt;unaPalabra.equalsIgnoreCase(palabraClave));</span>
+<span class="fc" id="L46">		return palabrasClaves.stream().anyMatch(unaPalabra-&gt;unaPalabra.equalsIgnoreCase(palabraClave));</span>
 	}
 
 	public double getX() {
-<span class="nc" id="L57">		return x;</span>
+<span class="nc" id="L50">		return x;</span>
 	}
 
 	public void setX(double x) {
-<span class="fc" id="L61">		this.x = x;</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L54">		this.x = x;</span>
+<span class="fc" id="L55">	}</span>
 
 	public double getY() {
-<span class="nc" id="L65">		return y;</span>
+<span class="nc" id="L58">		return y;</span>
 	}
 
 	public void setY(double y) {
-<span class="fc" id="L69">		this.y = y;</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L62">		this.y = y;</span>
+<span class="fc" id="L63">	}</span>
 
 	public Point getCoordenadas() {
-<span class="nc" id="L73">		return coordenadas;</span>
+<span class="nc" id="L66">		return coordenadas;</span>
 	}
 
 	public double calcularDistancia(Point punto) {
-<span class="fc" id="L77">		return this.coordenadas.distance(punto);</span>
+<span class="fc" id="L70">		return this.coordenadas.distance(punto);</span>
 	}
 
 	public void setCoordenadas() {
-<span class="fc" id="L81">		this.coordenadas = new Point(x, y);</span>
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L74">		this.coordenadas = new Point(x, y);</span>
+<span class="fc" id="L75">	}</span>
 
 
 	public boolean estaCerca(Point unPunto) {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		return (calcularDistancia(unPunto) &lt; 0.5);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		return (calcularDistancia(unPunto) &lt; 0.5);</span>
 	}
 
 	public boolean cumpleCriterio(String criterio) {
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if(criterio.equalsIgnoreCase(nombre)){</span>
-<span class="fc" id="L91">			return true;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if(criterio.equalsIgnoreCase(nombre)){</span>
+<span class="fc" id="L84">			return true;</span>
 		}
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		else if(esUnaPalabraClave(criterio)){</span>
-<span class="nc" id="L94">			return true;</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		else if(esUnaPalabraClave(criterio)){</span>
+<span class="nc" id="L87">			return true;</span>
 		}
-<span class="fc" id="L96">		return false;</span>
+<span class="fc" id="L89">		return false;</span>
 	}
 
 	private boolean esUnaPalabraClave(String criterio) {
-<span class="fc" id="L100">		return palabrasClaves.stream().anyMatch(unaPalabraClave-&gt;unaPalabraClave.equalsIgnoreCase(criterio));</span>
+<span class="fc" id="L93">		return palabrasClaves.stream().anyMatch(unaPalabraClave-&gt;unaPalabraClave.equalsIgnoreCase(criterio));</span>
 	}
 
 	public String getNombre() {
-<span class="fc" id="L104">		return nombre;</span>
+<span class="fc" id="L97">		return nombre;</span>
 	}
 
 	public abstract boolean estaDisponible(LocalDateTime fechaConsulta);
 
 	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio){
-<span class="fc" id="L110">		return false;</span>
+<span class="fc" id="L103">		return false;</span>
 	}
 
 }

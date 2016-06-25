@@ -17,19 +17,19 @@ public class RepositorioDeTerminales {
 <span class="fc" id="L17">		listaDeTerminales.add(unTerminal);</span>
 <span class="fc" id="L18">	}</span>
 	public void reporteParcialporTerminal(){
-<span class="fc" id="L20">		listaDeTerminales.stream().forEach(terminal-&gt;reportarFormateado(terminal));</span>
-<span class="fc" id="L21">	}</span>
+<span class="nc" id="L20">		listaDeTerminales.stream().forEach(terminal-&gt;reportarFormateado(terminal));</span>
+<span class="nc" id="L21">	}</span>
 	private void reportarFormateado(RepositorioDePois terminal) {
-<span class="fc" id="L23">		writer.println(&quot;Usuario: &quot;+terminal.getNombre());</span>
-<span class="fc" id="L24">		terminal.reporteParcial(writer);</span>
-<span class="fc" id="L25">	}</span>
+<span class="nc" id="L23">		writer.println(&quot;Usuario: &quot;+terminal.getNombre());</span>
+<span class="nc" id="L24">		terminal.reporteParcial(writer);</span>
+<span class="nc" id="L25">	}</span>
 	public void reporteTotalporTerminal(){
-<span class="fc" id="L27">		writer.println(&quot;Usuario\t\tCantidad Resultados Totales&quot;);</span>
-<span class="fc" id="L28">		listaDeTerminales.stream().forEach(terminal-&gt;reportarTotalFormateado(terminal));</span>
-<span class="fc" id="L29">	}</span>
+<span class="nc" id="L27">		writer.println(&quot;Usuario\t\tCantidad Resultados Totales&quot;);</span>
+<span class="nc" id="L28">		listaDeTerminales.stream().forEach(terminal-&gt;reportarTotalFormateado(terminal));</span>
+<span class="nc" id="L29">	}</span>
 	private void reportarTotalFormateado(RepositorioDePois terminal) {
-<span class="fc" id="L31">		writer.println(terminal.getNombre()+&quot;\t\t&quot;);</span>
-<span class="fc" id="L32">		terminal.reporteTotal(writer);</span>
-<span class="fc" id="L33">	}</span>
+<span class="nc" id="L31">		writer.println(terminal.getNombre()+&quot;\t\t&quot;);</span>
+<span class="nc" id="L32">		terminal.reporteTotal(writer);</span>
+<span class="nc" id="L33">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

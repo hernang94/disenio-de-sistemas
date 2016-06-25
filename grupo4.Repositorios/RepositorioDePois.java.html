@@ -37,7 +37,7 @@ public class RepositorioDePois implements ObserverBusqueda{
 <span class="fc" id="L37">	}</span>
 
 	public String getNombre() {
-<span class="fc" id="L40">		return nombre;</span>
+<span class="nc" id="L40">		return nombre;</span>
 	}
 
 	public void agregarObserver(Observers unObserver){
@@ -57,124 +57,121 @@ public class RepositorioDePois implements ObserverBusqueda{
 <span class="nc" id="L57">	}</span>
 
 	public void agregarPoi(Poi unPoi) {
-			try {
+			
 <span class="fc bfc" id="L61" title="All 2 branches covered.">				if (!repositorioContienePoi(unPoi.getNombre())) {</span>
 <span class="fc" id="L62">					listaDePois.add(unPoi);</span>
 				}
 				else{
 <span class="fc" id="L65">				throw new RuntimeException(&quot;Poi ya existente&quot;);</span>
 				}
-<span class="fc" id="L67">			}catch (RuntimeException e) {</span>
-<span class="fc" id="L68">				e.printStackTrace();</span>
-<span class="fc" id="L69">			}</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L67">	}</span>
 
 	public void bajaPoi(Poi unPoi) {
 		try {
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">			if (!repositorioContienePoi(unPoi.getNombre())) {</span>
-<span class="fc" id="L75">				listaDePois.remove(unPoi);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">			if (!repositorioContienePoi(unPoi.getNombre())) {</span>
+<span class="fc" id="L72">				listaDePois.remove(unPoi);</span>
 			}
 			else{
-<span class="nc" id="L78">			throw new Exception(&quot;No existe el Poi&quot;);</span>
+<span class="nc" id="L75">			throw new Exception(&quot;No existe el Poi&quot;);</span>
 			}
-<span class="nc" id="L80">		}catch (Exception e) {</span>
-<span class="nc" id="L81">			e.printStackTrace();</span>
-<span class="fc" id="L82">		}</span>
-<span class="fc" id="L83">	}</span>
+<span class="nc" id="L77">		}catch (Exception e) {</span>
+<span class="nc" id="L78">			e.printStackTrace();</span>
+<span class="fc" id="L79">		}</span>
+<span class="fc" id="L80">	}</span>
 
 	public void modificarPoi(Poi unPoi) {
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (repositorioContienePoi(unPoi.getNombre())) {</span>
-<span class="nc" id="L87">			Poi poiAux = listaDePois.stream().filter(poi -&gt; poi.getNombre().equalsIgnoreCase(unPoi.getNombre()))</span>
-<span class="nc" id="L88">					.findFirst().get();</span>
-<span class="nc" id="L89">			bajaPoi(poiAux);</span>
-<span class="nc" id="L90">			agregarPoi(unPoi);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (repositorioContienePoi(unPoi.getNombre())) {</span>
+<span class="nc" id="L84">			Poi poiAux = listaDePois.stream().filter(poi -&gt; poi.getNombre().equalsIgnoreCase(unPoi.getNombre()))</span>
+<span class="nc" id="L85">					.findFirst().get();</span>
+<span class="nc" id="L86">			bajaPoi(poiAux);</span>
+<span class="nc" id="L87">			agregarPoi(unPoi);</span>
 		}
-<span class="nc" id="L92">	}</span>
+<span class="nc" id="L89">	}</span>
 
 	private boolean repositorioContienePoi(String nombre) {
-<span class="fc" id="L95">		return listaDePois.stream().anyMatch(unPoi -&gt; unPoi.getNombre().equalsIgnoreCase(nombre));</span>
+<span class="fc" id="L92">		return listaDePois.stream().anyMatch(unPoi -&gt; unPoi.getNombre().equalsIgnoreCase(nombre));</span>
 	}
 
 	public List&lt;Poi&gt; busquedaLibre(String criterio) {
-<span class="fc" id="L99">		List&lt;Poi&gt; listaAux = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L96">		List&lt;Poi&gt; listaAux = new ArrayList&lt;&gt;();</span>
 		long diferencia;
-<span class="fc" id="L101">		LocalDateTime tiempoInicio = LocalDateTime.now();</span>
-<span class="fc" id="L102">		listaAux = filtrarPorCriterio(criterio);</span>
-<span class="fc" id="L103">		LocalDateTime tiempoFin = LocalDateTime.now();</span>
-<span class="fc" id="L104">		diferencia=calcularDiferencia(tiempoInicio, tiempoFin);</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if(diferencia&gt;tiempoEstipulado){</span>
-<span class="fc" id="L106">			listaObservers.stream().forEach(observer-&gt;observer.notificar(writer));</span>
+<span class="fc" id="L98">		LocalDateTime tiempoInicio = LocalDateTime.now();</span>
+<span class="fc" id="L99">		listaAux = filtrarPorCriterio(criterio);</span>
+<span class="fc" id="L100">		LocalDateTime tiempoFin = LocalDateTime.now();</span>
+<span class="fc" id="L101">		diferencia=calcularDiferencia(tiempoInicio, tiempoFin);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if(diferencia&gt;tiempoEstipulado){</span>
+<span class="fc" id="L103">			listaObservers.stream().forEach(observer-&gt;observer.notificar(writer));</span>
 		}
-<span class="fc" id="L108">		int cantBuscada= listaAux.size();</span>
-<span class="fc" id="L109">		listaObservers.stream().forEach(observer-&gt;observer.agregarBusqueda(diferencia,criterio,tiempoInicio,cantBuscada));</span>
-<span class="fc" id="L110">		listaDePois.addAll(listaAux);</span>
-<span class="fc" id="L111">		return listaAux;</span>
+<span class="fc" id="L105">		int cantBuscada= listaAux.size();</span>
+<span class="fc" id="L106">		listaObservers.stream().forEach(observer-&gt;observer.agregarBusqueda(diferencia,criterio,tiempoInicio,cantBuscada));</span>
+<span class="fc" id="L107">		listaDePois.addAll(listaAux);</span>
+<span class="fc" id="L108">		return listaAux;</span>
 	}
 	
 	public void obtenerReporteTotalPorFecha(){
-<span class="fc" id="L115">		listaObservers.stream().forEach(unObserver-&gt;unObserver.reporteTotalPorFecha(writer));</span>
-<span class="fc" id="L116">	}</span>
+<span class="nc" id="L112">		listaObservers.stream().forEach(unObserver-&gt;unObserver.reporteTotalPorFecha(writer));</span>
+<span class="nc" id="L113">	}</span>
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
-<span class="fc" id="L120">		poiAux = obtenerSegunCriterio(criterio);</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if(poiAux==null){</span>
-<span class="nc" id="L122">			return false;</span>
+<span class="fc" id="L117">		poiAux = obtenerSegunCriterio(criterio);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if(poiAux==null){</span>
+<span class="nc" id="L119">			return false;</span>
 		}
-<span class="fc" id="L124">		return poiAux.estaDisponible(fecha);</span>
+<span class="fc" id="L121">		return poiAux.estaDisponible(fecha);</span>
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, Servicio servicio) {
-<span class="fc" id="L128">		Poi poiAux = obtenerSegunCriterio(servicio.getNombre());</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		if(poiAux==null){</span>
-<span class="fc" id="L130">			return false;</span>
+<span class="fc" id="L125">		Poi poiAux = obtenerSegunCriterio(servicio.getNombre());</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if(poiAux==null){</span>
+<span class="fc" id="L127">			return false;</span>
 		}
-<span class="fc" id="L132">		return poiAux.estaDisponible(fecha, servicio);</span>
+<span class="fc" id="L129">		return poiAux.estaDisponible(fecha, servicio);</span>
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha) {
 		Poi poiAux;
-<span class="fc" id="L137">		poiAux=obtenerSegunCriterio(fecha.toString());</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		return poiAux!=null;</span>
+<span class="fc" id="L134">		poiAux=obtenerSegunCriterio(fecha.toString());</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		return poiAux!=null;</span>
 	}
 
 	public List&lt;Poi&gt; filtrarPorCriterio(String criterio) {
-<span class="fc" id="L142">		List&lt;Poi&gt; listaFiltrada = listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio))</span>
-<span class="fc" id="L143">				.collect(Collectors.toList());</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (listaFiltrada.isEmpty()) {</span>
-<span class="fc" id="L145">			listaAdaptadores.stream()</span>
-<span class="fc" id="L146">					.forEach(unComponente -&gt; listaFiltrada.addAll((unComponente.buscarPois(criterio))));</span>
+<span class="fc" id="L139">		List&lt;Poi&gt; listaFiltrada = listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio))</span>
+<span class="fc" id="L140">				.collect(Collectors.toList());</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (listaFiltrada.isEmpty()) {</span>
+<span class="fc" id="L142">			listaAdaptadores.stream()</span>
+<span class="fc" id="L143">					.forEach(unComponente -&gt; listaFiltrada.addAll((unComponente.buscarPois(criterio))));</span>
 		}
-<span class="fc" id="L148">		return listaFiltrada;</span>
+<span class="fc" id="L145">		return listaFiltrada;</span>
 	}
 
 	public boolean consultaCercania(String criterio, Point ubicacionSolicitada) {
 		Poi poi_aux;
-<span class="fc" id="L153">		poi_aux = obtenerSegunCriterio(criterio);</span>
-<span class="fc" id="L154">		return poi_aux.estaCerca(ubicacionSolicitada);</span>
+<span class="fc" id="L150">		poi_aux = obtenerSegunCriterio(criterio);</span>
+<span class="fc" id="L151">		return poi_aux.estaCerca(ubicacionSolicitada);</span>
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
 		try{
 		Poi poiAux;
-<span class="fc" id="L160">		poiAux=listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio)).findFirst().get();</span>
-<span class="fc" id="L161">		return poiAux;</span>
-<span class="fc" id="L162">		}catch(NoSuchElementException excepcion){</span>
-<span class="fc" id="L163">			return null;</span>
+<span class="fc" id="L157">		poiAux=listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio)).findFirst().get();</span>
+<span class="fc" id="L158">		return poiAux;</span>
+<span class="fc" id="L159">		}catch(NoSuchElementException excepcion){</span>
+<span class="fc" id="L160">			return null;</span>
 		}
 		
 	}
 	
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
-<span class="fc" id="L169">		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);</span>
-<span class="fc" id="L170">		return diferencia;</span>
+<span class="fc" id="L166">		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);</span>
+<span class="fc" id="L167">		return diferencia;</span>
 	}
 	public void reporteParcial(PrintWriter writer){
-<span class="fc" id="L173">		listaObservers.stream().forEach(observer-&gt;observer.reporteParcial(writer));</span>
-<span class="fc" id="L174">	}</span>
+<span class="nc" id="L170">		listaObservers.stream().forEach(observer-&gt;observer.reporteParcial(writer));</span>
+<span class="nc" id="L171">	}</span>
 	public void reporteTotal(PrintWriter writer){
-<span class="fc" id="L176">		listaObservers.stream().forEach(observer-&gt;observer.reporteTotal(writer));</span>
-<span class="fc" id="L177">	}</span>
+<span class="nc" id="L173">		listaObservers.stream().forEach(observer-&gt;observer.reporteTotal(writer));</span>
+<span class="nc" id="L174">	}</span>
 	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
