@@ -37,7 +37,7 @@ public class RepositorioDePois implements ObserverBusqueda{
 <span class="fc" id="L37">	}</span>
 
 	public String getNombre() {
-<span class="nc" id="L40">		return nombre;</span>
+<span class="fc" id="L40">		return nombre;</span>
 	}
 
 	public void agregarObserver(Observers unObserver){
@@ -109,8 +109,8 @@ public class RepositorioDePois implements ObserverBusqueda{
 	}
 	
 	public void obtenerReporteTotalPorFecha(){
-<span class="nc" id="L112">		listaObservers.stream().forEach(unObserver-&gt;unObserver.reporteTotalPorFecha(writer));</span>
-<span class="nc" id="L113">	}</span>
+<span class="fc" id="L112">		listaObservers.stream().forEach(unObserver-&gt;unObserver.reporteTotalPorFecha(writer));</span>
+<span class="fc" id="L113">	}</span>
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
@@ -167,11 +167,11 @@ public class RepositorioDePois implements ObserverBusqueda{
 <span class="fc" id="L167">		return diferencia;</span>
 	}
 	public void reporteParcial(PrintWriter writer){
-<span class="nc" id="L170">		listaObservers.stream().forEach(observer-&gt;observer.reporteParcial(writer));</span>
-<span class="nc" id="L171">	}</span>
+<span class="fc" id="L170">		listaObservers.stream().forEach(observer-&gt;observer.reporteParcial(writer));</span>
+<span class="fc" id="L171">	}</span>
 	public void reporteTotal(PrintWriter writer){
-<span class="nc" id="L173">		listaObservers.stream().forEach(observer-&gt;observer.reporteTotal(writer));</span>
-<span class="nc" id="L174">	}</span>
+<span class="fc" id="L173">		listaObservers.stream().forEach(observer-&gt;observer.reporteTotal(writer));</span>
+<span class="fc" id="L174">	}</span>
 	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -36,8 +36,8 @@ public class BancoTransformer implements Adaptadores{
 			// TODO Auto-generated catch block
 <span class="nc" id="L37">			e.printStackTrace();</span>
 		}
-<span class="nc" id="L39">		catch(NullPointerException e){</span>
-<span class="nc" id="L40">			e.printStackTrace();</span>
+<span class="fc" id="L39">		catch(NullPointerException e){</span>
+<span class="fc" id="L40">			e.printStackTrace();</span>
 <span class="pc" id="L41">		}</span>
 <span class="fc" id="L42">		return adaptarListaBancosExternos(listaParaAdaptar);</span>
 	}
@@ -61,8 +61,8 @@ public class BancoTransformer implements Adaptadores{
 	}
 
 	public List&lt;Poi&gt;buscarPois(String criterio){
-<span class="nc" id="L64">		String jsons= componente.getJsonBanco(criterio);</span>
-<span class="nc" id="L65">		return convertirJson(jsons);</span>
+<span class="fc" id="L64">		String jsons= componente.getJsonBanco(criterio);</span>
+<span class="fc" id="L65">		return convertirJson(jsons);</span>
 	}
 
 	public void setComponente(ComponenteBanco componenteBanco) {
