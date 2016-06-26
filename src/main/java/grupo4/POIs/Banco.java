@@ -1,5 +1,6 @@
 package grupo4.POIs;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,16 +8,15 @@ import java.util.Map;
 
 //import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 public class Banco extends Poi {
-	private Map<Integer,Horario> hashHorario;
-	private List<Servicio>listaServicios= new ArrayList<>();
+	private Map<DayOfWeek, Horario> hashHorario;
+	private List<Servicio> listaServicios = new ArrayList<>();
 
-	public Banco(Map<Integer,Horario> horarios,String nombre, List<String> palabrasClaves) {
-		super(nombre,palabrasClaves);
-		this.hashHorario= horarios;
+	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves) {
+		super(nombre, palabrasClaves);
+		this.hashHorario = horarios;
 	}
-	
+
 	public List<Servicio> getListaServicios() {
 		return listaServicios;
 	}
@@ -27,6 +27,6 @@ public class Banco extends Poi {
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
 		int dia = horaConsulta.getDayOfWeek().getValue();
-		return (hashHorario.get(dia)!=null)&&(hashHorario.get(dia).estaEnHorario(horaConsulta));
+		return (hashHorario.get(dia) != null) && (hashHorario.get(dia).estaEnHorario(horaConsulta));
 	}
 }

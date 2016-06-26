@@ -1,5 +1,6 @@
 package grupo4.ComponentesExternos;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,17 +45,16 @@ public class CGPAdapter implements Adaptadores{
 	}
 
 	private Servicio adaptarServicio(ServicioDTO unServicio) {
-		Servicio servAux = new Servicio(unServicio.getNombre(),adaptarHorarios(unServicio.getRangos()));
-		return servAux;
+		return new Servicio(unServicio.getNombre(),adaptarHorarios(unServicio.getRangos()));
 	}
 
-	private void cargarHorario(int dia,String horaDesde, String horaHasta,Map<Integer,Horario> hashHorariosAdaptados){
+	private void cargarHorario(DayOfWeek dia,String horaDesde, String horaHasta,Map<DayOfWeek,Horario> hashHorariosAdaptados){
 		Horario horario= new Horario(horaDesde, horaHasta);
 		hashHorariosAdaptados.put(dia, horario);
 		}
 	
-	private Map<Integer,Horario> adaptarHorarios(List<RangoServicioDTO> listaRangos) {
-		Map<Integer,Horario> hashHorariosAdapter= new HashMap<>();
+	private Map<DayOfWeek, Horario> adaptarHorarios(List<RangoServicioDTO> listaRangos) {
+		Map<DayOfWeek,Horario> hashHorariosAdapter= new HashMap<>();
 		listaRangos.stream()
 		.forEach(rango -> cargarHorario(rango.getDia(),
 				new LocalTime(rango.getHoraDesde(), rango.getMinutoDesde()).toString(),

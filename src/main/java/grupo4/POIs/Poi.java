@@ -11,39 +11,23 @@ public abstract class Poi {
 	protected String nombre;
 	private double x;
 	private double y;
-	private List<String> palabrasClaves=new ArrayList<>();
-	
+	private List<String> palabrasClaves = new ArrayList<>();
 
 	public Poi(String nombre, List<String> palabrasClaves) {
 		this.nombre = nombre;
-		this.palabrasClaves=palabrasClaves;
+		this.palabrasClaves = palabrasClaves;
 	}
 
 	public List<String> getPalabrasClaves() {
 		return palabrasClaves;
 	}
 
-	public void agregarPalabraClave(String palabraClave){
-			if (!poiContienePalabra(palabraClave)) {
-				palabrasClaves.add(palabraClave);
-			}
-			else{
-			throw new RuntimeException("Palabra clave ya existente");
-			}
+	public void agregarPalabraClave(String palabraClave) {
+		palabrasClaves.add(palabraClave);
 	}
-	
-	public void quitarPalabraClave(String palabraClave){
-			if (poiContienePalabra(palabraClave)) {
-				palabrasClaves.remove(palabraClave);
-			}
-			else{
-			throw new RuntimeException("Palabra clave no existente");
-			}
-		
-	}
-	
-	private boolean poiContienePalabra(String palabraClave) {
-		return palabrasClaves.stream().anyMatch(unaPalabra->unaPalabra.equalsIgnoreCase(palabraClave));
+
+	public void quitarPalabraClave(String palabraClave) {
+		palabrasClaves.remove(palabraClave);
 	}
 
 	public double getX() {
@@ -74,23 +58,16 @@ public abstract class Poi {
 		this.coordenadas = new Point(x, y);
 	}
 
-
 	public boolean estaCerca(Point unPunto) {
 		return (calcularDistancia(unPunto) < 0.5);
 	}
 
 	public boolean cumpleCriterio(String criterio) {
-		if(criterio.equalsIgnoreCase(nombre)){
-			return true;
-		}
-		else if(esUnaPalabraClave(criterio)){
-			return true;
-		}
-		return false;
+		return criterio.equalsIgnoreCase(nombre) || esUnaPalabraClave(criterio);
 	}
 
 	private boolean esUnaPalabraClave(String criterio) {
-		return palabrasClaves.stream().anyMatch(unaPalabraClave->unaPalabraClave.equalsIgnoreCase(criterio));
+		return palabrasClaves.stream().anyMatch(unaPalabraClave -> unaPalabraClave.equalsIgnoreCase(criterio));
 	}
 
 	public String getNombre() {
@@ -99,7 +76,7 @@ public abstract class Poi {
 
 	public abstract boolean estaDisponible(LocalDateTime fechaConsulta);
 
-	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio){
+	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio) {
 		return false;
 	}
 

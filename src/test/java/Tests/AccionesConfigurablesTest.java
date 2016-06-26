@@ -2,6 +2,7 @@ package Tests;
 
 
 import java.io.PrintWriter;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,12 +54,12 @@ public class AccionesConfigurablesTest {
 	private CGPAdapter adaptador;
 	private ComponenteBanco componenteBanco;
 	private BancoTransformer optimus;
-	private Map<Integer,Horario> hashMapBanco;
+	private Map<DayOfWeek,Horario> hashMapBanco;
 	private Horario horarioBanco;
 	private LocalDateTime fechaAux;
-	private Map<Integer,Horario> hashMapLocalComercialManiana;
-	private Map<Integer,Horario> hashMapLocalComercialTarde;
-	private Map<Integer,Horario> hashMapServicio; 
+	private Map<DayOfWeek,Horario> hashMapLocalComercialManiana;
+	private Map<DayOfWeek,Horario> hashMapLocalComercialTarde;
+	private Map<DayOfWeek,Horario> hashMapServicio; 
 	private RepositorioDeTerminales repo;
 	private PrintWriter writer;
 	private ObserverNotificador notificador;
@@ -80,7 +81,7 @@ public class AccionesConfigurablesTest {
 		
 		listaCentroAAdaptar=new ArrayList<>();
 		
-		rangoPrueba= new RangoServicioDTO(1,9,0,18,0);
+		rangoPrueba= new RangoServicioDTO(DayOfWeek.MONDAY,9,0,18,0);
 		
 		servicioPrueba=new ServicioDTO("Prueba");
 		servicioPrueba.agregarRango(rangoPrueba);
@@ -111,11 +112,11 @@ public class AccionesConfigurablesTest {
 		fechaAux= LocalDateTime.now();
 		
 		hashMapBanco = new HashMap<>();
-		hashMapBanco.put(fechaAux.getDayOfWeek().MONDAY.getValue(), horarioBanco);
-		hashMapBanco.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), horarioBanco);
-		hashMapBanco.put(fechaAux.getDayOfWeek().WEDNESDAY.getValue(), horarioBanco);
-		hashMapBanco.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), horarioBanco);
-		hashMapBanco.put(fechaAux.getDayOfWeek().FRIDAY.getValue(), horarioBanco);
+		hashMapBanco.put(DayOfWeek.MONDAY, horarioBanco);
+		hashMapBanco.put(DayOfWeek.TUESDAY, horarioBanco);
+		hashMapBanco.put(DayOfWeek.WEDNESDAY, horarioBanco);
+		hashMapBanco.put(DayOfWeek.THURSDAY, horarioBanco);
+		hashMapBanco.put(DayOfWeek.FRIDAY, horarioBanco);
 		palabrasClavesBanco=new ArrayList<>();
 		palabrasClavesBanco.add("Santander");
 		palabrasClavesBanco.add("Rio");
@@ -145,14 +146,14 @@ public class AccionesConfigurablesTest {
 		rubro = rubro.MUEBLERIA;
 		//local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00", 1, 6);
 		hashMapLocalComercialManiana=new HashMap<>();
-		hashMapLocalComercialManiana.put(fechaAux.getDayOfWeek().MONDAY.getValue(), new Horario("09:00", "13:00"));
-		hashMapLocalComercialManiana.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), new Horario("09:00", "13:00"));
-		hashMapLocalComercialManiana.put(fechaAux.getDayOfWeek().WEDNESDAY.getValue(), new Horario("09:00", "13:00"));
-		hashMapLocalComercialManiana.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("09:00", "13:00"));
+		hashMapLocalComercialManiana.put(DayOfWeek.MONDAY, new Horario("09:00", "13:00"));
+		hashMapLocalComercialManiana.put(DayOfWeek.TUESDAY, new Horario("09:00", "13:00"));
+		hashMapLocalComercialManiana.put(DayOfWeek.WEDNESDAY, new Horario("09:00", "13:00"));
+		hashMapLocalComercialManiana.put(DayOfWeek.THURSDAY, new Horario("09:00", "13:00"));
 		hashMapLocalComercialTarde=new HashMap<>();
-		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().MONDAY.getValue(), new Horario("14:00", "18:00"));
-		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), new Horario("14:00", "20:00"));
-		hashMapLocalComercialTarde.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("14:00", "19:00"));
+		hashMapLocalComercialTarde.put(DayOfWeek.MONDAY, new Horario("14:00", "18:00"));
+		hashMapLocalComercialTarde.put(DayOfWeek.TUESDAY, new Horario("14:00", "20:00"));
+		hashMapLocalComercialTarde.put(DayOfWeek.THURSDAY, new Horario("14:00", "19:00"));
 		palabrasClavesLocalComercial=new ArrayList<>();
 		palabrasClavesLocalComercial.add("Muebles");
 		palabrasClavesLocalComercial.add("Madera");
@@ -171,8 +172,8 @@ public class AccionesConfigurablesTest {
 		banco2.setCoordenadas();		
 
 		hashMapServicio= new HashMap<>();
-		hashMapServicio.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), new Horario("12:00", "13:30"));
-		hashMapServicio.put(fechaAux.getDayOfWeek().FRIDAY.getValue(), new Horario("12:00", "13:30"));
+		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
+		hashMapServicio.put(DayOfWeek.FRIDAY, new Horario("12:00", "13:30"));
 		Polygon comuna10 = new Polygon();
 		comuna10.add(new Point(-34.637466, -58.476939));
 		comuna10.add(new Point(-34.6350677, -58.4810659));

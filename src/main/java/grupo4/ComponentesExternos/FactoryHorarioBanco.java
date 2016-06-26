@@ -1,5 +1,6 @@
 package grupo4.ComponentesExternos;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,20 +8,22 @@ import java.util.Map;
 import grupo4.POIs.Horario;
 
 public class FactoryHorarioBanco {
-	private Map<Integer,Horario> hashMapBanco;
+	
+	//Les
+	private Map<DayOfWeek, Horario> hashMapBanco;
 	private Horario horarioBanco;
-	private LocalDateTime fechaAux;
-	public FactoryHorarioBanco(){
-	horarioBanco= new Horario("10:00", "15:00");
-	hashMapBanco = new HashMap<>();
-	fechaAux= LocalDateTime.now();
+
+	public FactoryHorarioBanco() {
+		horarioBanco = new Horario("10:00", "15:00");
+		hashMapBanco = new HashMap<>();
 	}
-	public Map<Integer,Horario> dameHorarioBanco(){
-	hashMapBanco.put(fechaAux.getDayOfWeek().MONDAY.getValue(), horarioBanco);
-	hashMapBanco.put(fechaAux.getDayOfWeek().TUESDAY.getValue(), horarioBanco);
-	hashMapBanco.put(fechaAux.getDayOfWeek().WEDNESDAY.getValue(), horarioBanco);
-	hashMapBanco.put(fechaAux.getDayOfWeek().THURSDAY.getValue(), horarioBanco);
-	hashMapBanco.put(fechaAux.getDayOfWeek().FRIDAY.getValue(), horarioBanco);
-	return hashMapBanco;
+
+	public Map<DayOfWeek, Horario> dameHorarioBanco() {
+		hashMapBanco.put(DayOfWeek.MONDAY, horarioBanco);
+		hashMapBanco.put(DayOfWeek.TUESDAY, horarioBanco);
+		hashMapBanco.put(DayOfWeek.WEDNESDAY, horarioBanco);
+		hashMapBanco.put(DayOfWeek.THURSDAY, horarioBanco);
+		hashMapBanco.put(DayOfWeek.FRIDAY, horarioBanco);
+		return hashMapBanco;
 	}
 }

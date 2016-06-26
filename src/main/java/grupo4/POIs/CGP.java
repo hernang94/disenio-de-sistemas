@@ -14,7 +14,7 @@ public class CGP extends Poi {
 	private Polygon comuna;
 
 	public CGP(Polygon comuna, String nombre, List<String> palabrasClaves) {
-		super(nombre,palabrasClaves);
+		super(nombre, palabrasClaves);
 		this.comuna = comuna;
 	}
 
@@ -30,21 +30,22 @@ public class CGP extends Poi {
 		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(fechaConsulta));
 	}
 
-	public boolean estaDisponible(LocalDateTime fechaConsulta,Servicio servicio) {
+	public boolean estaDisponible(LocalDateTime fechaConsulta, Servicio servicio) {
 		return encontrarServicio(servicio).estaDisponible(fechaConsulta);
 	}
 
 	public boolean cumpleCriterio(String criterio) {
-		try{
-			LocalDateTime aux= LocalDateTime.parse(criterio); 
+		try {
+			LocalDateTime aux = LocalDateTime.parse(criterio);
 			return this.estaDisponible(aux);
-		}catch(DateTimeParseException exc){
+		} catch (DateTimeParseException exc) {
 			return (criterio.equals(this.nombre)) || (servicios.stream()
 					.anyMatch(servicio -> servicio.getNombre().toLowerCase().contains(criterio.toLowerCase())));
 		}
 	}
-	
-	public Servicio encontrarServicio(Servicio servicio){
-		 return servicios.stream().filter(unServicio -> unServicio.getNombre().equalsIgnoreCase((servicio.getNombre()))).findFirst().get();
+
+	public Servicio encontrarServicio(Servicio servicio) {
+		return servicios.stream().filter(unServicio -> unServicio.getNombre().equalsIgnoreCase((servicio.getNombre())))
+				.findFirst().get();
 	}
 }

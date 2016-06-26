@@ -1,5 +1,6 @@
 package grupo4.POIs;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -7,14 +8,17 @@ import java.util.Map;
 import org.uqbar.geodds.Point;
 
 public class LocalComercial extends Poi {
+
 	private Rubro rubro;
-	private Map<Integer,Horario> hashManana;
-	private Map<Integer,Horario> hashTarde;
-	public LocalComercial(Rubro rubro,Map<Integer,Horario> horariosManiana, Map<Integer,Horario> horariosTarde,String nombre, List<String> palabrasClaves) {
-		super(nombre,palabrasClaves);
+	private Map<DayOfWeek, Horario> hashManana;
+	private Map<DayOfWeek, Horario> hashTarde;
+
+	public LocalComercial(Rubro rubro, Map<DayOfWeek, Horario> horariosManiana, Map<DayOfWeek, Horario> horariosTarde,
+			String nombre, List<String> palabrasClaves) {
+		super(nombre, palabrasClaves);
 		this.rubro = rubro;
-		this.hashManana=horariosManiana;
-		this.hashTarde=horariosTarde;
+		this.hashManana = horariosManiana;
+		this.hashTarde = horariosTarde;
 	}
 
 	public boolean estaCerca(Point unPunto) {
@@ -27,8 +31,8 @@ public class LocalComercial extends Poi {
 	}
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
-		int dia=horaConsulta.getDayOfWeek().getValue();
-		return evaluarDisponibilidad(dia,horaConsulta);
+		int dia = horaConsulta.getDayOfWeek().getValue();
+		return evaluarDisponibilidad(dia, horaConsulta);
 	}
 
 	private boolean evaluarDisponibilidad(int dia, LocalDateTime horaConsulta) {

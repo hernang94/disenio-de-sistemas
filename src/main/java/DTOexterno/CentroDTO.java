@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CentroDTO {
+	
 	private int comuna;
 	private String zonas;
 	private String director;
@@ -43,7 +44,8 @@ public class CentroDTO {
 	public List<ServicioDTO> getServiciosDTO() {
 		return serviciosDTO;
 	}
-	public void agregarServicio(ServicioDTO servicio){
+
+	public void agregarServicio(ServicioDTO servicio) {
 		this.serviciosDTO.add(servicio);
 	}
 

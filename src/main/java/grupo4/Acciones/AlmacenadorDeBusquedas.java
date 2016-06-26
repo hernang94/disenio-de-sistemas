@@ -15,22 +15,24 @@ public class AlmacenadorDeBusquedas implements Observers {
 		this.almacen = almacen;
 	}
 
-	public void notificar(PrintWriter writer){
-		
+	public void notificar(PrintWriter writer) {
+
 	}
 
-	public void agregarBusqueda(long diferencia, String criterio, LocalDateTime tiempoInicio, int size){
-		ResultadosDeBusquedas newResult=new ResultadosDeBusquedas(diferencia, criterio, tiempoInicio, size);
+	public void agregarBusqueda(long diferencia, String criterio, LocalDateTime tiempoInicio, int size) {
+		ResultadosDeBusquedas newResult = new ResultadosDeBusquedas(diferencia, criterio, tiempoInicio, size);
 		almacen.agregarBusqueda(newResult);
 	}
 
-	public void reporteTotalPorFecha(PrintWriter writer){
-		
+	public void reporteTotalPorFecha(PrintWriter writer) {
+
 	}
-	public void reporteParcial(PrintWriter writer){
-		
+
+	public void reporteParcial(PrintWriter writer) {
+
 	}
-	public void reporteTotal(PrintWriter writer){
-	
+
+	public void reporteTotal(PrintWriter writer) {
+
 	}
 }
