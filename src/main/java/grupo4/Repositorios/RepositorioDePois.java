@@ -1,23 +1,14 @@
 package grupo4.Repositorios;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
-import org.hamcrest.core.IsNull;
 import org.uqbar.geodds.Point;
-
 import grupo4.Acciones.ObserverBusqueda;
 import grupo4.Acciones.Observers;
 import grupo4.ComponentesExternos.Adaptadores;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -138,7 +129,7 @@ public class RepositorioDePois implements ObserverBusqueda {
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
-		return listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElseGet(null);
+		return listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);
 	}
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {

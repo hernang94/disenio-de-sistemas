@@ -11,7 +11,7 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.ResultadosDeBusquedas;
 
 public class ObserverReporter implements Observers {
-	
+
 	private RepositorioDeBusquedas almacen;
 
 	public ObserverReporter(RepositorioDeBusquedas almacen, PrintWriter writer) {

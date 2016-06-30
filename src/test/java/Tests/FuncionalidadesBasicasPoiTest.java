@@ -39,7 +39,6 @@ public class FuncionalidadesBasicasPoiTest {
 	private Rubro rubro;
 	private Map<DayOfWeek, Horario> hashMapBanco;
 	private Horario horarioBanco;
-	private LocalDateTime fechaAux;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
@@ -54,8 +53,6 @@ public class FuncionalidadesBasicasPoiTest {
 
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
 		horarioBanco = new Horario("10:00", "15:00");
-
-		fechaAux = LocalDateTime.now();
 
 		hashMapBanco = new HashMap<>();
 		hashMapBanco.put(DayOfWeek.MONDAY, horarioBanco);
@@ -282,7 +279,6 @@ public class FuncionalidadesBasicasPoiTest {
 		thrown.expect(RuntimeException.class);
 		thrown.expectMessage("Palabra clave ya existente");
 		banco.agregarPalabraClave("Fantino");
-		// La excepcion la muestra por consola, buscarla.
 	}
 
 	@Test
@@ -293,11 +289,9 @@ public class FuncionalidadesBasicasPoiTest {
 
 	@Test
 	public void quitarPalabraClaveNoExistente() {
-
 		thrown.expect(RuntimeException.class);
 		thrown.expectMessage("Palabra clave no existente");
 		banco.quitarPalabraClave("Ahorro");
-		// La excepcion la muestra por consola, buscarla.
 	}
 
 	@Test

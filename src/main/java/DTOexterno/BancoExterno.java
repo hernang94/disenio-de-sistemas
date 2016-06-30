@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BancoExterno {
-	
+
 	private String banco;
 	private double x;
 	private double y;

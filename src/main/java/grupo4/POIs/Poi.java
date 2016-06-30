@@ -23,11 +23,19 @@ public abstract class Poi {
 	}
 
 	public void agregarPalabraClave(String palabraClave) {
-		palabrasClaves.add(palabraClave);
+		if (!palabrasClaves.contains(palabraClave)) {
+			palabrasClaves.add(palabraClave);
+		} else {
+			throw new RuntimeException("Palabra clave ya existente");
+		}
 	}
 
 	public void quitarPalabraClave(String palabraClave) {
-		palabrasClaves.remove(palabraClave);
+		if (palabrasClaves.contains(palabraClave)) {
+			palabrasClaves.remove(palabraClave);
+		} else {
+			throw new RuntimeException("Palabra clave no existente");
+		}
 	}
 
 	public double getX() {

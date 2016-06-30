@@ -1,15 +1,13 @@
 package grupo4.ComponentesExternos;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 import grupo4.POIs.Horario;
 
 public class FactoryHorarioBanco {
-	
-	//Les
+
 	private Map<DayOfWeek, Horario> hashMapBanco;
 	private Horario horarioBanco;
 

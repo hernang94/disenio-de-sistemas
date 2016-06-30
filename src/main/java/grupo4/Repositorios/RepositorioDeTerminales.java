@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioDeTerminales {
-	
+
 	private List<RepositorioDePois> listaDeTerminales;
 	private PrintWriter writer;
 

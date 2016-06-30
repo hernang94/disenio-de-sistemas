@@ -1,11 +1,8 @@
 package Tests;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +10,9 @@ import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -70,7 +64,6 @@ public class CompenetesExternosTest {
 	private BancoTransformer megatron;
 	private Map<DayOfWeek, Horario> hashMapBanco;
 	private Horario horarioBanco;
-	private LocalDateTime fechaAux;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
@@ -128,8 +121,6 @@ public class CompenetesExternosTest {
 		dispositivoTactil.agregarObserver(reporter);
 		dispositivoTactil.agregarObserver(almacenador);
 		horarioBanco = new Horario("10:00", "15:00");
-
-		fechaAux = LocalDateTime.now();
 
 		hashMapBanco = new HashMap<>();
 		hashMapBanco.put(DayOfWeek.MONDAY, horarioBanco);
@@ -256,7 +247,6 @@ public class CompenetesExternosTest {
 		try {
 			response = cliente.execute(get);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		String stringResponse = EntityUtils.toString(response.getEntity());

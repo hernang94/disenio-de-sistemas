@@ -8,7 +8,7 @@ import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
 public class Comunas {
-	
+
 	public Map<Integer, Polygon> inicializarHashComunas() {
 		Map<Integer, Polygon> hashComunas = new HashMap<>();
 		hashComunas.put(1,
@@ -124,4 +124,3 @@ public class Comunas {
 		return hashComunas;
 	}
 }
-

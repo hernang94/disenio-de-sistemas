@@ -1,21 +1,14 @@
 package grupo4.ComponentesExternos;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import DTOexterno.BancoExterno;
 import grupo4.POIs.Banco;
-import grupo4.POIs.Horario;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 

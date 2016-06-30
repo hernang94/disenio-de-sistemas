@@ -2,8 +2,6 @@ package grupo4.Acciones;
 
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.ResultadosDeBusquedas;

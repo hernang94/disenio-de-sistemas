@@ -7,23 +7,25 @@ import java.util.List;
 import java.util.Set;
 
 public class RepositorioDeBusquedas {
-	private List <ResultadosDeBusquedas> listaBusquedas;
-	private Set<LocalDate>listafechas;
-	
+	private List<ResultadosDeBusquedas> listaBusquedas;
+	private Set<LocalDate> listafechas;
+
 	public RepositorioDeBusquedas() {
 		listaBusquedas = new ArrayList<>();
-		listafechas= new HashSet<>();
+		listafechas = new HashSet<>();
 	}
 
 	public void agregarBusqueda(ResultadosDeBusquedas newResult) {
-		listaBusquedas.add(newResult);	
+		listaBusquedas.add(newResult);
 		listafechas.add(newResult.getFechaDeBusqueda().toLocalDate());
 	}
-	public List <ResultadosDeBusquedas> getlistaBusquedas(){
+
+	public List<ResultadosDeBusquedas> getlistaBusquedas() {
 		return listaBusquedas;
 	}
-	public Set<LocalDate> getlistaFechas(){
+
+	public Set<LocalDate> getlistaFechas() {
 		return listafechas;
 	}
-	
+
 }

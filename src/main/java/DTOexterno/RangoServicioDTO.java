@@ -3,7 +3,7 @@ package DTOexterno;
 import java.time.DayOfWeek;
 
 public class RangoServicioDTO {
-	
+
 	private DayOfWeek dia;
 	private int horaDesde;
 	private int minutoDesde;

@@ -31,11 +31,11 @@ public class LocalComercial extends Poi {
 	}
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
-		int dia = horaConsulta.getDayOfWeek().getValue();
+		DayOfWeek dia = horaConsulta.getDayOfWeek();
 		return evaluarDisponibilidad(dia, horaConsulta);
 	}
 
-	private boolean evaluarDisponibilidad(int dia, LocalDateTime horaConsulta) {
+	private boolean evaluarDisponibilidad(DayOfWeek dia, LocalDateTime horaConsulta) {
 		boolean criterio1 = (hashManana.get(dia).estaEnHorario(horaConsulta));
 		boolean criterio2 = (hashTarde.get(dia).estaEnHorario(horaConsulta));
 		return (criterio1 || criterio2);

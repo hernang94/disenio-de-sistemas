@@ -1,7 +1,5 @@
 package grupo4.Acciones;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 

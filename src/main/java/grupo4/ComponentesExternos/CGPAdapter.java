@@ -18,10 +18,11 @@ import grupo4.POIs.Horario;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 
-public class CGPAdapter implements Adaptadores{
+public class CGPAdapter implements Adaptadores {
 
 	private Map<Integer, Polygon> hashComunas;
 	private ComponenteCGPS componente;
+
 	public void setComponente(ComponenteCGPS componente) {
 		this.componente = componente;
 	}
@@ -35,31 +36,33 @@ public class CGPAdapter implements Adaptadores{
 	}
 
 	private Poi adaptar(CentroDTO unCentro) {
-		Comunas comunaAux= new Comunas();
-		hashComunas= comunaAux.inicializarHashComunas();
-		List<String> palabrasClavesAux= new ArrayList<>();
-		CGP aux = new CGP(hashComunas.get(unCentro.getComuna()),Integer.toString(unCentro.getComuna()),palabrasClavesAux);
+		Comunas comunaAux = new Comunas();
+		hashComunas = comunaAux.inicializarHashComunas();
+		List<String> palabrasClavesAux = new ArrayList<>();
+		CGP aux = new CGP(hashComunas.get(unCentro.getComuna()), Integer.toString(unCentro.getComuna()),
+				palabrasClavesAux);
 		unCentro.getServiciosDTO().stream().forEach(servicio -> aux.addServicio(adaptarServicio(servicio)));
 		return aux;
 
 	}
 
 	private Servicio adaptarServicio(ServicioDTO unServicio) {
-		return new Servicio(unServicio.getNombre(),adaptarHorarios(unServicio.getRangos()));
+		return new Servicio(unServicio.getNombre(), adaptarHorarios(unServicio.getRangos()));
 	}
 
-	private void cargarHorario(DayOfWeek dia,String horaDesde, String horaHasta,Map<DayOfWeek,Horario> hashHorariosAdaptados){
-		Horario horario= new Horario(horaDesde, horaHasta);
+	private void cargarHorario(DayOfWeek dia, String horaDesde, String horaHasta,
+			Map<DayOfWeek, Horario> hashHorariosAdaptados) {
+		Horario horario = new Horario(horaDesde, horaHasta);
 		hashHorariosAdaptados.put(dia, horario);
-		}
-	
+	}
+
 	private Map<DayOfWeek, Horario> adaptarHorarios(List<RangoServicioDTO> listaRangos) {
-		Map<DayOfWeek,Horario> hashHorariosAdapter= new HashMap<>();
+		Map<DayOfWeek, Horario> hashHorariosAdapter = new HashMap<>();
 		listaRangos.stream()
-		.forEach(rango -> cargarHorario(rango.getDia(),
-				new LocalTime(rango.getHoraDesde(), rango.getMinutoDesde()).toString(),
-				new LocalTime(rango.getHoraHasta(), rango.getMinutoHasta()).toString(),hashHorariosAdapter));
+				.forEach(rango -> cargarHorario(rango.getDia(),
+						new LocalTime(rango.getHoraDesde(), rango.getMinutoDesde()).toString(),
+						new LocalTime(rango.getHoraHasta(), rango.getMinutoHasta()).toString(), hashHorariosAdapter));
 		return hashHorariosAdapter;
 	}
-	
+
 }

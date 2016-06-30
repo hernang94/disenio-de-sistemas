@@ -8,8 +8,7 @@ public class ResultadosDeBusquedas {
 	private String fraseBuscada;
 	private LocalDateTime fechaDeBusqueda;
 	private int cantidadDeResultados;
-	
-	
+
 	public ResultadosDeBusquedas(long tiempoDeBusqueda, String fraseBuscada, LocalDateTime fechaDeBusqueda,
 			int cantidadDeResultados) {
 		super();
@@ -19,26 +18,20 @@ public class ResultadosDeBusquedas {
 		this.cantidadDeResultados = cantidadDeResultados;
 	}
 
-
 	public long getTiempoDeBusqueda() {
 		return tiempoDeBusqueda;
 	}
-
 
 	public String getFraseBuscada() {
 		return fraseBuscada;
 	}
 
-
 	public LocalDateTime getFechaDeBusqueda() {
 		return fechaDeBusqueda;
 	}
 
-
 	public int getCantidadDeResultados() {
 		return cantidadDeResultados;
 	}
-	
-	
-	
+
 }

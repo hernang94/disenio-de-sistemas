@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.uqbar.geodds.Point;
 
-public class Parada extends Poi {	
-	
+public class Parada extends Poi {
+
 	public Parada(String nombre, List<String> palabrasClaves) {
 		super(nombre, palabrasClaves);
 	}
