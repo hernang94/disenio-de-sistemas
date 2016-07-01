@@ -57,7 +57,7 @@ public class RepositorioDePois implements ObserverBusqueda {
 	}
 
 	public void bajaPoi(Poi unPoi) {
-		if (!repositorioContienePoi(unPoi.getNombre())) {
+		if (repositorioContienePoi(unPoi.getNombre())) {
 			listaDePois.remove(unPoi);
 		} else {
 			throw new RuntimeException("No existe el Poi");

@@ -2,21 +2,18 @@ package Tests;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
@@ -32,6 +29,7 @@ import grupo4.ComponentesExternos.BancoTransformer;
 import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
+import grupo4.ComponentesExternos.Http;
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
@@ -77,9 +75,8 @@ public class CompenetesExternosTest {
 	private List<String> palabrasClavesCGP;
 	private List<String> palabrasClavesParada;
 	private List<String> palabrasClavesLocalComercial;
-	private HttpClient cliente;
-	private HttpGet get;
 	private BancoExterno bancoExterno;
+	private Http http;
 
 	@SuppressWarnings("static-access")
 
@@ -215,8 +212,7 @@ public class CompenetesExternosTest {
 		repo = new RepositorioDeTerminales(writer);
 		repo.agregarTerminal(dispositivoTactil);
 
-		cliente = new DefaultHttpClient();
-		get = new HttpGet("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
+		http = new Http("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
 
 	}
 
@@ -240,17 +236,25 @@ public class CompenetesExternosTest {
 		Assert.assertTrue(adaptador.adaptarObjetos(listaCentroAAdaptar).get(0).getNombre().equalsIgnoreCase("9"));
 	}
 
-	@Test
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+	
+	@Test	
 	public void pruebaConvertirJson() throws ParseException, IOException {
 		List<Poi> listAux = new ArrayList<>();
-		HttpResponse response = null;
-		try {
-			response = cliente.execute(get);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		String stringResponse = EntityUtils.toString(response.getEntity());
-		listAux.addAll(optimus.convertirJson(stringResponse));
+		listAux.addAll(optimus.convertirJson(http.obtenerString()));
 		Assert.assertEquals("Banco de la Plaza", listAux.get(0).getNombre());
 	}
+/*	@Test
+	public void pruebaConvertirJsonFalla() throws org.apache.http.ParseException, IOException{
+		Http falla = new Http("");
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("Error IOException");
+		thrown.expectMessage("Error ClientProtocolException");
+		List<Poi> listAux = new ArrayList<>();
+		listAux.addAll(optimus.convertirJson(falla.obtenerString()));
+		
+	}
+	*/
+	
 }

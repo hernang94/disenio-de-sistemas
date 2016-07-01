@@ -1,7 +1,6 @@
 package grupo4.POIs;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.uqbar.geodds.Point;
@@ -11,11 +10,17 @@ public abstract class Poi {
 	protected String nombre;
 	private double x;
 	private double y;
-	private List<String> palabrasClaves = new ArrayList<>();
+	private List<String> palabrasClaves;
 
 	public Poi(String nombre, List<String> palabrasClaves) {
 		this.nombre = nombre;
 		this.palabrasClaves = palabrasClaves;
+	}
+	public void setPalabrasClaves(List<String> palabrasClaves){
+		this.palabrasClaves=palabrasClaves;
+	}
+	public void setNombre(String nombre){
+		this.nombre=nombre;
 	}
 
 	public List<String> getPalabrasClaves() {

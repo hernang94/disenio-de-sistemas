@@ -191,6 +191,14 @@ public class FuncionalidadesBasicasPoiTest {
 	public void encuentraNombrePeroNoCriterioLocalComercial() {
 		Assert.assertTrue(local.encuentraNombre("Blaisten"));
 	}
+	@Test
+	public void encuentraNombrePorRubroLocalComercial(){
+		Assert.assertTrue(local.encuentraNombre(rubro.getNombre()));
+	}
+	@Test
+	public void encuentraNombrePorPalabraClaveLocalComercial(){
+		Assert.assertTrue(local.encuentraNombre("Muebles"));
+	}
 
 	@Test
 	public void estaDisponibleCGPSinServicio() {
@@ -202,7 +210,11 @@ public class FuncionalidadesBasicasPoiTest {
 		boolean a = dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 17, 00), "Blaisten");
 		Assert.assertTrue(a);
 	}
-
+	@Test
+	public void estaDisponibleLocalManana(){
+		boolean a = dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "Blaisten");
+		Assert.assertTrue(a);
+	}
 	@Test
 	public void pruebaHorario() {
 		Horario nuevo = new Horario("09:00", "18:00");
@@ -315,11 +327,19 @@ public class FuncionalidadesBasicasPoiTest {
 	}
 
 	@Test
+	public void quitarPoiExistente(){
+		dispositivoTactil.bajaPoi(parada114);
+		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
+	}
+	@Test
 	public void quitarPoiNoExistente() {
 		List<String> palabrasClaves = new ArrayList<>();
 		palabrasClaves.add("Ramal Quilmes");
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("No existe el Poi");
 		Parada parada85 = new Parada("parada 85", palabrasClaves);
 		dispositivoTactil.bajaPoi(parada85);
+		
 	}
 
 	@Test
@@ -338,18 +358,4 @@ public class FuncionalidadesBasicasPoiTest {
 		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00)));
 	}
 
-	/*
-	 * @Test public void pruebaModificacionPoi(){ List<String>
-	 * palabrasClavesParada=new ArrayList<>();
-	 * palabrasClavesParada.add("Bondi"); palabrasClavesParada.add("UTN");
-	 * palabrasClavesParada.add("Colectivo"); palabrasClavesParada.add("Rojo");
-	 * palabrasClavesParada.add("Vidrios polarizados");
-	 * palabrasClavesParada.add("114"); palabrasClavesParada.add(
-	 * "Aire Acondicionado"); Parada parada114x2 = new
-	 * Parada("114",palabrasClavesParada); parada114x2.setX(-34.6417364);
-	 * parada114x2.setY(-58.4792636); parada114x2.setCoordenadas();
-	 * dispositivoTactil.modificarPoi(parada114x2);
-	 * dispositivoTactil.filtrarPorCriterio(criterio)
-	 * Assert.assertTrue(condition); }
-	 */
 }

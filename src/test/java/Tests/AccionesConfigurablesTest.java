@@ -56,7 +56,6 @@ public class AccionesConfigurablesTest {
 	private BancoTransformer optimus;
 	private Map<DayOfWeek,Horario> hashMapBanco;
 	private Horario horarioBanco;
-	private LocalDateTime fechaAux;
 	private Map<DayOfWeek,Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek,Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek,Horario> hashMapServicio; 
@@ -108,8 +107,6 @@ public class AccionesConfigurablesTest {
 		dispositivoTactil.agregarObserver(reporter);
 		dispositivoTactil.agregarObserver(almacenador);	
 		horarioBanco= new Horario("10:00", "15:00");
-		
-		fechaAux= LocalDateTime.now();
 		
 		hashMapBanco = new HashMap<>();
 		hashMapBanco.put(DayOfWeek.MONDAY, horarioBanco);
