@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,18 +42,16 @@ public class FuncionalidadesBasicasPoiTest {
 	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
-
+	
 	@SuppressWarnings("static-access")
-
+	
 	@Before
-	public void init() {
-		// Arreglar los parametros
+	public void init(){
 		dispositivoTactil = RepositorioDePois.getInstancia();
 		
-
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
+		
 		horarioBanco = new Horario("10:00", "15:00");
-
 		hashMapBanco = new HashMap<>();
 		hashMapBanco.put(DayOfWeek.MONDAY, horarioBanco);
 		hashMapBanco.put(DayOfWeek.TUESDAY, horarioBanco);
@@ -86,8 +85,6 @@ public class FuncionalidadesBasicasPoiTest {
 		parada114.setCoordenadas();
 
 		rubro = rubro.MUEBLERIA;
-		// local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00",
-		// 1, 6);
 		hashMapLocalComercialManiana = new HashMap<>();
 		hashMapLocalComercialManiana.put(DayOfWeek.MONDAY, new Horario("09:00", "13:00"));
 		hashMapLocalComercialManiana.put(DayOfWeek.TUESDAY, new Horario("09:00", "13:00"));
@@ -136,14 +133,24 @@ public class FuncionalidadesBasicasPoiTest {
 		palabrasClavesCGP.add("All Boys");
 		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP);
 		cgp.addServicio(timbrado);
-
-		/*dispositivoTactil.agregarPoi(banco);
+		
+		dispositivoTactil.agregarPoi(banco);
 		dispositivoTactil.agregarPoi(banco2);
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
-		dispositivoTactil.agregarPoi(cgp);*/
+		dispositivoTactil.agregarPoi(cgp);
+		
 	}
-
+	
+	@After
+	public void fin(){
+		dispositivoTactil.bajaPoi(banco);
+		dispositivoTactil.bajaPoi(banco2);
+		dispositivoTactil.bajaPoi(parada114);
+		dispositivoTactil.bajaPoi(local);
+		dispositivoTactil.bajaPoi(cgp);
+	}
+	
 	@Test
 	public void cercaniaAParada() {
 		Assert.assertFalse(dispositivoTactil.consultaCercania("114", unPuntoABuscar));

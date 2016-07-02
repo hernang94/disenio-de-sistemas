@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -202,6 +203,14 @@ public class ObserversTest {
 		repoDePois.agregarPoi(cgp);
 	}
 	
+	@After
+	public void fin(){
+		repoDePois.bajaPoi(banco);
+		repoDePois.bajaPoi(banco2);
+		repoDePois.bajaPoi(parada114);
+		repoDePois.bajaPoi(local);
+		repoDePois.bajaPoi(cgp);		
+	}
 	
 	@Test
 	public void notificadorArministrador(){
