@@ -6,20 +6,24 @@ import org.uqbar.geodds.Point;
 import grupo4.ComponentesExternos.Adaptadores;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class RepositorioDePois{
-
+	private static RepositorioDePois instancia= new RepositorioDePois();
 	private String nombre;
 	private List<Poi> listaDePois = new ArrayList<>();
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
-	private PrintWriter writer;
 
-	public RepositorioDePois(String unNombre, PrintWriter writer) {
-		this.nombre = unNombre;
-		this.writer = writer;
+	private RepositorioDePois(){
+	}
+	
+	public static RepositorioDePois getInstancia() {
+		return instancia;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public String getNombre() {

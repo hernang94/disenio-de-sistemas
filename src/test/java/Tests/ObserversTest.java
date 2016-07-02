@@ -22,10 +22,12 @@ import DTOexterno.ServicioDTO;
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.ObserverReporter;
+import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.BancoTransformer;
 import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
+import grupo4.ComponentesExternos.EmailSender;
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
@@ -35,11 +37,10 @@ import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
-import grupo4.Repositorios.RepositorioDeTerminales;
 
 public class ObserversTest {
 	private List<CentroDTO> listaCentroAAdaptar;
-	private RepositorioDePois dispositivoTactil;
+	private RepositorioDePois repoDePois;
 	private Parada parada114;
 	private Servicio timbrado;
 	private CentroDTO centroPrueba;
@@ -63,19 +64,28 @@ public class ObserversTest {
 	private ObserverNotificador notificador;
 	private ObserverReporter reporter;
 	private ObserverAlmacenador almacenador;
-	private ObserverAlmacenador almacen;
 	private List<String> palabrasClavesBanco;
 	private List<String> palabrasClavesCGP;
 	private List<String> palabrasClavesParada;
 	private List<String> palabrasClavesLocalComercial;
+	private Usuario terminal;
+	private EmailSender notificadorMail;
+	private RepositorioDeBusquedas repositorioBusquedas;
 	@SuppressWarnings("static-access")
 	
 	@Before
 	public void init() {
-		almacen= new ObserverAlmacenador();
-		notificador=new ObserverNotificador(0);//tiempoEstipulado=0
-		reporter=new ObserverReporter(almacen,writer);
-		almacenador= new ObserverAlmacenador(almacen);
+		terminal = new Usuario("Terminal Abasto", repoDePois);
+		notificadorMail = Mockito.mock(EmailSender.class);
+		repositorioBusquedas = new RepositorioDeBusquedas();
+		
+		notificador=new ObserverNotificador(0,notificadorMail);//tiempoEstipulado=0
+		reporter=new ObserverReporter(repositorioBusquedas);
+		almacenador= new ObserverAlmacenador(repositorioBusquedas);
+		
+		terminal.agregarObserver(notificador);
+		terminal.agregarObserver(reporter);
+		terminal.agregarObserver(almacenador);
 		
 		listaCentroAAdaptar=new ArrayList<>();
 		
@@ -99,12 +109,9 @@ public class ObserversTest {
 		optimus = new BancoTransformer();
 		optimus.setComponente(componenteBanco);
 		
-		dispositivoTactil = new RepositorioDePois("terminalAbasto",writer);
-		dispositivoTactil.agregarAdaptador(adaptador);
-		dispositivoTactil.agregarAdaptador(optimus);
-		dispositivoTactil.agregarObserver(notificador);
-		dispositivoTactil.agregarObserver(reporter);
-		dispositivoTactil.agregarObserver(almacenador);	
+		repoDePois = RepositorioDePois.getInstancia();
+		repoDePois.agregarAdaptador(adaptador);
+		repoDePois.agregarAdaptador(optimus);
 		horarioBanco= new Horario("10:00", "15:00");
 		
 		hashMapBanco = new HashMap<>();
@@ -140,7 +147,6 @@ public class ObserversTest {
 		parada114.setCoordenadas();
 
 		rubro = rubro.MUEBLERIA;
-		//local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00", 1, 6);
 		hashMapLocalComercialManiana=new HashMap<>();
 		hashMapLocalComercialManiana.put(DayOfWeek.MONDAY, new Horario("09:00", "13:00"));
 		hashMapLocalComercialManiana.put(DayOfWeek.TUESDAY, new Horario("09:00", "13:00"));
@@ -189,43 +195,44 @@ public class ObserversTest {
 		cgp = new CGP(comuna10,"CGP10",palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
-		dispositivoTactil.agregarPoi(banco);
-		dispositivoTactil.agregarPoi(banco2);
-		dispositivoTactil.agregarPoi(parada114);
-		dispositivoTactil.agregarPoi(local);
-		dispositivoTactil.agregarPoi(cgp);
+		repoDePois.agregarPoi(banco);
+		repoDePois.agregarPoi(banco2);
+		repoDePois.agregarPoi(parada114);
+		repoDePois.agregarPoi(local);
+		repoDePois.agregarPoi(cgp);
 	}
 	
 	
 	@Test
 	public void notificadorArministrador(){
-		dispositivoTactil.busquedaLibre("HSBC");
-		Mockito.verify(writer).println("Mail enviado al adminisitrador");
+		terminal.busquedaLibre("HSBC");
+		Mockito.verify(notificadorMail).enviarMail();
 	}
 	
 	@Test
 	public void calcularDiferencia(){
-		Assert.assertEquals(10, dispositivoTactil.calcularDiferencia(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));
+		Assert.assertEquals(10, terminal.calcularDiferencia(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));
 	}
 	
 	@Test
 	public void reportarCantidadBusquedas(){
-		dispositivoTactil.busquedaLibre("muebleria");
-		dispositivoTactil.obtenerReporteTotalPorFecha();
-		Mockito.verify(writer).println("Fecha\t\tCantidad Total");	
+		terminal.busquedaLibre("muebleria");
+		terminal.busquedaLibre("Santander Rio");
+		terminal.obtenerReporteTotalPorFecha();
+		Assert.assertEquals(1,repositorioBusquedas.getListaFechaCant().get(0).getCantidad());
 	}
 	
-	@Test
+	/*@Test
 	public void reportePorTerminal(){
-		dispositivoTactil.busquedaLibre("muebleria");
+		repoDePois.busquedaLibre("muebleria");
 		repo.reporteTotalporTerminal();
 		Mockito.verify(writer).println("Usuario\t\tCantidad Resultados Totales");
-	}
+	}*/
 	
 	@Test
 	public void reporteParcialesporTerminal(){
-		dispositivoTactil.busquedaLibre("muebleria");
-		repo.reporteParcialporTerminal();
-		Mockito.verify(writer).println("Usuario: terminalAbasto");
+		terminal.busquedaLibre("muebleria");
+		terminal.reporteParcial();
+		Assert.assertTrue(repositorioBusquedas.getlistaBusquedas().contains(1));
 	}
 }

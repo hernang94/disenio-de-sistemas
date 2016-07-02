@@ -13,7 +13,7 @@ public class Usuario {
 
 	private String terminal;
 	private RepositorioDePois repositorio;
-	private List<Observers> observers;
+	private List<Observers> observers = new ArrayList<>();
 	
 	public Usuario(String terminal, RepositorioDePois repositorio) {
 		this.terminal = terminal;

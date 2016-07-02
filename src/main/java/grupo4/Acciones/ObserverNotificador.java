@@ -1,26 +1,23 @@
 package grupo4.Acciones;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import grupo4.ComponentesExternos.EmailSender;
 
-public class ObserverNotificador implements Observers,EmailSender {
+public class ObserverNotificador implements Observers {
 	
 	private long tiempoEstipulado;
+	private EmailSender notificador;
 	
-	public ObserverNotificador(long tiempoEstipulado) {
+	public ObserverNotificador(long tiempoEstipulado, EmailSender notificador) {
 		this.tiempoEstipulado = tiempoEstipulado;
+		this.notificador= notificador;
 	}
 
 	public void evaluarNotificacion(long diferencia){
 		if(diferencia > tiempoEstipulado){
-			enviarMail();
+			notificador.enviarMail();
 		}
-	}
-	
-	public void enviarMail(){
-		
 	}
 
 	public void agregarBusqueda( String criterio,long diferencia, LocalDateTime tiempoInicio, int size) {

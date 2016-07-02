@@ -1,7 +1,6 @@
 package Tests;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -22,9 +21,6 @@ import DTOexterno.BancoExterno;
 import DTOexterno.CentroDTO;
 import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
-import grupo4.Acciones.ObserverAlmacenador;
-import grupo4.Acciones.ObserverNotificador;
-import grupo4.Acciones.ObserverReporter;
 import grupo4.ComponentesExternos.BancoTransformer;
 import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
@@ -38,7 +34,6 @@ import grupo4.POIs.Parada;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
-import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 
 public class ComponentesExternosTest {
@@ -64,11 +59,6 @@ public class ComponentesExternosTest {
 	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
-	private PrintWriter writer;
-	private ObserverNotificador notificador;
-	private ObserverReporter reporter;
-	private ObserverAlmacenador almacenador;
-	private ObserverAlmacenador almacen;
 	private List<String> palabrasClavesBanco;
 	private List<String> palabrasClavesCGP;
 	private List<String> palabrasClavesParada;
@@ -80,20 +70,13 @@ public class ComponentesExternosTest {
 
 	@Before
 	public void init() {
-		almacen = new ObserverAlmacenador();
-		notificador = new ObserverNotificador(0);//tiempoEstipulado=0
-		reporter = new ObserverReporter(almacen, writer);
-		almacenador = new ObserverAlmacenador(almacen);
-
 		listaCentroAAdaptar = new ArrayList<>();
 
 		rangoPrueba = new RangoServicioDTO(DayOfWeek.MONDAY, 9, 0, 18, 0);
 
 		servicioPrueba = new ServicioDTO("Prueba");
 		servicioPrueba.agregarRango(rangoPrueba);
-
-		writer = Mockito.mock(PrintWriter.class);
-
+		
 		megatron = Mockito.mock(BancoTransformer.class);
 		megatron.setComponente(componenteBanco);
 
@@ -109,12 +92,9 @@ public class ComponentesExternosTest {
 		optimus = new BancoTransformer();
 		optimus.setComponente(componenteBanco);
 
-		dispositivoTactil = new RepositorioDePois("terminalAbasto", writer);
+		dispositivoTactil = RepositorioDePois.getInstancia();
 		dispositivoTactil.agregarAdaptador(adaptador);
 		dispositivoTactil.agregarAdaptador(megatron);
-		dispositivoTactil.agregarObserver(notificador);
-		dispositivoTactil.agregarObserver(reporter);
-		dispositivoTactil.agregarObserver(almacenador);
 		horarioBanco = new Horario("10:00", "15:00");
 
 		hashMapBanco = new HashMap<>();
@@ -201,12 +181,12 @@ public class ComponentesExternosTest {
 		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
-		dispositivoTactil.agregarPoi(banco);
+		/*dispositivoTactil.agregarPoi(banco);
 		dispositivoTactil.agregarPoi(banco2);
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
-
+		 */
 
 		http = new Http("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
 

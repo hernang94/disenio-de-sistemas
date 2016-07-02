@@ -1,6 +1,5 @@
 package Tests;
 
-import java.io.PrintWriter;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,14 +41,14 @@ public class FuncionalidadesBasicasPoiTest {
 	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
-	private PrintWriter writer;
 
 	@SuppressWarnings("static-access")
 
 	@Before
 	public void init() {
 		// Arreglar los parametros
-		dispositivoTactil = new RepositorioDePois("terminalAbasto",writer);
+		dispositivoTactil = RepositorioDePois.getInstancia();
+		
 
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
 		horarioBanco = new Horario("10:00", "15:00");
@@ -138,11 +137,11 @@ public class FuncionalidadesBasicasPoiTest {
 		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
-		dispositivoTactil.agregarPoi(banco);
+		/*dispositivoTactil.agregarPoi(banco);
 		dispositivoTactil.agregarPoi(banco2);
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
-		dispositivoTactil.agregarPoi(cgp);
+		dispositivoTactil.agregarPoi(cgp);*/
 	}
 
 	@Test

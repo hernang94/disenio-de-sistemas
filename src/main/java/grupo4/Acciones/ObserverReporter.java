@@ -14,7 +14,7 @@ public class ObserverReporter implements Observers {
 
 	private RepositorioDeBusquedas almacen;
 
-	public ObserverReporter(RepositorioDeBusquedas almacen, PrintWriter writer) {
+	public ObserverReporter(RepositorioDeBusquedas almacen) {
 		this.almacen = almacen;
 	}
 	
