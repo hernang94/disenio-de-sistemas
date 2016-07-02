@@ -19,7 +19,7 @@ import org.uqbar.geodds.Polygon;
 import DTOexterno.CentroDTO;
 import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
-import grupo4.Acciones.AlmacenadorDeBusquedas;
+import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.ObserverReporter;
 import grupo4.ComponentesExternos.BancoTransformer;
@@ -37,7 +37,7 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeTerminales;
 
-public class AccionesConfigurablesTest {
+public class ObserversTest {
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
@@ -59,12 +59,11 @@ public class AccionesConfigurablesTest {
 	private Map<DayOfWeek,Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek,Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek,Horario> hashMapServicio; 
-	private RepositorioDeTerminales repo;
 	private PrintWriter writer;
 	private ObserverNotificador notificador;
 	private ObserverReporter reporter;
-	private AlmacenadorDeBusquedas almacenador;
-	private RepositorioDeBusquedas almacen;
+	private ObserverAlmacenador almacenador;
+	private ObserverAlmacenador almacen;
 	private List<String> palabrasClavesBanco;
 	private List<String> palabrasClavesCGP;
 	private List<String> palabrasClavesParada;
@@ -73,10 +72,10 @@ public class AccionesConfigurablesTest {
 	
 	@Before
 	public void init() {
-		almacen= new RepositorioDeBusquedas();
-		notificador=new ObserverNotificador();
+		almacen= new ObserverAlmacenador();
+		notificador=new ObserverNotificador(0);//tiempoEstipulado=0
 		reporter=new ObserverReporter(almacen,writer);
-		almacenador= new AlmacenadorDeBusquedas(almacen);
+		almacenador= new ObserverAlmacenador(almacen);
 		
 		listaCentroAAdaptar=new ArrayList<>();
 		
@@ -100,7 +99,7 @@ public class AccionesConfigurablesTest {
 		optimus = new BancoTransformer();
 		optimus.setComponente(componenteBanco);
 		
-		dispositivoTactil = new RepositorioDePois("terminalAbasto",-1,writer);
+		dispositivoTactil = new RepositorioDePois("terminalAbasto",writer);
 		dispositivoTactil.agregarAdaptador(adaptador);
 		dispositivoTactil.agregarAdaptador(optimus);
 		dispositivoTactil.agregarObserver(notificador);
@@ -195,9 +194,6 @@ public class AccionesConfigurablesTest {
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
-		
-		repo=new RepositorioDeTerminales(writer);
-		repo.agregarTerminal(dispositivoTactil);
 	}
 	
 	

@@ -11,7 +11,6 @@ public class ResultadosDeBusquedas {
 
 	public ResultadosDeBusquedas(long tiempoDeBusqueda, String fraseBuscada, LocalDateTime fechaDeBusqueda,
 			int cantidadDeResultados) {
-		super();
 		this.tiempoDeBusqueda = tiempoDeBusqueda;
 		this.fraseBuscada = fraseBuscada;
 		this.fechaDeBusqueda = fechaDeBusqueda;

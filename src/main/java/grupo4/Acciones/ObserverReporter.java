@@ -17,40 +17,25 @@ public class ObserverReporter implements Observers {
 	public ObserverReporter(RepositorioDeBusquedas almacen, PrintWriter writer) {
 		this.almacen = almacen;
 	}
-
-	public void notificar(PrintWriter writer) {
+	
+	public void evaluarNotificacion(long diferencia){
+		
+	}
+	
+	public void agregarBusqueda(String criterio, long diferencia, LocalDateTime tiempoInicio, int size) {
 
 	}
 
-	public void agregarBusqueda(long diferencia, String criterio, LocalDateTime tiempoInicio, int size) {
-
+	public void reporteTotalPorFecha() {
+		almacen.getListaFechaCant();
 	}
 
-	public void reporteTotalPorFecha(PrintWriter writer) {
-		writer.println("Fecha\t\tCantidad Total");
-		List<ResultadosDeBusquedas> listaResulAux = almacen.getlistaBusquedas();
-		Set<LocalDate> listaFechasAux = almacen.getlistaFechas();
-		listaFechasAux.stream().forEach(fecha -> imprimirReporteFecha(fecha, listaResulAux, writer));
+	public void reporteParcial() {
+		almacen.getlistaBusquedas();
 	}
 
-	private void imprimirReporteFecha(LocalDate fecha, List<ResultadosDeBusquedas> listaResulAux, PrintWriter writer) {
-		List<ResultadosDeBusquedas> auxiliar = listaResulAux.stream()
-				.filter(resultado -> resultado.getFechaDeBusqueda().toLocalDate().equals(fecha))
-				.collect(Collectors.toList());
-		int cantidadTotal = auxiliar.stream().mapToInt(resultado -> resultado.getCantidadDeResultados()).sum();
-		writer.println(fecha.toString() + "     \t\t" + cantidadTotal);
-	}
-
-	public void reporteParcial(PrintWriter writer) {
-		writer.println("Cantidad Resultados Parciales");
-		List<ResultadosDeBusquedas> listaResulAux = almacen.getlistaBusquedas();
-		listaResulAux.stream().forEach(resultado -> writer.println(resultado.getCantidadDeResultados()));
-	}
-
-	public void reporteTotal(PrintWriter writer) {
-		List<ResultadosDeBusquedas> listaResulAux = almacen.getlistaBusquedas();
-		int cantidadTotal = listaResulAux.stream().mapToInt(resultado -> resultado.getCantidadDeResultados()).sum();
-		writer.print(cantidadTotal);
+	public void reporteTotal() {
+		
 	}
 
 }

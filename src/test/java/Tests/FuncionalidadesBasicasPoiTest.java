@@ -49,7 +49,7 @@ public class FuncionalidadesBasicasPoiTest {
 	@Before
 	public void init() {
 		// Arreglar los parametros
-		dispositivoTactil = new RepositorioDePois("terminalAbasto", -1, writer);
+		dispositivoTactil = new RepositorioDePois("terminalAbasto",writer);
 
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
 		horarioBanco = new Horario("10:00", "15:00");
@@ -143,7 +143,6 @@ public class FuncionalidadesBasicasPoiTest {
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
-
 	}
 
 	@Test

@@ -1,27 +1,41 @@
 package grupo4.Acciones;
 
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class ObserverNotificador implements Observers {
+import grupo4.ComponentesExternos.EmailSender;
 
-	public void notificar(PrintWriter writer) {
-		writer.println("Mail enviado al adminisitrador");
+public class ObserverNotificador implements Observers,EmailSender {
+	
+	private long tiempoEstipulado;
+	
+	public ObserverNotificador(long tiempoEstipulado) {
+		this.tiempoEstipulado = tiempoEstipulado;
 	}
 
-	public void agregarBusqueda(long diferencia, String criterio, LocalDateTime tiempoInicio, int size) {
+	public void evaluarNotificacion(long diferencia){
+		if(diferencia > tiempoEstipulado){
+			enviarMail();
+		}
+	}
+	
+	public void enviarMail(){
+		
+	}
+
+	public void agregarBusqueda( String criterio,long diferencia, LocalDateTime tiempoInicio, int size) {
 
 	}
 
-	public void reporteTotalPorFecha(PrintWriter writer) {
+	public void reporteTotalPorFecha() {
+		
+	}
+
+	public void reporteParcial() {
 
 	}
 
-	public void reporteParcial(PrintWriter writer) {
-
-	}
-
-	public void reporteTotal(PrintWriter writer) {
+	public void reporteTotal() {
 
 	}
 }

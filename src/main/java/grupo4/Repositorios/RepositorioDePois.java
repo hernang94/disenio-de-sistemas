@@ -3,41 +3,27 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.uqbar.geodds.Point;
-import grupo4.Acciones.ObserverBusqueda;
-import grupo4.Acciones.Observers;
 import grupo4.ComponentesExternos.Adaptadores;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-public class RepositorioDePois implements ObserverBusqueda {
+public class RepositorioDePois{
 
 	private String nombre;
 	private List<Poi> listaDePois = new ArrayList<>();
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
-	private List<Observers> listaObservers = new ArrayList<>();
-	private long tiempoEstipulado;
 	private PrintWriter writer;
 
-	public RepositorioDePois(String unNombre, long tiempoEstipulado, PrintWriter writer) {
+	public RepositorioDePois(String unNombre, PrintWriter writer) {
 		this.nombre = unNombre;
-		this.tiempoEstipulado = tiempoEstipulado;
 		this.writer = writer;
 	}
 
 	public String getNombre() {
 		return nombre;
-	}
-
-	public void agregarObserver(Observers unObserver) {
-		listaObservers.add(unObserver);
-	}
-
-	public void quitarObserver(Observers unObserver) {
-		listaObservers.remove(unObserver);
 	}
 
 	public void agregarAdaptador(Adaptadores adaptador) {
@@ -70,24 +56,12 @@ public class RepositorioDePois implements ObserverBusqueda {
 
 	public List<Poi> busquedaLibre(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();
-		long diferencia;
-		LocalDateTime tiempoInicio = LocalDateTime.now();
 		listaAux = filtrarPorCriterio(criterio);
-		LocalDateTime tiempoFin = LocalDateTime.now();
-		diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
-		if (diferencia > tiempoEstipulado) {
-			listaObservers.stream().forEach(observer -> observer.notificar(writer));
-		}
-		int cantBuscada = listaAux.size();
-		listaObservers.stream()
-				.forEach(observer -> observer.agregarBusqueda(diferencia, criterio, tiempoInicio, cantBuscada));
 		listaDePois.addAll(listaAux);
 		return listaAux;
 	}
 
-	public void obtenerReporteTotalPorFecha() {
-		listaObservers.stream().forEach(unObserver -> unObserver.reporteTotalPorFecha(writer));
-	}
+
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
@@ -132,17 +106,5 @@ public class RepositorioDePois implements ObserverBusqueda {
 		return listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);
 	}
 
-	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
-		long diferencia = ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);
-		return diferencia;
-	}
-
-	public void reporteParcial(PrintWriter writer) {
-		listaObservers.stream().forEach(observer -> observer.reporteParcial(writer));
-	}
-
-	public void reporteTotal(PrintWriter writer) {
-		listaObservers.stream().forEach(observer -> observer.reporteTotal(writer));
-	}
 
 }

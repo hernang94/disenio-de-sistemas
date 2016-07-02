@@ -1,17 +1,18 @@
 package grupo4.Acciones;
 
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface Observers {
 
-	public void notificar(PrintWriter writer);
+	
+	public void evaluarNotificacion(long diferencia);
+	
+	public void agregarBusqueda(String criterio,long diferencia, LocalDateTime tiempoInicio, int size);
 
-	public void agregarBusqueda(long diferencia, String criterio, LocalDateTime tiempoInicio, int size);
+	public void reporteTotalPorFecha();
 
-	public void reporteTotalPorFecha(PrintWriter writer);
+	public void reporteParcial();
 
-	public void reporteParcial(PrintWriter writer);
-
-	public void reporteTotal(PrintWriter writer);
+	public void reporteTotal();
 }
