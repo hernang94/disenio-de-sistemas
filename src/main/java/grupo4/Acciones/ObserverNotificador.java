@@ -22,11 +22,11 @@ public class ObserverNotificador implements Observers {
 		}
 	}
 
-	public void agregarBusqueda(String criterio, long diferencia, LocalDateTime tiempoInicio, int size) {
+	public void agregarBusqueda(String terminal,String criterio, long diferencia, LocalDateTime tiempoInicio, int size) {
 
 	}
 
-	public void reporteTotalPorFecha() {
+	public void reporteTotalPorFecha(String terminal) {
 
 	}
 

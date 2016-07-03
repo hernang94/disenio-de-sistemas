@@ -80,7 +80,7 @@ public class ObserversTest {
 	public void init() {
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
-		repositorioBusquedas = new RepositorioDeBusquedas();
+		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
 		
 		notificador=new ObserverNotificador(-1,notificadorMail);//tiempoEstipulado=-1
 		reporter=new ObserverReporter(repositorioBusquedas);
@@ -210,7 +210,8 @@ public class ObserversTest {
 	
 	@After
 	public void limpiarSingleton(){
-		repoDePois.reset();		
+		repoDePois.reset();	
+		repositorioBusquedas.reset();
 	}
 	
 	@Test
@@ -238,9 +239,9 @@ public class ObserversTest {
 	public void reportarCantidadBusquedas(){
 		terminal.busquedaLibre("muebles");
 		//repoDePois.agregarPoi(banco);
-		//terminal.busquedaLibre("Blaisten");
+		terminal.busquedaLibre("Blaisten");
 		terminal.obtenerReporteTotalPorFecha();
-		Assert.assertEquals(1,repositorioBusquedas.getListaFechaCant().get(0).getCantidad());
+		Assert.assertEquals(2,repositorioBusquedas.getListaFechaCant(terminal.getTerminal()).get(0).getCantidad());
 	}
 	
 	/*@Test
@@ -256,4 +257,13 @@ public class ObserversTest {
 		terminal.reporteParcial();
 		Assert.assertTrue(repositorioBusquedas.getlistaBusquedas().contains(1));
 	}
+
+	@Test
+	public void reporteTotal(){
+		terminal.busquedaLibre("Blaisten");
+		terminal.busquedaLibre("muebles");
+		terminal.reporteTotal();
+		Assert.assertTrue(2==repositorioBusquedas.reporteTotal().get(terminal.getTerminal()));
+	}
+	
 }

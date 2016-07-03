@@ -1,20 +1,25 @@
 package grupo4.Repositorios;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 public class ResultadosDeBusquedas {
 
+	private String terminalDeLaBusqueda;
 	private long tiempoDeBusqueda;
 	private String fraseBuscada;
-	private LocalDateTime fechaDeBusqueda;
+	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 
-	public ResultadosDeBusquedas(long tiempoDeBusqueda, String fraseBuscada, LocalDateTime fechaDeBusqueda,
+	public ResultadosDeBusquedas(String terminal,long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
 			int cantidadDeResultados) {
+		this.terminalDeLaBusqueda=terminal;
 		this.tiempoDeBusqueda = tiempoDeBusqueda;
 		this.fraseBuscada = fraseBuscada;
 		this.fechaDeBusqueda = fechaDeBusqueda;
 		this.cantidadDeResultados = cantidadDeResultados;
+	}
+	
+	public String getTerminalDeLaBusqueda(){
+		return terminalDeLaBusqueda;
 	}
 
 	public long getTiempoDeBusqueda() {
@@ -25,7 +30,7 @@ public class ResultadosDeBusquedas {
 		return fraseBuscada;
 	}
 
-	public LocalDateTime getFechaDeBusqueda() {
+	public LocalDate getFechaDeBusqueda() {
 		return fechaDeBusqueda;
 	}
 

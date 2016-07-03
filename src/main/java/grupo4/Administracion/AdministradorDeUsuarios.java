@@ -1,14 +1,13 @@
 package grupo4.Administracion;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
-import grupo4.Repositorios.RepositorioDePois;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.ObserverReporter;
+import grupo4.Acciones.Observers;
 import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.EmailSender;
 
@@ -21,6 +20,13 @@ public class AdministradorDeUsuarios {
 	private AdministradorDeUsuarios() {
 
 	}
+	
+
+	public static AdministradorDeUsuarios getInstancia() {
+		return instancia;
+	}
+
+
 
 	public void agregarUsuario(Usuario nuevoUsuario) {
 		listaDeUsuarios.add(nuevoUsuario);
@@ -29,22 +35,39 @@ public class AdministradorDeUsuarios {
 	public void bajaUsuario(Usuario usuarioABajar) {
 		listaDeUsuarios.remove(usuarioABajar);
 	}
-
+  
+	
 	public void agregarAccionNotificarxComuna(String comuna, long tiempoEstipulado) {
-		listaDeUsuarios.stream().filter(usuario -> usuario.getComuna().equalsIgnoreCase(comuna))
-				.forEach(usuario -> usuario.agregarObserver(new ObserverNotificador(tiempoEstipulado, notificador)));
+		ObserverNotificador observernotificador=new ObserverNotificador(tiempoEstipulado, notificador);
+		agregarAccionxComuna(comuna, observernotificador);
 	}
 
 	public void agregarAccionAlmacenarxComuna(String comuna) {
-		listaDeUsuarios.stream().filter(usuario -> usuario.getComuna().equalsIgnoreCase(comuna))
-				.forEach(usuario -> usuario.agregarObserver(new ObserverAlmacenador(almacen)));
+		ObserverAlmacenador almacenador= new ObserverAlmacenador(almacen);
+		agregarAccionxComuna(comuna, almacenador);
 	}
 
 	public void agregarAccionReportarxComuna(String comuna) {
-		listaDeUsuarios.stream().filter(usuario -> usuario.getComuna().equalsIgnoreCase(comuna))
-				.forEach(usuario -> usuario.agregarObserver(new ObserverReporter(almacen)));
+		ObserverReporter reporter= new ObserverReporter(almacen);
+		agregarAccionxComuna(comuna, reporter);
+	}
+	
+	public void agregarAccionNotificarATodos(long tiempoEstipulado){
+		ObserverNotificador observernotificador=new ObserverNotificador(tiempoEstipulado, notificador);
+		agregarAccionATodos(observernotificador);
+	}
+	
+	public void agregarAccionAlmacenarATodos(){
+		ObserverAlmacenador almacenador= new ObserverAlmacenador(almacen);
+		agregarAccionATodos(almacenador);
+	}
+	
+	public void agregarAccionReportarATodos(){
+		ObserverReporter reporter= new ObserverReporter(almacen);
+		agregarAccionATodos(reporter);
 	}
 
+	
 	public void quitarAccionNotificarxComuna(String comuna, long tiempoEstipulado) {
 		quitarAccionPorComuna(ObserverNotificador.class, comuna);
 	}
@@ -57,17 +80,6 @@ public class AdministradorDeUsuarios {
 		quitarAccionPorComuna(ObserverReporter.class, comuna);
 	}
 	
-	public void quitarAccionPorComuna(Object objeto,String comuna){
-		listaDeUsuarios.stream().filter(usuario -> usuario.getComuna().equalsIgnoreCase(comuna))
-		.forEach(usuario -> usuario.quitarObserver(usuario.getObservers().stream()
-				.filter(observer -> observer.getClass().equals(objeto)).findFirst().get()));
-	}
-	
-	public void quitarAccionATodos(Object objeto){
-		listaDeUsuarios.stream().forEach(usuario -> usuario.quitarObserver(usuario.getObservers().stream()
-				.filter(observer -> observer.getClass().equals(objeto)).findFirst().get()));
-	}
-	
 	public void quitarAccionNotificarATodos(){
 		quitarAccionATodos(ObserverNotificador.class);
 	}
@@ -77,5 +89,27 @@ public class AdministradorDeUsuarios {
 	public void quitarAccionReportarATodos(){
 		quitarAccionATodos(ObserverReporter.class);
 	}
+	
+	
+	public void agregarAccionxComuna(String comuna,Observers objeto){
+		listaDeUsuarios.stream().filter(usuario -> usuario.getComuna().equalsIgnoreCase(comuna))
+		.forEach(usuario -> usuario.agregarObserver(objeto));
+	}
+	public void agregarAccionATodos(Observers objeto){
+		listaDeUsuarios.stream().forEach(usuario -> usuario.agregarObserver(objeto));
+	}
 
+	public void quitarAccionPorComuna(Object objeto,String comuna){
+		listaDeUsuarios.stream().filter(usuario -> usuario.getComuna().equalsIgnoreCase(comuna))
+		.forEach(usuario -> usuario.quitarObserver(obtenerObserverSegunTipo(objeto,usuario)));
+	}
+	
+	public void quitarAccionATodos(Object objeto){
+		listaDeUsuarios.stream().forEach(usuario -> usuario.quitarObserver(obtenerObserverSegunTipo(objeto,usuario)));
+	}
+	public Observers obtenerObserverSegunTipo(Object objeto,Usuario usuario){
+		return usuario.getObservers().stream()
+				.filter(observer -> observer.getClass().equals(objeto)).findFirst().get();
+	}
 }
+

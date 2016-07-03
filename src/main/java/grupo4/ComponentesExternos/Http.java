@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+@SuppressWarnings("deprecation")
 public class Http {
 	private HttpClient cliente;
 	private HttpGet get;

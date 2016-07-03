@@ -18,5 +18,7 @@ public class FechaCantReporte {
 	public int getCantidad() {
 		return cantidad;
 	}
-
+	public void aumentarCantidad(Integer cantidadNueva){
+		cantidad+=cantidadNueva;
+	}
 }

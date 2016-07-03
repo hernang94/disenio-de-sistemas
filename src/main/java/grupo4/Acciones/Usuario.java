@@ -38,7 +38,7 @@ public class Usuario {
 		observers.stream().forEach(observer -> observer.evaluarNotificacion(diferencia));
 		int cantBuscada = listaAux.size();
 		observers.stream()
-				.forEach(observer -> observer.agregarBusqueda(criterio, diferencia, tiempoInicio, cantBuscada));
+				.forEach(observer -> observer.agregarBusqueda(terminal,criterio, diferencia, tiempoInicio, cantBuscada));
 	}
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
@@ -46,7 +46,7 @@ public class Usuario {
 	}
 
 	public void obtenerReporteTotalPorFecha() {
-		observers.stream().forEach(unObserver -> unObserver.reporteTotalPorFecha());
+		observers.stream().forEach(unObserver -> unObserver.reporteTotalPorFecha(terminal));
 	}
 
 	public void reporteParcial() {
