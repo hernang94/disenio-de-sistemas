@@ -111,5 +111,8 @@ public class AdministradorDeUsuarios {
 		return usuario.getObservers().stream()
 				.filter(observer -> observer.getClass().equals(objeto)).findFirst().get();
 	}
+	
+	
+	
 }
 

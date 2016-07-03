@@ -189,7 +189,6 @@ public class ComponentesExternosTest {
 		dispositivoTactil.agregarPoi(cgp);
 
 		http = new Http("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
-
 	}
 
 	@After
