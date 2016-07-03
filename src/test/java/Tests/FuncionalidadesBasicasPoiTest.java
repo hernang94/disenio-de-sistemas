@@ -242,13 +242,11 @@ public class FuncionalidadesBasicasPoiTest {
 	@Test
 	public void pruebaBusquedaLibrexRubro() {
 		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("muebleria"), "Blaisten"));
-
 	}
 
 	@Test
 	public void pruebaBusquedaLibrexLinea() {
 		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("114"), "114"));
-
 	}
 
 	@Test

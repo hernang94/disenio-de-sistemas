@@ -1,7 +1,6 @@
 package grupo4.Acciones;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface Observers {
 

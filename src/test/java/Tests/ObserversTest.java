@@ -221,9 +221,9 @@ public class ObserversTest {
 	
 	@Test
 	public void reportarCantidadBusquedas(){
-		//terminal.busquedaLibre("muebleria");
+		terminal.busquedaLibre("muebles");
 		//repoDePois.agregarPoi(banco);
-		terminal.busquedaLibre("HSBC");
+		//terminal.busquedaLibre("Blaisten");
 		terminal.obtenerReporteTotalPorFecha();
 		Assert.assertEquals(1,repositorioBusquedas.getListaFechaCant().get(0).getCantidad());
 	}
@@ -237,7 +237,7 @@ public class ObserversTest {
 	
 	@Test
 	public void reporteParcialesporTerminal(){
-		terminal.busquedaLibre("muebleria");
+		terminal.busquedaLibre("Blaisten");
 		terminal.reporteParcial();
 		Assert.assertTrue(repositorioBusquedas.getlistaBusquedas().contains(1));
 	}
