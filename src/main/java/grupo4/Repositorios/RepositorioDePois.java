@@ -9,21 +9,20 @@ import grupo4.POIs.Servicio;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class RepositorioDePois{
-	private static RepositorioDePois instancia= new RepositorioDePois();
+public class RepositorioDePois {
+	private static RepositorioDePois instancia = new RepositorioDePois();
 	private String nombre;
 	private List<Poi> listaDePois = new ArrayList<>();
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
 
-	private RepositorioDePois(){
+	private RepositorioDePois() {
 	}
-	
 
-	public  void reset() {
+	public void reset() {
 		listaDePois.clear();
 		listaAdaptadores.clear();
 	}
-	
+
 	public static RepositorioDePois getInstancia() {
 		return instancia;
 	}
@@ -70,8 +69,6 @@ public class RepositorioDePois{
 		return listaAux;
 	}
 
-
-
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
 		poiAux = obtenerSegunCriterio(criterio);
@@ -115,6 +112,5 @@ public class RepositorioDePois{
 	public Poi obtenerSegunCriterio(String criterio) {
 		return listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);
 	}
-
 
 }

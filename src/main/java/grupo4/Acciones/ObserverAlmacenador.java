@@ -12,17 +12,17 @@ public class ObserverAlmacenador implements Observers {
 		this.almacen = almacen;
 	}
 
-	public void evaluarNotificacion(long diferencia){
-		
+	public void evaluarNotificacion(long diferencia) {
+
 	}
 
-	public void agregarBusqueda(String criterio,long diferencia, LocalDateTime tiempoInicio, int size) {
-		ResultadosDeBusquedas newResult = new ResultadosDeBusquedas(diferencia,criterio, tiempoInicio, size);
+	public void agregarBusqueda(String criterio, long diferencia, LocalDateTime tiempoInicio, int size) {
+		ResultadosDeBusquedas newResult = new ResultadosDeBusquedas(diferencia, criterio, tiempoInicio, size);
 		almacen.agregarBusqueda(newResult);
 	}
 
 	public void reporteTotalPorFecha() {
-		
+
 	}
 
 	public void reporteParcial() {

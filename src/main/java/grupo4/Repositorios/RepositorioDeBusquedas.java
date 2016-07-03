@@ -24,23 +24,24 @@ public class RepositorioDeBusquedas {
 	}
 
 	public List<Integer> getlistaBusquedas() {
-		List<Integer> lista=new ArrayList<>();
-		listaBusquedas.forEach(busqueda->lista.add(busqueda.getCantidadDeResultados()));
+		List<Integer> lista = new ArrayList<>();
+		listaBusquedas.forEach(busqueda -> lista.add(busqueda.getCantidadDeResultados()));
 		return lista;
 	}
 
 	public Set<LocalDate> getlistaFechas() {
 		return listafechas;
 	}
-	
-	public FechaCantReporte cantidadPorFecha(LocalDate fecha){
-		return new FechaCantReporte(fecha,listaBusquedas.stream().filter(busqueda->busqueda.getFechaDeBusqueda().equals(fecha)).collect(Collectors.toList()).size());
+
+	public FechaCantReporte cantidadPorFecha(LocalDate fecha) {
+		return new FechaCantReporte(fecha, listaBusquedas.stream()
+				.filter(busqueda -> busqueda.getFechaDeBusqueda().equals(fecha)).collect(Collectors.toList()).size());
 	}
-	
-	public List<FechaCantReporte> getListaFechaCant(){
-		List<FechaCantReporte> lista=new ArrayList<>();
-		listafechas.stream().forEach(fecha->lista.add(cantidadPorFecha(fecha)));
+
+	public List<FechaCantReporte> getListaFechaCant() {
+		List<FechaCantReporte> lista = new ArrayList<>();
+		listafechas.stream().forEach(fecha -> lista.add(cantidadPorFecha(fecha)));
 		return lista;
 	}
-	
+
 }

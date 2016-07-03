@@ -1,7 +1,6 @@
 package Tests;
 
 
-import java.io.PrintWriter;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,7 +11,9 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
@@ -61,7 +62,6 @@ public class ObserversTest {
 	private Map<DayOfWeek,Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek,Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek,Horario> hashMapServicio; 
-	private PrintWriter writer;
 	private ObserverNotificador notificador;
 	private ObserverReporter reporter;
 	private ObserverAlmacenador almacenador;
@@ -72,6 +72,8 @@ public class ObserversTest {
 	private Usuario terminal;
 	private EmailSender notificadorMail;
 	private RepositorioDeBusquedas repositorioBusquedas;
+	private ObserverNotificador notificadorFalla;
+	private Usuario terminalFalla;
 	@SuppressWarnings("static-access")
 	
 	@Before
@@ -80,7 +82,7 @@ public class ObserversTest {
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = new RepositorioDeBusquedas();
 		
-		notificador=new ObserverNotificador(-1,notificadorMail);//tiempoEstipulado=0
+		notificador=new ObserverNotificador(-1,notificadorMail);//tiempoEstipulado=-1
 		reporter=new ObserverReporter(repositorioBusquedas);
 		almacenador= new ObserverAlmacenador(repositorioBusquedas);
 		
@@ -90,8 +92,6 @@ public class ObserversTest {
 		
 		servicioPrueba=new ServicioDTO("Prueba");
 		servicioPrueba.agregarRango(rangoPrueba);
-		
-		writer=Mockito.mock(PrintWriter.class);
 		
 		centroPrueba= new CentroDTO(9, "Mataderos,Parque Avellaneda", "Mauro Corvaro", "Calle Falsa 123", "4597-9684");
 		centroPrueba.agregarServicio(servicioPrueba);
@@ -200,6 +200,11 @@ public class ObserversTest {
 		terminal.agregarObserver(notificador);
 		terminal.agregarObserver(reporter);
 		terminal.agregarObserver(almacenador);
+				
+
+		terminalFalla=new Usuario("Terminal Abasto", repoDePois);
+		notificadorFalla=new ObserverNotificador(1,notificadorMail);
+		terminalFalla.agregarObserver(notificadorFalla);
 		
 	}
 	
@@ -213,7 +218,17 @@ public class ObserversTest {
 		terminal.busquedaLibre("HSBC");
 		Mockito.verify(notificadorMail).enviarMail("Tiempo de busqueda mayor al estipulado");
 	}
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 	
+	@Test
+	public void notificadorAdministradorFalla(){
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("Tiempo de busqueda menor al estipulado");
+		terminalFalla.busquedaLibre("HSBC");
+		
+	}
 	@Test
 	public void calcularDiferencia(){
 		Assert.assertEquals(10, terminal.calcularDiferencia(LocalDateTime.of(2016, 06, 05, 18, 15, 10), LocalDateTime.of(2016, 06, 05, 18, 15, 20)));

@@ -77,7 +77,7 @@ public class ComponentesExternosTest {
 
 		servicioPrueba = new ServicioDTO("Prueba");
 		servicioPrueba.agregarRango(rangoPrueba);
-		
+
 		megatron = Mockito.mock(BancoTransformer.class);
 		megatron.setComponente(componenteBanco);
 
@@ -187,14 +187,13 @@ public class ComponentesExternosTest {
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
-		 
 
 		http = new Http("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
 
 	}
-	
+
 	@After
-	public void limpiarSingleton(){
+	public void limpiarSingleton() {
 		dispositivoTactil.reset();
 	}
 
@@ -220,23 +219,22 @@ public class ComponentesExternosTest {
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
-	
-	@Test	
+
+	@Test
 	public void pruebaConvertirJson() throws ParseException, IOException {
 		List<Poi> listAux = new ArrayList<>();
 		listAux.addAll(optimus.convertirJson(http.obtenerString()));
 		Assert.assertEquals("Banco de la Plaza", listAux.get(0).getNombre());
 	}
-	/*@Test
-	public void pruebaConvertirJsonFalla() throws org.apache.http.ParseException, IOException{
-		Http falla = new Http("");
-		thrown.expect(RuntimeException.class);
-		thrown.expectMessage("Error IOException");
-		thrown.expectMessage("Error ClientProtocolException");
-		List<Poi> listAux = new ArrayList<>();
-		listAux.addAll(optimus.convertirJson(falla.obtenerString()));
-		
-	}*/
-	
-	
+	/*
+	 * @Test public void pruebaConvertirJsonFalla() throws
+	 * org.apache.http.ParseException, IOException{ Http falla = new Http("");
+	 * thrown.expect(RuntimeException.class); thrown.expectMessage(
+	 * "Error IOException"); thrown.expectMessage(
+	 * "Error ClientProtocolException"); List<Poi> listAux = new ArrayList<>();
+	 * listAux.addAll(optimus.convertirJson(falla.obtenerString()));
+	 * 
+	 * }
+	 */
+
 }

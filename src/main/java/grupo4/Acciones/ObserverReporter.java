@@ -1,13 +1,7 @@
 package grupo4.Acciones;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import grupo4.Repositorios.RepositorioDeBusquedas;
-import grupo4.Repositorios.ResultadosDeBusquedas;
 
 public class ObserverReporter implements Observers {
 
@@ -16,11 +10,11 @@ public class ObserverReporter implements Observers {
 	public ObserverReporter(RepositorioDeBusquedas almacen) {
 		this.almacen = almacen;
 	}
-	
-	public void evaluarNotificacion(long diferencia){
-		
+
+	public void evaluarNotificacion(long diferencia) {
+
 	}
-	
+
 	public void agregarBusqueda(String criterio, long diferencia, LocalDateTime tiempoInicio, int size) {
 
 	}
@@ -34,7 +28,7 @@ public class ObserverReporter implements Observers {
 	}
 
 	public void reporteTotal() {
-		
+
 	}
 
 }
