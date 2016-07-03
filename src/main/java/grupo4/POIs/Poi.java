@@ -76,7 +76,7 @@ public abstract class Poi {
 	}
 
 	public boolean cumpleCriterio(String criterio) {
-		return criterio.equalsIgnoreCase(nombre) || esUnaPalabraClave(criterio);
+		return ((criterio.equalsIgnoreCase(nombre)) || (esUnaPalabraClave(criterio)));
 	}
 
 	private boolean esUnaPalabraClave(String criterio) {

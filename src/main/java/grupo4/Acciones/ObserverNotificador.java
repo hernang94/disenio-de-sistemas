@@ -16,7 +16,7 @@ public class ObserverNotificador implements Observers {
 
 	public void evaluarNotificacion(long diferencia){
 		if(diferencia > tiempoEstipulado){
-			notificador.enviarMail();
+			notificador.enviarMail("Tiempo de busqueda mayor al estipulado");
 		}
 	}
 

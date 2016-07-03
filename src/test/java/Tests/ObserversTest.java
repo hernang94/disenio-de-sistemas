@@ -76,17 +76,13 @@ public class ObserversTest {
 	
 	@Before
 	public void init() {
-		terminal = new Usuario("Terminal Abasto", repoDePois);
+		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = new RepositorioDeBusquedas();
 		
-		notificador=new ObserverNotificador(0,notificadorMail);//tiempoEstipulado=0
+		notificador=new ObserverNotificador(-1,notificadorMail);//tiempoEstipulado=0
 		reporter=new ObserverReporter(repositorioBusquedas);
 		almacenador= new ObserverAlmacenador(repositorioBusquedas);
-		
-		terminal.agregarObserver(notificador);
-		terminal.agregarObserver(reporter);
-		terminal.agregarObserver(almacenador);
 		
 		listaCentroAAdaptar=new ArrayList<>();
 		
@@ -109,10 +105,9 @@ public class ObserversTest {
 		componenteBanco=Mockito.mock(ComponenteBanco.class);
 		optimus = new BancoTransformer();
 		optimus.setComponente(componenteBanco);
-		
-		repoDePois = RepositorioDePois.getInstancia();
 		repoDePois.agregarAdaptador(adaptador);
 		repoDePois.agregarAdaptador(optimus);
+		
 		horarioBanco= new Horario("10:00", "15:00");
 		
 		hashMapBanco = new HashMap<>();
@@ -130,7 +125,7 @@ public class ObserversTest {
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
-		banco= new Banco(hashMapBanco, "Santander Rio",palabrasClavesBanco);
+		banco= new Banco(hashMapBanco,"Santander Rio",palabrasClavesBanco);
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
 		banco.setCoordenadas();
@@ -169,7 +164,7 @@ public class ObserversTest {
 		local.setY(-58.4814007);
 		local.setCoordenadas();
 		
-		banco2= new Banco(hashMapBanco, "HSBC",palabrasClavesBanco);
+		banco2= new Banco(hashMapBanco,"HSBC",palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 		banco2.setCoordenadas();		
@@ -201,21 +196,22 @@ public class ObserversTest {
 		repoDePois.agregarPoi(parada114);
 		repoDePois.agregarPoi(local);
 		repoDePois.agregarPoi(cgp);
+		terminal = new Usuario("Terminal Abasto", repoDePois);
+		terminal.agregarObserver(notificador);
+		terminal.agregarObserver(reporter);
+		terminal.agregarObserver(almacenador);
+		
 	}
 	
 	@After
-	public void fin(){
-		repoDePois.bajaPoi(banco);
-		repoDePois.bajaPoi(banco2);
-		repoDePois.bajaPoi(parada114);
-		repoDePois.bajaPoi(local);
-		repoDePois.bajaPoi(cgp);		
+	public void limpiarSingleton(){
+		repoDePois.reset();		
 	}
 	
 	@Test
 	public void notificadorArministrador(){
 		terminal.busquedaLibre("HSBC");
-		Mockito.verify(notificadorMail).enviarMail();
+		Mockito.verify(notificadorMail).enviarMail("Tiempo de busqueda mayor al estipulado");
 	}
 	
 	@Test
@@ -225,8 +221,9 @@ public class ObserversTest {
 	
 	@Test
 	public void reportarCantidadBusquedas(){
-		terminal.busquedaLibre("muebleria");
-		terminal.busquedaLibre("Santander Rio");
+		//terminal.busquedaLibre("muebleria");
+		//repoDePois.agregarPoi(banco);
+		terminal.busquedaLibre("HSBC");
 		terminal.obtenerReporteTotalPorFecha();
 		Assert.assertEquals(1,repositorioBusquedas.getListaFechaCant().get(0).getCantidad());
 	}

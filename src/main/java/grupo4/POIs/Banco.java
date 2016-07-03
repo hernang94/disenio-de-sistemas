@@ -29,4 +29,5 @@ public class Banco extends Poi {
 		DayOfWeek dia = horaConsulta.getDayOfWeek();
 		return (hashHorario.get(dia) != null) && (hashHorario.get(dia).estaEnHorario(horaConsulta));
 	}
+
 }

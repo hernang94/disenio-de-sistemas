@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -181,15 +182,20 @@ public class ComponentesExternosTest {
 		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
-		/*dispositivoTactil.agregarPoi(banco);
+		dispositivoTactil.agregarPoi(banco);
 		dispositivoTactil.agregarPoi(banco2);
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
-		 */
+		 
 
 		http = new Http("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
 
+	}
+	
+	@After
+	public void limpiarSingleton(){
+		dispositivoTactil.reset();
 	}
 
 	@Test
@@ -221,7 +227,7 @@ public class ComponentesExternosTest {
 		listAux.addAll(optimus.convertirJson(http.obtenerString()));
 		Assert.assertEquals("Banco de la Plaza", listAux.get(0).getNombre());
 	}
-/*	@Test
+	/*@Test
 	public void pruebaConvertirJsonFalla() throws org.apache.http.ParseException, IOException{
 		Http falla = new Http("");
 		thrown.expect(RuntimeException.class);
@@ -230,7 +236,7 @@ public class ComponentesExternosTest {
 		List<Poi> listAux = new ArrayList<>();
 		listAux.addAll(optimus.convertirJson(falla.obtenerString()));
 		
-	}
-	*/
+	}*/
+	
 	
 }

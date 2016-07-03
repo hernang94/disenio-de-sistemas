@@ -15,7 +15,14 @@ public class RepositorioDePois{
 	private List<Poi> listaDePois = new ArrayList<>();
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
 
+	//public static volatile ModuleState instance = null;
 	private RepositorioDePois(){
+	}
+	
+
+	public  void reset() {
+		listaDePois.clear();
+		listaAdaptadores.clear();
 	}
 	
 	public static RepositorioDePois getInstancia() {
@@ -61,7 +68,6 @@ public class RepositorioDePois{
 	public List<Poi> busquedaLibre(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();
 		listaAux = filtrarPorCriterio(criterio);
-		listaDePois.addAll(listaAux);
 		return listaAux;
 	}
 
@@ -96,6 +102,7 @@ public class RepositorioDePois{
 		if (listaFiltrada.isEmpty()) {
 			listaAdaptadores.stream()
 					.forEach(unComponente -> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
+			listaDePois.addAll(listaFiltrada);
 		}
 		return listaFiltrada;
 	}
