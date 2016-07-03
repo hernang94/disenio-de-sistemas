@@ -64,4 +64,9 @@ public class Usuario {
 	public void reporteTotal() {
 		observers.stream().forEach(observer -> observer.reporteTotal());
 	}
+
+	public List<Observers> getObservers() {
+		return observers;
+	}
+	
 }
