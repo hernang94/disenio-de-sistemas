@@ -11,6 +11,7 @@ import grupo4.Repositorios.RepositorioDePois;
 public class Usuario {
 
 	private String terminal;
+
 	private String comuna;
 	private RepositorioDePois repositorio;
 	private List<Observers> observers = new ArrayList<>();
@@ -50,6 +51,13 @@ public class Usuario {
 	
 	public void reporteParcial() {
 		observers.stream().forEach(observer -> observer.reporteParcial());
+	}
+	public String getTerminal() {
+		return terminal;
+	}
+	
+	public String getComuna() {
+		return comuna;
 	}
 
 	public void reporteTotal() {
