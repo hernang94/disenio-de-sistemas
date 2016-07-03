@@ -2,6 +2,7 @@ package grupo4.ComponentesExternos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,7 +41,9 @@ public class BancoTransformer implements Adaptadores {
 	private Poi adaptarBanco(BancoExterno bancoExterno) {
 		FactoryHorarioBanco horarioBanco = new FactoryHorarioBanco();
 		List<String> palabrasClavesBanco = new ArrayList<>();
-		Banco banco = new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);
+		Random rand=new Random();
+		int id=rand.nextInt(1000);
+		Banco banco = new Banco(id,horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);
 		banco.setX(bancoExterno.getX());
 		banco.setY(bancoExterno.getY());
 		List<Servicio> listaDeServicios = bancoExterno.getServicios().stream()

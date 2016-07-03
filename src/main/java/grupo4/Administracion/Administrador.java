@@ -1,28 +1,35 @@
 package grupo4.Administracion;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
+import grupo4.Repositorios.RepositorioDePois;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import DTOexterno.BajaPoiExterna;
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.ObserverReporter;
 import grupo4.Acciones.Observers;
 import grupo4.Acciones.Usuario;
+import grupo4.ComponentesExternos.BajaPoiAdapter;
 import grupo4.ComponentesExternos.EmailSender;
 
-public class AdministradorDeUsuarios {
-	private static AdministradorDeUsuarios instancia = new AdministradorDeUsuarios();
+public class Administrador {
+	private static Administrador instancia = new Administrador();
 	private List<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
 	private EmailSender notificador;
 	private RepositorioDeBusquedas almacen;
+	private RepositorioDePois repo;
 
-	private AdministradorDeUsuarios() {
+	private Administrador() {
 
 	}
 	
 
-	public static AdministradorDeUsuarios getInstancia() {
+	public static Administrador getInstancia() {
 		return instancia;
 	}
 
@@ -112,6 +119,12 @@ public class AdministradorDeUsuarios {
 				.filter(observer -> observer.getClass().equals(objeto)).findFirst().get();
 	}
 	
+	public void bajarPois(){
+		ObjectMapper objectMapper= new ObjectMapper();
+		BajaPoiAdapter adaptador=new BajaPoiAdapter(objectMapper);
+		List<BajaPoiExterna> lista = adaptador.obtenerPoisABajar();
+		lista.stream().forEach(elemento->repo.bajaPoi(elemento.getId()));
+	}
 	
 	
 }

@@ -44,24 +44,30 @@ public class RepositorioDePois {
 	}
 
 	public void agregarPoi(Poi unPoi) {
-		if (!repositorioContienePoi(unPoi.getNombre())) {
+		if (!repositorioContienePoi(unPoi.getId())) {
 			listaDePois.add(unPoi);
 		} else {
 			throw new RuntimeException("Poi ya existente");
 		}
 	}
 
-	public void bajaPoi(Poi unPoi) {
-		if (repositorioContienePoi(unPoi.getNombre())) {
-			listaDePois.remove(unPoi);
+	public void bajaPoi(int id) {
+		if (repositorioContienePoi(id)) {
+			listaDePois.remove(obtenerPoi(id));
 		} else {
 			throw new RuntimeException("No existe el Poi");
 		}
 	}
+	
 
-	private boolean repositorioContienePoi(String nombre) {
-		return listaDePois.stream().anyMatch(unPoi -> unPoi.getNombre().equalsIgnoreCase(nombre));
+	private boolean repositorioContienePoi(Integer id) {
+		return listaDePois.stream().anyMatch(unPoi -> unPoi.getId()==id);
 	}
+	
+	private Poi obtenerPoi(int id){
+		return listaDePois.stream().filter(poi->poi.getId()==id).findFirst().get();
+	}
+
 
 	public List<Poi> busquedaLibre(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();

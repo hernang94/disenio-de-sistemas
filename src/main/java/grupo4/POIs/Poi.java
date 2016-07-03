@@ -8,13 +8,15 @@ import org.uqbar.geodds.Point;
 public abstract class Poi {
 	private Point coordenadas;
 	protected String nombre;
+	private int id;
 	private double x;
 	private double y;
 	private List<String> palabrasClaves;
 
-	public Poi(String nombre, List<String> palabrasClaves) {
+	public Poi(int id,String nombre, List<String> palabrasClaves) {
 		this.nombre = nombre;
 		this.palabrasClaves = palabrasClaves;
+		this.id=id;
 	}
 	public void setPalabrasClaves(List<String> palabrasClaves){
 		this.palabrasClaves=palabrasClaves;
@@ -92,5 +94,9 @@ public abstract class Poi {
 	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio) {
 		return false;
 	}
+	public int getId() {
+		return id;
+	}
 
+	
 }

@@ -12,8 +12,8 @@ public class Banco extends Poi {
 	private Map<DayOfWeek, Horario> hashHorario;
 	private List<Servicio> listaServicios = new ArrayList<>();
 
-	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves) {
-		super(nombre, palabrasClaves);
+	public Banco(int id,Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves) {
+		super(id,nombre, palabrasClaves);
 		this.hashHorario = horarios;
 	}
 
