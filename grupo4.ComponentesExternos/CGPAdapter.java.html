@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.joda.time.LocalTime;
@@ -18,51 +19,53 @@ import grupo4.POIs.Horario;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 
-<span class="fc" id="L21">public class CGPAdapter implements Adaptadores {</span>
+<span class="fc" id="L22">public class CGPAdapter implements Adaptadores {</span>
 
 	private Map&lt;Integer, Polygon&gt; hashComunas;
 	private ComponenteCGPS componente;
 
 	public void setComponente(ComponenteCGPS componente) {
-<span class="fc" id="L27">		this.componente = componente;</span>
-<span class="fc" id="L28">	}</span>
+<span class="fc" id="L28">		this.componente = componente;</span>
+<span class="fc" id="L29">	}</span>
 
 	public List&lt;Poi&gt; buscarPois(String valor) {
-<span class="fc" id="L31">		return adaptarObjetos(this.componente.buscarCGPs(valor));</span>
+<span class="fc" id="L32">		return adaptarObjetos(this.componente.buscarCGPs(valor));</span>
 	}
 
 	public List&lt;Poi&gt; adaptarObjetos(List&lt;CentroDTO&gt; listaExterna) {
-<span class="fc" id="L35">		return listaExterna.stream().map(unCentro -&gt; adaptar(unCentro)).collect(Collectors.toList());</span>
+<span class="fc" id="L36">		return listaExterna.stream().map(unCentro -&gt; adaptar(unCentro)).collect(Collectors.toList());</span>
 	}
 
 	private Poi adaptar(CentroDTO unCentro) {
-<span class="fc" id="L39">		Comunas comunaAux = new Comunas();</span>
-<span class="fc" id="L40">		hashComunas = comunaAux.inicializarHashComunas();</span>
-<span class="fc" id="L41">		List&lt;String&gt; palabrasClavesAux = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L42">		CGP aux = new CGP(hashComunas.get(unCentro.getComuna()), Integer.toString(unCentro.getComuna()),</span>
+<span class="fc" id="L40">		Comunas comunaAux = new Comunas();</span>
+<span class="fc" id="L41">		hashComunas = comunaAux.inicializarHashComunas();</span>
+<span class="fc" id="L42">		List&lt;String&gt; palabrasClavesAux = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">		Random rand=new Random();</span>
+<span class="fc" id="L44">		int id=rand.nextInt(1000);</span>
+<span class="fc" id="L45">		CGP aux = new CGP(id,hashComunas.get(unCentro.getComuna()), Integer.toString(unCentro.getComuna()),</span>
 				palabrasClavesAux);
-<span class="fc" id="L44">		unCentro.getServiciosDTO().stream().forEach(servicio -&gt; aux.addServicio(adaptarServicio(servicio)));</span>
-<span class="fc" id="L45">		return aux;</span>
+<span class="fc" id="L47">		unCentro.getServiciosDTO().stream().forEach(servicio -&gt; aux.addServicio(adaptarServicio(servicio)));</span>
+<span class="fc" id="L48">		return aux;</span>
 
 	}
 
 	private Servicio adaptarServicio(ServicioDTO unServicio) {
-<span class="fc" id="L50">		return new Servicio(unServicio.getNombre(), adaptarHorarios(unServicio.getRangos()));</span>
+<span class="fc" id="L53">		return new Servicio(unServicio.getNombre(), adaptarHorarios(unServicio.getRangos()));</span>
 	}
 
 	private void cargarHorario(DayOfWeek dia, String horaDesde, String horaHasta,
 			Map&lt;DayOfWeek, Horario&gt; hashHorariosAdaptados) {
-<span class="fc" id="L55">		Horario horario = new Horario(horaDesde, horaHasta);</span>
-<span class="fc" id="L56">		hashHorariosAdaptados.put(dia, horario);</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L58">		Horario horario = new Horario(horaDesde, horaHasta);</span>
+<span class="fc" id="L59">		hashHorariosAdaptados.put(dia, horario);</span>
+<span class="fc" id="L60">	}</span>
 
 	private Map&lt;DayOfWeek, Horario&gt; adaptarHorarios(List&lt;RangoServicioDTO&gt; listaRangos) {
-<span class="fc" id="L60">		Map&lt;DayOfWeek, Horario&gt; hashHorariosAdapter = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L61">		listaRangos.stream()</span>
-<span class="fc" id="L62">				.forEach(rango -&gt; cargarHorario(rango.getDia(),</span>
-<span class="fc" id="L63">						new LocalTime(rango.getHoraDesde(), rango.getMinutoDesde()).toString(),</span>
-<span class="fc" id="L64">						new LocalTime(rango.getHoraHasta(), rango.getMinutoHasta()).toString(), hashHorariosAdapter));</span>
-<span class="fc" id="L65">		return hashHorariosAdapter;</span>
+<span class="fc" id="L63">		Map&lt;DayOfWeek, Horario&gt; hashHorariosAdapter = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L64">		listaRangos.stream()</span>
+<span class="fc" id="L65">				.forEach(rango -&gt; cargarHorario(rango.getDia(),</span>
+<span class="fc" id="L66">						new LocalTime(rango.getHoraDesde(), rango.getMinutoDesde()).toString(),</span>
+<span class="fc" id="L67">						new LocalTime(rango.getHoraHasta(), rango.getMinutoHasta()).toString(), hashHorariosAdapter));</span>
+<span class="fc" id="L68">		return hashHorariosAdapter;</span>
 	}
 
 }

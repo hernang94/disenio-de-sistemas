@@ -2,6 +2,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,49 +17,51 @@ public class BancoTransformer implements Adaptadores {
 	private ComponenteBanco componente;
 	private ObjectMapper objectMapper;
 
-<span class="fc" id="L19">	public BancoTransformer() {</span>
-<span class="fc" id="L20">		this.objectMapper = new ObjectMapper();</span>
-<span class="fc" id="L21">	}</span>
+<span class="fc" id="L20">	public BancoTransformer() {</span>
+<span class="fc" id="L21">		this.objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L22">	}</span>
 
 	public List&lt;Poi&gt; convertirJson(String jsons) {
-<span class="fc" id="L24">		List&lt;BancoExterno&gt; listaParaAdaptar = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L25">		List&lt;BancoExterno&gt; listaParaAdaptar = new ArrayList&lt;&gt;();</span>
 		try {
-<span class="fc" id="L26">			listaParaAdaptar = objectMapper.readValue(jsons,</span>
-<span class="fc" id="L27">					TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BancoExterno.class));</span>
-<span class="nc" id="L28">		} catch (Exception e) {</span>
-<span class="nc" id="L29">			throw new RuntimeException(e);</span>
-<span class="fc" id="L30">		}</span>
-<span class="fc" id="L31">		return adaptarListaBancosExternos(listaParaAdaptar);</span>
+<span class="fc" id="L27">			listaParaAdaptar = objectMapper.readValue(jsons,</span>
+<span class="fc" id="L28">					TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BancoExterno.class));</span>
+<span class="nc" id="L29">		} catch (Exception e) {</span>
+<span class="nc" id="L30">			throw new RuntimeException(e);</span>
+<span class="fc" id="L31">		}</span>
+<span class="fc" id="L32">		return adaptarListaBancosExternos(listaParaAdaptar);</span>
 	}
 
 	private List&lt;Poi&gt; adaptarListaBancosExternos(List&lt;BancoExterno&gt; listaParaAdaptar) {
-<span class="fc" id="L35">		List&lt;Poi&gt; listaDeBancos = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L36">		listaDeBancos = listaParaAdaptar.stream().map(banco -&gt; adaptarBanco(banco)).collect(Collectors.toList());</span>
-<span class="fc" id="L37">		return listaDeBancos;</span>
+<span class="fc" id="L36">		List&lt;Poi&gt; listaDeBancos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L37">		listaDeBancos = listaParaAdaptar.stream().map(banco -&gt; adaptarBanco(banco)).collect(Collectors.toList());</span>
+<span class="fc" id="L38">		return listaDeBancos;</span>
 	}
 
 	private Poi adaptarBanco(BancoExterno bancoExterno) {
-<span class="fc" id="L41">		FactoryHorarioBanco horarioBanco = new FactoryHorarioBanco();</span>
-<span class="fc" id="L42">		List&lt;String&gt; palabrasClavesBanco = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L43">		Banco banco = new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);</span>
-<span class="fc" id="L44">		banco.setX(bancoExterno.getX());</span>
-<span class="fc" id="L45">		banco.setY(bancoExterno.getY());</span>
-<span class="fc" id="L46">		List&lt;Servicio&gt; listaDeServicios = bancoExterno.getServicios().stream()</span>
-<span class="fc" id="L47">				.map(nombre -&gt; new Servicio(nombre, horarioBanco.dameHorarioBanco())).collect(Collectors.toList());</span>
-<span class="fc" id="L48">		banco.setCoordenadas();</span>
-<span class="fc" id="L49">		banco.setListaServicios(listaDeServicios);</span>
-<span class="fc" id="L50">		return banco;</span>
+<span class="fc" id="L42">		FactoryHorarioBanco horarioBanco = new FactoryHorarioBanco();</span>
+<span class="fc" id="L43">		List&lt;String&gt; palabrasClavesBanco = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L44">		Random rand=new Random();</span>
+<span class="fc" id="L45">		int id=rand.nextInt(1000);</span>
+<span class="fc" id="L46">		Banco banco = new Banco(id,horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);</span>
+<span class="fc" id="L47">		banco.setX(bancoExterno.getX());</span>
+<span class="fc" id="L48">		banco.setY(bancoExterno.getY());</span>
+<span class="fc" id="L49">		List&lt;Servicio&gt; listaDeServicios = bancoExterno.getServicios().stream()</span>
+<span class="fc" id="L50">				.map(nombre -&gt; new Servicio(nombre, horarioBanco.dameHorarioBanco())).collect(Collectors.toList());</span>
+<span class="fc" id="L51">		banco.setCoordenadas();</span>
+<span class="fc" id="L52">		banco.setListaServicios(listaDeServicios);</span>
+<span class="fc" id="L53">		return banco;</span>
 	}
 
 	public List&lt;Poi&gt; buscarPois(String criterio) {
-<span class="nc" id="L54">		String jsons = componente.getJsonBanco(criterio);</span>
-<span class="nc" id="L55">		return convertirJson(jsons);</span>
+<span class="nc" id="L57">		String jsons = componente.getJsonBanco(criterio);</span>
+<span class="nc" id="L58">		return convertirJson(jsons);</span>
 	}
 
 	public void setComponente(ComponenteBanco componenteBanco) {
-<span class="fc" id="L59">		this.componente = componenteBanco;</span>
+<span class="fc" id="L62">		this.componente = componenteBanco;</span>
 
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L64">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
