@@ -15,7 +15,6 @@ public class RepositorioDePois{
 	private List<Poi> listaDePois = new ArrayList<>();
 	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
 
-	//public static volatile ModuleState instance = null;
 	private RepositorioDePois(){
 	}
 	

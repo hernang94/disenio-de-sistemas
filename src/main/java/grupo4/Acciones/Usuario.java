@@ -11,6 +11,7 @@ import grupo4.Repositorios.RepositorioDePois;
 public class Usuario {
 
 	private String terminal;
+	private String comuna;
 	private RepositorioDePois repositorio;
 	private List<Observers> observers = new ArrayList<>();
 	
