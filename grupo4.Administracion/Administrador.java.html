@@ -20,111 +20,33 @@ import grupo4.ComponentesExternos.EmailSender;
 public class Administrador {
 <span class="nc" id="L21">	private static Administrador instancia = new Administrador();</span>
 <span class="nc" id="L22">	private List&lt;Usuario&gt; listaDeUsuarios = new ArrayList&lt;Usuario&gt;();</span>
-	private EmailSender notificador;
-	private RepositorioDeBusquedas almacen;
 	private RepositorioDePois repo;
 
-<span class="nc" id="L27">	private Administrador() {</span>
+<span class="nc" id="L25">	private Administrador() {</span>
 
-<span class="nc" id="L29">	}</span>
+<span class="nc" id="L27">	}</span>
 	
 
 	public static Administrador getInstancia() {
-<span class="nc" id="L33">		return instancia;</span>
+<span class="nc" id="L31">		return instancia;</span>
 	}
 
 
 
 	public void agregarUsuario(Usuario nuevoUsuario) {
-<span class="nc" id="L39">		listaDeUsuarios.add(nuevoUsuario);</span>
-<span class="nc" id="L40">	}</span>
+<span class="nc" id="L37">		listaDeUsuarios.add(nuevoUsuario);</span>
+<span class="nc" id="L38">	}</span>
 
 	public void bajaUsuario(Usuario usuarioABajar) {
-<span class="nc" id="L43">		listaDeUsuarios.remove(usuarioABajar);</span>
-<span class="nc" id="L44">	}</span>
-  
-	
-	public void agregarAccionNotificarxComuna(String comuna, long tiempoEstipulado) {
-<span class="nc" id="L48">		ObserverNotificador observernotificador=new ObserverNotificador(tiempoEstipulado, notificador);</span>
-<span class="nc" id="L49">		agregarAccionxComuna(comuna, observernotificador);</span>
-<span class="nc" id="L50">	}</span>
-
-	public void agregarAccionAlmacenarxComuna(String comuna) {
-<span class="nc" id="L53">		ObserverAlmacenador almacenador= new ObserverAlmacenador(almacen);</span>
-<span class="nc" id="L54">		agregarAccionxComuna(comuna, almacenador);</span>
-<span class="nc" id="L55">	}</span>
-
-	public void agregarAccionReportarxComuna(String comuna) {
-<span class="nc" id="L58">		ObserverReporter reporter= new ObserverReporter(almacen);</span>
-<span class="nc" id="L59">		agregarAccionxComuna(comuna, reporter);</span>
-<span class="nc" id="L60">	}</span>
-	
-	public void agregarAccionNotificarATodos(long tiempoEstipulado){
-<span class="nc" id="L63">		ObserverNotificador observernotificador=new ObserverNotificador(tiempoEstipulado, notificador);</span>
-<span class="nc" id="L64">		agregarAccionATodos(observernotificador);</span>
-<span class="nc" id="L65">	}</span>
-	
-	public void agregarAccionAlmacenarATodos(){
-<span class="nc" id="L68">		ObserverAlmacenador almacenador= new ObserverAlmacenador(almacen);</span>
-<span class="nc" id="L69">		agregarAccionATodos(almacenador);</span>
-<span class="nc" id="L70">	}</span>
-	
-	public void agregarAccionReportarATodos(){
-<span class="nc" id="L73">		ObserverReporter reporter= new ObserverReporter(almacen);</span>
-<span class="nc" id="L74">		agregarAccionATodos(reporter);</span>
-<span class="nc" id="L75">	}</span>
-
-	
-	public void quitarAccionNotificarxComuna(String comuna, long tiempoEstipulado) {
-<span class="nc" id="L79">		quitarAccionPorComuna(ObserverNotificador.class, comuna);</span>
-<span class="nc" id="L80">	}</span>
-
-	public void quitarAccionAlmacenarxComuna(String comuna) {
-<span class="nc" id="L83">		quitarAccionPorComuna(ObserverAlmacenador.class, comuna);</span>
-<span class="nc" id="L84">	}</span>
-
-	public void quitarAccionReportarxComuna(String comuna) {
-<span class="nc" id="L87">		quitarAccionPorComuna(ObserverReporter.class, comuna);</span>
-<span class="nc" id="L88">	}</span>
-	
-	public void quitarAccionNotificarATodos(){
-<span class="nc" id="L91">		quitarAccionATodos(ObserverNotificador.class);</span>
-<span class="nc" id="L92">	}</span>
-	public void quitarAccionAlmacenarATodos(){
-<span class="nc" id="L94">		quitarAccionATodos(ObserverAlmacenador.class);</span>
-<span class="nc" id="L95">	}</span>
-	public void quitarAccionReportarATodos(){
-<span class="nc" id="L97">		quitarAccionATodos(ObserverReporter.class);</span>
-<span class="nc" id="L98">	}</span>
-	
-	
-	public void agregarAccionxComuna(String comuna,Observers objeto){
-<span class="nc" id="L102">		listaDeUsuarios.stream().filter(usuario -&gt; usuario.getComuna().equalsIgnoreCase(comuna))</span>
-<span class="nc" id="L103">		.forEach(usuario -&gt; usuario.agregarObserver(objeto));</span>
-<span class="nc" id="L104">	}</span>
-	public void agregarAccionATodos(Observers objeto){
-<span class="nc" id="L106">		listaDeUsuarios.stream().forEach(usuario -&gt; usuario.agregarObserver(objeto));</span>
-<span class="nc" id="L107">	}</span>
-
-	public void quitarAccionPorComuna(Object objeto,String comuna){
-<span class="nc" id="L110">		listaDeUsuarios.stream().filter(usuario -&gt; usuario.getComuna().equalsIgnoreCase(comuna))</span>
-<span class="nc" id="L111">		.forEach(usuario -&gt; usuario.quitarObserver(obtenerObserverSegunTipo(objeto,usuario)));</span>
-<span class="nc" id="L112">	}</span>
-	
-	public void quitarAccionATodos(Object objeto){
-<span class="nc" id="L115">		listaDeUsuarios.stream().forEach(usuario -&gt; usuario.quitarObserver(obtenerObserverSegunTipo(objeto,usuario)));</span>
-<span class="nc" id="L116">	}</span>
-	public Observers obtenerObserverSegunTipo(Object objeto,Usuario usuario){
-<span class="nc" id="L118">		return usuario.getObservers().stream()</span>
-<span class="nc" id="L119">				.filter(observer -&gt; observer.getClass().equals(objeto)).findFirst().get();</span>
-	}
+<span class="nc" id="L41">		listaDeUsuarios.remove(usuarioABajar);</span>
+<span class="nc" id="L42">	}</span>
 	
 	public void bajarPois(){
-<span class="nc" id="L123">		ObjectMapper objectMapper= new ObjectMapper();</span>
-<span class="nc" id="L124">		BajaPoiAdapter adaptador=new BajaPoiAdapter(objectMapper);</span>
-<span class="nc" id="L125">		List&lt;BajaPoiExterna&gt; lista = adaptador.obtenerPoisABajar();</span>
-<span class="nc" id="L126">		lista.stream().forEach(elemento-&gt;repo.bajaPoi(elemento.getId()));</span>
-<span class="nc" id="L127">	}</span>
+<span class="nc" id="L45">		ObjectMapper objectMapper= new ObjectMapper();</span>
+<span class="nc" id="L46">		BajaPoiAdapter adaptador=new BajaPoiAdapter(objectMapper);</span>
+<span class="nc" id="L47">		List&lt;BajaPoiExterna&gt; lista = adaptador.obtenerPoisABajar();</span>
+<span class="nc" id="L48">		lista.stream().forEach(elemento-&gt;repo.bajaPoi(elemento.getId()));</span>
+<span class="nc" id="L49">	}</span>
 	
 	
 }
