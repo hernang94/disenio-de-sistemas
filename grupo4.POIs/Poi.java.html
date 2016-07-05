@@ -94,8 +94,12 @@ public abstract class Poi {
 	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio) {
 <span class="fc" id="L95">		return false;</span>
 	}
+	public void reemplazarPalabrasClaves(List&lt;String&gt; palabrasAReemplazar){
+<span class="nc" id="L98">		palabrasClaves.clear();</span>
+<span class="nc" id="L99">		palabrasClaves.addAll(palabrasAReemplazar);</span>
+<span class="nc" id="L100">	}</span>
 	public int getId() {
-<span class="fc" id="L98">		return id;</span>
+<span class="fc" id="L102">		return id;</span>
 	}
 
 	

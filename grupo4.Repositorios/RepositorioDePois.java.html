@@ -118,6 +118,16 @@ public class RepositorioDePois {
 	public Poi obtenerSegunCriterio(String criterio) {
 <span class="fc" id="L119">		return listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);</span>
 	}
+	public void cambiarPalabrasClaves(String palabraFantasia, List&lt;String&gt; palabrasClaves){
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if(repositorioContienePoi(palabraFantasia)){</span>
+<span class="nc" id="L123">			listaDePois.stream().forEach(poi-&gt;poi.reemplazarPalabrasClaves(palabrasClaves));</span>
+		}
+<span class="nc" id="L125">	}</span>
 
+
+	private boolean repositorioContienePoi(String palabraFantasia) {
+<span class="nc" id="L129">		return listaDePois.stream().anyMatch(unPoi -&gt; unPoi.getNombre().equalsIgnoreCase(palabraFantasia));</span>
+	}
+	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
