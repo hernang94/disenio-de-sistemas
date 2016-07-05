@@ -1,27 +1,22 @@
 package grupo4.Procesos;
 
-import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import DTOexterno.BajaPoiExterna;
-import grupo4.Acciones.ObserverAlmacenador;
-import grupo4.Acciones.ObserverNotificador;
-import grupo4.Acciones.ObserverReporter;
-import grupo4.Acciones.Observers;
 import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.BajaPoiAdapter;
-import grupo4.ComponentesExternos.EmailSender;
 
 public class AdministradorDeProcesos {
 	private static AdministradorDeProcesos instancia = new AdministradorDeProcesos();
 	private List<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
 	private RepositorioDePois repo;
-
+	private Queue<Proceso> colaDeProcesos;
 	private AdministradorDeProcesos() {
 
 	}

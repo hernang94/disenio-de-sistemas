@@ -11,7 +11,7 @@ import grupo4.Acciones.FechaCantReporte;
 
 public class RepositorioDeBusquedas {
 	private List<ResultadosDeBusquedas> listaBusquedas = new ArrayList<>();;
-	Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
+	private Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
 	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();
 
 	private RepositorioDeBusquedas() {

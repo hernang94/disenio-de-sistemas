@@ -12,7 +12,7 @@ public class Usuario {
 
 	private String terminal;
 
-	private String comuna;
+	private int comuna;
 	private RepositorioDePois repositorio;
 	private List<Observers> observers = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class Usuario {
 		return terminal;
 	}
 
-	public String getComuna() {
+	public int getComuna() {
 		return comuna;
 	}
 

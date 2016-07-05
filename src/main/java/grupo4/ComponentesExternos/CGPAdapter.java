@@ -12,6 +12,7 @@ import org.joda.time.LocalTime;
 import org.uqbar.geodds.Polygon;
 
 import DTOexterno.CentroDTO;
+import DTOexterno.LocalComercialExterno;
 import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
 import grupo4.POIs.CGP;
@@ -66,6 +67,12 @@ public class CGPAdapter implements Adaptadores {
 						new LocalTime(rango.getHoraDesde(), rango.getMinutoDesde()).toString(),
 						new LocalTime(rango.getHoraHasta(), rango.getMinutoHasta()).toString(), hashHorariosAdapter));
 		return hashHorariosAdapter;
+	}
+
+	@Override
+	public List<LocalComercialExterno> obtenerLocalesExternos() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

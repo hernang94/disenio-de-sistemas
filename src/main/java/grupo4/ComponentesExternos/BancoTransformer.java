@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import DTOexterno.BancoExterno;
+import DTOexterno.LocalComercialExterno;
 import grupo4.POIs.Banco;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
@@ -61,6 +62,12 @@ public class BancoTransformer implements Adaptadores {
 	public void setComponente(ComponenteBanco componenteBanco) {
 		this.componente = componenteBanco;
 
+	}
+
+	@Override
+	public List<LocalComercialExterno> obtenerLocalesExternos() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

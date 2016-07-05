@@ -10,6 +10,9 @@ public LocalComercialExterno(String nombre, List<String> palabrasClaves) {
 	this.nombre = nombre;
 	this.palabrasClaves = palabrasClaves;
 }
+
+public LocalComercialExterno() {
+}
 public String getNombre() {
 	return nombre;
 }
