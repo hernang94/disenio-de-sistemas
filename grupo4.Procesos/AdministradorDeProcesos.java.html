@@ -1,54 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AdministradorDeProcesos.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TPAnual</a> &gt; <a href="index.source.html" class="el_package">grupo4.Procesos</a> &gt; <span class="el_source">AdministradorDeProcesos.java</span></div><h1>AdministradorDeProcesos.java</h1><pre class="source lang-java linenums">package grupo4.Procesos;
 
-import grupo4.Repositorios.RepositorioDePois;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import DTOexterno.BajaPoiExterna;
-import grupo4.Acciones.Usuario;
-import grupo4.ComponentesExternos.BajaPoiAdapter;
 
 public class AdministradorDeProcesos {
-<span class="nc" id="L16">	private static AdministradorDeProcesos instancia = new AdministradorDeProcesos();</span>
-<span class="nc" id="L17">	private List&lt;Usuario&gt; listaDeUsuarios = new ArrayList&lt;Usuario&gt;();</span>
-	private RepositorioDePois repo;
-	private Queue&lt;Proceso&gt; colaDeProcesos;
-<span class="nc" id="L20">	private AdministradorDeProcesos() {</span>
+<span class="nc" id="L5">	private static AdministradorDeProcesos instancia = new AdministradorDeProcesos();</span>
+<span class="nc" id="L6">	private AdministradorDeProcesos() {</span>
 
-<span class="nc" id="L22">	}</span>
+<span class="nc" id="L8">	}</span>
 	
-
 	public static AdministradorDeProcesos getInstancia() {
-<span class="nc" id="L26">		return instancia;</span>
+<span class="nc" id="L11">		return instancia;</span>
 	}
 
-
-
-	public void agregarUsuario(Usuario nuevoUsuario) {
-<span class="nc" id="L32">		listaDeUsuarios.add(nuevoUsuario);</span>
-<span class="nc" id="L33">	}</span>
-
-	public void bajaUsuario(Usuario usuarioABajar) {
-<span class="nc" id="L36">		listaDeUsuarios.remove(usuarioABajar);</span>
-<span class="nc" id="L37">	}</span>
-	
-	public void bajarPois(){
-<span class="nc" id="L40">		ObjectMapper objectMapper= new ObjectMapper();</span>
-<span class="nc" id="L41">		BajaPoiAdapter adaptador=new BajaPoiAdapter(objectMapper);</span>
-<span class="nc" id="L42">		List&lt;BajaPoiExterna&gt; lista = adaptador.obtenerPoisABajar();</span>
-<span class="nc" id="L43">		lista.stream().forEach(elemento-&gt;evaluarYBajarPoi(elemento));</span>
-<span class="nc" id="L44">	}</span>
-	public void evaluarYBajarPoi(BajaPoiExterna bajaPoi){
-<span class="nc bnc" id="L46" title="All 2 branches missed.">		if(bajaPoi.getId()==400){</span>
-			//TODO Almacenar en el repositorio de resultados de ejecucion el error
-<span class="nc" id="L48">			return;</span>
-		}
-<span class="nc" id="L50">		repo.bajaPoi(bajaPoi.getId());</span>
-<span class="nc" id="L51">	}</span>
 	
 }
 

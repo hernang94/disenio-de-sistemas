@@ -22,7 +22,7 @@ public class BajaPoiAdapter {
 <span class="nc" id="L22">		return convertirJson(jsons);</span>
 	}
 
-	private List&lt;BajaPoiExterna&gt; convertirJson(String jsons) {
+	public List&lt;BajaPoiExterna&gt; convertirJson(String jsons) {
 <span class="nc" id="L26">		List&lt;BajaPoiExterna&gt; lista = new ArrayList&lt;&gt;();</span>
 		try {
 <span class="nc" id="L28">			lista=objectMapper.readValue(jsons,</span>
