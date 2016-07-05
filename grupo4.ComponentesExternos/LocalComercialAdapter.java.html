@@ -15,45 +15,53 @@ import java.util.stream.Stream;
 import org.apache.http.message.BufferedHeader;
 
 import DTOexterno.LocalComercialExterno;
+import grupo4.POIs.Poi;
 
-public class LocalComercialAdapter {
-private ComponenteLocalComercial componente;
+public class LocalComercialAdapter implements Adaptadores{
+	private ComponenteLocalComercial componente;
 
-<span class="nc" id="L22">public LocalComercialAdapter() {</span>
-	
-<span class="nc" id="L24">}</span>
+<span class="nc" id="L23">	public LocalComercialAdapter() {</span>
 
+<span class="nc" id="L25">	}</span>
 
-public List&lt;LocalComercialExterno&gt; obtenerLocalesExternos() throws IOException{
-<span class="nc" id="L28">	List&lt;LocalComercialExterno&gt; listaADevolver= crearListaDeLocales(componente.obtenerArchivo());</span>
-<span class="nc" id="L29">	return listaADevolver;</span>
-	
-}
-
-private List&lt;LocalComercialExterno&gt; crearListaDeLocales(File obtenerArchivo) throws IOException {
-<span class="nc" id="L34">	List&lt;LocalComercialExterno&gt;listaARetornar=new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L35">	BufferedReader archivo=new BufferedReader(new FileReader(obtenerArchivo));</span>
-	String linea;
-<span class="nc bnc" id="L37" title="All 2 branches missed.">	while ((linea=archivo.readLine())!=null){</span>
-<span class="nc" id="L38">		listaARetornar.add(obtenerObjetoLocal(linea));</span>
+	public List&lt;LocalComercialExterno&gt; obtenerLocalesExternos() {
+		List&lt;LocalComercialExterno&gt; listaADevolver;
+		try {
+<span class="nc" id="L30">			listaADevolver = crearListaDeLocales(componente.obtenerArchivo());</span>
+<span class="nc" id="L31">			return listaADevolver;</span>
+<span class="nc" id="L32">		} catch (IOException e) {</span>
+<span class="nc" id="L33">			throw new RuntimeException();</span>
+		}
 	}
-<span class="nc" id="L40">	return listaARetornar;</span>
-}
 
+	private List&lt;LocalComercialExterno&gt; crearListaDeLocales(File obtenerArchivo) throws IOException {
+<span class="nc" id="L38">		List&lt;LocalComercialExterno&gt; listaARetornar = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L39">		BufferedReader archivo = new BufferedReader(new FileReader(obtenerArchivo));</span>
+		String linea;
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		while ((linea = archivo.readLine()) != null) {</span>
+<span class="nc" id="L42">			listaARetornar.add(obtenerObjetoLocal(linea));</span>
+		}
+<span class="nc" id="L44">		return listaARetornar;</span>
+	}
 
-private LocalComercialExterno obtenerObjetoLocal(String contenido) {
-	LocalComercialExterno localComercial;
-<span class="nc" id="L46">	String nombre=contenido.substring(0,contenido.indexOf(';'));</span>
-<span class="nc" id="L47">	String lista=contenido.substring(contenido.indexOf(';')+1,contenido.length());</span>
-<span class="nc" id="L48">	List&lt;String&gt; palabrasClave=Arrays.asList(lista.split(&quot;&quot;));</span>
-<span class="nc" id="L49">	localComercial=new LocalComercialExterno(nombre, palabrasClave);</span>
-<span class="nc" id="L50">	return localComercial;</span>
-}
+	private LocalComercialExterno obtenerObjetoLocal(String contenido) {
+		LocalComercialExterno localComercial;
+<span class="nc" id="L49">		String nombre = contenido.substring(0, contenido.indexOf(';'));</span>
+<span class="nc" id="L50">		String lista = contenido.substring(contenido.indexOf(';') + 1, contenido.length());</span>
+<span class="nc" id="L51">		List&lt;String&gt; palabrasClave = Arrays.asList(lista.split(&quot;&quot;));</span>
+<span class="nc" id="L52">		localComercial = new LocalComercialExterno(nombre, palabrasClave);</span>
+<span class="nc" id="L53">		return localComercial;</span>
+	}
 
+	public void setComponente(ComponenteLocalComercial componente) {
+<span class="nc" id="L57">		this.componente = componente;</span>
+<span class="nc" id="L58">	}</span>
 
-public void setComponente(ComponenteLocalComercial componente) {
-<span class="nc" id="L55">	this.componente = componente;</span>
-<span class="nc" id="L56">}</span>
+	@Override
+	public List&lt;Poi&gt; buscarPois(String criterio1) {
+		// TODO Auto-generated method stub
+<span class="nc" id="L63">		return null;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
