@@ -118,5 +118,15 @@ public class RepositorioDePois {
 	public Poi obtenerSegunCriterio(String criterio) {
 		return listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);
 	}
+	public void cambiarPalabrasClaves(String palabraFantasia, List<String> palabrasClaves){
+		if(repositorioContienePoi(palabraFantasia)){
+			listaDePois.stream().forEach(poi->poi.reemplazarPalabrasClaves(palabrasClaves));
+		}
+	}
 
+
+	private boolean repositorioContienePoi(String palabraFantasia) {
+		return listaDePois.stream().anyMatch(unPoi -> unPoi.getNombre().equalsIgnoreCase(palabraFantasia));
+	}
+	
 }

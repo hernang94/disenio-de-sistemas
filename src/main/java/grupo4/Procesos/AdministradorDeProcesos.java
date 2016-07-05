@@ -1,4 +1,4 @@
-package grupo4.Administracion;
+package grupo4.Procesos;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
@@ -17,17 +17,17 @@ import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.BajaPoiAdapter;
 import grupo4.ComponentesExternos.EmailSender;
 
-public class Administrador {
-	private static Administrador instancia = new Administrador();
+public class AdministradorDeProcesos {
+	private static AdministradorDeProcesos instancia = new AdministradorDeProcesos();
 	private List<Usuario> listaDeUsuarios = new ArrayList<Usuario>();
 	private RepositorioDePois repo;
 
-	private Administrador() {
+	private AdministradorDeProcesos() {
 
 	}
 	
 
-	public static Administrador getInstancia() {
+	public static AdministradorDeProcesos getInstancia() {
 		return instancia;
 	}
 
@@ -45,9 +45,15 @@ public class Administrador {
 		ObjectMapper objectMapper= new ObjectMapper();
 		BajaPoiAdapter adaptador=new BajaPoiAdapter(objectMapper);
 		List<BajaPoiExterna> lista = adaptador.obtenerPoisABajar();
-		lista.stream().forEach(elemento->repo.bajaPoi(elemento.getId()));
+		lista.stream().forEach(elemento->evaluarYBajarPoi(elemento));
 	}
-	
+	public void evaluarYBajarPoi(BajaPoiExterna bajaPoi){
+		if(bajaPoi.getId()==400){
+			//TODO Almacenar en el repositorio de resultados de ejecucion el error
+			return;
+		}
+		repo.bajaPoi(bajaPoi.getId());
+	}
 	
 }
 

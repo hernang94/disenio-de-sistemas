@@ -1,4 +1,4 @@
-package grupo4.Administracion;
+package grupo4.Procesos;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,22 +10,29 @@ import grupo4.Acciones.Observers;
 import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.EmailSender;
 import grupo4.Repositorios.RepositorioDeBusquedas;;
-public class GestionadorDeAcciones {
+public class ProcesoGestionarAcciones implements Proceso{
 	private LocalDateTime horaYFecha;
 	private long periodicidad;
 	private List<Usuario> listaDeUsuarios;
 	private EmailSender notificador;
 	private RepositorioDeBusquedas almacen;
-	
-	public GestionadorDeAcciones(LocalDateTime horaYFecha, long periodicidad, List<Usuario> listaUsuarios, String comuna, EmailSender notificador) {
+	private int accion;
+	private int observer;
+	private int tiempoEstipulado;
+	public ProcesoGestionarAcciones(LocalDateTime horaYFecha, long periodicidad, List<Usuario> listaUsuarios, String comuna, EmailSender notificador
+			,int accion, int observer, int tiempoEstipulado) {
 		this.horaYFecha = horaYFecha;
 		this.periodicidad = periodicidad;
 		this.listaDeUsuarios = listaUsuarios;
 		almacen= RepositorioDeBusquedas.getInstancia();
 		this.notificador=notificador;
+		this.accion=accion;
+		this.observer=observer;
+		this.tiempoEstipulado=tiempoEstipulado;
 	}
-
-	public void ejecutar(int accion,int observer,int tiempoEstipulado){
+	//Observer: 1-Notificar 2-Almacenar 3-Reportar
+	//Accion: 1-Agregar 2-Quitar
+	public void ejecutar(){
 		switch(accion){
 			case 1:
 				agregarAccion(observer,tiempoEstipulado);

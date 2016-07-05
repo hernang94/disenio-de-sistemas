@@ -1,6 +1,5 @@
 package grupo4.ComponentesExternos;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import DTOexterno.BajaPoiExterna;
-import DTOexterno.BancoExterno;
 
 public class BajaPoiAdapter {
 	private ObjectMapper objectMapper;
@@ -33,6 +31,10 @@ public class BajaPoiAdapter {
 			throw new RuntimeException(e);
 		}
 		return lista;
+	}
+
+	public void setComponente(ComponenteBajaPois componente) {
+		this.componente = componente;
 	}
 	
 }

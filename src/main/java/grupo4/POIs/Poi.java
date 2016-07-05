@@ -94,6 +94,10 @@ public abstract class Poi {
 	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio) {
 		return false;
 	}
+	public void reemplazarPalabrasClaves(List<String> palabrasAReemplazar){
+		palabrasClaves.clear();
+		palabrasClaves.addAll(palabrasAReemplazar);
+	}
 	public int getId() {
 		return id;
 	}
