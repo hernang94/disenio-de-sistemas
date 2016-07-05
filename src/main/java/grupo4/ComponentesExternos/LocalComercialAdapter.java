@@ -2,17 +2,11 @@ package grupo4.ComponentesExternos;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
-
-import org.apache.http.message.BufferedHeader;
 
 import DTOexterno.LocalComercialExterno;
 import grupo4.POIs.Poi;
@@ -41,6 +35,7 @@ public class LocalComercialAdapter implements Adaptadores{
 		while ((linea = archivo.readLine()) != null) {
 			listaARetornar.add(obtenerObjetoLocal(linea));
 		}
+		archivo.close();
 		return listaARetornar;
 	}
 

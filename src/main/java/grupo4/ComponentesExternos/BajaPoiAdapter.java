@@ -22,7 +22,7 @@ public class BajaPoiAdapter {
 		return convertirJson(jsons);
 	}
 
-	private List<BajaPoiExterna> convertirJson(String jsons) {
+	public List<BajaPoiExterna> convertirJson(String jsons) {
 		List<BajaPoiExterna> lista = new ArrayList<>();
 		try {
 			lista=objectMapper.readValue(jsons,
