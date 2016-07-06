@@ -1,6 +1,5 @@
 package grupo4.Repositorios;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ResultadosDeEjecucion {
