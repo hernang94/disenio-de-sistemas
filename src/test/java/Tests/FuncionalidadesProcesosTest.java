@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -35,6 +34,7 @@ import grupo4.POIs.Parada;
 import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Procesos.AccionBajaPoi;
+import grupo4.Procesos.AccionGestionObserver;
 import grupo4.Procesos.AdministradorDeProcesos;
 import grupo4.Procesos.AgregarAlmacenar;
 import grupo4.Procesos.CriterioATodos;
@@ -48,57 +48,58 @@ import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.RepositorioDeUsuarios;
 
 public class FuncionalidadesProcesosTest {
-		private List<CentroDTO> listaCentroAAdaptar;
-		private RepositorioDePois repoDePois;
-		private Parada parada114;
-		private Servicio timbrado;
-		private CentroDTO centroPrueba;
-		private ServicioDTO servicioPrueba;
-		private RangoServicioDTO rangoPrueba;
-		private Banco banco;
-		private Banco banco2;
-		private CGP cgp;
-		private LocalComercial local;
-		private Rubro rubro;
-		private ComponenteCGPS componente;
-		private CGPAdapter adaptador;
-		private ComponenteBanco componenteBanco;
-		private BancoTransformer optimus;
-		private Map<DayOfWeek, Horario> hashMapBanco;
-		private Horario horarioBanco;
-		private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
-		private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
-		private Map<DayOfWeek, Horario> hashMapServicio;
-		private ObserverNotificador notificador;
-		private ObserverReporter reporter;
-		private ObserverAlmacenador almacenador;
-		private List<String> palabrasClavesBanco;
-		private List<String> palabrasClavesCGP;
-		private List<String> palabrasClavesParada;
-		private List<String> palabrasClavesLocalComercial;
-		private Usuario terminal;
-		private EmailSender notificadorMail;
-		private RepositorioDeBusquedas repositorioBusquedas;
-		private ObserverNotificador notificador2;
-		private Usuario terminal2;
-		private Usuario terminal3;
-		
-		private AdministradorDeProcesos adminProcesos;
-		private Proceso procesoBajaPoi;
-		private AccionBajaPoi accionBajaPoi;
-		private RepositorioDeResultadosDeEjecucion repoResultadosEjecucion;
-		private CriterioATodos criterioTodos;
-		private CriterioPorComuna criterioComuna;
-		private CriterioPorSeleccion criterioSeleccion;
-		private AgregarAlmacenar agregarAlmacenarTodos;
-		private AgregarAlmacenar agregarAlmacenarComuna;
-		private AgregarAlmacenar agregarAlmacenarSeleccion;
-		private QuitarAlmacenar quitarAlmacenarTodos;
-		private QuitarAlmacenar quitarAlmacenarComuna;
-		private QuitarAlmacenar quitarAlmacenarSeleccion;
-		private RepositorioDeUsuarios repoUsuarios;
-		private List<String> listaTerminales;
+	private List<CentroDTO> listaCentroAAdaptar;
+	private RepositorioDePois repoDePois;
+	private Parada parada114;
+	private Servicio timbrado;
+	private CentroDTO centroPrueba;
+	private ServicioDTO servicioPrueba;
+	private RangoServicioDTO rangoPrueba;
+	private Banco banco;
+	private Banco banco2;
+	private CGP cgp;
+	private LocalComercial local;
+	private Rubro rubro;
+	private ComponenteCGPS componente;
+	private CGPAdapter adaptador;
+	private ComponenteBanco componenteBanco;
+	private BancoTransformer optimus;
+	private Map<DayOfWeek, Horario> hashMapBanco;
+	private Horario horarioBanco;
+	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
+	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
+	private Map<DayOfWeek, Horario> hashMapServicio;
+	private ObserverNotificador notificador;
+	private ObserverReporter reporter;
+	private ObserverAlmacenador almacenador;
+	private List<String> palabrasClavesBanco;
+	private List<String> palabrasClavesCGP;
+	private List<String> palabrasClavesParada;
+	private List<String> palabrasClavesLocalComercial;
+	private Usuario terminal;
+	private EmailSender notificadorMail;
+	private RepositorioDeBusquedas repositorioBusquedas;
+	private ObserverNotificador notificador2;
+	private Usuario terminal2;
+	private Usuario terminal3;
 
+	private AdministradorDeProcesos adminProcesos;
+	private Proceso proceso;
+	private AccionBajaPoi accionBajaPoi;
+	private RepositorioDeResultadosDeEjecucion repoResultadosEjecucion;
+	private CriterioATodos criterioTodos;
+	private CriterioPorComuna criterioComuna;
+	private CriterioPorSeleccion criterioSeleccion;
+	private AgregarAlmacenar agregarAlmacenarTodos;
+	private AgregarAlmacenar agregarAlmacenarComuna;
+	private AgregarAlmacenar agregarAlmacenarSeleccion;
+	private QuitarAlmacenar quitarAlmacenarTodos;
+	private QuitarAlmacenar quitarAlmacenarComuna;
+	private QuitarAlmacenar quitarAlmacenarSeleccion;
+	private RepositorioDeUsuarios repoUsuarios;
+	private List<String> listaTerminales;
+
+	@SuppressWarnings("static-access")
 	@Before
 	public void init() {
 		repoDePois = RepositorioDePois.getInstancia();
@@ -219,41 +220,41 @@ public class FuncionalidadesProcesosTest {
 		repoDePois.agregarPoi(parada114);
 		repoDePois.agregarPoi(local);
 		repoDePois.agregarPoi(cgp);
-		
-		terminal = new Usuario("Terminal Abasto", repoDePois,10);
+
+		terminal = new Usuario("Terminal Abasto", repoDePois, 10);
 		terminal.agregarObserver(notificador);
 		terminal.agregarObserver(reporter);
 		terminal.agregarObserver(almacenador);
 
-		terminal2 = new Usuario("Terminal Alto Palermo", repoDePois,1);
+		terminal2 = new Usuario("Terminal Alto Palermo", repoDePois, 1);
 		notificador2 = new ObserverNotificador(1, notificadorMail);
 		terminal2.agregarObserver(notificador2);
 
-		accionBajaPoi= new AccionBajaPoi(repoDePois);
-		procesoBajaPoi=new Proceso(LocalDateTime.now(),0,accionBajaPoi);
-		
-		repoResultadosEjecucion= RepositorioDeResultadosDeEjecucion.getInstancia();
-		repoUsuarios= RepositorioDeUsuarios.getInstancia();
-		
-		criterioTodos=new CriterioATodos();
-		criterioComuna=new CriterioPorComuna(10);
-		listaTerminales=new ArrayList<>();
+		accionBajaPoi = new AccionBajaPoi(repoDePois);
+
+		repoResultadosEjecucion = RepositorioDeResultadosDeEjecucion.getInstancia();
+		repoUsuarios = RepositorioDeUsuarios.getInstancia();
+
+		criterioTodos = new CriterioATodos();
+		criterioComuna = new CriterioPorComuna(10);
+		listaTerminales = new ArrayList<>();
 		listaTerminales.add("Terminal Abasto");
 		listaTerminales.add("Terminal Alto Palermo");
-		criterioSeleccion=new CriterioPorSeleccion(listaTerminales);
-		
-		agregarAlmacenarTodos= new AgregarAlmacenar(criterioTodos);
-		agregarAlmacenarComuna= new AgregarAlmacenar(criterioComuna);
-		agregarAlmacenarSeleccion=new AgregarAlmacenar(criterioSeleccion);
-		
+		criterioSeleccion = new CriterioPorSeleccion(listaTerminales);
+
+		agregarAlmacenarTodos = new AgregarAlmacenar(criterioTodos);
+		agregarAlmacenarComuna = new AgregarAlmacenar(criterioComuna);
+		agregarAlmacenarSeleccion = new AgregarAlmacenar(criterioSeleccion);
+
 		quitarAlmacenarTodos = new QuitarAlmacenar(criterioTodos);
 		quitarAlmacenarComuna = new QuitarAlmacenar(criterioComuna);
 		quitarAlmacenarSeleccion = new QuitarAlmacenar(criterioSeleccion);
-		
+
 		repoUsuarios.agregarUsuario(terminal);
 		repoUsuarios.agregarUsuario(terminal2);
+
 	}
-	
+
 	@After
 	public void limpiarSingleton() {
 		repoDePois.reset();
@@ -261,56 +262,70 @@ public class FuncionalidadesProcesosTest {
 		repoUsuarios.reset();
 		repoResultadosEjecucion.getlistaDeResultados().clear();
 	}
-	
-	/*@Test
-	public void AccionBajaPoi(){
-		procesoBajaPoi.ejecutar();
-		
-	}*/
-	
+
+	/*
+	 * @Test public void AccionBajaPoi(){ procesoBajaPoi.ejecutar();
+	 * 
+	 * }
+	 */
+
 	@Test
-	public void agregarAlmacenarATodos(){
+	public void agregarAlmacenarATodos() {
 		agregarAlmacenarTodos.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
-	public void agregarAlmacenarPorComuna(){
+	public void agregarAlmacenarPorComuna() {
 		agregarAlmacenarComuna.ejecutar();
-		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
-	public void agregarAlmacenarSeleccion(){
+	public void agregarAlmacenarSeleccion() {
 		agregarAlmacenarSeleccion.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
-	public void quitarAlmacenarATodos(){
+	public void quitarAlmacenarATodos() {
 		agregarAlmacenarTodos.ejecutar();
 		quitarAlmacenarTodos.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
-	public void quitarAlmacenarPorComuna(){
+	public void quitarAlmacenarPorComuna() {
 		agregarAlmacenarComuna.ejecutar();
 		quitarAlmacenarComuna.ejecutar();
-		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
-	public void quitarAlmacenarSeleccion(){
+	public void quitarAlmacenarSeleccion() {
 		agregarAlmacenarSeleccion.ejecutar();
 		quitarAlmacenarSeleccion.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
 	public void conicideComuna() {
-		Assert.assertEquals(10,terminal.getComuna());
+		Assert.assertEquals(10, terminal.getComuna());
 	}
-	
+
+	@Test
+	public void procesoAlmacenarTodos() {
+		proceso = new Proceso(LocalDateTime.now(), 0, agregarAlmacenarTodos);
+		proceso.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+
+	}
 
 }
