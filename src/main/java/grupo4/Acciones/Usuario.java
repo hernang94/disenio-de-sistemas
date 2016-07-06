@@ -11,14 +11,14 @@ import grupo4.Repositorios.RepositorioDePois;
 public class Usuario {
 
 	private String terminal;
-
 	private int comuna;
 	private RepositorioDePois repositorio;
 	private List<Observers> observers = new ArrayList<>();
 
-	public Usuario(String terminal, RepositorioDePois repositorio) {
+	public Usuario(String terminal, RepositorioDePois repositorio, int comuna) {
 		this.terminal = terminal;
 		this.repositorio = repositorio;
+		this.comuna=comuna;
 	}
 
 	public void agregarObserver(Observers observer) {

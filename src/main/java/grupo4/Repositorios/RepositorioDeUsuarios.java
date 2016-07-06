@@ -21,4 +21,8 @@ public class RepositorioDeUsuarios {
 		return listaDeUsuarios;
 	}
 
+	public void reset() {
+		listaDeUsuarios.clear();
+	}
+
 }
