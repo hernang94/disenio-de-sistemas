@@ -37,8 +37,8 @@ public class Usuario {
 		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
 		observers.stream().forEach(observer -> observer.evaluarNotificacion(diferencia));
 		int cantBuscada = listaAux.size();
-		observers.stream()
-				.forEach(observer -> observer.agregarBusqueda(terminal,criterio, diferencia, tiempoInicio, cantBuscada));
+		observers.stream().forEach(
+				observer -> observer.agregarBusqueda(terminal, criterio, diferencia, tiempoInicio, cantBuscada));
 	}
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
@@ -68,5 +68,5 @@ public class Usuario {
 	public List<Observers> getObservers() {
 		return observers;
 	}
-	
+
 }

@@ -13,9 +13,9 @@ public class LocalComercial extends Poi {
 	private Map<DayOfWeek, Horario> hashManana;
 	private Map<DayOfWeek, Horario> hashTarde;
 
-	public LocalComercial(int id,Rubro rubro, Map<DayOfWeek, Horario> horariosManiana, Map<DayOfWeek, Horario> horariosTarde,
-			String nombre, List<String> palabrasClaves) {
-		super(id,nombre, palabrasClaves);
+	public LocalComercial(int id, Rubro rubro, Map<DayOfWeek, Horario> horariosManiana,
+			Map<DayOfWeek, Horario> horariosTarde, String nombre, List<String> palabrasClaves) {
+		super(id, nombre, palabrasClaves);
 		this.rubro = rubro;
 		this.hashManana = horariosManiana;
 		this.hashTarde = horariosTarde;

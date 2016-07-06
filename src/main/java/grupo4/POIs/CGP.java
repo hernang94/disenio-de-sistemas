@@ -12,8 +12,8 @@ public class CGP extends Poi {
 	private List<Servicio> servicios = new ArrayList<>();
 	private Polygon comuna;
 
-	public CGP(int id,Polygon comuna, String nombre, List<String> palabrasClaves) {
-		super(id,nombre, palabrasClaves);
+	public CGP(int id, Polygon comuna, String nombre, List<String> palabrasClaves) {
+		super(id, nombre, palabrasClaves);
 		this.comuna = comuna;
 	}
 

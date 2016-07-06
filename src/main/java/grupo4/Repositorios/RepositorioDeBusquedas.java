@@ -14,9 +14,6 @@ public class RepositorioDeBusquedas {
 	private Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
 	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();
 
-	private RepositorioDeBusquedas() {
-	}
-
 	public static RepositorioDeBusquedas getInstancia() {
 		return instancia;
 	}
@@ -67,14 +64,15 @@ public class RepositorioDeBusquedas {
 		return busquedasDeCadaTerminal.get(terminal);
 	}
 
-	public Map<String,Integer> reporteTotal() {
-		Map<String,Integer> hashARetornar=new HashMap<>();
-		busquedasDeCadaTerminal.forEach((terminal,lista)->hashARetornar.put(terminal, cantidadTotalDeBusquedas(lista)));
+	public Map<String, Integer> reporteTotal() {
+		Map<String, Integer> hashARetornar = new HashMap<>();
+		busquedasDeCadaTerminal
+				.forEach((terminal, lista) -> hashARetornar.put(terminal, cantidadTotalDeBusquedas(lista)));
 		return hashARetornar;
 	}
-	
-	public Integer cantidadTotalDeBusquedas(List<FechaCantReporte> lista){
-		return lista.stream().mapToInt(elemento->elemento.getCantidad()).sum();
+
+	public Integer cantidadTotalDeBusquedas(List<FechaCantReporte> lista) {
+		return lista.stream().mapToInt(elemento -> elemento.getCantidad()).sum();
 	}
 
 }

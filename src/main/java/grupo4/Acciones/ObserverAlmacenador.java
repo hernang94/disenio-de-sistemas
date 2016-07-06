@@ -16,8 +16,10 @@ public class ObserverAlmacenador implements Observers {
 
 	}
 
-	public void agregarBusqueda(String terminal,String criterio, long diferencia, LocalDateTime tiempoInicio, int size) {
-		ResultadosDeBusquedas newResult = new ResultadosDeBusquedas(terminal,diferencia, criterio, tiempoInicio.toLocalDate(), size);
+	public void agregarBusqueda(String terminal, String criterio, long diferencia, LocalDateTime tiempoInicio,
+			int size) {
+		ResultadosDeBusquedas newResult = new ResultadosDeBusquedas(terminal, diferencia, criterio,
+				tiempoInicio.toLocalDate(), size);
 		almacen.agregarBusqueda(newResult);
 	}
 

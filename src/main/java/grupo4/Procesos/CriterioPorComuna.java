@@ -9,14 +9,14 @@ import grupo4.Repositorios.RepositorioDeUsuarios;
 public class CriterioPorComuna implements Criterio {
 
 	private int comuna;
-	
+
 	public CriterioPorComuna(int comuna) {
-		this.comuna=comuna;
+		this.comuna = comuna;
 	}
 
-	@Override
 	public List<Usuario> obtenerLista() {
-		List<Usuario>listaAuxiliar=RepositorioDeUsuarios.getInstancia().getListaDeUsuarios().stream().filter(usuario->usuario.getComuna()==comuna).collect(Collectors.toList());
+		List<Usuario> listaAuxiliar = RepositorioDeUsuarios.getInstancia().getListaDeUsuarios().stream()
+				.filter(usuario -> usuario.getComuna() == comuna).collect(Collectors.toList());
 		return listaAuxiliar;
 	}
 

@@ -11,12 +11,8 @@ import java.util.List;
 import DTOexterno.LocalComercialExterno;
 import grupo4.POIs.Poi;
 
-public class LocalComercialAdapter implements Adaptadores{
+public class LocalComercialAdapter implements Adaptadores {
 	private ComponenteLocalComercial componente;
-
-	public LocalComercialAdapter() {
-
-	}
 
 	public List<LocalComercialExterno> obtenerLocalesExternos() {
 		List<LocalComercialExterno> listaADevolver;
@@ -52,9 +48,7 @@ public class LocalComercialAdapter implements Adaptadores{
 		this.componente = componente;
 	}
 
-	@Override
 	public List<Poi> buscarPois(String criterio1) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

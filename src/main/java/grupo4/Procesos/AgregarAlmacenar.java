@@ -1,9 +1,7 @@
 package grupo4.Procesos;
 
-
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Repositorios.RepositorioDeBusquedas;
-
 
 public class AgregarAlmacenar extends AccionGestionObserver {
 

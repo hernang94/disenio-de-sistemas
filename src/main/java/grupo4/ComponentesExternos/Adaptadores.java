@@ -7,5 +7,6 @@ import grupo4.POIs.Poi;
 
 public interface Adaptadores {
 	public List<Poi> buscarPois(String criterio1);
-	public List <LocalComercialExterno> obtenerLocalesExternos();
+
+	public List<LocalComercialExterno> obtenerLocalesExternos();
 }

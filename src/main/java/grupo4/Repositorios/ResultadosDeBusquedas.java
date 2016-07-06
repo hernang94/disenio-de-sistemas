@@ -1,6 +1,7 @@
 package grupo4.Repositorios;
 
 import java.time.LocalDate;
+
 public class ResultadosDeBusquedas {
 
 	private String terminalDeLaBusqueda;
@@ -9,16 +10,16 @@ public class ResultadosDeBusquedas {
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 
-	public ResultadosDeBusquedas(String terminal,long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
+	public ResultadosDeBusquedas(String terminal, long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
 			int cantidadDeResultados) {
-		this.terminalDeLaBusqueda=terminal;
+		this.terminalDeLaBusqueda = terminal;
 		this.tiempoDeBusqueda = tiempoDeBusqueda;
 		this.fraseBuscada = fraseBuscada;
 		this.fechaDeBusqueda = fechaDeBusqueda;
 		this.cantidadDeResultados = cantidadDeResultados;
 	}
-	
-	public String getTerminalDeLaBusqueda(){
+
+	public String getTerminalDeLaBusqueda() {
 		return terminalDeLaBusqueda;
 	}
 

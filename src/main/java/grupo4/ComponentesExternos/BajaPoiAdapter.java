@@ -16,8 +16,8 @@ public class BajaPoiAdapter {
 		super();
 		this.objectMapper = objectMapper;
 	}
-	
-	public List<BajaPoiExterna> obtenerPoisABajar(){
+
+	public List<BajaPoiExterna> obtenerPoisABajar() {
 		String jsons = componente.getJsonBajadePois();
 		return convertirJson(jsons);
 	}
@@ -25,7 +25,7 @@ public class BajaPoiAdapter {
 	public List<BajaPoiExterna> convertirJson(String jsons) {
 		List<BajaPoiExterna> lista = new ArrayList<>();
 		try {
-			lista=objectMapper.readValue(jsons,
+			lista = objectMapper.readValue(jsons,
 					TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BajaPoiExterna.class));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -36,5 +36,5 @@ public class BajaPoiAdapter {
 	public void setComponente(ComponenteBajaPois componente) {
 		this.componente = componente;
 	}
-	
+
 }

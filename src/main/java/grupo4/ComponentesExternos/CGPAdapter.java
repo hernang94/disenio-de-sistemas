@@ -41,9 +41,9 @@ public class CGPAdapter implements Adaptadores {
 		Comunas comunaAux = new Comunas();
 		hashComunas = comunaAux.inicializarHashComunas();
 		List<String> palabrasClavesAux = new ArrayList<>();
-		Random rand=new Random();
-		int id=rand.nextInt(1000);
-		CGP aux = new CGP(id,hashComunas.get(unCentro.getComuna()), Integer.toString(unCentro.getComuna()),
+		Random rand = new Random();
+		int id = rand.nextInt(1000);
+		CGP aux = new CGP(id, hashComunas.get(unCentro.getComuna()), Integer.toString(unCentro.getComuna()),
 				palabrasClavesAux);
 		unCentro.getServiciosDTO().stream().forEach(servicio -> aux.addServicio(adaptarServicio(servicio)));
 		return aux;
@@ -69,9 +69,7 @@ public class CGPAdapter implements Adaptadores {
 		return hashHorariosAdapter;
 	}
 
-	@Override
 	public List<LocalComercialExterno> obtenerLocalesExternos() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -15,7 +15,8 @@ public class ObserverReporter implements Observers {
 
 	}
 
-	public void agregarBusqueda(String terminal,String criterio, long diferencia, LocalDateTime tiempoInicio, int size) {
+	public void agregarBusqueda(String terminal, String criterio, long diferencia, LocalDateTime tiempoInicio,
+			int size) {
 
 	}
 

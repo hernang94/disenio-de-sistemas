@@ -15,27 +15,27 @@ public class Http {
 	private HttpClient cliente;
 	private HttpGet get;
 	private HttpResponse response;
-	
+
 	public Http(String direccion) {
 		cliente = new DefaultHttpClient();
 		get = new HttpGet(direccion);
-		response=null;
+		response = null;
 	}
 
-	public String obtenerString() throws ParseException, IOException{
+	public String obtenerString() throws ParseException, IOException {
 		obtenerDataHttp();
 		return EntityUtils.toString(response.getEntity());
 	}
-	
-	public void obtenerDataHttp(){
+
+	public void obtenerDataHttp() {
 		try {
-		response = cliente.execute(get);
+			response = cliente.execute(get);
 		} catch (ClientProtocolException e1) {
 			throw new RuntimeException("Error ClientProtocolException");
 		} catch (IOException e1) {
 			throw new RuntimeException("Error IOException");
 		}
-		
+
 	}
 
 }
