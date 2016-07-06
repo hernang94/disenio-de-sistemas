@@ -41,9 +41,9 @@ import grupo4.POIs.Servicio;
 <span class="fc" id="L41">		Comunas comunaAux = new Comunas();</span>
 <span class="fc" id="L42">		hashComunas = comunaAux.inicializarHashComunas();</span>
 <span class="fc" id="L43">		List&lt;String&gt; palabrasClavesAux = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L44">		Random rand=new Random();</span>
-<span class="fc" id="L45">		int id=rand.nextInt(1000);</span>
-<span class="fc" id="L46">		CGP aux = new CGP(id,hashComunas.get(unCentro.getComuna()), Integer.toString(unCentro.getComuna()),</span>
+<span class="fc" id="L44">		Random rand = new Random();</span>
+<span class="fc" id="L45">		int id = rand.nextInt(1000);</span>
+<span class="fc" id="L46">		CGP aux = new CGP(id, hashComunas.get(unCentro.getComuna()), Integer.toString(unCentro.getComuna()),</span>
 				palabrasClavesAux);
 <span class="fc" id="L48">		unCentro.getServiciosDTO().stream().forEach(servicio -&gt; aux.addServicio(adaptarServicio(servicio)));</span>
 <span class="fc" id="L49">		return aux;</span>
@@ -69,10 +69,8 @@ import grupo4.POIs.Servicio;
 <span class="fc" id="L69">		return hashHorariosAdapter;</span>
 	}
 
-	@Override
 	public List&lt;LocalComercialExterno&gt; obtenerLocalesExternos() {
-		// TODO Auto-generated method stub
-<span class="nc" id="L75">		return null;</span>
+<span class="nc" id="L73">		return null;</span>
 	}
 
 }

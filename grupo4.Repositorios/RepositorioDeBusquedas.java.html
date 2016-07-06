@@ -9,72 +9,70 @@ import java.util.stream.Collectors;
 
 import grupo4.Acciones.FechaCantReporte;
 
-public class RepositorioDeBusquedas {
+<span class="fc" id="L12">public class RepositorioDeBusquedas {</span>
 <span class="fc" id="L13">	private List&lt;ResultadosDeBusquedas&gt; listaBusquedas = new ArrayList&lt;&gt;();;</span>
 <span class="fc" id="L14">	private Map&lt;String, List&lt;FechaCantReporte&gt;&gt; busquedasDeCadaTerminal = new HashMap&lt;&gt;();</span>
 <span class="fc" id="L15">	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();</span>
 
-<span class="fc" id="L17">	private RepositorioDeBusquedas() {</span>
-<span class="fc" id="L18">	}</span>
-
 	public static RepositorioDeBusquedas getInstancia() {
-<span class="fc" id="L21">		return instancia;</span>
+<span class="fc" id="L18">		return instancia;</span>
 	}
 
 	public void reset() {
-<span class="fc" id="L25">		listaBusquedas.clear();</span>
-<span class="fc" id="L26">		busquedasDeCadaTerminal.clear();</span>
-<span class="fc" id="L27">	}</span>
+<span class="fc" id="L22">		listaBusquedas.clear();</span>
+<span class="fc" id="L23">		busquedasDeCadaTerminal.clear();</span>
+<span class="fc" id="L24">	}</span>
 
 	public void agregarBusqueda(ResultadosDeBusquedas newResult) {
-<span class="fc" id="L30">		listaBusquedas.add(newResult);</span>
-<span class="fc" id="L31">		actualizarHashTerminales(newResult);</span>
-<span class="fc" id="L32">	}</span>
+<span class="fc" id="L27">		listaBusquedas.add(newResult);</span>
+<span class="fc" id="L28">		actualizarHashTerminales(newResult);</span>
+<span class="fc" id="L29">	}</span>
 
 	private void actualizarHashTerminales(ResultadosDeBusquedas newResult) {
-<span class="fc bfc" id="L35" title="All 2 branches covered.">		if (busquedasDeCadaTerminal.containsKey(newResult.getTerminalDeLaBusqueda())) {</span>
-<span class="fc" id="L36">			FechaCantReporte fechaAux = busquedasDeCadaTerminal.get(newResult.getTerminalDeLaBusqueda()).stream()</span>
-<span class="fc" id="L37">					.filter(reporte -&gt; reporte.getFecha().equals(newResult.getFechaDeBusqueda())).findFirst().get();</span>
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">			if (fechaAux == null) {</span>
-<span class="nc" id="L39">				FechaCantReporte auxAAgregar = new FechaCantReporte(newResult.getFechaDeBusqueda(),</span>
-<span class="nc" id="L40">						newResult.getCantidadDeResultados());</span>
-<span class="nc" id="L41">				busquedasDeCadaTerminal.get(newResult.getTerminalDeLaBusqueda()).add(auxAAgregar);</span>
-<span class="nc" id="L42">			} else {</span>
-<span class="fc" id="L43">				fechaAux.aumentarCantidad(newResult.getCantidadDeResultados());</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		if (busquedasDeCadaTerminal.containsKey(newResult.getTerminalDeLaBusqueda())) {</span>
+<span class="fc" id="L33">			FechaCantReporte fechaAux = busquedasDeCadaTerminal.get(newResult.getTerminalDeLaBusqueda()).stream()</span>
+<span class="fc" id="L34">					.filter(reporte -&gt; reporte.getFecha().equals(newResult.getFechaDeBusqueda())).findFirst().get();</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">			if (fechaAux == null) {</span>
+<span class="nc" id="L36">				FechaCantReporte auxAAgregar = new FechaCantReporte(newResult.getFechaDeBusqueda(),</span>
+<span class="nc" id="L37">						newResult.getCantidadDeResultados());</span>
+<span class="nc" id="L38">				busquedasDeCadaTerminal.get(newResult.getTerminalDeLaBusqueda()).add(auxAAgregar);</span>
+<span class="nc" id="L39">			} else {</span>
+<span class="fc" id="L40">				fechaAux.aumentarCantidad(newResult.getCantidadDeResultados());</span>
 			}
-<span class="fc" id="L45">		} else {</span>
-<span class="fc" id="L46">			List&lt;FechaCantReporte&gt; listaAAgregar = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L47">			FechaCantReporte auxAAgregar = new FechaCantReporte(newResult.getFechaDeBusqueda(),</span>
-<span class="fc" id="L48">					newResult.getCantidadDeResultados());</span>
-<span class="fc" id="L49">			listaAAgregar.add(auxAAgregar);</span>
-<span class="fc" id="L50">			busquedasDeCadaTerminal.put(newResult.getTerminalDeLaBusqueda(), listaAAgregar);</span>
+<span class="fc" id="L42">		} else {</span>
+<span class="fc" id="L43">			List&lt;FechaCantReporte&gt; listaAAgregar = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L44">			FechaCantReporte auxAAgregar = new FechaCantReporte(newResult.getFechaDeBusqueda(),</span>
+<span class="fc" id="L45">					newResult.getCantidadDeResultados());</span>
+<span class="fc" id="L46">			listaAAgregar.add(auxAAgregar);</span>
+<span class="fc" id="L47">			busquedasDeCadaTerminal.put(newResult.getTerminalDeLaBusqueda(), listaAAgregar);</span>
 		}
 
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L50">	}</span>
 
 	public List&lt;Integer&gt; getlistaBusquedas() {
-<span class="fc" id="L56">		List&lt;Integer&gt; lista = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L57">		listaBusquedas.forEach(busqueda -&gt; lista.add(busqueda.getCantidadDeResultados()));</span>
-<span class="fc" id="L58">		return lista;</span>
+<span class="fc" id="L53">		List&lt;Integer&gt; lista = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">		listaBusquedas.forEach(busqueda -&gt; lista.add(busqueda.getCantidadDeResultados()));</span>
+<span class="fc" id="L55">		return lista;</span>
 	}
 
 	public FechaCantReporte cantidadPorFecha(LocalDate fecha) {
-<span class="nc" id="L62">		return new FechaCantReporte(fecha, listaBusquedas.stream()</span>
-<span class="nc" id="L63">				.filter(busqueda -&gt; busqueda.getFechaDeBusqueda().equals(fecha)).collect(Collectors.toList()).size());</span>
+<span class="nc" id="L59">		return new FechaCantReporte(fecha, listaBusquedas.stream()</span>
+<span class="nc" id="L60">				.filter(busqueda -&gt; busqueda.getFechaDeBusqueda().equals(fecha)).collect(Collectors.toList()).size());</span>
 	}
 
 	public List&lt;FechaCantReporte&gt; getListaFechaCant(String terminal) {
-<span class="fc" id="L67">		return busquedasDeCadaTerminal.get(terminal);</span>
+<span class="fc" id="L64">		return busquedasDeCadaTerminal.get(terminal);</span>
 	}
 
-	public Map&lt;String,Integer&gt; reporteTotal() {
-<span class="fc" id="L71">		Map&lt;String,Integer&gt; hashARetornar=new HashMap&lt;&gt;();</span>
-<span class="fc" id="L72">		busquedasDeCadaTerminal.forEach((terminal,lista)-&gt;hashARetornar.put(terminal, cantidadTotalDeBusquedas(lista)));</span>
-<span class="fc" id="L73">		return hashARetornar;</span>
+	public Map&lt;String, Integer&gt; reporteTotal() {
+<span class="fc" id="L68">		Map&lt;String, Integer&gt; hashARetornar = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L69">		busquedasDeCadaTerminal</span>
+<span class="fc" id="L70">				.forEach((terminal, lista) -&gt; hashARetornar.put(terminal, cantidadTotalDeBusquedas(lista)));</span>
+<span class="fc" id="L71">		return hashARetornar;</span>
 	}
-	
-	public Integer cantidadTotalDeBusquedas(List&lt;FechaCantReporte&gt; lista){
-<span class="fc" id="L77">		return lista.stream().mapToInt(elemento-&gt;elemento.getCantidad()).sum();</span>
+
+	public Integer cantidadTotalDeBusquedas(List&lt;FechaCantReporte&gt; lista) {
+<span class="fc" id="L75">		return lista.stream().mapToInt(elemento -&gt; elemento.getCantidad()).sum();</span>
 	}
 
 }

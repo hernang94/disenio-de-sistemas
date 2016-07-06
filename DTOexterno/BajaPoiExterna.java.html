@@ -3,41 +3,46 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BajaPoiExterna {
-private int id;
-private String fecha;
+	private int id;
+	private String fecha;
 
+	public BajaPoiExterna(int id, String fecha) {
+<span class="nc" id="L10">		super();</span>
+<span class="nc" id="L11">		this.id = id;</span>
+<span class="nc" id="L12">		this.fecha = fecha;</span>
+<span class="nc" id="L13">	}</span>
 
-public BajaPoiExterna(int id, String fecha) {
-<span class="nc" id="L11">	super();</span>
-<span class="nc" id="L12">	this.id = id;</span>
-<span class="nc" id="L13">	this.fecha = fecha;</span>
-<span class="nc" id="L14">}</span>
+<span class="nc" id="L15">	public BajaPoiExterna() {</span>
 
-<span class="nc" id="L16">public BajaPoiExterna(){</span>
-	
-<span class="nc" id="L18">}</span>
-public int getId() {
-<span class="nc" id="L20">	return id;</span>
-}
-@JsonProperty(&quot;id&quot;)
-public void setId(int id) {
-<span class="nc" id="L24">	this.id = id;</span>
-<span class="nc" id="L25">}</span>
-@JsonProperty(&quot;status_code&quot;)
-public void setIdFake(int status_code){
-<span class="nc" id="L28">	this.id=status_code;</span>
-<span class="nc" id="L29">}</span>
-public String getFecha() {
-<span class="nc" id="L31">	return fecha;</span>
-}
-@JsonProperty(&quot;deletedAt&quot;)
-public void setFecha(String fecha) {
-<span class="nc" id="L35">	this.fecha = fecha;</span>
-<span class="nc" id="L36">}</span>
-@JsonProperty(&quot;error&quot;)
-public void setFechaFake(String error){
-<span class="nc" id="L39">	this.fecha=error;</span>
-<span class="nc" id="L40">}</span>
+<span class="nc" id="L17">	}</span>
+
+	public int getId() {
+<span class="nc" id="L20">		return id;</span>
+	}
+
+	@JsonProperty(&quot;id&quot;)
+	public void setId(int id) {
+<span class="nc" id="L25">		this.id = id;</span>
+<span class="nc" id="L26">	}</span>
+
+	@JsonProperty(&quot;status_code&quot;)
+	public void setIdFake(int status_code) {
+<span class="nc" id="L30">		this.id = status_code;</span>
+<span class="nc" id="L31">	}</span>
+
+	public String getFecha() {
+<span class="nc" id="L34">		return fecha;</span>
+	}
+
+	@JsonProperty(&quot;deletedAt&quot;)
+	public void setFecha(String fecha) {
+<span class="nc" id="L39">		this.fecha = fecha;</span>
+<span class="nc" id="L40">	}</span>
+
+	@JsonProperty(&quot;error&quot;)
+	public void setFechaFake(String error) {
+<span class="nc" id="L44">		this.fecha = error;</span>
+<span class="nc" id="L45">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

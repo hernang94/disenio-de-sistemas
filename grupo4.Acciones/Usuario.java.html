@@ -37,8 +37,8 @@ public class Usuario {
 <span class="fc" id="L37">		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);</span>
 <span class="fc" id="L38">		observers.stream().forEach(observer -&gt; observer.evaluarNotificacion(diferencia));</span>
 <span class="fc" id="L39">		int cantBuscada = listaAux.size();</span>
-<span class="fc" id="L40">		observers.stream()</span>
-<span class="fc" id="L41">				.forEach(observer -&gt; observer.agregarBusqueda(terminal,criterio, diferencia, tiempoInicio, cantBuscada));</span>
+<span class="fc" id="L40">		observers.stream().forEach(</span>
+<span class="fc" id="L41">				observer -&gt; observer.agregarBusqueda(terminal, criterio, diferencia, tiempoInicio, cantBuscada));</span>
 <span class="fc" id="L42">	}</span>
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
@@ -68,6 +68,6 @@ public class Usuario {
 	public List&lt;Observers&gt; getObservers() {
 <span class="nc" id="L69">		return observers;</span>
 	}
-	
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

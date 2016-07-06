@@ -15,27 +15,27 @@ public class Http {
 	private HttpClient cliente;
 	private HttpGet get;
 	private HttpResponse response;
-	
+
 <span class="fc" id="L19">	public Http(String direccion) {</span>
 <span class="fc" id="L20">		cliente = new DefaultHttpClient();</span>
 <span class="fc" id="L21">		get = new HttpGet(direccion);</span>
-<span class="fc" id="L22">		response=null;</span>
+<span class="fc" id="L22">		response = null;</span>
 <span class="fc" id="L23">	}</span>
 
-	public String obtenerString() throws ParseException, IOException{
+	public String obtenerString() throws ParseException, IOException {
 <span class="fc" id="L26">		obtenerDataHttp();</span>
 <span class="fc" id="L27">		return EntityUtils.toString(response.getEntity());</span>
 	}
-	
-	public void obtenerDataHttp(){
+
+	public void obtenerDataHttp() {
 		try {
-<span class="fc" id="L32">		response = cliente.execute(get);</span>
+<span class="fc" id="L32">			response = cliente.execute(get);</span>
 <span class="nc" id="L33">		} catch (ClientProtocolException e1) {</span>
 <span class="nc" id="L34">			throw new RuntimeException(&quot;Error ClientProtocolException&quot;);</span>
 <span class="nc" id="L35">		} catch (IOException e1) {</span>
 <span class="nc" id="L36">			throw new RuntimeException(&quot;Error IOException&quot;);</span>
 <span class="fc" id="L37">		}</span>
-		
+
 <span class="fc" id="L39">	}</span>
 
 }

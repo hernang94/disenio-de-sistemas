@@ -42,9 +42,9 @@ public class BancoTransformer implements Adaptadores {
 	private Poi adaptarBanco(BancoExterno bancoExterno) {
 <span class="fc" id="L43">		FactoryHorarioBanco horarioBanco = new FactoryHorarioBanco();</span>
 <span class="fc" id="L44">		List&lt;String&gt; palabrasClavesBanco = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L45">		Random rand=new Random();</span>
-<span class="fc" id="L46">		int id=rand.nextInt(1000);</span>
-<span class="fc" id="L47">		Banco banco = new Banco(id,horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);</span>
+<span class="fc" id="L45">		Random rand = new Random();</span>
+<span class="fc" id="L46">		int id = rand.nextInt(1000);</span>
+<span class="fc" id="L47">		Banco banco = new Banco(id, horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);</span>
 <span class="fc" id="L48">		banco.setX(bancoExterno.getX());</span>
 <span class="fc" id="L49">		banco.setY(bancoExterno.getY());</span>
 <span class="fc" id="L50">		List&lt;Servicio&gt; listaDeServicios = bancoExterno.getServicios().stream()</span>
@@ -64,10 +64,8 @@ public class BancoTransformer implements Adaptadores {
 
 <span class="fc" id="L65">	}</span>
 
-	@Override
 	public List&lt;LocalComercialExterno&gt; obtenerLocalesExternos() {
-		// TODO Auto-generated method stub
-<span class="nc" id="L70">		return null;</span>
+<span class="nc" id="L68">		return null;</span>
 	}
 
 }

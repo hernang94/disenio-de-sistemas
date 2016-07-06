@@ -11,33 +11,36 @@ import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.ResultadosDeEjecucion;
 
-public class AccionBajaPoi implements Accion{
-	RepositorioDePois repo;
-<span class="nc" id="L16">	public AccionBajaPoi(RepositorioDePois repositorio){</span>
-<span class="nc" id="L17">		this.repo=repositorio;</span>
-<span class="nc" id="L18">	}</span>
-	
-	public void ejecutar(){
-<span class="nc" id="L21">		bajarPois();</span>
-<span class="nc" id="L22">	}</span>
-	
-	
-	public void bajarPois(){
-<span class="nc" id="L26">		int cantidadDeErrores=0;</span>
-<span class="nc" id="L27">		ObjectMapper objectMapper= new ObjectMapper();</span>
-<span class="nc" id="L28">		BajaPoiAdapter adaptador=new BajaPoiAdapter(objectMapper);</span>
+public class AccionBajaPoi implements Accion {
+	private RepositorioDePois repo;
+
+<span class="nc" id="L17">	public AccionBajaPoi(RepositorioDePois repositorio) {</span>
+<span class="nc" id="L18">		this.repo = repositorio;</span>
+<span class="nc" id="L19">	}</span>
+
+	public void ejecutar() {
+<span class="nc" id="L22">		bajarPois();</span>
+<span class="nc" id="L23">	}</span>
+
+	public void bajarPois() {
+<span class="nc" id="L26">		int cantidadDeErrores = 0;</span>
+<span class="nc" id="L27">		ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L28">		BajaPoiAdapter adaptador = new BajaPoiAdapter(objectMapper);</span>
 <span class="nc" id="L29">		List&lt;BajaPoiExterna&gt; lista = adaptador.obtenerPoisABajar();</span>
-<span class="nc" id="L30">		lista.stream().forEach(elemento-&gt;evaluarYBajarPoi(elemento,cantidadDeErrores));</span>
-		
+<span class="nc" id="L30">		lista.stream().forEach(elemento -&gt; evaluarYBajarPoi(elemento, cantidadDeErrores));</span>
+
 <span class="nc" id="L32">	}</span>
-	public void evaluarYBajarPoi(BajaPoiExterna bajaPoi,int cantidadDeErrores){
-<span class="nc bnc" id="L34" title="All 2 branches missed.">		if(bajaPoi.getId()==400){</span>
-<span class="nc" id="L35">			RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.now(), &quot;Error de Baja de Poi&quot;));</span>
-<span class="nc" id="L36">			return;</span>
+
+	public void evaluarYBajarPoi(BajaPoiExterna bajaPoi, int cantidadDeErrores) {
+<span class="nc bnc" id="L35" title="All 2 branches missed.">		if (bajaPoi.getId() == 400) {</span>
+<span class="nc" id="L36">			RepositorioDeResultadosDeEjecucion.getInstancia()</span>
+<span class="nc" id="L37">					.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.now(), &quot;Error de Baja de Poi&quot;));</span>
+<span class="nc" id="L38">			return;</span>
 		}
-<span class="nc" id="L38">		String fecha=bajaPoi.getFecha().substring(0, bajaPoi.getFecha().length()-1);</span>
-<span class="nc" id="L39">		RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), &quot;Poi eliminado con exito&quot;));</span>
-<span class="nc" id="L40">		repo.bajaPoi(bajaPoi.getId());</span>
-<span class="nc" id="L41">	}</span>
+<span class="nc" id="L40">		String fecha = bajaPoi.getFecha().substring(0, bajaPoi.getFecha().length() - 1);</span>
+<span class="nc" id="L41">		RepositorioDeResultadosDeEjecucion.getInstancia()</span>
+<span class="nc" id="L42">				.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), &quot;Poi eliminado con exito&quot;));</span>
+<span class="nc" id="L43">		repo.bajaPoi(bajaPoi.getId());</span>
+<span class="nc" id="L44">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

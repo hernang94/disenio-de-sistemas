@@ -11,51 +11,45 @@ import java.util.List;
 import DTOexterno.LocalComercialExterno;
 import grupo4.POIs.Poi;
 
-public class LocalComercialAdapter implements Adaptadores{
+<span class="nc" id="L14">public class LocalComercialAdapter implements Adaptadores {</span>
 	private ComponenteLocalComercial componente;
-
-<span class="nc" id="L17">	public LocalComercialAdapter() {</span>
-
-<span class="nc" id="L19">	}</span>
 
 	public List&lt;LocalComercialExterno&gt; obtenerLocalesExternos() {
 		List&lt;LocalComercialExterno&gt; listaADevolver;
 		try {
-<span class="nc" id="L24">			listaADevolver = crearListaDeLocales(componente.obtenerArchivo());</span>
-<span class="nc" id="L25">			return listaADevolver;</span>
-<span class="nc" id="L26">		} catch (IOException e) {</span>
-<span class="nc" id="L27">			throw new RuntimeException();</span>
+<span class="nc" id="L20">			listaADevolver = crearListaDeLocales(componente.obtenerArchivo());</span>
+<span class="nc" id="L21">			return listaADevolver;</span>
+<span class="nc" id="L22">		} catch (IOException e) {</span>
+<span class="nc" id="L23">			throw new RuntimeException();</span>
 		}
 	}
 
 	private List&lt;LocalComercialExterno&gt; crearListaDeLocales(File obtenerArchivo) throws IOException {
-<span class="nc" id="L32">		List&lt;LocalComercialExterno&gt; listaARetornar = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L33">		BufferedReader archivo = new BufferedReader(new FileReader(obtenerArchivo));</span>
+<span class="nc" id="L28">		List&lt;LocalComercialExterno&gt; listaARetornar = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L29">		BufferedReader archivo = new BufferedReader(new FileReader(obtenerArchivo));</span>
 		String linea;
-<span class="nc bnc" id="L35" title="All 2 branches missed.">		while ((linea = archivo.readLine()) != null) {</span>
-<span class="nc" id="L36">			listaARetornar.add(obtenerObjetoLocal(linea));</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">		while ((linea = archivo.readLine()) != null) {</span>
+<span class="nc" id="L32">			listaARetornar.add(obtenerObjetoLocal(linea));</span>
 		}
-<span class="nc" id="L38">		archivo.close();</span>
-<span class="nc" id="L39">		return listaARetornar;</span>
+<span class="nc" id="L34">		archivo.close();</span>
+<span class="nc" id="L35">		return listaARetornar;</span>
 	}
 
 	private LocalComercialExterno obtenerObjetoLocal(String contenido) {
 		LocalComercialExterno localComercial;
-<span class="nc" id="L44">		String nombre = contenido.substring(0, contenido.indexOf(';'));</span>
-<span class="nc" id="L45">		String lista = contenido.substring(contenido.indexOf(';') + 1, contenido.length());</span>
-<span class="nc" id="L46">		List&lt;String&gt; palabrasClave = Arrays.asList(lista.split(&quot;&quot;));</span>
-<span class="nc" id="L47">		localComercial = new LocalComercialExterno(nombre, palabrasClave);</span>
-<span class="nc" id="L48">		return localComercial;</span>
+<span class="nc" id="L40">		String nombre = contenido.substring(0, contenido.indexOf(';'));</span>
+<span class="nc" id="L41">		String lista = contenido.substring(contenido.indexOf(';') + 1, contenido.length());</span>
+<span class="nc" id="L42">		List&lt;String&gt; palabrasClave = Arrays.asList(lista.split(&quot;&quot;));</span>
+<span class="nc" id="L43">		localComercial = new LocalComercialExterno(nombre, palabrasClave);</span>
+<span class="nc" id="L44">		return localComercial;</span>
 	}
 
 	public void setComponente(ComponenteLocalComercial componente) {
-<span class="nc" id="L52">		this.componente = componente;</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L48">		this.componente = componente;</span>
+<span class="nc" id="L49">	}</span>
 
-	@Override
 	public List&lt;Poi&gt; buscarPois(String criterio1) {
-		// TODO Auto-generated method stub
-<span class="nc" id="L58">		return null;</span>
+<span class="nc" id="L52">		return null;</span>
 	}
 
 }

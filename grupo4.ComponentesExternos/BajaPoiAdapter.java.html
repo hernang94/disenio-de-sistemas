@@ -16,8 +16,8 @@ public class BajaPoiAdapter {
 <span class="nc" id="L16">		super();</span>
 <span class="nc" id="L17">		this.objectMapper = objectMapper;</span>
 <span class="nc" id="L18">	}</span>
-	
-	public List&lt;BajaPoiExterna&gt; obtenerPoisABajar(){
+
+	public List&lt;BajaPoiExterna&gt; obtenerPoisABajar() {
 <span class="nc" id="L21">		String jsons = componente.getJsonBajadePois();</span>
 <span class="nc" id="L22">		return convertirJson(jsons);</span>
 	}
@@ -25,7 +25,7 @@ public class BajaPoiAdapter {
 	public List&lt;BajaPoiExterna&gt; convertirJson(String jsons) {
 <span class="nc" id="L26">		List&lt;BajaPoiExterna&gt; lista = new ArrayList&lt;&gt;();</span>
 		try {
-<span class="nc" id="L28">			lista=objectMapper.readValue(jsons,</span>
+<span class="nc" id="L28">			lista = objectMapper.readValue(jsons,</span>
 <span class="nc" id="L29">					TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BajaPoiExterna.class));</span>
 <span class="nc" id="L30">		} catch (Exception e) {</span>
 <span class="nc" id="L31">			throw new RuntimeException(e);</span>
@@ -36,6 +36,6 @@ public class BajaPoiAdapter {
 	public void setComponente(ComponenteBajaPois componente) {
 <span class="nc" id="L37">		this.componente = componente;</span>
 <span class="nc" id="L38">	}</span>
-	
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
