@@ -5,21 +5,25 @@ import java.util.List;
 
 import grupo4.Acciones.Usuario;
 
-<span class="nc" id="L8">public class RepositorioDeUsuarios {</span>
-<span class="nc" id="L9">	private List&lt;Usuario&gt; listaDeUsuarios = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L10">	private static RepositorioDeUsuarios instancia = new RepositorioDeUsuarios();</span>
+<span class="fc" id="L8">public class RepositorioDeUsuarios {</span>
+<span class="fc" id="L9">	private List&lt;Usuario&gt; listaDeUsuarios = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L10">	private static RepositorioDeUsuarios instancia = new RepositorioDeUsuarios();</span>
 
 	public static RepositorioDeUsuarios getInstancia() {
-<span class="nc" id="L13">		return instancia;</span>
+<span class="fc" id="L13">		return instancia;</span>
 	}
 
 	public void agregarUsuario(Usuario usuario) {
-<span class="nc" id="L17">		listaDeUsuarios.add(usuario);</span>
-<span class="nc" id="L18">	}</span>
+<span class="fc" id="L17">		listaDeUsuarios.add(usuario);</span>
+<span class="fc" id="L18">	}</span>
 
 	public List&lt;Usuario&gt; getListaDeUsuarios() {
-<span class="nc" id="L21">		return listaDeUsuarios;</span>
+<span class="fc" id="L21">		return listaDeUsuarios;</span>
 	}
+
+	public void reset() {
+<span class="fc" id="L25">		listaDeUsuarios.clear();</span>
+<span class="fc" id="L26">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

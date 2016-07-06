@@ -10,14 +10,14 @@ public class CriterioPorComuna implements Criterio {
 
 	private int comuna;
 
-<span class="nc" id="L13">	public CriterioPorComuna(int comuna) {</span>
-<span class="nc" id="L14">		this.comuna = comuna;</span>
-<span class="nc" id="L15">	}</span>
+<span class="fc" id="L13">	public CriterioPorComuna(int comuna) {</span>
+<span class="fc" id="L14">		this.comuna = comuna;</span>
+<span class="fc" id="L15">	}</span>
 
 	public List&lt;Usuario&gt; obtenerLista() {
-<span class="nc" id="L18">		List&lt;Usuario&gt; listaAuxiliar = RepositorioDeUsuarios.getInstancia().getListaDeUsuarios().stream()</span>
-<span class="nc bnc" id="L19" title="All 2 branches missed.">				.filter(usuario -&gt; usuario.getComuna() == comuna).collect(Collectors.toList());</span>
-<span class="nc" id="L20">		return listaAuxiliar;</span>
+<span class="fc" id="L18">		List&lt;Usuario&gt; listaAuxiliar = RepositorioDeUsuarios.getInstancia().getListaDeUsuarios().stream()</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">				.filter(usuario -&gt; usuario.getComuna() == comuna).collect(Collectors.toList());</span>
+<span class="fc" id="L20">		return listaAuxiliar;</span>
 	}
 
 }

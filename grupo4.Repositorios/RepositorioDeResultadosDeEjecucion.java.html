@@ -3,20 +3,20 @@
 import java.util.ArrayList;
 import java.util.List;
 
-<span class="nc" id="L6">public class RepositorioDeResultadosDeEjecucion {</span>
-<span class="nc" id="L7">	private List&lt;ResultadosDeEjecucion&gt; listaDeResultados = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L8">	private static RepositorioDeResultadosDeEjecucion instancia = new RepositorioDeResultadosDeEjecucion();</span>
+<span class="fc" id="L6">public class RepositorioDeResultadosDeEjecucion {</span>
+<span class="fc" id="L7">	private List&lt;ResultadosDeEjecucion&gt; listaDeResultados = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L8">	private static RepositorioDeResultadosDeEjecucion instancia = new RepositorioDeResultadosDeEjecucion();</span>
 
 	public static RepositorioDeResultadosDeEjecucion getInstancia() {
-<span class="nc" id="L11">		return instancia;</span>
+<span class="fc" id="L11">		return instancia;</span>
 	}
 
 	public void agregarResultado(ResultadosDeEjecucion resultado) {
-<span class="nc" id="L15">		listaDeResultados.add(resultado);</span>
-<span class="nc" id="L16">	}</span>
+<span class="fc" id="L15">		listaDeResultados.add(resultado);</span>
+<span class="fc" id="L16">	}</span>
 
 	public List&lt;ResultadosDeEjecucion&gt; getlistaDeResultados() {
-<span class="nc" id="L19">		return listaDeResultados;</span>
+<span class="fc" id="L19">		return listaDeResultados;</span>
 	}
 
 }

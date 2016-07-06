@@ -11,14 +11,14 @@ import grupo4.Repositorios.RepositorioDePois;
 public class Usuario {
 
 	private String terminal;
-
 	private int comuna;
 	private RepositorioDePois repositorio;
-<span class="fc" id="L17">	private List&lt;Observers&gt; observers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L16">	private List&lt;Observers&gt; observers = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L19">	public Usuario(String terminal, RepositorioDePois repositorio) {</span>
-<span class="fc" id="L20">		this.terminal = terminal;</span>
-<span class="fc" id="L21">		this.repositorio = repositorio;</span>
+<span class="fc" id="L18">	public Usuario(String terminal, RepositorioDePois repositorio, int comuna) {</span>
+<span class="fc" id="L19">		this.terminal = terminal;</span>
+<span class="fc" id="L20">		this.repositorio = repositorio;</span>
+<span class="fc" id="L21">		this.comuna=comuna;</span>
 <span class="fc" id="L22">	}</span>
 
 	public void agregarObserver(Observers observer) {
@@ -26,8 +26,8 @@ public class Usuario {
 <span class="fc" id="L26">	}</span>
 
 	public void quitarObserver(Observers observer) {
-<span class="nc" id="L29">		observers.remove(observer);</span>
-<span class="nc" id="L30">	}</span>
+<span class="fc" id="L29">		observers.remove(observer);</span>
+<span class="fc" id="L30">	}</span>
 
 	public void busquedaLibre(String criterio) {
 		List&lt;Poi&gt; listaAux;
@@ -58,7 +58,7 @@ public class Usuario {
 	}
 
 	public int getComuna() {
-<span class="nc" id="L61">		return comuna;</span>
+<span class="fc" id="L61">		return comuna;</span>
 	}
 
 	public void reporteTotal() {
@@ -66,7 +66,7 @@ public class Usuario {
 <span class="fc" id="L66">	}</span>
 
 	public List&lt;Observers&gt; getObservers() {
-<span class="nc" id="L69">		return observers;</span>
+<span class="fc" id="L69">		return observers;</span>
 	}
 
 }
