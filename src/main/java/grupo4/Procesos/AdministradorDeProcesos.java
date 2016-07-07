@@ -2,15 +2,16 @@ package grupo4.Procesos;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Timer;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class AdministradorDeProcesos {
 	private static AdministradorDeProcesos instancia = new AdministradorDeProcesos();
-	private ScheduledThreadPoolExecutor scheduler;
+	private Timer scheduler;
 
 	private AdministradorDeProcesos() {
-		this.scheduler = new ScheduledThreadPoolExecutor(1);
+		this.scheduler = new Timer();
 	}
 
 	public static AdministradorDeProcesos getInstancia() {

@@ -34,7 +34,6 @@ import grupo4.POIs.Parada;
 import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Procesos.AccionBajaPoi;
-import grupo4.Procesos.AccionGestionObserver;
 import grupo4.Procesos.AdministradorDeProcesos;
 import grupo4.Procesos.AgregarAlmacenar;
 import grupo4.Procesos.AgregarNotificar;
@@ -85,7 +84,6 @@ public class FuncionalidadesProcesosTest {
 	private RepositorioDeBusquedas repositorioBusquedas;
 	private ObserverNotificador notificador2;
 	private Usuario terminal2;
-	private Usuario terminal3;
 
 	private AdministradorDeProcesos adminProcesos;
 	private Proceso proceso;
@@ -293,6 +291,16 @@ public class FuncionalidadesProcesosTest {
 		repoResultadosEjecucion.getlistaDeResultados().clear();
 	}
 
+	@Test
+	public void ejecutarProceso() throws InterruptedException{
+		adminProcesos.crearProcesoNuevo(agregarAlmacenarTodos, LocalDateTime.of(2016, 07, 07, 15, 51), 0);
+		//proceso = new Proceso(LocalDateTime.of(2016, 07, 07, 15, 47), 0, agregarAlmacenarTodos);
+		//adminProcesos.ejecutarProceso(proceso);
+		Thread.sleep(60000);
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+	
 	@Test
 	public void agregarAlmacenarATodos() {
 		agregarAlmacenarTodos.ejecutar();
