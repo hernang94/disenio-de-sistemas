@@ -6,15 +6,15 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class AdministradorDeProcesos {
-<span class="nc" id="L9">	private static AdministradorDeProcesos instancia = new AdministradorDeProcesos();</span>
+<span class="fc" id="L9">	private static AdministradorDeProcesos instancia = new AdministradorDeProcesos();</span>
 	private ScheduledThreadPoolExecutor scheduler;
 
-<span class="nc" id="L12">	private AdministradorDeProcesos() {</span>
-<span class="nc" id="L13">		this.scheduler = new ScheduledThreadPoolExecutor(1);</span>
-<span class="nc" id="L14">	}</span>
+<span class="fc" id="L12">	private AdministradorDeProcesos() {</span>
+<span class="fc" id="L13">		this.scheduler = new ScheduledThreadPoolExecutor(1);</span>
+<span class="fc" id="L14">	}</span>
 
 	public static AdministradorDeProcesos getInstancia() {
-<span class="nc" id="L17">		return instancia;</span>
+<span class="fc" id="L17">		return instancia;</span>
 	}
 
 	private Runnable ejecutarProceso(Proceso proceso) {
