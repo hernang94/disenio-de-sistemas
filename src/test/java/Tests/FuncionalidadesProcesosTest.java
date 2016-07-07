@@ -37,11 +37,15 @@ import grupo4.Procesos.AccionBajaPoi;
 import grupo4.Procesos.AccionGestionObserver;
 import grupo4.Procesos.AdministradorDeProcesos;
 import grupo4.Procesos.AgregarAlmacenar;
+import grupo4.Procesos.AgregarNotificar;
+import grupo4.Procesos.AgregarReportar;
 import grupo4.Procesos.CriterioATodos;
 import grupo4.Procesos.CriterioPorComuna;
 import grupo4.Procesos.CriterioPorSeleccion;
 import grupo4.Procesos.Proceso;
 import grupo4.Procesos.QuitarAlmacenar;
+import grupo4.Procesos.QuitarNotificar;
+import grupo4.Procesos.QuitarReportar;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
@@ -85,6 +89,7 @@ public class FuncionalidadesProcesosTest {
 
 	private AdministradorDeProcesos adminProcesos;
 	private Proceso proceso;
+	private Proceso proceso2;
 	private AccionBajaPoi accionBajaPoi;
 	private RepositorioDeResultadosDeEjecucion repoResultadosEjecucion;
 	private CriterioATodos criterioTodos;
@@ -96,6 +101,18 @@ public class FuncionalidadesProcesosTest {
 	private QuitarAlmacenar quitarAlmacenarTodos;
 	private QuitarAlmacenar quitarAlmacenarComuna;
 	private QuitarAlmacenar quitarAlmacenarSeleccion;
+	private AgregarNotificar agregarNotificarTodos;
+	private AgregarNotificar agregarNotificarComuna;
+	private AgregarNotificar agregarNotificarSeleccion;
+	private QuitarNotificar quitarNotificarTodos;
+	private QuitarNotificar quitarNotificarComuna;
+	private QuitarNotificar quitarNotificarSeleccion;
+	private AgregarReportar agregarReportarTodos;
+	private AgregarReportar agregarReportarComuna;
+	private AgregarReportar agregarReportarSeleccion;
+	private QuitarReportar quitarReportarTodos;
+	private QuitarReportar quitarReportarComuna;
+	private QuitarReportar quitarReportarSeleccion;
 	private RepositorioDeUsuarios repoUsuarios;
 	private List<String> listaTerminales;
 
@@ -234,6 +251,7 @@ public class FuncionalidadesProcesosTest {
 
 		repoResultadosEjecucion = RepositorioDeResultadosDeEjecucion.getInstancia();
 		repoUsuarios = RepositorioDeUsuarios.getInstancia();
+		adminProcesos = AdministradorDeProcesos.getInstancia();
 
 		criterioTodos = new CriterioATodos();
 		criterioComuna = new CriterioPorComuna(10);
@@ -245,14 +263,26 @@ public class FuncionalidadesProcesosTest {
 		agregarAlmacenarTodos = new AgregarAlmacenar(criterioTodos);
 		agregarAlmacenarComuna = new AgregarAlmacenar(criterioComuna);
 		agregarAlmacenarSeleccion = new AgregarAlmacenar(criterioSeleccion);
-
 		quitarAlmacenarTodos = new QuitarAlmacenar(criterioTodos);
 		quitarAlmacenarComuna = new QuitarAlmacenar(criterioComuna);
 		quitarAlmacenarSeleccion = new QuitarAlmacenar(criterioSeleccion);
 
 		repoUsuarios.agregarUsuario(terminal);
 		repoUsuarios.agregarUsuario(terminal2);
+		
+		agregarNotificarTodos = new AgregarNotificar(criterioTodos,5,notificadorMail);
+		agregarNotificarComuna = new AgregarNotificar(criterioComuna,10,notificadorMail);
+		agregarNotificarSeleccion = new AgregarNotificar(criterioSeleccion,0,notificadorMail);
+		quitarNotificarTodos = new QuitarNotificar(criterioTodos);
+		quitarNotificarComuna = new QuitarNotificar(criterioComuna);
+		quitarNotificarSeleccion = new QuitarNotificar(criterioSeleccion);
 
+		agregarReportarTodos = new AgregarReportar(criterioTodos);
+		agregarReportarComuna = new AgregarReportar(criterioComuna);
+		agregarReportarSeleccion = new AgregarReportar(criterioSeleccion);
+		quitarReportarTodos = new QuitarReportar(criterioTodos);
+		quitarReportarComuna = new QuitarReportar(criterioComuna);
+		quitarReportarSeleccion = new QuitarReportar(criterioSeleccion);
 	}
 
 	@After
@@ -262,12 +292,6 @@ public class FuncionalidadesProcesosTest {
 		repoUsuarios.reset();
 		repoResultadosEjecucion.getlistaDeResultados().clear();
 	}
-
-	/*
-	 * @Test public void AccionBajaPoi(){ procesoBajaPoi.ejecutar();
-	 * 
-	 * }
-	 */
 
 	@Test
 	public void agregarAlmacenarATodos() {
@@ -286,6 +310,14 @@ public class FuncionalidadesProcesosTest {
 	@Test
 	public void agregarAlmacenarSeleccion() {
 		agregarAlmacenarSeleccion.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+	
+	@Test
+	public void procesoAgregarAlmacenarTodos() {
+		proceso = new Proceso(LocalDateTime.now(), 0, agregarAlmacenarTodos);
+		proceso.ejecutar();
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
@@ -313,19 +345,105 @@ public class FuncionalidadesProcesosTest {
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
-
+	
 	@Test
-	public void conicideComuna() {
-		Assert.assertEquals(10, terminal.getComuna());
-	}
-
-	@Test
-	public void procesoAlmacenarTodos() {
+	public void procesoQuitarAlmacenarTodos() {
 		proceso = new Proceso(LocalDateTime.now(), 0, agregarAlmacenarTodos);
 		proceso.ejecutar();
+		proceso2 = new Proceso(LocalDateTime.now(), 0, quitarAlmacenarTodos);
+		proceso2.ejecutar();
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
-
+	}
+	
+	@Test
+	public void agregarNotificarATodos() {
+		agregarNotificarTodos.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
 
+	@Test
+	public void agregarNotificarPorComuna() {
+		agregarNotificarComuna.ejecutar();
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void agregarNotificarSeleccion() {
+		agregarNotificarSeleccion.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+	
+	@Test
+	public void quitarNotificarATodos() {
+		agregarNotificarTodos.ejecutar();
+		quitarNotificarTodos.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void quitarNotificarPorComuna() {
+		agregarNotificarComuna.ejecutar();
+		quitarNotificarComuna.ejecutar();
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void quitarNotificarSeleccion() {
+		agregarNotificarSeleccion.ejecutar();
+		quitarNotificarSeleccion.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void agregarReportarATodos() {
+		agregarReportarTodos.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void agregarReportarPorComuna() {
+		agregarReportarComuna.ejecutar();
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void agregarReportarSeleccion() {
+		agregarReportarSeleccion.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+	
+	@Test
+	public void quitarReportarATodos() {
+		agregarReportarTodos.ejecutar();
+		quitarReportarTodos.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void quitarReportarPorComuna() {
+		agregarReportarComuna.ejecutar();
+		quitarReportarComuna.ejecutar();
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void quitarReportarSeleccion() {
+		agregarReportarSeleccion.ejecutar();
+		quitarReportarSeleccion.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+	
 }
