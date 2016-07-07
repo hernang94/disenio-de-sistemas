@@ -1,5 +1,7 @@
 package Tests;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.ParseException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +17,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import DTOexterno.BajaPoiExterna;
 import DTOexterno.CentroDTO;
 import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
@@ -21,11 +28,15 @@ import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.ObserverReporter;
 import grupo4.Acciones.Usuario;
+import grupo4.ComponentesExternos.BajaPoiAdapter;
 import grupo4.ComponentesExternos.BancoTransformer;
 import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
+import grupo4.ComponentesExternos.ComponenteLocalComercial;
 import grupo4.ComponentesExternos.EmailSender;
+import grupo4.ComponentesExternos.Http;
+import grupo4.ComponentesExternos.LocalComercialAdapter;
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
@@ -33,6 +44,7 @@ import grupo4.POIs.LocalComercial;
 import grupo4.POIs.Parada;
 import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
+import grupo4.Procesos.AccionAltaPalabrasClaves;
 import grupo4.Procesos.AccionBajaPoi;
 import grupo4.Procesos.AdministradorDeProcesos;
 import grupo4.Procesos.AgregarAlmacenar;
@@ -85,10 +97,12 @@ public class FuncionalidadesProcesosTest {
 	private ObserverNotificador notificador2;
 	private Usuario terminal2;
 
+//NUEVO
 	private AdministradorDeProcesos adminProcesos;
 	private Proceso proceso;
 	private Proceso proceso2;
 	private AccionBajaPoi accionBajaPoi;
+	private AccionBajaPoi accionBajaPoiConMock;
 	private RepositorioDeResultadosDeEjecucion repoResultadosEjecucion;
 	private CriterioATodos criterioTodos;
 	private CriterioPorComuna criterioComuna;
@@ -113,6 +127,16 @@ public class FuncionalidadesProcesosTest {
 	private QuitarReportar quitarReportarSeleccion;
 	private RepositorioDeUsuarios repoUsuarios;
 	private List<String> listaTerminales;
+	private BajaPoiAdapter adaptadorBajaPoiMockeado;
+	private BajaPoiAdapter adaptadorBajaPoi;
+	private ComponenteLocalComercial componenteLocalComercial;
+	private LocalComercialAdapter adaptadorLocalComercialMockeado;
+	private LocalComercialAdapter adaptadorLocalComercial;
+	private AccionAltaPalabrasClaves accionPalabras;
+	private File archivo;
+	private Http httpBad;
+	private Http http;
+	private ObjectMapper objectMapper;
 
 	@SuppressWarnings("static-access")
 	@Before
@@ -197,7 +221,7 @@ public class FuncionalidadesProcesosTest {
 		palabrasClavesLocalComercial.add("Carpintero");
 		palabrasClavesLocalComercial.add("Mesa");
 		palabrasClavesLocalComercial.add("Silla");
-		local = new LocalComercial(40, rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
+		local = new LocalComercial(123, rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
 				palabrasClavesLocalComercial);
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
@@ -227,7 +251,7 @@ public class FuncionalidadesProcesosTest {
 		palabrasClavesCGP.add("Villa Luro");
 		palabrasClavesCGP.add("Villa Real");
 		palabrasClavesCGP.add("All Boys");
-		cgp = new CGP(50, comuna10, "CGP10", palabrasClavesCGP);
+		cgp = new CGP(122, comuna10, "CGP10", palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
 		repoDePois.agregarPoi(banco);
@@ -245,7 +269,29 @@ public class FuncionalidadesProcesosTest {
 		notificador2 = new ObserverNotificador(1, notificadorMail);
 		terminal2.agregarObserver(notificador2);
 
-		accionBajaPoi = new AccionBajaPoi(repoDePois);
+//NUEVO
+		
+//CAMBIAR LA RUTA DEL ARCHIVO -> PREGUNTAR COMO TESTEAR ESTO
+		archivo=new File("C:/Users/Micaela/Documents/GitHub/2016-jm-group-04/ArchivoDePrueba.txt");
+		
+		componenteLocalComercial = Mockito.mock(ComponenteLocalComercial.class);
+		adaptadorLocalComercialMockeado = Mockito.mock(LocalComercialAdapter.class);
+		adaptadorLocalComercialMockeado.setComponente(componenteLocalComercial);
+		accionPalabras = new AccionAltaPalabrasClaves(adaptadorLocalComercialMockeado, repoDePois);
+
+		httpBad = new Http("http://demo3537367.mockable.io/trash/pois_bad");
+		http= new Http("http://demo3537367.mockable.io/trash/pois");	 	
+
+		objectMapper = new ObjectMapper();
+		adaptadorBajaPoi= new BajaPoiAdapter(objectMapper);
+		
+		accionBajaPoi=new AccionBajaPoi(repoDePois,adaptadorBajaPoi);
+		
+		adaptadorBajaPoiMockeado = Mockito.mock(BajaPoiAdapter.class);
+		accionBajaPoiConMock = new AccionBajaPoi(repoDePois, adaptadorBajaPoiMockeado);
+
+		adaptadorLocalComercial = new LocalComercialAdapter();
+		adaptadorLocalComercial.setComponente(componenteLocalComercial);
 
 		repoResultadosEjecucion = RepositorioDeResultadosDeEjecucion.getInstancia();
 		repoUsuarios = RepositorioDeUsuarios.getInstancia();
@@ -267,10 +313,10 @@ public class FuncionalidadesProcesosTest {
 
 		repoUsuarios.agregarUsuario(terminal);
 		repoUsuarios.agregarUsuario(terminal2);
-		
-		agregarNotificarTodos = new AgregarNotificar(criterioTodos,5,notificadorMail);
-		agregarNotificarComuna = new AgregarNotificar(criterioComuna,10,notificadorMail);
-		agregarNotificarSeleccion = new AgregarNotificar(criterioSeleccion,0,notificadorMail);
+
+		agregarNotificarTodos = new AgregarNotificar(criterioTodos, 5, notificadorMail);
+		agregarNotificarComuna = new AgregarNotificar(criterioComuna, 10, notificadorMail);
+		agregarNotificarSeleccion = new AgregarNotificar(criterioSeleccion, 0, notificadorMail);
 		quitarNotificarTodos = new QuitarNotificar(criterioTodos);
 		quitarNotificarComuna = new QuitarNotificar(criterioComuna);
 		quitarNotificarSeleccion = new QuitarNotificar(criterioSeleccion);
@@ -292,15 +338,66 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void ejecutarProceso() throws InterruptedException{
-		adminProcesos.crearProcesoNuevo(agregarAlmacenarTodos, LocalDateTime.of(2016, 07, 07, 15, 51), 0);
-		//proceso = new Proceso(LocalDateTime.of(2016, 07, 07, 15, 47), 0, agregarAlmacenarTodos);
-		//adminProcesos.ejecutarProceso(proceso);
-		Thread.sleep(60000);
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
+	public void accionBajaPoi() {
+		accionBajaPoiConMock.ejecutar();
+		Mockito.verify(adaptadorBajaPoiMockeado).obtenerPoisABajar();
 	}
 	
+//PREGUNTAR
+	/*@Test
+	public void evaluarYBajarPoiJsonBad() throws ParseException, IOException {
+		List<BajaPoiExterna> listAux =adaptadorBajaPoi.convertirJson(httpBad.obtenerString());
+		accionBajaPoi.evaluarYBajarPoi(listAux.stream().findFirst().get());
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		
+	}
+	@Test
+	public void parseoJsonBad() throws ParseException, IOException {
+		List<BajaPoiExterna> listAux =adaptadorBajaPoi.convertirJson(httpBad.obtenerString());
+		Assert.assertEquals(400, listAux.stream().findFirst().get().getId());
+		
+	}*/
+	
+	@Test
+	public void evaluarYBajarPoiJson() throws ParseException, IOException {
+		List<BajaPoiExterna> listAux =adaptadorBajaPoi.convertirJson(http.obtenerString());
+		accionBajaPoi.evaluarYBajarPoi(listAux.stream().findFirst().get());
+		Assert.assertEquals("Poi eliminado con exito", repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getResultado());
+		
+	}
+	
+
+	@Test
+	public void accionAltaPalabrasClaves() {
+		accionPalabras.ejecutar();
+		Mockito.verify(adaptadorLocalComercialMockeado).obtenerLocalesExternos();
+	}
+
+	@Test
+	public void obtenerObjetoLocalDeLocalComercialAdapter() {
+		Assert.assertEquals("Carrousel",
+				adaptadorLocalComercial.obtenerObjetoLocal("Carrousel;colegio escolar uniformes modas").getNombre());
+	}
+
+	@Test
+	public void crearListaDeLocalesDeLocalComercialAdapter() throws IOException {
+		Assert.assertEquals("Carrousel",adaptadorLocalComercial.crearListaDeLocales(archivo).stream().findFirst().get().getNombre());
+		
+	}
+	@Test
+	public void buscarPoisDeLocalComercialAdapter(){
+		Assert.assertEquals(null,adaptadorLocalComercial.buscarPois("parada114"));
+	}
+
+	@Test
+	public void ejecutarProceso() throws InterruptedException{
+		adminProcesos.crearProcesoNuevo(agregarAlmacenarTodos,LocalDateTime.of(2016, 07, 07, 21, 00), 0); 
+		//proceso = new Proceso(LocalDateTime.of(2016, 07, 07, 15, 47), 0, agregarAlmacenarTodos); 
+		//adminProcesos.ejecutarProceso(proceso);
+		Assert.assertEquals(2,repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+	  }
+
+
 	@Test
 	public void agregarAlmacenarATodos() {
 		agregarAlmacenarTodos.ejecutar();
@@ -321,7 +418,7 @@ public class FuncionalidadesProcesosTest {
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
 	public void procesoAgregarAlmacenarTodos() {
 		proceso = new Proceso(LocalDateTime.now(), 0, agregarAlmacenarTodos);
@@ -353,7 +450,7 @@ public class FuncionalidadesProcesosTest {
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
 	public void procesoQuitarAlmacenarTodos() {
 		proceso = new Proceso(LocalDateTime.now(), 0, agregarAlmacenarTodos);
@@ -363,7 +460,7 @@ public class FuncionalidadesProcesosTest {
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
 	public void agregarNotificarATodos() {
 		agregarNotificarTodos.ejecutar();
@@ -384,7 +481,7 @@ public class FuncionalidadesProcesosTest {
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
 	public void quitarNotificarATodos() {
 		agregarNotificarTodos.ejecutar();
@@ -429,7 +526,7 @@ public class FuncionalidadesProcesosTest {
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
-	
+
 	@Test
 	public void quitarReportarATodos() {
 		agregarReportarTodos.ejecutar();
@@ -453,5 +550,5 @@ public class FuncionalidadesProcesosTest {
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
-	
+
 }

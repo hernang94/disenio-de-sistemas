@@ -2,23 +2,23 @@ package grupo4.Procesos;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Timer;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class AdministradorDeProcesos {
 	private static AdministradorDeProcesos instancia = new AdministradorDeProcesos();
-	private Timer scheduler;
+	private ScheduledExecutorService scheduler;
 
 	private AdministradorDeProcesos() {
-		this.scheduler = new Timer();
+		this.scheduler = Executors.newScheduledThreadPool(1);
 	}
 
 	public static AdministradorDeProcesos getInstancia() {
 		return instancia;
 	}
 
-	private Runnable ejecutarProceso(Proceso proceso) {
+	public Runnable ejecutarProceso(Proceso proceso) {
 		proceso.ejecutar();
 		return null;
 	}

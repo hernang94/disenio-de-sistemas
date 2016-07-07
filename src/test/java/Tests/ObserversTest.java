@@ -196,12 +196,12 @@ public class ObserversTest {
 		repoDePois.agregarPoi(parada114);
 		repoDePois.agregarPoi(local);
 		repoDePois.agregarPoi(cgp);
-		terminal = new Usuario("Terminal Abasto", repoDePois,10);
+		terminal = new Usuario("Terminal Abasto", repoDePois, 10);
 		terminal.agregarObserver(notificador);
 		terminal.agregarObserver(reporter);
 		terminal.agregarObserver(almacenador);
 
-		terminalFalla = new Usuario("Terminal Abasto", repoDePois,1);
+		terminalFalla = new Usuario("Terminal Abasto", repoDePois, 1);
 		notificadorFalla = new ObserverNotificador(1, notificadorMail);
 		terminalFalla.agregarObserver(notificadorFalla);
 

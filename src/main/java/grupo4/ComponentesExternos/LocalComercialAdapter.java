@@ -24,7 +24,7 @@ public class LocalComercialAdapter implements Adaptadores {
 		}
 	}
 
-	private List<LocalComercialExterno> crearListaDeLocales(File obtenerArchivo) throws IOException {
+	public List<LocalComercialExterno> crearListaDeLocales(File obtenerArchivo) throws IOException {
 		List<LocalComercialExterno> listaARetornar = new ArrayList<>();
 		BufferedReader archivo = new BufferedReader(new FileReader(obtenerArchivo));
 		String linea;
@@ -35,7 +35,8 @@ public class LocalComercialAdapter implements Adaptadores {
 		return listaARetornar;
 	}
 
-	private LocalComercialExterno obtenerObjetoLocal(String contenido) {
+	// Este metodo deberia ser privado pero lo pusimos publico para testearlo
+	public LocalComercialExterno obtenerObjetoLocal(String contenido) {
 		LocalComercialExterno localComercial;
 		String nombre = contenido.substring(0, contenido.indexOf(';'));
 		String lista = contenido.substring(contenido.indexOf(';') + 1, contenido.length());
