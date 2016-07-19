@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 public interface Observers {
 
+	//Usar un ENUM y tener los criterios/quitar herencia
+	//Usar un metodo polimorfico unico y que cada uno lo redefina
+	
 	public void evaluarNotificacion(long diferencia);
 
 	public void agregarBusqueda(String terminal, String criterio, long diferencia, LocalDateTime tiempoInicio,

@@ -37,6 +37,9 @@ public class Usuario {
 		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
 		observers.stream().forEach(observer -> observer.evaluarNotificacion(diferencia));
 		int cantBuscada = listaAux.size();
+		
+		//Pasarse a si mismo (this)
+		//Pasarle un objeto ResultadoDeBusqueda
 		observers.stream().forEach(
 				observer -> observer.agregarBusqueda(terminal, criterio, diferencia, tiempoInicio, cantBuscada));
 	}

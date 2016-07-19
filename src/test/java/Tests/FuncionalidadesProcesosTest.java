@@ -391,7 +391,7 @@ public class FuncionalidadesProcesosTest {
 
 	@Test
 	public void ejecutarProceso() throws InterruptedException{
-		adminProcesos.crearProcesoNuevo(agregarAlmacenarTodos,LocalDateTime.of(2016, 07, 07, 21, 00), 0); 
+		adminProcesos.crearProcesoNuevo(agregarAlmacenarTodos,LocalDateTime.of(2016, 07, 8, 13, 00), 0); 
 		//proceso = new Proceso(LocalDateTime.of(2016, 07, 07, 15, 47), 0, agregarAlmacenarTodos); 
 		//adminProcesos.ejecutarProceso(proceso);
 		Assert.assertEquals(2,repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());

@@ -26,7 +26,7 @@ public class AccionBajaPoi implements Accion {
 		List<BajaPoiExterna> lista = adaptador.obtenerPoisABajar();
 		lista.stream().forEach(elemento -> evaluarYBajarPoi(elemento));
 	}
-
+//No tiene que parsear el json que te devuelve 400(que tire antes el runTime
 	public void evaluarYBajarPoi(BajaPoiExterna bajaPoi) {
 		if (bajaPoi.getId() == 400) {
 			RepositorioDeResultadosDeEjecucion.getInstancia()
