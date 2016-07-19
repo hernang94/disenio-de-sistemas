@@ -20,7 +20,7 @@ public class AdministradorDeProcesos {
 
 	public Runnable ejecutarProceso(Proceso proceso) {
 		proceso.ejecutar();
-		return null;
+		return proceso;
 	}
 
 	public void crearProcesoNuevo(Accion accion, LocalDateTime fechaEjecucion, long periodicidad) {

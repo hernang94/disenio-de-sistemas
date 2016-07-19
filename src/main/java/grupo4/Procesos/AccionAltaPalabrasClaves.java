@@ -9,7 +9,7 @@ import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.ResultadosDeEjecucion;
 
-public class AccionAltaPalabrasClaves implements Accion {
+public class AccionAltaPalabrasClaves implements Accion{
 	private LocalComercialAdapter adapter;
 	private RepositorioDePois repositorio;
 
@@ -25,5 +25,4 @@ public class AccionAltaPalabrasClaves implements Accion {
 		RepositorioDeResultadosDeEjecucion.getInstancia()
 				.agregarResultado(new ResultadosDeEjecucion(lista.size(), LocalDateTime.now(), "exito"));
 	}
-
 }
