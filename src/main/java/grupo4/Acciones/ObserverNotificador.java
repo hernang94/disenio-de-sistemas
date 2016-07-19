@@ -3,12 +3,13 @@ package grupo4.Acciones;
 import java.time.LocalDateTime;
 
 import grupo4.ComponentesExternos.EmailSender;
+import grupo4.Repositorios.ResultadosDeBusquedas;
 
 public class ObserverNotificador implements Observers {
 
 	private long tiempoEstipulado;
 	private EmailSender notificador;
-
+	private EnumObservers id=EnumObservers.NOTIFICADOR;
 	public ObserverNotificador(long tiempoEstipulado, EmailSender notificador) {
 		this.tiempoEstipulado = tiempoEstipulado;
 		this.notificador = notificador;
@@ -22,20 +23,14 @@ public class ObserverNotificador implements Observers {
 		}
 	}
 
-	public void agregarBusqueda(String terminal, String criterio, long diferencia, LocalDateTime tiempoInicio,
-			int size) {
-
+	
+	
+	public EnumObservers getId() {
+		return id;
 	}
 
-	public void reporteTotalPorFecha(String terminal) {
-
-	}
-
-	public void reporteParcial() {
-
-	}
-
-	public void reporteTotal() {
-
+	@Override
+	public void realizarAccion(ResultadosDeBusquedas resultado) {
+		evaluarNotificacion(resultado.getTiempoDeBusqueda());
 	}
 }

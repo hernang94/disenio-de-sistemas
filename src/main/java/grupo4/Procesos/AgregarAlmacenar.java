@@ -10,7 +10,7 @@ public class AgregarAlmacenar extends AccionGestionObserver {
 	}
 
 	public void ejecutar() {
-		ObserverAlmacenador observer = new ObserverAlmacenador(RepositorioDeBusquedas.getInstancia());
+		ObserverAlmacenador observer = new ObserverAlmacenador();
 		agregarAccion(observer, criterio.obtenerLista());
 
 	}

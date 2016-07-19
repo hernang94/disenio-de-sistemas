@@ -1,21 +1,19 @@
 package grupo4.Acciones;
 
-import java.time.LocalDateTime;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.ResultadosDeBusquedas;
 
-public class ObserverAlmacenador implements Observers {
-	private EnumObservers id=EnumObservers.ALMACENADOR;
-	public ObserverAlmacenador() {
-	}
-	
+public class ObserverReporterTotal implements Observers {
+	private EnumObservers id=EnumObservers.REPORTERTOTAL;
+	@Override
 	public void realizarAccion(ResultadosDeBusquedas resultado) {
-		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultado);
+		RepositorioDeBusquedas.getInstancia().reporteTotal();
 	}
-
 	public EnumObservers getId() {
 		return id;
 	}
+
+	
 	
 }

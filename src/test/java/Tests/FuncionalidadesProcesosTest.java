@@ -26,7 +26,7 @@ import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
-import grupo4.Acciones.ObserverReporter;
+import grupo4.Acciones.ObserverReporterParcial;
 import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.BajaPoiAdapter;
 import grupo4.ComponentesExternos.BancoTransformer;
@@ -85,7 +85,7 @@ public class FuncionalidadesProcesosTest {
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
 	private ObserverNotificador notificador;
-	private ObserverReporter reporter;
+	private ObserverReporterParcial reporter;
 	private ObserverAlmacenador almacenador;
 	private List<String> palabrasClavesBanco;
 	private List<String> palabrasClavesCGP;
@@ -146,7 +146,7 @@ public class FuncionalidadesProcesosTest {
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
 
 		notificador = new ObserverNotificador(-1, notificadorMail);// tiempoEstipulado=-1
-		reporter = new ObserverReporter(repositorioBusquedas);
+		reporter = new ObserverReporterParcial(repositorioBusquedas);
 		almacenador = new ObserverAlmacenador(repositorioBusquedas);
 
 		listaCentroAAdaptar = new ArrayList<>();

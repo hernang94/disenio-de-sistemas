@@ -19,6 +19,9 @@ public class BajaPoiAdapter {
 
 	public List<BajaPoiExterna> obtenerPoisABajar() {
 		String jsons = componente.getJsonBajadePois();
+		if(jsons.contains("status_code")&&jsons.contains("400")){
+			throw new RuntimeException();
+		}
 		return convertirJson(jsons);
 	}
 

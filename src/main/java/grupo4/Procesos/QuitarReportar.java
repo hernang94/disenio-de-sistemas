@@ -1,6 +1,6 @@
 package grupo4.Procesos;
 
-import grupo4.Acciones.ObserverReporter;
+import grupo4.Acciones.ObserverReporterParcial;
 
 public class QuitarReportar extends AccionGestionObserver {
 
@@ -9,6 +9,6 @@ public class QuitarReportar extends AccionGestionObserver {
 	}
 
 	public void ejecutar() {
-		quitarAccion(ObserverReporter.class, criterio.obtenerLista());
+		quitarAccion(ObserverReporterParcial.class, criterio.obtenerLista());
 	}
 }

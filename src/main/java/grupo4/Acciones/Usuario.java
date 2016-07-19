@@ -7,6 +7,7 @@ import java.util.List;
 
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioDePois;
+import grupo4.Repositorios.ResultadosDeBusquedas;
 
 public class Usuario {
 
@@ -35,13 +36,12 @@ public class Usuario {
 		listaAux = repositorio.busquedaLibre(criterio);
 		LocalDateTime tiempoFin = LocalDateTime.now();
 		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
-		observers.stream().forEach(observer -> observer.evaluarNotificacion(diferencia));
-		int cantBuscada = listaAux.size();
+		ResultadosDeBusquedas resultadoAux =  new ResultadosDeBusquedas(terminal, diferencia, criterio, tiempoInicio.toLocalDate(), listaAux.size());
+		observers.stream().forEach(observer -> observer.realizarAccion(resultadoAux));
 		
 		//Pasarse a si mismo (this)
 		//Pasarle un objeto ResultadoDeBusqueda
-		observers.stream().forEach(
-				observer -> observer.agregarBusqueda(terminal, criterio, diferencia, tiempoInicio, cantBuscada));
+		
 	}
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
@@ -49,11 +49,11 @@ public class Usuario {
 	}
 
 	public void obtenerReporteTotalPorFecha() {
-		observers.stream().forEach(unObserver -> unObserver.reporteTotalPorFecha(terminal));
+		observers.stream().forEach(unObserver -> unObserver.realizarAccion(null));
 	}
 
 	public void reporteParcial() {
-		observers.stream().forEach(observer -> observer.reporteParcial());
+		observers.stream().forEach(observer -> observer.realizarAccion(null));
 	}
 
 	public String getTerminal() {
@@ -65,7 +65,7 @@ public class Usuario {
 	}
 
 	public void reporteTotal() {
-		observers.stream().forEach(observer -> observer.reporteTotal());
+		observers.stream().forEach(observer -> observer.realizarAccion(null));
 	}
 
 	public List<Observers> getObservers() {

@@ -1,6 +1,6 @@
 package grupo4.Procesos;
 
-import grupo4.Acciones.ObserverReporter;
+import grupo4.Acciones.ObserverReporterParcial;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
 
@@ -11,7 +11,7 @@ public class AgregarReportar extends AccionGestionObserver {
 	}
 
 	public void ejecutar() {
-		ObserverReporter observer = new ObserverReporter(RepositorioDeBusquedas.getInstancia());
+		ObserverReporterParcial observer = new ObserverReporterParcial();
 		agregarAccion(observer, criterio.obtenerLista());
 	}
 
