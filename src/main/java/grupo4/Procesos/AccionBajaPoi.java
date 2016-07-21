@@ -18,8 +18,14 @@ public class AccionBajaPoi implements Accion {
 		this.adaptador = adaptador;
 	}
 
-	public void ejecutar() {
-		bajarPois();
+	public boolean ejecutar() {
+		try{
+			bajarPois();
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
 	}
 
 	public void bajarPois() {

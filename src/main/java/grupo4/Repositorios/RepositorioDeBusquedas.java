@@ -49,9 +49,11 @@ public class RepositorioDeBusquedas {
 
 	}
 
-	public List<Integer> getlistaBusquedas() {
+	public List<Integer> getlistaBusquedas(String unTerminal) {
 		List<Integer> lista = new ArrayList<>();
-		listaBusquedas.forEach(busqueda -> lista.add(busqueda.getCantidadDeResultados()));
+		List<ResultadosDeBusquedas> listaFiltrada = listaBusquedas.stream()
+				.filter(busqueda -> busqueda.esDeTerminal(unTerminal)).collect(Collectors.toList());
+		listaFiltrada.forEach(busqueda -> lista.add(busqueda.getCantidadDeResultados()));
 		return lista;
 	}
 

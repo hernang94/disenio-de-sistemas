@@ -12,20 +12,23 @@ public class AccionQuitarObserver implements Accion {
 
 	private Criterio criterioSeleccion;
 	private EnumObservers observerAQuitar;
-	private DecoratorFalla decorator;
 	
-	public AccionQuitarObserver(Criterio criterioSeleccion, EnumObservers observerAQuitar, DecoratorFalla decorator) {
+	public AccionQuitarObserver(Criterio criterioSeleccion, EnumObservers observerAQuitar) {
 		this.criterioSeleccion = criterioSeleccion;
-		this.observerAQuitar = observerAQuitar;
-		this.decorator=decorator;
-		
+		this.observerAQuitar = observerAQuitar;		
 	}
 	
-	public void ejecutar(){
-		List<Usuario> usuarios= criterioSeleccion.obtenerLista();
-		usuarios.stream().forEach(usuario -> usuario.quitarObserver(obtenerObserverSegunTipo(observerAQuitar, usuario)));
-		RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(
-				new ResultadosDeEjecucion(usuarios.size(), LocalDateTime.now(), usuarios.size() + " Usuarios afectados"));
+	public boolean ejecutar(){
+		try{
+			List<Usuario> usuarios= criterioSeleccion.obtenerLista();
+			usuarios.stream().forEach(usuario -> usuario.quitarObserver(obtenerObserverSegunTipo(observerAQuitar, usuario)));
+			RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(
+					new ResultadosDeEjecucion(usuarios.size(), LocalDateTime.now(), usuarios.size() + " Usuarios afectados"));			
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
 	}
 	
 	private Observers obtenerObserverSegunTipo(EnumObservers observerId, Usuario usuario) {

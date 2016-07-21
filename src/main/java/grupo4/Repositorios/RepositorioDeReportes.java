@@ -3,6 +3,8 @@ package grupo4.Repositorios;
 import java.util.ArrayList;
 import java.util.List;
 
+import grupo4.Acciones.Reporte;
+
 public class RepositorioDeReportes {
 	private List<Reporte> listaDeReportes=new ArrayList<>();
 	private static RepositorioDeReportes instancia = new RepositorioDeReportes();

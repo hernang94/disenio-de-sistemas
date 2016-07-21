@@ -18,11 +18,17 @@ public class AccionAltaPalabrasClaves implements Accion{
 		this.repositorio = repositorio;
 	}
 
-	public void ejecutar() {
-		List<LocalComercialExterno> lista = adapter.obtenerLocalesExternos();
-		lista.stream().forEach(localExterno -> repositorio.cambiarPalabrasClaves(localExterno.getNombre(),
-				localExterno.getPalabrasClaves()));
-		RepositorioDeResultadosDeEjecucion.getInstancia()
-				.agregarResultado(new ResultadosDeEjecucion(lista.size(), LocalDateTime.now(), "exito"));
+	public boolean ejecutar() {
+		try{
+			List<LocalComercialExterno> lista = adapter.obtenerLocalesExternos();
+			lista.stream().forEach(localExterno -> repositorio.cambiarPalabrasClaves(localExterno.getNombre(),
+					localExterno.getPalabrasClaves()));
+			RepositorioDeResultadosDeEjecucion.getInstancia()
+			.agregarResultado(new ResultadosDeEjecucion(lista.size(), LocalDateTime.now(), "exito"));
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
 	}
 }

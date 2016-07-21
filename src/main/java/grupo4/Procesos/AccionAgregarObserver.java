@@ -16,10 +16,16 @@ public class AccionAgregarObserver implements Accion{
 		this.criterioSeleccion = criterioSeleccion;
 	}
 	
-	public void ejecutar(){
-		List<Usuario> usuarios = criterioSeleccion.obtenerLista();
-		usuarios.stream().forEach(usuario -> usuario.agregarObserver(observer));
-		RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(
-				new ResultadosDeEjecucion(usuarios.size(), LocalDateTime.now(), usuarios.size() + " Usuarios afectados"));
+	public boolean ejecutar(){
+		try{
+			List<Usuario> usuarios = criterioSeleccion.obtenerLista();
+			usuarios.stream().forEach(usuario -> usuario.agregarObserver(observer));
+			RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(
+					new ResultadosDeEjecucion(usuarios.size(), LocalDateTime.now(), usuarios.size() + " Usuarios afectados"));			
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
 	}
 }

@@ -39,4 +39,8 @@ public class ResultadosDeBusquedas {
 		return cantidadDeResultados;
 	}
 
+	public boolean esDeTerminal(String unTerminal) {
+		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);
+	}
+
 }
