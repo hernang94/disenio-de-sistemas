@@ -13,7 +13,9 @@ import org.apache.http.ParseException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
@@ -26,7 +28,6 @@ import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
-import grupo4.Acciones.ObserverReporterParcial;
 import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.BajaPoiAdapter;
 import grupo4.ComponentesExternos.BancoTransformer;
@@ -47,10 +48,13 @@ import grupo4.POIs.Servicio;
 import grupo4.Procesos.AccionAgregarObserver;
 import grupo4.Procesos.AccionAltaPalabrasClaves;
 import grupo4.Procesos.AccionBajaPoi;
+import grupo4.Procesos.AccionQuitarObserver;
 import grupo4.Procesos.AdministradorDeProcesos;
 import grupo4.Procesos.CriterioATodos;
 import grupo4.Procesos.CriterioPorComuna;
 import grupo4.Procesos.CriterioPorSeleccion;
+import grupo4.Procesos.DecoratorNotificador;
+import grupo4.Procesos.DecoratorReintentar;
 import grupo4.Procesos.Proceso;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
@@ -80,7 +84,6 @@ public class FuncionalidadesProcesosTest {
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
 	private ObserverNotificador notificador;
-	private ObserverReporterParcial reporter;
 	private ObserverAlmacenador almacenador;
 	private List<String> palabrasClavesBanco;
 	private List<String> palabrasClavesCGP;
@@ -92,12 +95,9 @@ public class FuncionalidadesProcesosTest {
 	private ObserverNotificador notificador2;
 	private Usuario terminal2;
 
-//NUEVO
+	// NUEVO
 	private AdministradorDeProcesos adminProcesos;
 	private Proceso proceso;
-	private Proceso proceso2;
-	private AccionBajaPoi accionBajaPoi;
-	private AccionBajaPoi accionBajaPoiConMock;
 	private RepositorioDeResultadosDeEjecucion repoResultadosEjecucion;
 	private CriterioATodos criterioTodos;
 	private CriterioPorComuna criterioComuna;
@@ -109,12 +109,18 @@ public class FuncionalidadesProcesosTest {
 	private ComponenteLocalComercial componenteLocalComercial;
 	private LocalComercialAdapter adaptadorLocalComercialMockeado;
 	private LocalComercialAdapter adaptadorLocalComercial;
-	private AccionAltaPalabrasClaves accionPalabras;
 	private File archivo;
 	private Http httpBad;
 	private Http http;
 	private ObjectMapper objectMapper;
-	private AccionAgregarObserver agregarNotificador;
+	private AccionAgregarObserver agregarObserver;
+	private AccionAltaPalabrasClaves accionPalabras;
+	private AccionQuitarObserver quitarObserver;
+	private AccionBajaPoi accionBajaPoi;
+	private AccionBajaPoi accionBajaPoiConMock;
+
+	private DecoratorReintentar decoratorReintentar;
+	private DecoratorNotificador decoratorNotificar;
 
 	@SuppressWarnings("static-access")
 	@Before
@@ -124,8 +130,8 @@ public class FuncionalidadesProcesosTest {
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
 
 		notificador = new ObserverNotificador(-1, notificadorMail);// tiempoEstipulado=-1
-		reporter = new ObserverReporterParcial(repositorioBusquedas);
-		almacenador = new ObserverAlmacenador(repositorioBusquedas);
+
+		almacenador = new ObserverAlmacenador();
 
 		listaCentroAAdaptar = new ArrayList<>();
 
@@ -240,31 +246,30 @@ public class FuncionalidadesProcesosTest {
 
 		terminal = new Usuario("Terminal Abasto", repoDePois, 10);
 		terminal.agregarObserver(notificador);
-		terminal.agregarObserver(reporter);
 		terminal.agregarObserver(almacenador);
 
 		terminal2 = new Usuario("Terminal Alto Palermo", repoDePois, 1);
 		notificador2 = new ObserverNotificador(1, notificadorMail);
 		terminal2.agregarObserver(notificador2);
 
-//NUEVO
-		
-//CAMBIAR LA RUTA DEL ARCHIVO -> PREGUNTAR COMO TESTEAR ESTO
-		archivo=new File("C:/Users/Micaela/Documents/GitHub/2016-jm-group-04/ArchivoDePrueba.txt");
-		
+		// NUEVO
+
+		// CAMBIAR LA RUTA DEL ARCHIVO
+		archivo = new File("C:/Users/Micaela/Documents/GitHub/2016-jm-group-04/ArchivoDePrueba.txt");
+
 		componenteLocalComercial = Mockito.mock(ComponenteLocalComercial.class);
 		adaptadorLocalComercialMockeado = Mockito.mock(LocalComercialAdapter.class);
 		adaptadorLocalComercialMockeado.setComponente(componenteLocalComercial);
 		accionPalabras = new AccionAltaPalabrasClaves(adaptadorLocalComercialMockeado, repoDePois);
 
 		httpBad = new Http("http://demo3537367.mockable.io/trash/pois_bad");
-		http= new Http("http://demo3537367.mockable.io/trash/pois");	 	
+		http = new Http("http://demo3537367.mockable.io/trash/pois");
 
 		objectMapper = new ObjectMapper();
-		adaptadorBajaPoi= new BajaPoiAdapter(objectMapper);
-		
-		accionBajaPoi=new AccionBajaPoi(repoDePois,adaptadorBajaPoi);
-		
+		adaptadorBajaPoi = new BajaPoiAdapter(objectMapper);
+
+		accionBajaPoi = new AccionBajaPoi(repoDePois, adaptadorBajaPoi);
+
 		adaptadorBajaPoiMockeado = Mockito.mock(BajaPoiAdapter.class);
 		accionBajaPoiConMock = new AccionBajaPoi(repoDePois, adaptadorBajaPoiMockeado);
 
@@ -281,16 +286,6 @@ public class FuncionalidadesProcesosTest {
 		listaTerminales.add("Terminal Abasto");
 		listaTerminales.add("Terminal Alto Palermo");
 		criterioSeleccion = new CriterioPorSeleccion(listaTerminales);
-
-		agregarNotificador= new AccionAgregarObserver(notificador, criterioTodos);
-		
-		/*agregarAlmacenarTodos = new AgregarAlmacenar(criterioTodos);
-		agregarAlmacenarComuna = new AgregarAlmacenar(criterioComuna);
-		agregarAlmacenarSeleccion = new AgregarAlmacenar(criterioSeleccion);
-		quitarAlmacenarTodos = new QuitarAlmacenar(criterioTodos);
-		quitarAlmacenarComuna = new QuitarAlmacenar(criterioComuna);
-		quitarAlmacenarSeleccion = new QuitarAlmacenar(criterioSeleccion);
-		Aca deberíamos cambiar todo esto por los nuevos Agregar y Quitar*/
 
 		repoUsuarios.agregarUsuario(terminal);
 		repoUsuarios.agregarUsuario(terminal2);
@@ -310,30 +305,29 @@ public class FuncionalidadesProcesosTest {
 		accionBajaPoiConMock.ejecutar();
 		Mockito.verify(adaptadorBajaPoiMockeado).obtenerPoisABajar();
 	}
-	
-//PREGUNTAR
-	/*@Test
-	public void evaluarYBajarPoiJsonBad() throws ParseException, IOException {
-		List<BajaPoiExterna> listAux =adaptadorBajaPoi.convertirJson(httpBad.obtenerString());
-		accionBajaPoi.evaluarYBajarPoi(listAux.stream().findFirst().get());
-		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
-		
-	}
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+
 	@Test
-	public void parseoJsonBad() throws ParseException, IOException {
-		List<BajaPoiExterna> listAux =adaptadorBajaPoi.convertirJson(httpBad.obtenerString());
-		Assert.assertEquals(400, listAux.stream().findFirst().get().getId());
-		
-	}*/
-	
+	public void evaluarYBajarPoiJsonBad() throws ParseException, IOException {
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("Error 400");
+		List<BajaPoiExterna> listAux = adaptadorBajaPoi.convertirJson(httpBad.obtenerString());
+		accionBajaPoi.bajarPoi(listAux.stream().findFirst().get());
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+
+	}
+
 	@Test
 	public void evaluarYBajarPoiJson() throws ParseException, IOException {
-		List<BajaPoiExterna> listAux =adaptadorBajaPoi.convertirJson(http.obtenerString());
-		accionBajaPoi.evaluarYBajarPoi(listAux.stream().findFirst().get());
-		Assert.assertEquals("Poi eliminado con exito", repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getResultado());
-		
+		List<BajaPoiExterna> listAux = adaptadorBajaPoi.convertirJson(http.obtenerString());
+		accionBajaPoi.bajarPoi(listAux.stream().findFirst().get());
+		Assert.assertEquals("0 Usuarios afectados",
+				repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getResultado());
+
 	}
-	
 
 	@Test
 	public void accionAltaPalabrasClaves() {
@@ -349,172 +343,149 @@ public class FuncionalidadesProcesosTest {
 
 	@Test
 	public void crearListaDeLocalesDeLocalComercialAdapter() throws IOException {
-		Assert.assertEquals("Carrousel",adaptadorLocalComercial.crearListaDeLocales(archivo).stream().findFirst().get().getNombre());
-		
-	}
-	@Test
-	public void buscarPoisDeLocalComercialAdapter(){
-		Assert.assertEquals(null,adaptadorLocalComercial.buscarPois("parada114"));
+		Assert.assertEquals("Carrousel",
+				adaptadorLocalComercial.crearListaDeLocales(archivo).stream().findFirst().get().getNombre());
+
 	}
 
 	@Test
-	public void ejecutarProceso() throws InterruptedException{
-		adminProcesos.crearProcesoNuevo(agregarNotificador,LocalDateTime.now(), 0); 
-		Assert.assertEquals(2,repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
-	  }
+	public void buscarPoisDeLocalComercialAdapter() {
+		Assert.assertEquals(null, adaptadorLocalComercial.buscarPois("parada114"));
+	}
 
+	@Test
+	public void ejecutarProceso() throws InterruptedException {
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
+		adminProcesos.crearProcesoNuevo(agregarObserver, LocalDateTime.now(), 0);
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
 
 	@Test
 	public void agregarAlmacenarATodos() {
-		agregarAlmacenarTodos.ejecutar();
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
+		agregarObserver.ejecutar();
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
 	public void agregarAlmacenarPorComuna() {
-		agregarAlmacenarComuna.ejecutar();
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioComuna);
+		agregarObserver.ejecutar();
 		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
 	public void agregarAlmacenarSeleccion() {
-		agregarAlmacenarSeleccion.ejecutar();
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioSeleccion);
+		agregarObserver.ejecutar();
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
 	public void procesoAgregarAlmacenarTodos() {
-		proceso = new Proceso(LocalDateTime.now(), 0, agregarAlmacenarTodos);
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
+		proceso = new Proceso(LocalDateTime.now(), 0, agregarObserver);
 		proceso.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
+	}
+
+	@Test
+	public void ejecutarProcesoPeriodicidadMayorCero() {
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
+		adminProcesos.crearProcesoNuevo(agregarObserver, LocalDateTime.now(), 5);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
 	public void quitarAlmacenarATodos() {
-		agregarAlmacenarTodos.ejecutar();
-		quitarAlmacenarTodos.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
+		quitarObserver = new AccionQuitarObserver(criterioTodos, almacenador.getId());
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
+		agregarObserver.ejecutar();
+		quitarObserver.ejecutar();
+		Assert.assertTrue(repoResultadosEjecucion.getlistaDeResultados().stream()
+				.allMatch(x -> (x.getCantidadDeElementosAfectados()) == 2));
 	}
 
 	@Test
 	public void quitarAlmacenarPorComuna() {
-		agregarAlmacenarComuna.ejecutar();
-		quitarAlmacenarComuna.ejecutar();
-		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
+		quitarObserver = new AccionQuitarObserver(criterioComuna, almacenador.getId());
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioComuna);
+		agregarObserver.ejecutar();
+		quitarObserver.ejecutar();
+		Assert.assertTrue(repoResultadosEjecucion.getlistaDeResultados().stream()
+				.allMatch(x -> (x.getCantidadDeElementosAfectados()) == 1));
+
 	}
 
 	@Test
 	public void quitarAlmacenarSeleccion() {
-		agregarAlmacenarSeleccion.ejecutar();
-		quitarAlmacenarSeleccion.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
-	}
+		quitarObserver = new AccionQuitarObserver(criterioSeleccion, almacenador.getId());
+		agregarObserver = new AccionAgregarObserver(almacenador, criterioSeleccion);
+		agregarObserver.ejecutar();
+		quitarObserver.ejecutar();
+		Assert.assertTrue(repoResultadosEjecucion.getlistaDeResultados().stream()
+				.allMatch(x -> (x.getCantidadDeElementosAfectados()) == 2));
 
-	@Test
-	public void procesoQuitarAlmacenarTodos() {
-		proceso = new Proceso(LocalDateTime.now(), 0, agregarAlmacenarTodos);
-		proceso.ejecutar();
-		proceso2 = new Proceso(LocalDateTime.now(), 0, quitarAlmacenarTodos);
-		proceso2.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
 	public void agregarNotificarATodos() {
-		agregarNotificarTodos.ejecutar();
+		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
+		agregarObserver.ejecutar();
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
 	public void agregarNotificarPorComuna() {
-		agregarNotificarComuna.ejecutar();
+		agregarObserver = new AccionAgregarObserver(notificador, criterioComuna);
+		agregarObserver.ejecutar();
 		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
 	public void agregarNotificarSeleccion() {
-		agregarNotificarSeleccion.ejecutar();
+		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
+		agregarObserver.ejecutar();
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
-	public void quitarNotificarATodos() {
-		agregarNotificarTodos.ejecutar();
-		quitarNotificarTodos.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
+	public void decoratorReintentarEjecutar() {
+		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
+		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
+		Assert.assertTrue(decoratorReintentar.ejecutar());
 	}
 
 	@Test
-	public void quitarNotificarPorComuna() {
-		agregarNotificarComuna.ejecutar();
-		quitarNotificarComuna.ejecutar();
-		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
+	public void decoratorNotificarEjecutar() {
+		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
+		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
+		Assert.assertTrue(decoratorNotificar.ejecutar());
 	}
 
 	@Test
-	public void quitarNotificarSeleccion() {
-		agregarNotificarSeleccion.ejecutar();
-		quitarNotificarSeleccion.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
+	public void decoratorReintentarFalla() {
+		repoUsuarios.quitarUsuario(terminal);
+		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
+		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
+		Assert.assertFalse(decoratorReintentar.ejecutar());
+
 	}
 
 	@Test
-	public void agregarReportarATodos() {
-		agregarReportarTodos.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
+	public void decoratorNotificarFalla() {
+		repoUsuarios.quitarUsuario(terminal);
+		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
+		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
+		Assert.assertFalse(decoratorNotificar.ejecutar());
 	}
-
-	@Test
-	public void agregarReportarPorComuna() {
-		agregarReportarComuna.ejecutar();
-		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
-	}
-
-	@Test
-	public void agregarReportarSeleccion() {
-		agregarReportarSeleccion.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
-	}
-
-	@Test
-	public void quitarReportarATodos() {
-		agregarReportarTodos.ejecutar();
-		quitarReportarTodos.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
-	}
-
-	@Test
-	public void quitarReportarPorComuna() {
-		agregarReportarComuna.ejecutar();
-		quitarReportarComuna.ejecutar();
-		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
-	}
-
-	@Test
-	public void quitarReportarSeleccion() {
-		agregarReportarSeleccion.ejecutar();
-		quitarReportarSeleccion.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
-	}
-
 }

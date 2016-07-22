@@ -10,12 +10,13 @@ public class DecoratorNotificador implements Accion {
 		this.decorado = decorado;
 		this.notificador = notificador;
 	}
-	
+
 	@Override
 	public boolean ejecutar() {
-		boolean status=decorado.ejecutar();
-		if(!status){
-			notificador.enviarMail("Fallo el sistema");//Por ahora lo dejo asi porque no se si se quiere que se sepa qué fallo
+		boolean status = decorado.ejecutar();
+		if (!status) {
+			notificador.enviarMail("Fallo el sistema");// Por ahora lo dejo asi porque no se si se
+														// quiere que se sepa qué fallo
 		}
 		return status;
 	}

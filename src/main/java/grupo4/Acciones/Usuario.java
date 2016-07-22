@@ -19,7 +19,7 @@ public class Usuario {
 	public Usuario(String terminal, RepositorioDePois repositorio, int comuna) {
 		this.terminal = terminal;
 		this.repositorio = repositorio;
-		this.comuna=comuna;
+		this.comuna = comuna;
 	}
 
 	public void agregarObserver(Observers observer) {
@@ -36,24 +36,13 @@ public class Usuario {
 		listaAux = repositorio.busquedaLibre(criterio);
 		LocalDateTime tiempoFin = LocalDateTime.now();
 		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
-		ResultadosDeBusquedas resultadoAux =  new ResultadosDeBusquedas(terminal, diferencia, criterio, tiempoInicio.toLocalDate(), listaAux.size());
+		ResultadosDeBusquedas resultadoAux = new ResultadosDeBusquedas(terminal, diferencia, criterio,
+				tiempoInicio.toLocalDate(), listaAux.size());
 		observers.stream().forEach(observer -> observer.realizarAccion(resultadoAux));
-		
-		//Pasarse a si mismo (this)
-		//Pasarle un objeto ResultadoDeBusqueda
-		
 	}
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
 		return ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);
-	}
-
-	public void obtenerReporteTotalPorFecha() {
-		observers.stream().forEach(unObserver -> unObserver.realizarAccion(null));
-	}
-
-	public void reporteParcial() {
-		observers.stream().forEach(observer -> observer.realizarAccion(null));
 	}
 
 	public String getTerminal() {
@@ -62,10 +51,6 @@ public class Usuario {
 
 	public int getComuna() {
 		return comuna;
-	}
-
-	public void reporteTotal() {
-		observers.stream().forEach(observer -> observer.realizarAccion(null));
 	}
 
 	public List<Observers> getObservers() {

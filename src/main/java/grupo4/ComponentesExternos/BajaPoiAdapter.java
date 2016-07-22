@@ -13,19 +13,20 @@ public class BajaPoiAdapter {
 	private ComponenteBajaPois componente;
 
 	public BajaPoiAdapter(ObjectMapper objectMapper) {
-		super();
 		this.objectMapper = objectMapper;
 	}
 
 	public List<BajaPoiExterna> obtenerPoisABajar() {
-		String jsons = componente.getJsonBajadePois();
-		if(jsons.contains("status_code")&&jsons.contains("400")){
-			throw new RuntimeException();
-		}
+		String jsons = componente.getJsonBajaDePois();
 		return convertirJson(jsons);
+
 	}
 
 	public List<BajaPoiExterna> convertirJson(String jsons) {
+		if (jsons.contains("status_code")) {
+			throw new RuntimeException("Error 400");
+		}
+
 		List<BajaPoiExterna> lista = new ArrayList<>();
 		try {
 			lista = objectMapper.readValue(jsons,

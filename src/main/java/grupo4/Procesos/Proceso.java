@@ -2,13 +2,12 @@ package grupo4.Procesos;
 
 import java.time.LocalDateTime;
 
-public class Proceso implements Runnable{
+public class Proceso implements Runnable {
 	private LocalDateTime horaYFecha;
 	private long periodicidad;
 	private Accion accion;
 
 	public Proceso(LocalDateTime horaYFecha, long periodicidad, Accion accion) {
-		super();
 		this.horaYFecha = horaYFecha;
 		this.periodicidad = periodicidad;
 		this.accion = accion;
@@ -17,7 +16,7 @@ public class Proceso implements Runnable{
 	public void ejecutar() {
 		accion.ejecutar();
 	}
-	
+
 	@Override
 	public void run() {
 		this.ejecutar();

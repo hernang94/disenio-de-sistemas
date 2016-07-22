@@ -19,30 +19,24 @@ public class AccionBajaPoi implements Accion {
 	}
 
 	public boolean ejecutar() {
-		try{
+		try {
 			bajarPois();
 			return true;
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	public void bajarPois() {
 		List<BajaPoiExterna> lista = adaptador.obtenerPoisABajar();
-		lista.stream().forEach(elemento -> evaluarYBajarPoi(elemento));
+		lista.stream().forEach(elemento -> bajarPoi(elemento));
 	}
-//No tiene que parsear el json que te devuelve 400(que tire antes el runTime
-	public void evaluarYBajarPoi(BajaPoiExterna bajaPoi) {
-		if (bajaPoi.getId() == 400) {
-			RepositorioDeResultadosDeEjecucion.getInstancia()
-					.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.now(), "Error de Baja de Poi"));
 
-		} else {
-			String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);
-			RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(
-					new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), "Poi eliminado con exito"));
-			repo.bajaPoi(bajaPoi.getId());
-		}
+	public void bajarPoi(BajaPoiExterna bajaPoi) {
+		String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);
+		RepositorioDeResultadosDeEjecucion.getInstancia()
+				.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), "Poi eliminado con exito"));
+		repo.bajaPoi(bajaPoi.getId());
 	}
+
 }

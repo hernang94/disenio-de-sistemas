@@ -23,6 +23,8 @@ import DTOexterno.ServicioDTO;
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.ObserverReporterParcial;
+import grupo4.Acciones.ObserverReporterPorFecha;
+import grupo4.Acciones.ObserverReporterTotal;
 import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.BancoTransformer;
 import grupo4.ComponentesExternos.CGPAdapter;
@@ -62,7 +64,9 @@ public class ObserversTest {
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
 	private ObserverNotificador notificador;
-	private ObserverReporterParcial reporter;
+	private ObserverReporterParcial reporterParcial;
+	private ObserverReporterPorFecha reporterPorFecha;
+	private ObserverReporterTotal reporterTotal;
 	private ObserverAlmacenador almacenador;
 	private List<String> palabrasClavesBanco;
 	private List<String> palabrasClavesCGP;
@@ -83,8 +87,11 @@ public class ObserversTest {
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
 
 		notificador = new ObserverNotificador(-1, notificadorMail);// tiempoEstipulado=-1
-		reporter = new ObserverReporterParcial(repositorioBusquedas);
-		almacenador = new ObserverAlmacenador(repositorioBusquedas);
+		reporterParcial = new ObserverReporterParcial();
+		reporterPorFecha = new ObserverReporterPorFecha();
+		reporterTotal = new ObserverReporterTotal();
+
+		almacenador = new ObserverAlmacenador();
 
 		listaCentroAAdaptar = new ArrayList<>();
 
@@ -198,7 +205,10 @@ public class ObserversTest {
 		repoDePois.agregarPoi(cgp);
 		terminal = new Usuario("Terminal Abasto", repoDePois, 10);
 		terminal.agregarObserver(notificador);
-		terminal.agregarObserver(reporter);
+		terminal.agregarObserver(reporterPorFecha);
+		terminal.agregarObserver(reporterTotal);
+		terminal.agregarObserver(reporterParcial);
+
 		terminal.agregarObserver(almacenador);
 
 		terminalFalla = new Usuario("Terminal Abasto", repoDePois, 1);
@@ -239,25 +249,26 @@ public class ObserversTest {
 	@Test
 	public void reportarCantidadBusquedas() {
 		terminal.busquedaLibre("muebles");
-		// repoDePois.agregarPoi(banco);
 		terminal.busquedaLibre("Blaisten");
-		terminal.obtenerReporteTotalPorFecha();
 		Assert.assertEquals(2, repositorioBusquedas.getListaFechaCant(terminal.getTerminal()).get(0).getCantidad());
 	}
 
 	@Test
 	public void reporteParcialesporTerminal() {
 		terminal.busquedaLibre("Blaisten");
-		terminal.reporteParcial();
-		Assert.assertTrue(repositorioBusquedas.getlistaBusquedas().contains(1));
+		Assert.assertTrue(repositorioBusquedas.getlistaBusquedas(terminal.getTerminal()).contains(1));
 	}
 
 	@Test
 	public void reporteTotal() {
 		terminal.busquedaLibre("Blaisten");
 		terminal.busquedaLibre("muebles");
-		terminal.reporteTotal();
 		Assert.assertTrue(2 == repositorioBusquedas.reporteTotal().get(terminal.getTerminal()));
 	}
 
+	@Test
+	public void quitarObserver() {
+		terminal.quitarObserver(reporterParcial);
+		Assert.assertEquals(4, terminal.getObservers().size());
+	}
 }

@@ -1,6 +1,5 @@
 package grupo4.Acciones;
 
-
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDeReportes;
 import grupo4.Repositorios.ResultadosDeBusquedas;

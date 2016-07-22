@@ -1,6 +1,5 @@
 package grupo4.Acciones;
 
-
 import grupo4.ComponentesExternos.EmailSender;
 import grupo4.Repositorios.ResultadosDeBusquedas;
 
@@ -8,7 +7,8 @@ public class ObserverNotificador implements Observers {
 
 	private long tiempoEstipulado;
 	private EmailSender notificador;
-	private EnumObservers id=EnumObservers.NOTIFICADOR;
+	private EnumObservers id = EnumObservers.NOTIFICADOR;
+
 	public ObserverNotificador(long tiempoEstipulado, EmailSender notificador) {
 		this.tiempoEstipulado = tiempoEstipulado;
 		this.notificador = notificador;
@@ -22,8 +22,6 @@ public class ObserverNotificador implements Observers {
 		}
 	}
 
-	
-	
 	public EnumObservers getId() {
 		return id;
 	}
