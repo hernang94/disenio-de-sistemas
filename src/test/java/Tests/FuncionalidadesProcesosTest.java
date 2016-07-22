@@ -255,7 +255,7 @@ public class FuncionalidadesProcesosTest {
 		// NUEVO
 
 		// CAMBIAR LA RUTA DEL ARCHIVO
-		archivo = new File("C:/Users/Micaela/Documents/GitHub/2016-jm-group-04/ArchivoDePrueba.txt");
+		archivo = new File("C:/Users/Mauro/Documents/GitHub/2016-jm-group-04/ArchivoDePrueba.txt");
 
 		componenteLocalComercial = Mockito.mock(ComponenteLocalComercial.class);
 		adaptadorLocalComercialMockeado = Mockito.mock(LocalComercialAdapter.class);
@@ -317,7 +317,6 @@ public class FuncionalidadesProcesosTest {
 		accionBajaPoi.bajarPoi(listAux.stream().findFirst().get());
 		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
-
 	}
 
 	@Test
@@ -345,7 +344,6 @@ public class FuncionalidadesProcesosTest {
 	public void crearListaDeLocalesDeLocalComercialAdapter() throws IOException {
 		Assert.assertEquals("Carrousel",
 				adaptadorLocalComercial.crearListaDeLocales(archivo).stream().findFirst().get().getNombre());
-
 	}
 
 	@Test

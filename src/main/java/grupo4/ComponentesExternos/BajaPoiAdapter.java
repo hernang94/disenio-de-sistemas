@@ -26,15 +26,16 @@ public class BajaPoiAdapter {
 		if (jsons.contains("status_code")) {
 			throw new RuntimeException("Error 400");
 		}
-
-		List<BajaPoiExterna> lista = new ArrayList<>();
-		try {
-			lista = objectMapper.readValue(jsons,
-					TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BajaPoiExterna.class));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		else{			
+			List<BajaPoiExterna> lista = new ArrayList<>();
+			try {
+				lista = objectMapper.readValue(jsons,
+						TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BajaPoiExterna.class));
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			return lista;
 		}
-		return lista;
 	}
 
 	public void setComponente(ComponenteBajaPois componente) {
