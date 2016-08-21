@@ -1,31 +1,5 @@
 package Tests;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.http.ParseException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.mockito.Mockito;
-import org.uqbar.geodds.Point;
-import org.uqbar.geodds.Polygon;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import DTOexterno.BajaPoiExterna;
-import DTOexterno.CentroDTO;
-import DTOexterno.RangoServicioDTO;
-import DTOexterno.ServicioDTO;
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.Usuario;
@@ -60,6 +34,34 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.RepositorioDeUsuarios;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.http.ParseException;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
+import org.mockito.Mockito;
+import org.uqbar.geodds.Point;
+import org.uqbar.geodds.Polygon;
+
+import DTOexterno.BajaPoiExterna;
+import DTOexterno.CentroDTO;
+import DTOexterno.RangoServicioDTO;
+import DTOexterno.ServicioDTO;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FuncionalidadesProcesosTest {
 	private List<CentroDTO> listaCentroAAdaptar;
@@ -121,10 +123,11 @@ public class FuncionalidadesProcesosTest {
 
 	private DecoratorReintentar decoratorReintentar;
 	private DecoratorNotificador decoratorNotificar;
+	
 
 	@SuppressWarnings("static-access")
 	@Before
-	public void init() {
+	public void init() throws IOException {
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
@@ -255,7 +258,7 @@ public class FuncionalidadesProcesosTest {
 		// NUEVO
 
 		// CAMBIAR LA RUTA DEL ARCHIVO
-		archivo = new File("C:/Users/Micaela/Documents/GitHub/2016-jm-group-04/ArchivoDePrueba.txt");
+		archivo = TestExtensions.readFileFromResources("ArchivoDePrueba.txt");
 
 		componenteLocalComercial = Mockito.mock(ComponenteLocalComercial.class);
 		adaptadorLocalComercialMockeado = Mockito.mock(LocalComercialAdapter.class);
