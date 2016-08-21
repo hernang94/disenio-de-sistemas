@@ -11,7 +11,7 @@ import java.util.List;
 import DTOexterno.LocalComercialExterno;
 import grupo4.POIs.Poi;
 
-public class LocalComercialAdapter implements Adaptadores {
+public class LocalComercialAdapter implements OrigenExterno {
 	private ComponenteLocalComercial componente;
 
 	public List<LocalComercialExterno> obtenerLocalesExternos() {

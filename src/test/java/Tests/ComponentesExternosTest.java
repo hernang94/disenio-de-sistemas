@@ -94,8 +94,8 @@ public class ComponentesExternosTest {
 		optimus.setComponente(componenteBanco);
 
 		dispositivoTactil = RepositorioDePois.getInstancia();
-		dispositivoTactil.agregarAdaptador(adaptador);
-		dispositivoTactil.agregarAdaptador(megatron);
+		dispositivoTactil.agregarOrigenExterno(adaptador);
+		dispositivoTactil.agregarOrigenExterno(megatron);
 		horarioBanco = new Horario("10:00", "15:00");
 
 		hashMapBanco = new HashMap<>();

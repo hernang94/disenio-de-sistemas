@@ -20,7 +20,7 @@ import grupo4.POIs.Horario;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 
-public class CGPAdapter implements Adaptadores {
+public class CGPAdapter implements OrigenExterno {
 
 	private Map<Integer, Polygon> hashComunas;
 	private ComponenteCGPS componente;
