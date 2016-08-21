@@ -5,7 +5,7 @@ import grupo4.Repositorios.RepositorioDeReportes;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
 <span class="fc" id="L7">public class ObserverReporterTotal implements ObserverDeBusqueda {</span>
-<span class="fc" id="L8">	private TipoObserver id = TipoObserver.REPORTERTOTAL;</span>
+<span class="fc" id="L8">	private IdObserver id = IdObserver.REPORTERTOTAL;</span>
 
 	@Override
 	public void realizarAccion(ResultadoDeBusqueda resultado) {
@@ -14,7 +14,7 @@ import grupo4.Repositorios.ResultadoDeBusqueda;
 <span class="fc" id="L14">		RepositorioDeReportes.getInstancia().agregarReporte(reporte);</span>
 <span class="fc" id="L15">	}</span>
 
-	public TipoObserver getId() {
+	public IdObserver getId() {
 <span class="nc" id="L18">		return id;</span>
 	}
 

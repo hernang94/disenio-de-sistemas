@@ -4,13 +4,13 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
 <span class="fc" id="L6">public class ObserverAlmacenador implements ObserverDeBusqueda {</span>
-<span class="fc" id="L7">	private TipoObserver id = TipoObserver.ALMACENADOR;</span>
+<span class="fc" id="L7">	private IdObserver id = IdObserver.ALMACENADOR;</span>
 
 	public void realizarAccion(ResultadoDeBusqueda resultado) {
 <span class="fc" id="L10">		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultado);</span>
 <span class="fc" id="L11">	}</span>
 
-	public TipoObserver getId() {
+	public IdObserver getId() {
 <span class="fc" id="L14">		return id;</span>
 	}
 

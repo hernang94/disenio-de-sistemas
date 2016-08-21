@@ -7,7 +7,7 @@ public class ObserverNotificador implements ObserverDeBusqueda {
 
 	private long tiempoEstipulado;
 	private EmailSender notificador;
-<span class="fc" id="L10">	private TipoObserver id = TipoObserver.NOTIFICADOR;</span>
+<span class="fc" id="L10">	private IdObserver id = IdObserver.NOTIFICADOR;</span>
 
 <span class="fc" id="L12">	public ObserverNotificador(long tiempoEstipulado, EmailSender notificador) {</span>
 <span class="fc" id="L13">		this.tiempoEstipulado = tiempoEstipulado;</span>
@@ -22,7 +22,7 @@ public class ObserverNotificador implements ObserverDeBusqueda {
 		}
 <span class="fc" id="L23">	}</span>
 
-	public TipoObserver getId() {
+	public IdObserver getId() {
 <span class="fc" id="L26">		return id;</span>
 	}
 
