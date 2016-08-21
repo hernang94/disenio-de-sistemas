@@ -7,14 +7,14 @@ import java.util.List;
 
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioDePois;
-import grupo4.Repositorios.ResultadosDeBusquedas;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 
 public class Usuario {
 
 	private String terminal;
 	private int comuna;
 	private RepositorioDePois repositorio;
-<span class="fc" id="L17">	private List&lt;Observers&gt; observers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L17">	private List&lt;ObserverDeBusqueda&gt; observers = new ArrayList&lt;&gt;();</span>
 
 <span class="fc" id="L19">	public Usuario(String terminal, RepositorioDePois repositorio, int comuna) {</span>
 <span class="fc" id="L20">		this.terminal = terminal;</span>
@@ -22,11 +22,11 @@ public class Usuario {
 <span class="fc" id="L22">		this.comuna = comuna;</span>
 <span class="fc" id="L23">	}</span>
 
-	public void agregarObserver(Observers observer) {
+	public void agregarObserver(ObserverDeBusqueda observer) {
 <span class="fc" id="L26">		observers.add(observer);</span>
 <span class="fc" id="L27">	}</span>
 
-	public void quitarObserver(Observers observer) {
+	public void quitarObserver(ObserverDeBusqueda observer) {
 <span class="fc" id="L30">		observers.remove(observer);</span>
 <span class="fc" id="L31">	}</span>
 
@@ -36,7 +36,7 @@ public class Usuario {
 <span class="fc" id="L36">		listaAux = repositorio.busquedaLibre(criterio);</span>
 <span class="fc" id="L37">		LocalDateTime tiempoFin = LocalDateTime.now();</span>
 <span class="fc" id="L38">		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);</span>
-<span class="fc" id="L39">		ResultadosDeBusquedas resultadoAux = new ResultadosDeBusquedas(terminal, diferencia, criterio,</span>
+<span class="fc" id="L39">		ResultadoDeBusqueda resultadoAux = new ResultadoDeBusqueda(terminal, diferencia, criterio,</span>
 <span class="fc" id="L40">				tiempoInicio.toLocalDate(), listaAux.size());</span>
 <span class="fc" id="L41">		observers.stream().forEach(observer -&gt; observer.realizarAccion(resultadoAux));</span>
 <span class="fc" id="L42">	}</span>
@@ -53,7 +53,7 @@ public class Usuario {
 <span class="fc" id="L53">		return comuna;</span>
 	}
 
-	public List&lt;Observers&gt; getObservers() {
+	public List&lt;ObserverDeBusqueda&gt; getObservers() {
 <span class="fc" id="L57">		return observers;</span>
 	}
 

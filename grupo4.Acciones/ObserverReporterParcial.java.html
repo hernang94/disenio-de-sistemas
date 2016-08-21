@@ -2,16 +2,16 @@
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDeReportes;
-import grupo4.Repositorios.ResultadosDeBusquedas;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 
-<span class="fc" id="L7">public class ObserverReporterParcial implements Observers {</span>
-<span class="fc" id="L8">	private EnumObservers id = EnumObservers.REPORTERPARCIAL;</span>
+<span class="fc" id="L7">public class ObserverReporterParcial implements ObserverDeBusqueda {</span>
+<span class="fc" id="L8">	private TipoObserver id = TipoObserver.REPORTERPARCIAL;</span>
 
-	public EnumObservers getId() {
+	public TipoObserver getId() {
 <span class="nc" id="L11">		return id;</span>
 	}
 
-	public void realizarAccion(ResultadosDeBusquedas resultado) {
+	public void realizarAccion(ResultadoDeBusqueda resultado) {
 <span class="fc" id="L15">		Reporte reporteParcial = new ReporteParcial(resultado.getTerminalDeLaBusqueda(),</span>
 <span class="fc" id="L16">				RepositorioDeBusquedas.getInstancia().getlistaBusquedas(resultado.getTerminalDeLaBusqueda()));</span>
 <span class="fc" id="L17">		RepositorioDeReportes.getInstancia().agregarReporte(reporteParcial);</span>

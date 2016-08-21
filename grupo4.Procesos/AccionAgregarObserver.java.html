@@ -2,16 +2,16 @@
 
 import java.time.LocalDateTime;
 import java.util.List;
-import grupo4.Acciones.Observers;
+import grupo4.Acciones.ObserverDeBusqueda;
 import grupo4.Acciones.Usuario;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.ResultadosDeEjecucion;
 
 public class AccionAgregarObserver implements Accion {
-	private Observers observer;
+	private ObserverDeBusqueda observer;
 	private Criterio criterioSeleccion;
 
-<span class="fc" id="L14">	public AccionAgregarObserver(Observers observer, Criterio criterioSeleccion) {</span>
+<span class="fc" id="L14">	public AccionAgregarObserver(ObserverDeBusqueda observer, Criterio criterioSeleccion) {</span>
 <span class="fc" id="L15">		this.observer = observer;</span>
 <span class="fc" id="L16">		this.criterioSeleccion = criterioSeleccion;</span>
 <span class="fc" id="L17">	}</span>

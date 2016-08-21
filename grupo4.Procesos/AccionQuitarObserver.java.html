@@ -2,8 +2,8 @@
 
 import java.time.LocalDateTime;
 import java.util.List;
-import grupo4.Acciones.EnumObservers;
-import grupo4.Acciones.Observers;
+import grupo4.Acciones.TipoObserver;
+import grupo4.Acciones.ObserverDeBusqueda;
 import grupo4.Acciones.Usuario;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.ResultadosDeEjecucion;
@@ -11,9 +11,9 @@ import grupo4.Repositorios.ResultadosDeEjecucion;
 public class AccionQuitarObserver implements Accion {
 
 	private Criterio criterioSeleccion;
-	private EnumObservers observerAQuitar;
+	private TipoObserver observerAQuitar;
 
-<span class="fc" id="L16">	public AccionQuitarObserver(Criterio criterioSeleccion, EnumObservers observerAQuitar) {</span>
+<span class="fc" id="L16">	public AccionQuitarObserver(Criterio criterioSeleccion, TipoObserver observerAQuitar) {</span>
 <span class="fc" id="L17">		this.criterioSeleccion = criterioSeleccion;</span>
 <span class="fc" id="L18">		this.observerAQuitar = observerAQuitar;</span>
 <span class="fc" id="L19">	}</span>
@@ -31,7 +31,7 @@ public class AccionQuitarObserver implements Accion {
 		}
 	}
 
-	private Observers obtenerObserverSegunTipo(EnumObservers observerId, Usuario usuario) {
+	private ObserverDeBusqueda obtenerObserverSegunTipo(TipoObserver observerId, Usuario usuario) {
 <span class="fc" id="L35">		return usuario.getObservers().stream().filter(observer -&gt; observerId.equals(observer.getId())).findFirst()</span>
 <span class="fc" id="L36">				.get();</span>
 	}

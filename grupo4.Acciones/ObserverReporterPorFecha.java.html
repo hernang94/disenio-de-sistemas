@@ -2,19 +2,19 @@
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDeReportes;
-import grupo4.Repositorios.ResultadosDeBusquedas;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 
-<span class="fc" id="L7">public class ObserverReporterPorFecha implements Observers {</span>
-<span class="fc" id="L8">	private EnumObservers id = EnumObservers.REPORTERFECHA;</span>
+<span class="fc" id="L7">public class ObserverReporterPorFecha implements ObserverDeBusqueda {</span>
+<span class="fc" id="L8">	private TipoObserver id = TipoObserver.REPORTERFECHA;</span>
 
 	@Override
-	public void realizarAccion(ResultadosDeBusquedas resultado) {
+	public void realizarAccion(ResultadoDeBusqueda resultado) {
 <span class="fc" id="L12">		ReportePorFecha reporte = new ReportePorFecha(resultado.getTerminalDeLaBusqueda(),</span>
 <span class="fc" id="L13">				RepositorioDeBusquedas.getInstancia().getListaFechaCant(resultado.getTerminalDeLaBusqueda()));</span>
 <span class="fc" id="L14">		RepositorioDeReportes.getInstancia().agregarReporte(reporte);</span>
 <span class="fc" id="L15">	}</span>
 
-	public EnumObservers getId() {
+	public TipoObserver getId() {
 <span class="nc" id="L18">		return id;</span>
 	}
 

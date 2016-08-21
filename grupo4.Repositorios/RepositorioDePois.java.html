@@ -3,7 +3,7 @@
 import java.util.List;
 import java.util.stream.Collectors;
 import org.uqbar.geodds.Point;
-import grupo4.ComponentesExternos.Adaptadores;
+import grupo4.ComponentesExternos.OrigenExterno;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 import java.time.LocalDateTime;
@@ -13,14 +13,14 @@ public class RepositorioDePois {
 <span class="fc" id="L13">	private static RepositorioDePois instancia = new RepositorioDePois();</span>
 	private String nombre;
 <span class="fc" id="L15">	private List&lt;Poi&gt; listaDePois = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L16">	private List&lt;Adaptadores&gt; listaAdaptadores = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L16">	private List&lt;OrigenExterno&gt; origenesExternos = new ArrayList&lt;&gt;();</span>
 
 <span class="fc" id="L18">	private RepositorioDePois() {</span>
 <span class="fc" id="L19">	}</span>
 
 	public void reset() {
 <span class="fc" id="L22">		listaDePois.clear();</span>
-<span class="fc" id="L23">		listaAdaptadores.clear();</span>
+<span class="fc" id="L23">		origenesExternos.clear();</span>
 <span class="fc" id="L24">	}</span>
 
 	public static RepositorioDePois getInstancia() {
@@ -35,12 +35,12 @@ public class RepositorioDePois {
 <span class="nc" id="L35">		return nombre;</span>
 	}
 
-	public void agregarAdaptador(Adaptadores adaptador) {
-<span class="fc" id="L39">		listaAdaptadores.add(adaptador);</span>
+	public void agregarOrigenExterno(OrigenExterno origenExterno) {
+<span class="fc" id="L39">		origenesExternos.add(origenExterno);</span>
 <span class="fc" id="L40">	}</span>
 
-	public void quitarAdaptador(Adaptadores adaptador) {
-<span class="nc" id="L43">		listaAdaptadores.remove(adaptador);</span>
+	public void quitarAdaptador(OrigenExterno adaptador) {
+<span class="nc" id="L43">		origenesExternos.remove(adaptador);</span>
 <span class="nc" id="L44">	}</span>
 
 	public void agregarPoi(Poi unPoi) {
@@ -100,7 +100,7 @@ public class RepositorioDePois {
 <span class="fc" id="L100">		List&lt;Poi&gt; listaFiltrada = listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio))</span>
 <span class="fc" id="L101">				.collect(Collectors.toList());</span>
 <span class="fc bfc" id="L102" title="All 2 branches covered.">		if (listaFiltrada.isEmpty()) {</span>
-<span class="fc" id="L103">			listaAdaptadores.stream()</span>
+<span class="fc" id="L103">			origenesExternos.stream()</span>
 <span class="fc" id="L104">					.forEach(unComponente -&gt; listaFiltrada.addAll((unComponente.buscarPois(criterio))));</span>
 <span class="fc" id="L105">			listaDePois.addAll(listaFiltrada);</span>
 		}

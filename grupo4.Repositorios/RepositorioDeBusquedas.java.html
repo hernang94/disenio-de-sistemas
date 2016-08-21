@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import grupo4.Acciones.FechaCantReporte;
 
 <span class="fc" id="L12">public class RepositorioDeBusquedas {</span>
-<span class="fc" id="L13">	private List&lt;ResultadosDeBusquedas&gt; listaBusquedas = new ArrayList&lt;&gt;();;</span>
+<span class="fc" id="L13">	private List&lt;ResultadoDeBusqueda&gt; listaBusquedas = new ArrayList&lt;&gt;();;</span>
 <span class="fc" id="L14">	private Map&lt;String, List&lt;FechaCantReporte&gt;&gt; busquedasDeCadaTerminal = new HashMap&lt;&gt;();</span>
 <span class="fc" id="L15">	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();</span>
 
@@ -23,12 +23,12 @@ import grupo4.Acciones.FechaCantReporte;
 <span class="fc" id="L23">		busquedasDeCadaTerminal.clear();</span>
 <span class="fc" id="L24">	}</span>
 
-	public void agregarBusqueda(ResultadosDeBusquedas newResult) {
+	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
 <span class="fc" id="L27">		listaBusquedas.add(newResult);</span>
 <span class="fc" id="L28">		actualizarHashTerminales(newResult);</span>
 <span class="fc" id="L29">	}</span>
 
-	private void actualizarHashTerminales(ResultadosDeBusquedas newResult) {
+	private void actualizarHashTerminales(ResultadoDeBusqueda newResult) {
 <span class="fc bfc" id="L32" title="All 2 branches covered.">		if (busquedasDeCadaTerminal.containsKey(newResult.getTerminalDeLaBusqueda())) {</span>
 <span class="fc" id="L33">			FechaCantReporte fechaAux = busquedasDeCadaTerminal.get(newResult.getTerminalDeLaBusqueda()).stream()</span>
 <span class="fc" id="L34">					.filter(reporte -&gt; reporte.getFecha().equals(newResult.getFechaDeBusqueda())).findFirst().get();</span>
@@ -51,7 +51,7 @@ import grupo4.Acciones.FechaCantReporte;
 
 	public List&lt;Integer&gt; getlistaBusquedas(String unTerminal) {
 <span class="fc" id="L53">		List&lt;Integer&gt; lista = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L54">		List&lt;ResultadosDeBusquedas&gt; listaFiltrada = listaBusquedas.stream()</span>
+<span class="fc" id="L54">		List&lt;ResultadoDeBusqueda&gt; listaFiltrada = listaBusquedas.stream()</span>
 <span class="fc" id="L55">				.filter(busqueda -&gt; busqueda.esDeTerminal(unTerminal)).collect(Collectors.toList());</span>
 <span class="fc" id="L56">		listaFiltrada.forEach(busqueda -&gt; lista.add(busqueda.getCantidadDeResultados()));</span>
 <span class="fc" id="L57">		return lista;</span>

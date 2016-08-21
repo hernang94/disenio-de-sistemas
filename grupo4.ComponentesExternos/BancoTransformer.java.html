@@ -14,7 +14,7 @@ import grupo4.POIs.Banco;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 
-public class BancoTransformer implements Adaptadores {
+public class BancoTransformer implements OrigenExterno {
 	private ComponenteBanco componente;
 	private ObjectMapper objectMapper;
 
