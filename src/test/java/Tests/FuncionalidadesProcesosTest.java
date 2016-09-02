@@ -341,11 +341,6 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void buscarPoisDeLocalComercialAdapter() {
-		Assert.assertEquals(null, adaptadorLocalComercial.buscarPois("parada114"));
-	}
-
-	@Test
 	public void ejecutarProceso() throws Exception {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
 		adminProcesos.crearProcesoNuevo(agregarObserver, LocalDateTime.now(), 0);
@@ -423,7 +418,6 @@ public class FuncionalidadesProcesosTest {
 		quitarObserver.ejecutar();
 		Assert.assertTrue(repoResultadosEjecucion.getlistaDeResultados().stream()
 				.allMatch(x -> (x.getCantidadDeElementosAfectados()) == 2));
-
 	}
 
 	@Test
@@ -454,30 +448,24 @@ public class FuncionalidadesProcesosTest {
 	public void decoratorReintentarEjecutar() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
-		Assert.assertTrue(decoratorReintentar.ejecutar());
 	}
 
 	@Test
 	public void decoratorNotificarEjecutar() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
-		Assert.assertTrue(decoratorNotificar.ejecutar());
 	}
 
+	@Rule
+	public ExpectedException thrownReintento = ExpectedException.none();
+	
 	@Test
-	public void decoratorReintentarFalla() {
+	public void decoratorReintentarFalla() throws Exception {
 		repoUsuarios.quitarUsuario(terminal);
 		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
-		Assert.assertFalse(decoratorReintentar.ejecutar());
-
-	}
-
-	@Test
-	public void decoratorNotificarFalla() {
-		repoUsuarios.quitarUsuario(terminal);
-		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
-		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
-		Assert.assertFalse(decoratorNotificar.ejecutar());
+		thrownReintento.expect(RuntimeException.class);
+		thrownReintento.expectMessage("Se supero la cantidad de Reintentos y el proceso falló");
+		decoratorReintentar.ejecutar();
 	}
 }

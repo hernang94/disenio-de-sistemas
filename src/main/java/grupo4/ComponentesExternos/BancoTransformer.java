@@ -14,7 +14,7 @@ import grupo4.POIs.Banco;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 
-public class BancoTransformer implements OrigenExterno {
+public class BancoTransformer implements BuscadorDePois {
 	private ComponenteBanco componente;
 	private ObjectMapper objectMapper;
 
@@ -62,10 +62,6 @@ public class BancoTransformer implements OrigenExterno {
 	public void setComponente(ComponenteBanco componenteBanco) {
 		this.componente = componenteBanco;
 
-	}
-
-	public List<LocalComercialExterno> obtenerLocalesExternos() {
-		return null;
 	}
 
 }

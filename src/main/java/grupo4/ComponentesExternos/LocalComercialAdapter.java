@@ -11,7 +11,7 @@ import java.util.List;
 import DTOexterno.LocalComercialExterno;
 import grupo4.POIs.Poi;
 
-public class LocalComercialAdapter implements OrigenExterno {
+public class LocalComercialAdapter implements Actualizador {
 	private ComponenteLocalComercial componente;
 
 	public List<LocalComercialExterno> obtenerLocalesExternos() {
@@ -47,10 +47,6 @@ public class LocalComercialAdapter implements OrigenExterno {
 
 	public void setComponente(ComponenteLocalComercial componente) {
 		this.componente = componente;
-	}
-
-	public List<Poi> buscarPois(String criterio1) {
-		return null;
 	}
 
 }

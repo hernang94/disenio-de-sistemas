@@ -3,7 +3,8 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.uqbar.geodds.Point;
-import grupo4.ComponentesExternos.OrigenExterno;
+
+import grupo4.ComponentesExternos.BuscadorDePois;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class RepositorioDePois {
 	private static RepositorioDePois instancia = new RepositorioDePois();
 	private String nombre;
 	private List<Poi> listaDePois = new ArrayList<>();
-	private List<OrigenExterno> origenesExternos = new ArrayList<>();
+	private List<BuscadorDePois> origenesExternos = new ArrayList<>();
 
 	private RepositorioDePois() {
 	}
@@ -35,11 +36,11 @@ public class RepositorioDePois {
 		return nombre;
 	}
 
-	public void agregarOrigenExterno(OrigenExterno origenExterno) {
+	public void agregarOrigenExterno(BuscadorDePois origenExterno) {
 		origenesExternos.add(origenExterno);
 	}
 
-	public void quitarAdaptador(OrigenExterno adaptador) {
+	public void quitarAdaptador(BuscadorDePois adaptador) {
 		origenesExternos.remove(adaptador);
 	}
 
