@@ -27,7 +27,7 @@ public class DecoratorReintentar implements Accion {
 	public void ejecutar() throws Exception{//lo hago void y en el catch mi fijo lo del reintento
 		try{
 <span class="fc" id="L29">			this.setIntentosRealizados(this.getIntentosRealizados()+1);</span>
-<span class="nc" id="L30">			decorado.ejecutar();</span>
+<span class="fc" id="L30">			decorado.ejecutar();</span>
 		}
 <span class="fc" id="L32">		catch(Exception e){</span>
 <span class="pc bpc" id="L33" title="1 of 2 branches missed.">			if(this.getIntentosRealizados()&gt;this.getCantidadReintentos()){</span>
@@ -36,7 +36,7 @@ public class DecoratorReintentar implements Accion {
 			else{
 <span class="nc" id="L37">				this.ejecutar();</span>
 			}
-<span class="nc" id="L39">		}</span>
-<span class="nc" id="L40">	}</span>
+<span class="fc" id="L39">		}</span>
+<span class="fc" id="L40">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

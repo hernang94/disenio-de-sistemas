@@ -14,12 +14,12 @@ public class DecoratorNotificador implements Accion {
 	@Override
 	public void ejecutar() { //lo cambio a void y meto un try and catch, y en el catch mando el mail
 		try{
-<span class="nc" id="L17">			decorado.ejecutar();</span>
+<span class="fc" id="L17">			decorado.ejecutar();</span>
 		}
 <span class="nc" id="L19">		catch (Exception e) {</span>
 <span class="nc" id="L20">			notificador.enviarMail(&quot;Fallo el sistema&quot;);// Por ahora lo dejo asi porque no se si se</span>
 														// quiere que se sepa qué fallo
-<span class="nc" id="L22">		}</span>
-<span class="nc" id="L23">	}</span>
+<span class="fc" id="L22">		}</span>
+<span class="fc" id="L23">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
