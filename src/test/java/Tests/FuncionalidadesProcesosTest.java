@@ -445,15 +445,17 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void decoratorReintentarEjecutar() {
+	public void decoratorReintentarEjecutar() throws Exception {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
+		decoratorReintentar.ejecutar();
 	}
 
 	@Test
 	public void decoratorNotificarEjecutar() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
+		decoratorNotificar.ejecutar();
 	}
 
 	@Rule
