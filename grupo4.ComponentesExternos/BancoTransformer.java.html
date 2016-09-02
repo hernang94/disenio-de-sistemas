@@ -14,7 +14,7 @@ import grupo4.POIs.Banco;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 
-public class BancoTransformer implements OrigenExterno {
+public class BancoTransformer implements BuscadorDePois {
 	private ComponenteBanco componente;
 	private ObjectMapper objectMapper;
 
@@ -63,10 +63,6 @@ public class BancoTransformer implements OrigenExterno {
 <span class="fc" id="L63">		this.componente = componenteBanco;</span>
 
 <span class="fc" id="L65">	}</span>
-
-	public List&lt;LocalComercialExterno&gt; obtenerLocalesExternos() {
-<span class="nc" id="L68">		return null;</span>
-	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

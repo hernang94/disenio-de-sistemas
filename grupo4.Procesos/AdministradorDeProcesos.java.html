@@ -18,12 +18,12 @@ public class AdministradorDeProcesos {
 <span class="fc" id="L18">		return instancia;</span>
 	}
 
-	public Runnable ejecutarProceso(Proceso proceso) {
+	public Runnable ejecutarProceso(Proceso proceso) throws Exception {
 <span class="fc" id="L22">		proceso.ejecutar();</span>
 <span class="fc" id="L23">		return proceso;</span>
 	}
 
-	public void crearProcesoNuevo(Accion accion, LocalDateTime fechaEjecucion, long periodicidad) {
+	public void crearProcesoNuevo(Accion accion, LocalDateTime fechaEjecucion, long periodicidad) throws Exception {
 <span class="fc" id="L27">		Proceso proceso = new Proceso(fechaEjecucion, periodicidad, accion);</span>
 <span class="fc bfc" id="L28" title="All 2 branches covered.">		if (periodicidad == 0) {</span>
 <span class="fc" id="L29">			scheduler.schedule(this.ejecutarProceso(proceso),</span>

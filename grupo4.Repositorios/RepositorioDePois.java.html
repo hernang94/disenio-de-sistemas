@@ -3,128 +3,129 @@
 import java.util.List;
 import java.util.stream.Collectors;
 import org.uqbar.geodds.Point;
-import grupo4.ComponentesExternos.OrigenExterno;
+
+import grupo4.ComponentesExternos.BuscadorDePois;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class RepositorioDePois {
-<span class="fc" id="L13">	private static RepositorioDePois instancia = new RepositorioDePois();</span>
+<span class="fc" id="L14">	private static RepositorioDePois instancia = new RepositorioDePois();</span>
 	private String nombre;
-<span class="fc" id="L15">	private List&lt;Poi&gt; listaDePois = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L16">	private List&lt;OrigenExterno&gt; origenesExternos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L16">	private List&lt;Poi&gt; listaDePois = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L17">	private List&lt;BuscadorDePois&gt; origenesExternos = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L18">	private RepositorioDePois() {</span>
-<span class="fc" id="L19">	}</span>
+<span class="fc" id="L19">	private RepositorioDePois() {</span>
+<span class="fc" id="L20">	}</span>
 
 	public void reset() {
-<span class="fc" id="L22">		listaDePois.clear();</span>
-<span class="fc" id="L23">		origenesExternos.clear();</span>
-<span class="fc" id="L24">	}</span>
+<span class="fc" id="L23">		listaDePois.clear();</span>
+<span class="fc" id="L24">		origenesExternos.clear();</span>
+<span class="fc" id="L25">	}</span>
 
 	public static RepositorioDePois getInstancia() {
-<span class="fc" id="L27">		return instancia;</span>
+<span class="fc" id="L28">		return instancia;</span>
 	}
 
 	public void setNombre(String nombre) {
-<span class="nc" id="L31">		this.nombre = nombre;</span>
-<span class="nc" id="L32">	}</span>
+<span class="nc" id="L32">		this.nombre = nombre;</span>
+<span class="nc" id="L33">	}</span>
 
 	public String getNombre() {
-<span class="nc" id="L35">		return nombre;</span>
+<span class="nc" id="L36">		return nombre;</span>
 	}
 
-	public void agregarOrigenExterno(OrigenExterno origenExterno) {
-<span class="fc" id="L39">		origenesExternos.add(origenExterno);</span>
-<span class="fc" id="L40">	}</span>
+	public void agregarOrigenExterno(BuscadorDePois origenExterno) {
+<span class="fc" id="L40">		origenesExternos.add(origenExterno);</span>
+<span class="fc" id="L41">	}</span>
 
-	public void quitarAdaptador(OrigenExterno adaptador) {
-<span class="nc" id="L43">		origenesExternos.remove(adaptador);</span>
-<span class="nc" id="L44">	}</span>
+	public void quitarAdaptador(BuscadorDePois adaptador) {
+<span class="nc" id="L44">		origenesExternos.remove(adaptador);</span>
+<span class="nc" id="L45">	}</span>
 
 	public void agregarPoi(Poi unPoi) {
-<span class="fc bfc" id="L47" title="All 2 branches covered.">		if (!repositorioContienePoi(unPoi.getId())) {</span>
-<span class="fc" id="L48">			listaDePois.add(unPoi);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		if (!repositorioContienePoi(unPoi.getId())) {</span>
+<span class="fc" id="L49">			listaDePois.add(unPoi);</span>
 		} else {
-<span class="fc" id="L50">			throw new RuntimeException(&quot;Poi ya existente&quot;);</span>
+<span class="fc" id="L51">			throw new RuntimeException(&quot;Poi ya existente&quot;);</span>
 		}
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L53">	}</span>
 
 	public void bajaPoi(int id) {
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (repositorioContienePoi(id)) {</span>
-<span class="fc" id="L56">			listaDePois.remove(obtenerPoi(id));</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (repositorioContienePoi(id)) {</span>
+<span class="fc" id="L57">			listaDePois.remove(obtenerPoi(id));</span>
 		} else {
-<span class="fc" id="L58">			throw new RuntimeException(&quot;No existe el Poi&quot;);</span>
+<span class="fc" id="L59">			throw new RuntimeException(&quot;No existe el Poi&quot;);</span>
 		}
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L61">	}</span>
 
 	private boolean repositorioContienePoi(Integer id) {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		return listaDePois.stream().anyMatch(unPoi -&gt; unPoi.getId() == id);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		return listaDePois.stream().anyMatch(unPoi -&gt; unPoi.getId() == id);</span>
 	}
 
 	private Poi obtenerPoi(int id) {
-<span class="fc bfc" id="L67" title="All 2 branches covered.">		return listaDePois.stream().filter(poi -&gt; poi.getId() == id).findFirst().get();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		return listaDePois.stream().filter(poi -&gt; poi.getId() == id).findFirst().get();</span>
 	}
 
 	public List&lt;Poi&gt; busquedaLibre(String criterio) {
-<span class="fc" id="L71">		List&lt;Poi&gt; listaAux = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L72">		listaAux = filtrarPorCriterio(criterio);</span>
-<span class="fc" id="L73">		return listaAux;</span>
+<span class="fc" id="L72">		List&lt;Poi&gt; listaAux = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L73">		listaAux = filtrarPorCriterio(criterio);</span>
+<span class="fc" id="L74">		return listaAux;</span>
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;
-<span class="fc" id="L78">		poiAux = obtenerSegunCriterio(criterio);</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (poiAux == null) {</span>
-<span class="fc" id="L80">			return false;</span>
+<span class="fc" id="L79">		poiAux = obtenerSegunCriterio(criterio);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (poiAux == null) {</span>
+<span class="fc" id="L81">			return false;</span>
 		}
-<span class="fc" id="L82">		return poiAux.estaDisponible(fecha);</span>
+<span class="fc" id="L83">		return poiAux.estaDisponible(fecha);</span>
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, Servicio servicio) {
-<span class="fc" id="L86">		Poi poiAux = obtenerSegunCriterio(servicio.getNombre());</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (poiAux == null) {</span>
-<span class="fc" id="L88">			return false;</span>
+<span class="fc" id="L87">		Poi poiAux = obtenerSegunCriterio(servicio.getNombre());</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (poiAux == null) {</span>
+<span class="fc" id="L89">			return false;</span>
 		}
-<span class="fc" id="L90">		return poiAux.estaDisponible(fecha, servicio);</span>
+<span class="fc" id="L91">		return poiAux.estaDisponible(fecha, servicio);</span>
 	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha) {
 		Poi poiAux;
-<span class="fc" id="L95">		poiAux = obtenerSegunCriterio(fecha.toString());</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		return poiAux != null;</span>
+<span class="fc" id="L96">		poiAux = obtenerSegunCriterio(fecha.toString());</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		return poiAux != null;</span>
 	}
 
 	public List&lt;Poi&gt; filtrarPorCriterio(String criterio) {
-<span class="fc" id="L100">		List&lt;Poi&gt; listaFiltrada = listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio))</span>
-<span class="fc" id="L101">				.collect(Collectors.toList());</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (listaFiltrada.isEmpty()) {</span>
-<span class="fc" id="L103">			origenesExternos.stream()</span>
-<span class="fc" id="L104">					.forEach(unComponente -&gt; listaFiltrada.addAll((unComponente.buscarPois(criterio))));</span>
-<span class="fc" id="L105">			listaDePois.addAll(listaFiltrada);</span>
+<span class="fc" id="L101">		List&lt;Poi&gt; listaFiltrada = listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio))</span>
+<span class="fc" id="L102">				.collect(Collectors.toList());</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (listaFiltrada.isEmpty()) {</span>
+<span class="fc" id="L104">			origenesExternos.stream()</span>
+<span class="fc" id="L105">					.forEach(unComponente -&gt; listaFiltrada.addAll((unComponente.buscarPois(criterio))));</span>
+<span class="fc" id="L106">			listaDePois.addAll(listaFiltrada);</span>
 		}
-<span class="fc" id="L107">		return listaFiltrada;</span>
+<span class="fc" id="L108">		return listaFiltrada;</span>
 	}
 
 	public boolean consultaCercania(String criterio, Point ubicacionSolicitada) {
 		Poi poi_aux;
-<span class="fc" id="L112">		poi_aux = obtenerSegunCriterio(criterio);</span>
-<span class="fc" id="L113">		return poi_aux.estaCerca(ubicacionSolicitada);</span>
+<span class="fc" id="L113">		poi_aux = obtenerSegunCriterio(criterio);</span>
+<span class="fc" id="L114">		return poi_aux.estaCerca(ubicacionSolicitada);</span>
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
-<span class="fc" id="L117">		return listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);</span>
+<span class="fc" id="L118">		return listaDePois.stream().filter(unPoi -&gt; unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);</span>
 	}
 
 	public void cambiarPalabrasClaves(String palabraFantasia, List&lt;String&gt; palabrasClaves) {
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (repositorioContienePoi(palabraFantasia)) {</span>
-<span class="nc" id="L122">			listaDePois.stream().forEach(poi -&gt; poi.reemplazarPalabrasClaves(palabrasClaves));</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (repositorioContienePoi(palabraFantasia)) {</span>
+<span class="nc" id="L123">			listaDePois.stream().forEach(poi -&gt; poi.reemplazarPalabrasClaves(palabrasClaves));</span>
 		}
-<span class="nc" id="L124">	}</span>
+<span class="nc" id="L125">	}</span>
 
 	private boolean repositorioContienePoi(String palabraFantasia) {
-<span class="nc" id="L127">		return listaDePois.stream().anyMatch(unPoi -&gt; unPoi.getNombre().equalsIgnoreCase(palabraFantasia));</span>
+<span class="nc" id="L128">		return listaDePois.stream().anyMatch(unPoi -&gt; unPoi.getNombre().equalsIgnoreCase(palabraFantasia));</span>
 	}
 
 }

@@ -2,22 +2,41 @@
 
 public class DecoratorReintentar implements Accion {
 	private int cantidadReintentos;
+	private int intentosRealizados;
 	private Accion decorado;
 
 	public DecoratorReintentar(int cantidadReintentos, Accion decorado) {
-<span class="fc" id="L8">		super();</span>
-<span class="fc" id="L9">		this.cantidadReintentos = cantidadReintentos;</span>
-<span class="fc" id="L10">		this.decorado = decorado;</span>
-<span class="fc" id="L11">	}</span>
+<span class="fc" id="L9">		super();</span>
+<span class="fc" id="L10">		this.intentosRealizados = 0;</span>
+<span class="fc" id="L11">		this.cantidadReintentos = cantidadReintentos;</span>
+<span class="fc" id="L12">		this.decorado = decorado;</span>
+<span class="fc" id="L13">	}</span>
 
-	public boolean ejecutar() {
-		boolean status;
-<span class="fc" id="L15">		int nroIntento = 0;</span>
-		do {
-<span class="fc" id="L17">			nroIntento++;</span>
-<span class="fc" id="L18">			status = decorado.ejecutar();</span>
-<span class="fc bfc" id="L19" title="All 4 branches covered.">		} while (!status &amp;&amp; nroIntento &lt; cantidadReintentos);</span>
-<span class="fc" id="L20">		return status;</span>
+	public int getIntentosRealizados() {
+<span class="fc" id="L16">		return intentosRealizados;</span>
 	}
+
+	public void setIntentosRealizados(int intentosRealizados) {
+<span class="fc" id="L20">		this.intentosRealizados = intentosRealizados;</span>
+<span class="fc" id="L21">	}</span>
+
+	public int getCantidadReintentos() {
+<span class="fc" id="L24">		return cantidadReintentos;</span>
+	}
+
+	public void ejecutar() throws Exception{//lo hago void y en el catch mi fijo lo del reintento
+		try{
+<span class="fc" id="L29">			this.setIntentosRealizados(this.getIntentosRealizados()+1);</span>
+<span class="nc" id="L30">			decorado.ejecutar();</span>
+		}
+<span class="fc" id="L32">		catch(Exception e){</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">			if(this.getIntentosRealizados()&gt;this.getCantidadReintentos()){</span>
+<span class="fc" id="L34">				throw new RuntimeException(&quot;Se supero la cantidad de Reintentos y el proceso falló&quot;);</span>
+			}
+			else{
+<span class="nc" id="L37">				this.ejecutar();</span>
+			}
+<span class="nc" id="L39">		}</span>
+<span class="nc" id="L40">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -18,26 +18,21 @@ public class AccionBajaPoi implements Accion {
 <span class="fc" id="L18">		this.adaptador = adaptador;</span>
 <span class="fc" id="L19">	}</span>
 
-	public boolean ejecutar() {
-		try {
-<span class="fc" id="L23">			bajarPois();</span>
-<span class="fc" id="L24">			return true;</span>
-<span class="nc" id="L25">		} catch (Exception e) {</span>
-<span class="nc" id="L26">			return false;</span>
-		}
-	}
+	public void ejecutar() {
+<span class="fc" id="L22">			bajarPois();</span>
+<span class="fc" id="L23">	}</span>
 
 	public void bajarPois() {
-<span class="fc" id="L31">		List&lt;BajaPoiExterna&gt; lista = adaptador.obtenerPoisABajar();</span>
-<span class="pc" id="L32">		lista.stream().forEach(elemento -&gt; bajarPoi(elemento));</span>
-<span class="fc" id="L33">	}</span>
+<span class="fc" id="L26">		List&lt;BajaPoiExterna&gt; lista = adaptador.obtenerPoisABajar();</span>
+<span class="pc" id="L27">		lista.stream().forEach(elemento -&gt; bajarPoi(elemento));</span>
+<span class="fc" id="L28">	}</span>
 
 	public void bajarPoi(BajaPoiExterna bajaPoi) {
-<span class="nc" id="L36">		String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);</span>
-<span class="nc" id="L37">		RepositorioDeResultadosDeEjecucion.getInstancia()</span>
-<span class="nc" id="L38">				.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), &quot;Poi eliminado con exito&quot;));</span>
-<span class="nc" id="L39">		repo.bajaPoi(bajaPoi.getId());</span>
-<span class="nc" id="L40">	}</span>
+<span class="nc" id="L31">		String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);</span>
+<span class="nc" id="L32">		RepositorioDeResultadosDeEjecucion.getInstancia()</span>
+<span class="nc" id="L33">				.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), &quot;Poi eliminado con exito&quot;));</span>
+<span class="nc" id="L34">		repo.bajaPoi(bajaPoi.getId());</span>
+<span class="nc" id="L35">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

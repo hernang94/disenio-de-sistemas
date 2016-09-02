@@ -13,21 +13,26 @@ public class Proceso implements Runnable {
 <span class="fc" id="L13">		this.accion = accion;</span>
 <span class="fc" id="L14">	}</span>
 
-	public void ejecutar() {
-<span class="fc" id="L17">		accion.ejecutar();</span>
-<span class="fc" id="L18">	}</span>
+	public void ejecutar() throws Exception {
+		try{			
+<span class="fc" id="L18">			accion.ejecutar();</span>
+		}
+<span class="nc" id="L20">		catch(Exception e){</span>
+<span class="nc" id="L21">			throw new Exception(&quot;No se pudo ejecutar el proceso&quot;);</span>
+<span class="fc" id="L22">		}</span>
+<span class="fc" id="L23">	}</span>
 
 	@Override
 	public void run() {
-<span class="fc" id="L22">		this.ejecutar();</span>
-<span class="fc" id="L23">	}</span>
+		//this.ejecutar();
+<span class="fc" id="L28">	}</span>
 
 	public LocalDateTime getHoraYFecha() {
-<span class="nc" id="L26">		return horaYFecha;</span>
+<span class="nc" id="L31">		return horaYFecha;</span>
 	}
 
 	public long getPeriodicidad() {
-<span class="nc" id="L30">		return periodicidad;</span>
+<span class="nc" id="L35">		return periodicidad;</span>
 	}
 
 }
