@@ -12,12 +12,13 @@ public class DecoratorNotificador implements Accion {
 	}
 
 	@Override
-	public boolean ejecutar() { //lo cambio a void y meto un try and catch, y en el catch mando el mail
-		boolean status = decorado.ejecutar();
-		if (!status) {
+	public void ejecutar() { //lo cambio a void y meto un try and catch, y en el catch mando el mail
+		try{
+			decorado.ejecutar();
+		}
+		catch (Exception e) {
 			notificador.enviarMail("Fallo el sistema");// Por ahora lo dejo asi porque no se si se
 														// quiere que se sepa qué fallo
 		}
-		return status;
 	}
 }

@@ -10,13 +10,14 @@ public class DecoratorReintentar implements Accion {
 		this.decorado = decorado;
 	}
 
-	public boolean ejecutar() {//lo hago void y en el catch mi fijo lo del reintento
-		boolean status;
+	public void ejecutar() {//lo hago void y en el catch mi fijo lo del reintento
 		int nroIntento = 0;
-		do {
+		try{
 			nroIntento++;
-			status = decorado.ejecutar();
-		} while (!status && nroIntento < cantidadReintentos);
-		return status;
+			decorado.ejecutar();
+		}
+		catch(Exception e){
+			
+		}
 	}
 }
