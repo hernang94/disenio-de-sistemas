@@ -346,7 +346,7 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void ejecutarProceso() throws InterruptedException {
+	public void ejecutarProceso() throws Exception {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
 		adminProcesos.crearProcesoNuevo(agregarObserver, LocalDateTime.now(), 0);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
@@ -378,7 +378,7 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void procesoAgregarAlmacenarTodos() {
+	public void procesoAgregarAlmacenarTodos() throws Exception {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
 		proceso = new Proceso(LocalDateTime.now(), 0, agregarObserver);
 		proceso.ejecutar();
@@ -387,7 +387,7 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void ejecutarProcesoPeriodicidadMayorCero() {
+	public void ejecutarProcesoPeriodicidadMayorCero() throws Exception {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
 		adminProcesos.crearProcesoNuevo(agregarObserver, LocalDateTime.now(), 5);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()

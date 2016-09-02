@@ -13,13 +13,18 @@ public class Proceso implements Runnable {
 		this.accion = accion;
 	}
 
-	public void ejecutar() {
-		accion.ejecutar();
+	public void ejecutar() throws Exception {
+		try{			
+			accion.ejecutar();
+		}
+		catch(Exception e){
+			throw new Exception("No se pudo ejecutar el proceso");
+		}
 	}
 
 	@Override
 	public void run() {
-		this.ejecutar();
+		//this.ejecutar();
 	}
 
 	public LocalDateTime getHoraYFecha() {

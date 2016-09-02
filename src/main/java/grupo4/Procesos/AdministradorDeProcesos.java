@@ -18,12 +18,12 @@ public class AdministradorDeProcesos {
 		return instancia;
 	}
 
-	public Runnable ejecutarProceso(Proceso proceso) {
+	public Runnable ejecutarProceso(Proceso proceso) throws Exception {
 		proceso.ejecutar();
 		return proceso;
 	}
 
-	public void crearProcesoNuevo(Accion accion, LocalDateTime fechaEjecucion, long periodicidad) {
+	public void crearProcesoNuevo(Accion accion, LocalDateTime fechaEjecucion, long periodicidad) throws Exception {
 		Proceso proceso = new Proceso(fechaEjecucion, periodicidad, accion);
 		if (periodicidad == 0) {
 			scheduler.schedule(this.ejecutarProceso(proceso),

@@ -18,17 +18,12 @@ public class AccionQuitarObserver implements Accion {
 		this.observerAQuitar = observerAQuitar;
 	}
 
-	public boolean ejecutar() {
-		try {
+	public void ejecutar() {
 			List<Usuario> usuarios = criterioSeleccion.obtenerLista();
 			usuarios.stream()
 					.forEach(usuario -> usuario.quitarObserver(obtenerObserverSegunTipo(observerAQuitar, usuario)));
 			RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(new ResultadosDeEjecucion(
 					usuarios.size(), LocalDateTime.now(), usuarios.size() + " Usuarios afectados"));
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 	private ObserverDeBusqueda obtenerObserverSegunTipo(IdObserver observerId, Usuario usuario) {
