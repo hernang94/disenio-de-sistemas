@@ -51,7 +51,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
 import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
@@ -104,8 +103,10 @@ public class FuncionalidadesProcesosTest {
 	private CriterioATodos criterioTodos;
 	private CriterioPorComuna criterioComuna;
 	private CriterioPorSeleccion criterioSeleccion;
+	private CriterioPorSeleccion criterioSeleccionBad;
 	private RepositorioDeUsuarios repoUsuarios;
 	private List<String> listaTerminales;
+	private List<String> listaTerminalesNoExistentes;
 	private BajaPoiAdapter adaptadorBajaPoiMockeado;
 	private BajaPoiAdapter adaptadorBajaPoi;
 	private ComponenteLocalComercial componenteLocalComercial;
@@ -289,6 +290,9 @@ public class FuncionalidadesProcesosTest {
 		listaTerminales.add("Terminal Abasto");
 		listaTerminales.add("Terminal Alto Palermo");
 		criterioSeleccion = new CriterioPorSeleccion(listaTerminales);
+		listaTerminalesNoExistentes = new ArrayList<>();
+		listaTerminalesNoExistentes.add("Terminal Plaza Miserere");
+		criterioSeleccionBad = new CriterioPorSeleccion(listaTerminalesNoExistentes);
 
 		repoUsuarios.agregarUsuario(terminal);
 		repoUsuarios.agregarUsuario(terminal2);
@@ -456,6 +460,7 @@ public class FuncionalidadesProcesosTest {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
 		decoratorReintentar.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
 	}
 
 	@Test
@@ -463,6 +468,7 @@ public class FuncionalidadesProcesosTest {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
 		decoratorNotificar.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
 	}
 
 	@Rule
@@ -474,7 +480,15 @@ public class FuncionalidadesProcesosTest {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
 		thrownReintento.expect(RuntimeException.class);
-		thrownReintento.expectMessage("Se supero la cantidad de Reintentos y el proceso falló");
+		thrownReintento.expectMessage("Se supero la cantidad de Reintentos y el proceso fallo");
 		decoratorReintentar.ejecutar();
+	}
+	
+	@Test
+	public void decoratorNotificaFalla() throws Exception{
+		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccionBad);
+		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
+		decoratorNotificar.ejecutar();
+		Mockito.verify(notificadorMail).enviarMail("Fallo el sistema");
 	}
 }

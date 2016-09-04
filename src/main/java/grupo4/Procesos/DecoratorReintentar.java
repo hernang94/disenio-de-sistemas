@@ -31,7 +31,7 @@ public class DecoratorReintentar implements Accion {
 		}
 		catch(Exception e){
 			if(this.getIntentosRealizados()>this.getCantidadReintentos()){
-				throw new RuntimeException("Se supero la cantidad de Reintentos y el proceso falló");
+				throw new RuntimeException("Se supero la cantidad de Reintentos y el proceso fallo");
 			}
 			else{
 				this.ejecutar();
