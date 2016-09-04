@@ -304,11 +304,18 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void accionBajaPoi() {
+	public void accionBajaPoiMockeada() {
 		accionBajaPoiConMock.ejecutar();
 		Mockito.verify(adaptadorBajaPoiMockeado).obtenerPoisABajar();
 	}
 
+	@Test
+	public void accionBajaPoi() throws ParseException, IOException{
+		List<BajaPoiExterna> listAux = adaptadorBajaPoi.convertirJson(http.obtenerString());
+		listAux.stream().forEach(poiABajar-> accionBajaPoi.bajarPoi(poiABajar));
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().size());
+	}
+	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
