@@ -23,18 +23,18 @@ public class BajaPoiAdapter {
 	}
 
 	public List&lt;BajaPoiExterna&gt; convertirJson(String jsons) {
-<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		if (jsons.contains(&quot;status_code&quot;)) {</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		if (jsons.contains(&quot;status_code&quot;)) {</span>
 <span class="fc" id="L27">			throw new RuntimeException(&quot;Error 400&quot;);</span>
 		}
 		else{			
-<span class="nc" id="L30">			List&lt;BajaPoiExterna&gt; lista = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L30">			List&lt;BajaPoiExterna&gt; lista = new ArrayList&lt;&gt;();</span>
 			try {
-<span class="nc" id="L32">				lista = objectMapper.readValue(jsons,</span>
-<span class="nc" id="L33">						TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BajaPoiExterna.class));</span>
+<span class="fc" id="L32">				lista = objectMapper.readValue(jsons,</span>
+<span class="fc" id="L33">						TypeFactory.defaultInstance().constructCollectionLikeType(List.class, BajaPoiExterna.class));</span>
 <span class="nc" id="L34">			} catch (Exception e) {</span>
 <span class="nc" id="L35">				throw new RuntimeException(e);</span>
-<span class="nc" id="L36">			}</span>
-<span class="nc" id="L37">			return lista;</span>
+<span class="fc" id="L36">			}</span>
+<span class="fc" id="L37">			return lista;</span>
 		}
 	}
 

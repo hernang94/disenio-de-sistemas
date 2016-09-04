@@ -28,11 +28,11 @@ public class AccionBajaPoi implements Accion {
 <span class="fc" id="L28">	}</span>
 
 	public void bajarPoi(BajaPoiExterna bajaPoi) {
-<span class="nc" id="L31">		String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);</span>
-<span class="nc" id="L32">		RepositorioDeResultadosDeEjecucion.getInstancia()</span>
-<span class="nc" id="L33">				.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), &quot;Poi eliminado con exito&quot;));</span>
-<span class="nc" id="L34">		repo.bajaPoi(bajaPoi.getId());</span>
-<span class="nc" id="L35">	}</span>
+<span class="fc" id="L31">		String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);</span>
+<span class="fc" id="L32">		RepositorioDeResultadosDeEjecucion.getInstancia()</span>
+<span class="fc" id="L33">				.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), &quot;Poi eliminado con exito&quot;));</span>
+<span class="fc" id="L34">		repo.bajaPoi(bajaPoi.getId());</span>
+<span class="fc" id="L35">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
