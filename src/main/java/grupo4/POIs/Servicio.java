@@ -4,9 +4,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Entity
 public class Servicio {
 	@Id @GeneratedValue
 	private int id;

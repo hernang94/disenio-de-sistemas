@@ -2,17 +2,23 @@ package grupo4.Repositorios;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 @Entity
+@Table(name="Busquedas")
 public class ResultadoDeBusqueda {
 
 	@Id @GeneratedValue
 	private int id;
+	@Column(name="Usuario")
 	private String terminalDeLaBusqueda;
 	private long tiempoDeBusqueda;
+	@Column(name="Descripcion")
 	private String fraseBuscada;
+	@Column(name="Fecha")
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 

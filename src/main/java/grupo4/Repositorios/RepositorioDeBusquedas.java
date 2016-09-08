@@ -10,6 +10,11 @@ import java.util.stream.Collectors;
 import grupo4.Acciones.FechaCantReporte;
 
 public class RepositorioDeBusquedas {
+	//Aca directamente la lista y el map vuelan, porque si yo tengo la tabla de Resultados de Busqueda,
+	//la traigo completa y en caso de querer los de un terminal en especifico hago una query y traigo
+	//los de ese usuario/terminal y los devuelvo para el reporte
+	//No se si hay que hacer desaparecer el objeto FechaCantReporte y que devuela la busqueda completa
+	//y uso de ese objeto lo que necesito para hacer el reporte
 	private List<ResultadoDeBusqueda> listaBusquedas = new ArrayList<>();;
 	private Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
 	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();
