@@ -5,56 +5,72 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
+@Entity
+@Table(name=&quot;Usuarios&quot;)
 public class Usuario {
-
+	@Id @GeneratedValue
+	private long id;
+	@Column(name=&quot;Usuario&quot;)
 	private String terminal;
 	private int comuna;
+	@Transient
 	private RepositorioDePois repositorio;
-<span class="fc" id="L17">	private List&lt;ObserverDeBusqueda&gt; observers = new ArrayList&lt;&gt;();</span>
+	//Se persiste o no?
+<span class="pc" id="L30">	private List&lt;ObserverDeBusqueda&gt; observers = new ArrayList&lt;&gt;();</span>
+	
+	@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L33">	private Usuario(){}</span>
 
-<span class="fc" id="L19">	public Usuario(String terminal, RepositorioDePois repositorio, int comuna) {</span>
-<span class="fc" id="L20">		this.terminal = terminal;</span>
-<span class="fc" id="L21">		this.repositorio = repositorio;</span>
-<span class="fc" id="L22">		this.comuna = comuna;</span>
-<span class="fc" id="L23">	}</span>
+<span class="fc" id="L35">	public Usuario(String terminal, RepositorioDePois repositorio, int comuna) {</span>
+<span class="fc" id="L36">		this.terminal = terminal;</span>
+<span class="fc" id="L37">		this.repositorio = repositorio;</span>
+<span class="fc" id="L38">		this.comuna = comuna;</span>
+<span class="fc" id="L39">	}</span>
 
 	public void agregarObserver(ObserverDeBusqueda observer) {
-<span class="fc" id="L26">		observers.add(observer);</span>
-<span class="fc" id="L27">	}</span>
+<span class="fc" id="L42">		observers.add(observer);</span>
+<span class="fc" id="L43">	}</span>
 
 	public void quitarObserver(ObserverDeBusqueda observer) {
-<span class="fc" id="L30">		observers.remove(observer);</span>
-<span class="fc" id="L31">	}</span>
+<span class="fc" id="L46">		observers.remove(observer);</span>
+<span class="fc" id="L47">	}</span>
 
 	public void busquedaLibre(String criterio) {
 		List&lt;Poi&gt; listaAux;
-<span class="fc" id="L35">		LocalDateTime tiempoInicio = LocalDateTime.now();</span>
-<span class="fc" id="L36">		listaAux = repositorio.busquedaLibre(criterio);</span>
-<span class="fc" id="L37">		LocalDateTime tiempoFin = LocalDateTime.now();</span>
-<span class="fc" id="L38">		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);</span>
-<span class="fc" id="L39">		ResultadoDeBusqueda resultadoAux = new ResultadoDeBusqueda(terminal, diferencia, criterio,</span>
-<span class="fc" id="L40">				tiempoInicio.toLocalDate(), listaAux.size());</span>
-<span class="fc" id="L41">		observers.stream().forEach(observer -&gt; observer.realizarAccion(resultadoAux));</span>
-<span class="fc" id="L42">	}</span>
+<span class="fc" id="L51">		LocalDateTime tiempoInicio = LocalDateTime.now();</span>
+<span class="fc" id="L52">		listaAux = repositorio.busquedaLibre(criterio);</span>
+<span class="fc" id="L53">		LocalDateTime tiempoFin = LocalDateTime.now();</span>
+<span class="fc" id="L54">		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);</span>
+<span class="fc" id="L55">		ResultadoDeBusqueda resultadoAux = new ResultadoDeBusqueda(terminal, diferencia, criterio,</span>
+<span class="fc" id="L56">				tiempoInicio.toLocalDate(), listaAux.size());</span>
+<span class="fc" id="L57">		observers.stream().forEach(observer -&gt; observer.realizarAccion(resultadoAux));</span>
+<span class="fc" id="L58">	}</span>
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {
-<span class="fc" id="L45">		return ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);</span>
+<span class="fc" id="L61">		return ChronoUnit.SECONDS.between(tiempoinicio, tiempofin);</span>
 	}
 
 	public String getTerminal() {
-<span class="fc" id="L49">		return terminal;</span>
+<span class="fc" id="L65">		return terminal;</span>
 	}
 
 	public int getComuna() {
-<span class="fc" id="L53">		return comuna;</span>
+<span class="fc" id="L69">		return comuna;</span>
 	}
 
 	public List&lt;ObserverDeBusqueda&gt; getObservers() {
-<span class="fc" id="L57">		return observers;</span>
+<span class="fc" id="L73">		return observers;</span>
 	}
 
 }

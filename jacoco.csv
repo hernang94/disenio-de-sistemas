@@ -13,7 +13,7 @@ TPAnual,grupo4.Acciones,ObserverAlmacenador,0,13,0,0,0,5,0,3,0,3
 TPAnual,grupo4.Acciones,ObserverReporterPorFecha,3,20,0,0,1,6,1,2,1,2
 TPAnual,grupo4.Acciones,ObserverNotificador,0,36,0,2,0,12,0,5,0,4
 TPAnual,grupo4.Acciones,IdObserver,9,59,0,0,0,2,2,2,2,2
-TPAnual,grupo4.Acciones,Usuario,0,80,0,0,0,22,0,9,0,9
+TPAnual,grupo4.Acciones,Usuario,8,80,0,0,1,22,1,9,1,9
 TPAnual,grupo4.Acciones,ObserverReporterParcial,3,20,0,0,1,6,1,2,1,2
 TPAnual,grupo4.Acciones,FechaCantReporte,0,23,0,0,0,8,0,4,0,4
 TPAnual,grupo4.POIs,Servicio,0,30,0,2,0,9,0,4,0,3
