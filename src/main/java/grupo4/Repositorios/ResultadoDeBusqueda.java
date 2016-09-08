@@ -2,7 +2,7 @@ package grupo4.Repositorios;
 
 import java.time.LocalDate;
 
-public class ResultadosDeBusquedas {
+public class ResultadoDeBusqueda {
 
 	private String terminalDeLaBusqueda;
 	private long tiempoDeBusqueda;
@@ -10,7 +10,7 @@ public class ResultadosDeBusquedas {
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 
-	public ResultadosDeBusquedas(String terminal, long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
+	public ResultadoDeBusqueda(String terminal, long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
 			int cantidadDeResultados) {
 		this.terminalDeLaBusqueda = terminal;
 		this.tiempoDeBusqueda = tiempoDeBusqueda;

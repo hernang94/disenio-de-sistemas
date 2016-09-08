@@ -1,13 +1,13 @@
 package grupo4.Acciones;
 
 import grupo4.ComponentesExternos.EmailSender;
-import grupo4.Repositorios.ResultadosDeBusquedas;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 
-public class ObserverNotificador implements Observers {
+public class ObserverNotificador implements ObserverDeBusqueda {
 
 	private long tiempoEstipulado;
 	private EmailSender notificador;
-	private EnumObservers id = EnumObservers.NOTIFICADOR;
+	private IdObserver id = IdObserver.NOTIFICADOR;
 
 	public ObserverNotificador(long tiempoEstipulado, EmailSender notificador) {
 		this.tiempoEstipulado = tiempoEstipulado;
@@ -22,12 +22,12 @@ public class ObserverNotificador implements Observers {
 		}
 	}
 
-	public EnumObservers getId() {
+	public IdObserver getId() {
 		return id;
 	}
 
 	@Override
-	public void realizarAccion(ResultadosDeBusquedas resultado) {
+	public void realizarAccion(ResultadoDeBusqueda resultado) {
 		evaluarNotificacion(resultado.getTiempoDeBusqueda());
 	}
 }

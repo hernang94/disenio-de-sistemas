@@ -1,5 +1,5 @@
 package grupo4.Acciones;
 
-public enum EnumObservers {
+public enum IdObserver {
 	ALMACENADOR, NOTIFICADOR, REPORTERPARCIAL, REPORTERFECHA, REPORTERTOTAL;
 }

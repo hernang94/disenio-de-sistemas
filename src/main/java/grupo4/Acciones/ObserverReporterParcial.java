@@ -2,16 +2,16 @@ package grupo4.Acciones;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDeReportes;
-import grupo4.Repositorios.ResultadosDeBusquedas;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 
-public class ObserverReporterParcial implements Observers {
-	private EnumObservers id = EnumObservers.REPORTERPARCIAL;
+public class ObserverReporterParcial implements ObserverDeBusqueda {
+	private IdObserver id = IdObserver.REPORTERPARCIAL;
 
-	public EnumObservers getId() {
+	public IdObserver getId() {
 		return id;
 	}
 
-	public void realizarAccion(ResultadosDeBusquedas resultado) {
+	public void realizarAccion(ResultadoDeBusqueda resultado) {
 		Reporte reporteParcial = new ReporteParcial(resultado.getTerminalDeLaBusqueda(),
 				RepositorioDeBusquedas.getInstancia().getlistaBusquedas(resultado.getTerminalDeLaBusqueda()));
 		RepositorioDeReportes.getInstancia().agregarReporte(reporteParcial);

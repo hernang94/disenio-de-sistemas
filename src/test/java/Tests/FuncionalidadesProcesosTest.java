@@ -1,31 +1,5 @@
 package Tests;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.http.ParseException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.mockito.Mockito;
-import org.uqbar.geodds.Point;
-import org.uqbar.geodds.Polygon;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import DTOexterno.BajaPoiExterna;
-import DTOexterno.CentroDTO;
-import DTOexterno.RangoServicioDTO;
-import DTOexterno.ServicioDTO;
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.Usuario;
@@ -60,6 +34,33 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.RepositorioDeUsuarios;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.http.ParseException;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
+import org.uqbar.geodds.Point;
+import org.uqbar.geodds.Polygon;
+
+import DTOexterno.BajaPoiExterna;
+import DTOexterno.CentroDTO;
+import DTOexterno.RangoServicioDTO;
+import DTOexterno.ServicioDTO;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FuncionalidadesProcesosTest {
 	private List<CentroDTO> listaCentroAAdaptar;
@@ -102,8 +103,10 @@ public class FuncionalidadesProcesosTest {
 	private CriterioATodos criterioTodos;
 	private CriterioPorComuna criterioComuna;
 	private CriterioPorSeleccion criterioSeleccion;
+	private CriterioPorSeleccion criterioSeleccionBad;
 	private RepositorioDeUsuarios repoUsuarios;
 	private List<String> listaTerminales;
+	private List<String> listaTerminalesNoExistentes;
 	private BajaPoiAdapter adaptadorBajaPoiMockeado;
 	private BajaPoiAdapter adaptadorBajaPoi;
 	private ComponenteLocalComercial componenteLocalComercial;
@@ -121,10 +124,11 @@ public class FuncionalidadesProcesosTest {
 
 	private DecoratorReintentar decoratorReintentar;
 	private DecoratorNotificador decoratorNotificar;
+	
 
 	@SuppressWarnings("static-access")
 	@Before
-	public void init() {
+	public void init() throws IOException {
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
@@ -151,8 +155,8 @@ public class FuncionalidadesProcesosTest {
 		componenteBanco = Mockito.mock(ComponenteBanco.class);
 		optimus = new BancoTransformer();
 		optimus.setComponente(componenteBanco);
-		repoDePois.agregarAdaptador(adaptador);
-		repoDePois.agregarAdaptador(optimus);
+		repoDePois.agregarOrigenExterno(adaptador);
+		repoDePois.agregarOrigenExterno(optimus);
 
 		horarioBanco = new Horario("10:00", "15:00");
 
@@ -255,7 +259,7 @@ public class FuncionalidadesProcesosTest {
 		// NUEVO
 
 		// CAMBIAR LA RUTA DEL ARCHIVO
-		archivo = new File("C:/Users/Micaela/Documents/GitHub/2016-jm-group-04/ArchivoDePrueba.txt");
+		archivo = TestExtensions.readFileFromResources("ArchivoDePrueba.txt");
 
 		componenteLocalComercial = Mockito.mock(ComponenteLocalComercial.class);
 		adaptadorLocalComercialMockeado = Mockito.mock(LocalComercialAdapter.class);
@@ -286,6 +290,9 @@ public class FuncionalidadesProcesosTest {
 		listaTerminales.add("Terminal Abasto");
 		listaTerminales.add("Terminal Alto Palermo");
 		criterioSeleccion = new CriterioPorSeleccion(listaTerminales);
+		listaTerminalesNoExistentes = new ArrayList<>();
+		listaTerminalesNoExistentes.add("Terminal Plaza Miserere");
+		criterioSeleccionBad = new CriterioPorSeleccion(listaTerminalesNoExistentes);
 
 		repoUsuarios.agregarUsuario(terminal);
 		repoUsuarios.agregarUsuario(terminal2);
@@ -301,11 +308,18 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void accionBajaPoi() {
+	public void accionBajaPoiMockeada() {
 		accionBajaPoiConMock.ejecutar();
 		Mockito.verify(adaptadorBajaPoiMockeado).obtenerPoisABajar();
 	}
 
+	@Test
+	public void accionBajaPoi() throws ParseException, IOException{
+		List<BajaPoiExterna> listAux = adaptadorBajaPoi.convertirJson(http.obtenerString());
+		listAux.stream().forEach(poiABajar-> accionBajaPoi.bajarPoi(poiABajar));
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().size());
+	}
+	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
@@ -338,12 +352,7 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void buscarPoisDeLocalComercialAdapter() {
-		Assert.assertEquals(null, adaptadorLocalComercial.buscarPois("parada114"));
-	}
-
-	@Test
-	public void ejecutarProceso() throws InterruptedException {
+	public void ejecutarProceso() throws Exception {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
 		adminProcesos.crearProcesoNuevo(agregarObserver, LocalDateTime.now(), 0);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
@@ -375,7 +384,7 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void procesoAgregarAlmacenarTodos() {
+	public void procesoAgregarAlmacenarTodos() throws Exception {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
 		proceso = new Proceso(LocalDateTime.now(), 0, agregarObserver);
 		proceso.ejecutar();
@@ -384,7 +393,7 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void ejecutarProcesoPeriodicidadMayorCero() {
+	public void ejecutarProcesoPeriodicidadMayorCero() throws Exception {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
 		adminProcesos.crearProcesoNuevo(agregarObserver, LocalDateTime.now(), 5);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
@@ -420,7 +429,6 @@ public class FuncionalidadesProcesosTest {
 		quitarObserver.ejecutar();
 		Assert.assertTrue(repoResultadosEjecucion.getlistaDeResultados().stream()
 				.allMatch(x -> (x.getCantidadDeElementosAfectados()) == 2));
-
 	}
 
 	@Test
@@ -448,33 +456,39 @@ public class FuncionalidadesProcesosTest {
 	}
 
 	@Test
-	public void decoratorReintentarEjecutar() {
+	public void decoratorReintentarEjecutar() throws Exception {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
-		Assert.assertTrue(decoratorReintentar.ejecutar());
+		decoratorReintentar.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
 	}
 
 	@Test
 	public void decoratorNotificarEjecutar() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
-		Assert.assertTrue(decoratorNotificar.ejecutar());
+		decoratorNotificar.ejecutar();
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
 	}
 
+	@Rule
+	public ExpectedException thrownReintento = ExpectedException.none();
+	
 	@Test
-	public void decoratorReintentarFalla() {
+	public void decoratorReintentarFalla() throws Exception {
 		repoUsuarios.quitarUsuario(terminal);
 		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
-		Assert.assertFalse(decoratorReintentar.ejecutar());
-
+		thrownReintento.expect(RuntimeException.class);
+		thrownReintento.expectMessage("Se supero la cantidad de Reintentos y el proceso fallo");
+		decoratorReintentar.ejecutar();
 	}
-
+	
 	@Test
-	public void decoratorNotificarFalla() {
-		repoUsuarios.quitarUsuario(terminal);
-		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
+	public void decoratorNotificaFalla() throws Exception{
+		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccionBad);
 		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
-		Assert.assertFalse(decoratorNotificar.ejecutar());
+		decoratorNotificar.ejecutar();
+		Mockito.verify(notificadorMail).enviarMail("Fallo el sistema");
 	}
 }

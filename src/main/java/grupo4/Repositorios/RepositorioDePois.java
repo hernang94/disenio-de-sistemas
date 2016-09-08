@@ -3,7 +3,8 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.uqbar.geodds.Point;
-import grupo4.ComponentesExternos.Adaptadores;
+
+import grupo4.ComponentesExternos.BuscadorDePois;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 import java.time.LocalDateTime;
@@ -13,14 +14,14 @@ public class RepositorioDePois {
 	private static RepositorioDePois instancia = new RepositorioDePois();
 	private String nombre;
 	private List<Poi> listaDePois = new ArrayList<>();
-	private List<Adaptadores> listaAdaptadores = new ArrayList<>();
+	private List<BuscadorDePois> origenesExternos = new ArrayList<>();
 
 	private RepositorioDePois() {
 	}
 
 	public void reset() {
 		listaDePois.clear();
-		listaAdaptadores.clear();
+		origenesExternos.clear();
 	}
 
 	public static RepositorioDePois getInstancia() {
@@ -35,12 +36,12 @@ public class RepositorioDePois {
 		return nombre;
 	}
 
-	public void agregarAdaptador(Adaptadores adaptador) {
-		listaAdaptadores.add(adaptador);
+	public void agregarOrigenExterno(BuscadorDePois origenExterno) {
+		origenesExternos.add(origenExterno);
 	}
 
-	public void quitarAdaptador(Adaptadores adaptador) {
-		listaAdaptadores.remove(adaptador);
+	public void quitarAdaptador(BuscadorDePois adaptador) {
+		origenesExternos.remove(adaptador);
 	}
 
 	public void agregarPoi(Poi unPoi) {
@@ -100,7 +101,7 @@ public class RepositorioDePois {
 		List<Poi> listaFiltrada = listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList());
 		if (listaFiltrada.isEmpty()) {
-			listaAdaptadores.stream()
+			origenesExternos.stream()
 					.forEach(unComponente -> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
 			listaDePois.addAll(listaFiltrada);
 		}

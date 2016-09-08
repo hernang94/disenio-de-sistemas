@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import grupo4.Acciones.FechaCantReporte;
 
 public class RepositorioDeBusquedas {
-	private List<ResultadosDeBusquedas> listaBusquedas = new ArrayList<>();;
+	private List<ResultadoDeBusqueda> listaBusquedas = new ArrayList<>();;
 	private Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
 	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();
 
@@ -23,12 +23,12 @@ public class RepositorioDeBusquedas {
 		busquedasDeCadaTerminal.clear();
 	}
 
-	public void agregarBusqueda(ResultadosDeBusquedas newResult) {
+	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
 		listaBusquedas.add(newResult);
 		actualizarHashTerminales(newResult);
 	}
 
-	private void actualizarHashTerminales(ResultadosDeBusquedas newResult) {
+	private void actualizarHashTerminales(ResultadoDeBusqueda newResult) {
 		if (busquedasDeCadaTerminal.containsKey(newResult.getTerminalDeLaBusqueda())) {
 			FechaCantReporte fechaAux = busquedasDeCadaTerminal.get(newResult.getTerminalDeLaBusqueda()).stream()
 					.filter(reporte -> reporte.getFecha().equals(newResult.getFechaDeBusqueda())).findFirst().get();
@@ -51,7 +51,7 @@ public class RepositorioDeBusquedas {
 
 	public List<Integer> getlistaBusquedas(String unTerminal) {
 		List<Integer> lista = new ArrayList<>();
-		List<ResultadosDeBusquedas> listaFiltrada = listaBusquedas.stream()
+		List<ResultadoDeBusqueda> listaFiltrada = listaBusquedas.stream()
 				.filter(busqueda -> busqueda.esDeTerminal(unTerminal)).collect(Collectors.toList());
 		listaFiltrada.forEach(busqueda -> lista.add(busqueda.getCantidadDeResultados()));
 		return lista;

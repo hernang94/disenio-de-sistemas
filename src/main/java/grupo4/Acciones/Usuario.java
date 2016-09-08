@@ -7,14 +7,14 @@ import java.util.List;
 
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioDePois;
-import grupo4.Repositorios.ResultadosDeBusquedas;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 
 public class Usuario {
 
 	private String terminal;
 	private int comuna;
 	private RepositorioDePois repositorio;
-	private List<Observers> observers = new ArrayList<>();
+	private List<ObserverDeBusqueda> observers = new ArrayList<>();
 
 	public Usuario(String terminal, RepositorioDePois repositorio, int comuna) {
 		this.terminal = terminal;
@@ -22,11 +22,11 @@ public class Usuario {
 		this.comuna = comuna;
 	}
 
-	public void agregarObserver(Observers observer) {
+	public void agregarObserver(ObserverDeBusqueda observer) {
 		observers.add(observer);
 	}
 
-	public void quitarObserver(Observers observer) {
+	public void quitarObserver(ObserverDeBusqueda observer) {
 		observers.remove(observer);
 	}
 
@@ -36,7 +36,7 @@ public class Usuario {
 		listaAux = repositorio.busquedaLibre(criterio);
 		LocalDateTime tiempoFin = LocalDateTime.now();
 		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
-		ResultadosDeBusquedas resultadoAux = new ResultadosDeBusquedas(terminal, diferencia, criterio,
+		ResultadoDeBusqueda resultadoAux = new ResultadoDeBusqueda(terminal, diferencia, criterio,
 				tiempoInicio.toLocalDate(), listaAux.size());
 		observers.stream().forEach(observer -> observer.realizarAccion(resultadoAux));
 	}
@@ -53,7 +53,7 @@ public class Usuario {
 		return comuna;
 	}
 
-	public List<Observers> getObservers() {
+	public List<ObserverDeBusqueda> getObservers() {
 		return observers;
 	}
 

@@ -1,16 +1,16 @@
 package grupo4.Acciones;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
-import grupo4.Repositorios.ResultadosDeBusquedas;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 
-public class ObserverAlmacenador implements Observers {
-	private EnumObservers id = EnumObservers.ALMACENADOR;
+public class ObserverAlmacenador implements ObserverDeBusqueda {
+	private IdObserver id = IdObserver.ALMACENADOR;
 
-	public void realizarAccion(ResultadosDeBusquedas resultado) {
+	public void realizarAccion(ResultadoDeBusqueda resultado) {
 		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultado);
 	}
 
-	public EnumObservers getId() {
+	public IdObserver getId() {
 		return id;
 	}
 

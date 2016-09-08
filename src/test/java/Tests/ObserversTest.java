@@ -111,8 +111,8 @@ public class ObserversTest {
 		componenteBanco = Mockito.mock(ComponenteBanco.class);
 		optimus = new BancoTransformer();
 		optimus.setComponente(componenteBanco);
-		repoDePois.agregarAdaptador(adaptador);
-		repoDePois.agregarAdaptador(optimus);
+		repoDePois.agregarOrigenExterno(adaptador);
+		repoDePois.agregarOrigenExterno(optimus);
 
 		horarioBanco = new Horario("10:00", "15:00");
 
