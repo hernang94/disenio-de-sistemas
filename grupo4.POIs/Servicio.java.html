@@ -4,25 +4,30 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Servicio {
+	@Id @GeneratedValue
+	private int id;
 	private String nombre;
 	private Map&lt;DayOfWeek, Horario&gt; hashHorario;
 
-<span class="fc" id="L11">	public Servicio(String unNombre, Map&lt;DayOfWeek, Horario&gt; horarios) {</span>
-<span class="fc" id="L12">		this.nombre = unNombre;</span>
-<span class="fc" id="L13">		hashHorario = horarios;</span>
-<span class="fc" id="L14">	}</span>
+<span class="fc" id="L16">	public Servicio(String unNombre, Map&lt;DayOfWeek, Horario&gt; horarios) {</span>
+<span class="fc" id="L17">		this.nombre = unNombre;</span>
+<span class="fc" id="L18">		hashHorario = horarios;</span>
+<span class="fc" id="L19">	}</span>
 
 	public boolean estaDisponible(LocalDateTime fechaConsulta) {
-<span class="fc" id="L17">		DayOfWeek dia = fechaConsulta.getDayOfWeek();</span>
-<span class="fc bfc" id="L18" title="All 2 branches covered.">		if (hashHorario.get(dia) != null) {</span>
-<span class="fc" id="L19">			return hashHorario.get(dia).estaEnHorario(fechaConsulta);</span>
+<span class="fc" id="L22">		DayOfWeek dia = fechaConsulta.getDayOfWeek();</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		if (hashHorario.get(dia) != null) {</span>
+<span class="fc" id="L24">			return hashHorario.get(dia).estaEnHorario(fechaConsulta);</span>
 		}
-<span class="fc" id="L21">		return false;</span>
+<span class="fc" id="L26">		return false;</span>
 	}
 
 	public String getNombre() {
-<span class="fc" id="L25">		return nombre;</span>
+<span class="fc" id="L30">		return nombre;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

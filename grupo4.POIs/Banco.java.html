@@ -6,28 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.OneToMany;
+
 //import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Banco extends Poi {
 	private Map&lt;DayOfWeek, Horario&gt; hashHorario;
-<span class="fc" id="L13">	private List&lt;Servicio&gt; listaServicios = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L15">	@OneToMany</span>
+	private List&lt;Servicio&gt; listaServicios = new ArrayList&lt;&gt;();
 
 	public Banco(int id,Map&lt;DayOfWeek, Horario&gt; horarios, String nombre, List&lt;String&gt; palabrasClaves) {
-<span class="fc" id="L16">		super(id,nombre, palabrasClaves);</span>
-<span class="fc" id="L17">		this.hashHorario = horarios;</span>
-<span class="fc" id="L18">	}</span>
+<span class="fc" id="L19">		super(id,nombre, palabrasClaves);</span>
+<span class="fc" id="L20">		this.hashHorario = horarios;</span>
+<span class="fc" id="L21">	}</span>
 
 	public List&lt;Servicio&gt; getListaServicios() {
-<span class="nc" id="L21">		return listaServicios;</span>
+<span class="nc" id="L24">		return listaServicios;</span>
 	}
 
 	public void setListaServicios(List&lt;Servicio&gt; listaServicios) {
-<span class="fc" id="L25">		this.listaServicios = listaServicios;</span>
-<span class="fc" id="L26">	}</span>
+<span class="fc" id="L28">		this.listaServicios = listaServicios;</span>
+<span class="fc" id="L29">	}</span>
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
-<span class="fc" id="L29">		DayOfWeek dia = horaConsulta.getDayOfWeek();</span>
-<span class="pc bpc" id="L30" title="1 of 4 branches missed.">		return (hashHorario.get(dia) != null) &amp;&amp; (hashHorario.get(dia).estaEnHorario(horaConsulta));</span>
+<span class="fc" id="L32">		DayOfWeek dia = horaConsulta.getDayOfWeek();</span>
+<span class="pc bpc" id="L33" title="1 of 4 branches missed.">		return (hashHorario.get(dia) != null) &amp;&amp; (hashHorario.get(dia).estaEnHorario(horaConsulta));</span>
 	}
 
 }

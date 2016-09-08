@@ -5,40 +5,42 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.ManyToOne;
+
 import org.uqbar.geodds.Point;
 
 public class LocalComercial extends Poi {
-
+	@ManyToOne
 	private Rubro rubro;
 	private Map&lt;DayOfWeek, Horario&gt; hashManana;
 	private Map&lt;DayOfWeek, Horario&gt; hashTarde;
 
 	public LocalComercial(int id, Rubro rubro, Map&lt;DayOfWeek, Horario&gt; horariosManiana,
 			Map&lt;DayOfWeek, Horario&gt; horariosTarde, String nombre, List&lt;String&gt; palabrasClaves) {
-<span class="fc" id="L18">		super(id, nombre, palabrasClaves);</span>
-<span class="fc" id="L19">		this.rubro = rubro;</span>
-<span class="fc" id="L20">		this.hashManana = horariosManiana;</span>
-<span class="fc" id="L21">		this.hashTarde = horariosTarde;</span>
-<span class="fc" id="L22">	}</span>
+<span class="fc" id="L20">		super(id, nombre, palabrasClaves);</span>
+<span class="fc" id="L21">		this.rubro = rubro;</span>
+<span class="fc" id="L22">		this.hashManana = horariosManiana;</span>
+<span class="fc" id="L23">		this.hashTarde = horariosTarde;</span>
+<span class="fc" id="L24">	}</span>
 
 	public boolean estaCerca(Point unPunto) {
-<span class="fc bfc" id="L25" title="All 2 branches covered.">		return (super.calcularDistancia(unPunto) &lt;= rubro.getRadio());</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		return (super.calcularDistancia(unPunto) &lt;= rubro.getRadio());</span>
 
 	}
 
 	public boolean encuentraNombre(String criterio) {
-<span class="fc bfc" id="L30" title="All 4 branches covered.">		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.cumpleCriterio(criterio));</span>
+<span class="fc bfc" id="L32" title="All 4 branches covered.">		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.cumpleCriterio(criterio));</span>
 	}
 
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
-<span class="fc" id="L34">		DayOfWeek dia = horaConsulta.getDayOfWeek();</span>
-<span class="fc" id="L35">		return evaluarDisponibilidad(dia, horaConsulta);</span>
+<span class="fc" id="L36">		DayOfWeek dia = horaConsulta.getDayOfWeek();</span>
+<span class="fc" id="L37">		return evaluarDisponibilidad(dia, horaConsulta);</span>
 	}
 
 	private boolean evaluarDisponibilidad(DayOfWeek dia, LocalDateTime horaConsulta) {
-<span class="fc" id="L39">		boolean criterio1 = (hashManana.get(dia).estaEnHorario(horaConsulta));</span>
-<span class="fc" id="L40">		boolean criterio2 = (hashTarde.get(dia).estaEnHorario(horaConsulta));</span>
-<span class="pc bpc" id="L41" title="1 of 4 branches missed.">		return (criterio1 || criterio2);</span>
+<span class="fc" id="L41">		boolean criterio1 = (hashManana.get(dia).estaEnHorario(horaConsulta));</span>
+<span class="fc" id="L42">		boolean criterio2 = (hashTarde.get(dia).estaEnHorario(horaConsulta));</span>
+<span class="pc bpc" id="L43" title="1 of 4 branches missed.">		return (criterio1 || criterio2);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
