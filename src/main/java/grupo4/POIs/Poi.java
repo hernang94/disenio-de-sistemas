@@ -3,16 +3,30 @@ package grupo4.POIs;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.uqbar.geodds.Point;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.uqbar.geodds.Point;
+@Entity 
+@Table(name="Puntos de Interes")
 public abstract class Poi {
+	@Transient
 	private Point coordenadas;
 	protected String nombre;
+	@Id @GeneratedValue
 	private int id;
 	private double x;
 	private double y;
+	@ElementCollection
 	private List<String> palabrasClaves;
 
+	@SuppressWarnings("unused")
+	private Poi(){}
+	
 	public Poi(int id,String nombre, List<String> palabrasClaves) {
 		this.nombre = nombre;
 		this.palabrasClaves = palabrasClaves;

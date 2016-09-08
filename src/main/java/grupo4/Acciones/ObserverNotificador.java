@@ -3,7 +3,7 @@ package grupo4.Acciones;
 import grupo4.ComponentesExternos.EmailSender;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
-public class ObserverNotificador implements ObserverDeBusqueda {
+public class ObserverNotificador extends ObserverDeBusqueda {
 
 	private long tiempoEstipulado;
 	private EmailSender notificador;

@@ -4,7 +4,7 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDeReportes;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
-public class ObserverReporterPorFecha implements ObserverDeBusqueda {
+public class ObserverReporterPorFecha extends ObserverDeBusqueda {
 	private IdObserver id = IdObserver.REPORTERFECHA;
 
 	@Override

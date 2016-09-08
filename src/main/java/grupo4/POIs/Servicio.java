@@ -4,7 +4,12 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Servicio {
+	@Id @GeneratedValue
+	private int id;
 	private String nombre;
 	private Map<DayOfWeek, Horario> hashHorario;
 

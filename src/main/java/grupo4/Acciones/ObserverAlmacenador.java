@@ -3,7 +3,7 @@ package grupo4.Acciones;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
-public class ObserverAlmacenador implements ObserverDeBusqueda {
+public class ObserverAlmacenador extends ObserverDeBusqueda {
 	private IdObserver id = IdObserver.ALMACENADOR;
 
 	public void realizarAccion(ResultadoDeBusqueda resultado) {

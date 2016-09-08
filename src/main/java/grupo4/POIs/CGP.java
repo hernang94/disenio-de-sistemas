@@ -5,10 +5,13 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.OneToMany;
+
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
 public class CGP extends Poi {
+	@OneToMany
 	private List<Servicio> servicios = new ArrayList<>();
 	private Polygon comuna;
 

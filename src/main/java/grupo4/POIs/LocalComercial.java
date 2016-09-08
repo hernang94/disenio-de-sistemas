@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.ManyToOne;
+
 import org.uqbar.geodds.Point;
 
 public class LocalComercial extends Poi {
-
+	@ManyToOne
 	private Rubro rubro;
 	private Map<DayOfWeek, Horario> hashManana;
 	private Map<DayOfWeek, Horario> hashTarde;
