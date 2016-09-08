@@ -2,51 +2,57 @@
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 @Entity
+@Table(name=&quot;Busquedas&quot;)
 public class ResultadoDeBusqueda {
 
 	@Id @GeneratedValue
 	private int id;
+	@Column(name=&quot;Usuario&quot;)
 	private String terminalDeLaBusqueda;
 	private long tiempoDeBusqueda;
+	@Column(name=&quot;Descripcion&quot;)
 	private String fraseBuscada;
+	@Column(name=&quot;Fecha&quot;)
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 
 	public ResultadoDeBusqueda(String terminal, long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
-<span class="fc" id="L20">			int cantidadDeResultados) {</span>
-<span class="fc" id="L21">		this.terminalDeLaBusqueda = terminal;</span>
-<span class="fc" id="L22">		this.tiempoDeBusqueda = tiempoDeBusqueda;</span>
-<span class="fc" id="L23">		this.fraseBuscada = fraseBuscada;</span>
-<span class="fc" id="L24">		this.fechaDeBusqueda = fechaDeBusqueda;</span>
-<span class="fc" id="L25">		this.cantidadDeResultados = cantidadDeResultados;</span>
-<span class="fc" id="L26">	}</span>
+<span class="fc" id="L26">			int cantidadDeResultados) {</span>
+<span class="fc" id="L27">		this.terminalDeLaBusqueda = terminal;</span>
+<span class="fc" id="L28">		this.tiempoDeBusqueda = tiempoDeBusqueda;</span>
+<span class="fc" id="L29">		this.fraseBuscada = fraseBuscada;</span>
+<span class="fc" id="L30">		this.fechaDeBusqueda = fechaDeBusqueda;</span>
+<span class="fc" id="L31">		this.cantidadDeResultados = cantidadDeResultados;</span>
+<span class="fc" id="L32">	}</span>
 
 	public String getTerminalDeLaBusqueda() {
-<span class="fc" id="L29">		return terminalDeLaBusqueda;</span>
+<span class="fc" id="L35">		return terminalDeLaBusqueda;</span>
 	}
 
 	public long getTiempoDeBusqueda() {
-<span class="fc" id="L33">		return tiempoDeBusqueda;</span>
+<span class="fc" id="L39">		return tiempoDeBusqueda;</span>
 	}
 
 	public String getFraseBuscada() {
-<span class="nc" id="L37">		return fraseBuscada;</span>
+<span class="nc" id="L43">		return fraseBuscada;</span>
 	}
 
 	public LocalDate getFechaDeBusqueda() {
-<span class="fc" id="L41">		return fechaDeBusqueda;</span>
+<span class="fc" id="L47">		return fechaDeBusqueda;</span>
 	}
 
 	public int getCantidadDeResultados() {
-<span class="fc" id="L45">		return cantidadDeResultados;</span>
+<span class="fc" id="L51">		return cantidadDeResultados;</span>
 	}
 
 	public boolean esDeTerminal(String unTerminal) {
-<span class="fc" id="L49">		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);</span>
+<span class="fc" id="L55">		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);</span>
 	}
 
 }

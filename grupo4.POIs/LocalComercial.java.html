@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.ManyToOne;
-
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import org.uqbar.geodds.Point;
 
 public class LocalComercial extends Poi {
-	@ManyToOne
+	@Enumerated(EnumType.STRING)
 	private Rubro rubro;
 	private Map&lt;DayOfWeek, Horario&gt; hashManana;
 	private Map&lt;DayOfWeek, Horario&gt; hashTarde;

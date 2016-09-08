@@ -2,28 +2,41 @@
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name=&quot;Resultados de Ejecucion&quot;)
 public class ResultadosDeEjecucion {
+	@Id	@GeneratedValue
+	private long id;
+	
 	private int cantidadDeElementosAfectados;
+	//No convierto a nada la fecha porque solo la manejo desde aca y no necesito verla desde la BDD
 	private LocalDateTime fecha;
+	@Column(name=&quot;Descripcion&quot;)
 	private String resultado;
 
 	public ResultadosDeEjecucion(int cantidadDeElementosAfectados, LocalDateTime fecha, String resultado) {
-<span class="fc" id="L11">		super();</span>
-<span class="fc" id="L12">		this.cantidadDeElementosAfectados = cantidadDeElementosAfectados;</span>
-<span class="fc" id="L13">		this.fecha = fecha;</span>
-<span class="fc" id="L14">		this.resultado = resultado;</span>
-<span class="fc" id="L15">	}</span>
+<span class="fc" id="L24">		super();</span>
+<span class="fc" id="L25">		this.cantidadDeElementosAfectados = cantidadDeElementosAfectados;</span>
+<span class="fc" id="L26">		this.fecha = fecha;</span>
+<span class="fc" id="L27">		this.resultado = resultado;</span>
+<span class="fc" id="L28">	}</span>
 
 	public int getCantidadDeElementosAfectados() {
-<span class="fc" id="L18">		return cantidadDeElementosAfectados;</span>
+<span class="fc" id="L31">		return cantidadDeElementosAfectados;</span>
 	}
 
 	public LocalDateTime getDescripcion() {
-<span class="nc" id="L22">		return fecha;</span>
+<span class="nc" id="L35">		return fecha;</span>
 	}
 
 	public String getResultado() {
-<span class="nc" id="L26">		return resultado;</span>
+<span class="nc" id="L39">		return resultado;</span>
 	}
 
 }
