@@ -5,16 +5,32 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
+@Entity
+@Table(name="Usuarios")
 public class Usuario {
-
+	@Id @GeneratedValue
+	private long id;
+	@Column(name="Usuario")
 	private String terminal;
 	private int comuna;
+	@Transient
 	private RepositorioDePois repositorio;
+	//Se persiste o no?
 	private List<ObserverDeBusqueda> observers = new ArrayList<>();
+	
+	@SuppressWarnings("unused")
+	private Usuario(){}
 
 	public Usuario(String terminal, RepositorioDePois repositorio, int comuna) {
 		this.terminal = terminal;
