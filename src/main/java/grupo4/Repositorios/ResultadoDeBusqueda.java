@@ -22,6 +22,9 @@ public class ResultadoDeBusqueda {
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 
+	@SuppressWarnings("unused")
+	private ResultadoDeBusqueda(){}
+	
 	public ResultadoDeBusqueda(String terminal, long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
 			int cantidadDeResultados) {
 		this.terminalDeLaBusqueda = terminal;
