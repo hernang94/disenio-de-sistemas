@@ -22,37 +22,40 @@ public class ResultadoDeBusqueda {
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 
+	@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L26">	private ResultadoDeBusqueda(){}</span>
+	
 	public ResultadoDeBusqueda(String terminal, long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
-<span class="fc" id="L26">			int cantidadDeResultados) {</span>
-<span class="fc" id="L27">		this.terminalDeLaBusqueda = terminal;</span>
-<span class="fc" id="L28">		this.tiempoDeBusqueda = tiempoDeBusqueda;</span>
-<span class="fc" id="L29">		this.fraseBuscada = fraseBuscada;</span>
-<span class="fc" id="L30">		this.fechaDeBusqueda = fechaDeBusqueda;</span>
-<span class="fc" id="L31">		this.cantidadDeResultados = cantidadDeResultados;</span>
-<span class="fc" id="L32">	}</span>
+<span class="fc" id="L29">			int cantidadDeResultados) {</span>
+<span class="fc" id="L30">		this.terminalDeLaBusqueda = terminal;</span>
+<span class="fc" id="L31">		this.tiempoDeBusqueda = tiempoDeBusqueda;</span>
+<span class="fc" id="L32">		this.fraseBuscada = fraseBuscada;</span>
+<span class="fc" id="L33">		this.fechaDeBusqueda = fechaDeBusqueda;</span>
+<span class="fc" id="L34">		this.cantidadDeResultados = cantidadDeResultados;</span>
+<span class="fc" id="L35">	}</span>
 
 	public String getTerminalDeLaBusqueda() {
-<span class="fc" id="L35">		return terminalDeLaBusqueda;</span>
+<span class="fc" id="L38">		return terminalDeLaBusqueda;</span>
 	}
 
 	public long getTiempoDeBusqueda() {
-<span class="fc" id="L39">		return tiempoDeBusqueda;</span>
+<span class="fc" id="L42">		return tiempoDeBusqueda;</span>
 	}
 
 	public String getFraseBuscada() {
-<span class="nc" id="L43">		return fraseBuscada;</span>
+<span class="nc" id="L46">		return fraseBuscada;</span>
 	}
 
 	public LocalDate getFechaDeBusqueda() {
-<span class="fc" id="L47">		return fechaDeBusqueda;</span>
+<span class="fc" id="L50">		return fechaDeBusqueda;</span>
 	}
 
 	public int getCantidadDeResultados() {
-<span class="fc" id="L51">		return cantidadDeResultados;</span>
+<span class="fc" id="L54">		return cantidadDeResultados;</span>
 	}
 
 	public boolean esDeTerminal(String unTerminal) {
-<span class="fc" id="L55">		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);</span>
+<span class="fc" id="L58">		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);</span>
 	}
 
 }
