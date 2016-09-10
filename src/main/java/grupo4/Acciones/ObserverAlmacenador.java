@@ -4,10 +4,10 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
 public class ObserverAlmacenador extends ObserverDeBusqueda {
-	private IdObserver id = IdObserver.ALMACENADOR;
 
 	public void realizarAccion(ResultadoDeBusqueda resultado) {
 		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultado);
+		id = IdObserver.ALMACENADOR;
 	}
 
 	public IdObserver getId() {

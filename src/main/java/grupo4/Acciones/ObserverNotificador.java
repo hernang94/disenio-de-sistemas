@@ -7,11 +7,11 @@ public class ObserverNotificador extends ObserverDeBusqueda {
 
 	private long tiempoEstipulado;
 	private EmailSender notificador;
-	private IdObserver id = IdObserver.NOTIFICADOR;
 
 	public ObserverNotificador(long tiempoEstipulado, EmailSender notificador) {
 		this.tiempoEstipulado = tiempoEstipulado;
 		this.notificador = notificador;
+		id = IdObserver.NOTIFICADOR;
 	}
 
 	public void evaluarNotificacion(long diferencia) {

@@ -4,39 +4,41 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.uqbar.geodds.Point;
-@Entity 
-@Table(name="Puntos de Interes")
+
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Puntos de Interes")
 public abstract class Poi {
-	@Transient
-	private Point coordenadas;
 	protected String nombre;
-	@Id @GeneratedValue
-	private int id;
+	@Id
+	@GeneratedValue
+	private int idPoi;
 	private double x;
 	private double y;
 	@ElementCollection
 	private List<String> palabrasClaves;
 
 	@SuppressWarnings("unused")
-	private Poi(){}
-	
-	public Poi(int id,String nombre, List<String> palabrasClaves) {
+	private Poi() {
+	}
+
+	public Poi(String nombre, List<String> palabrasClaves) {
 		this.nombre = nombre;
 		this.palabrasClaves = palabrasClaves;
-		this.id=id;
 	}
-	public void setPalabrasClaves(List<String> palabrasClaves){
-		this.palabrasClaves=palabrasClaves;
+
+	public void setPalabrasClaves(List<String> palabrasClaves) {
+		this.palabrasClaves = palabrasClaves;
 	}
-	public void setNombre(String nombre){
-		this.nombre=nombre;
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public List<String> getPalabrasClaves() {
@@ -75,16 +77,9 @@ public abstract class Poi {
 		this.y = y;
 	}
 
-	public Point getCoordenadas() {
-		return coordenadas;
-	}
-
 	public double calcularDistancia(Point punto) {
-		return this.coordenadas.distance(punto);
-	}
 
-	public void setCoordenadas() {
-		this.coordenadas = new Point(x, y);
+		return new Point(x, y).distance(punto);
 	}
 
 	public boolean estaCerca(Point unPunto) {
@@ -108,13 +103,14 @@ public abstract class Poi {
 	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio) {
 		return false;
 	}
-	public void reemplazarPalabrasClaves(List<String> palabrasAReemplazar){
+
+	public void reemplazarPalabrasClaves(List<String> palabrasAReemplazar) {
 		palabrasClaves.clear();
 		palabrasClaves.addAll(palabrasAReemplazar);
 	}
+
 	public int getId() {
-		return id;
+		return idPoi;
 	}
 
-	
 }

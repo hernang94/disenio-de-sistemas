@@ -5,7 +5,10 @@ import grupo4.Repositorios.RepositorioDeReportes;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
 public class ObserverReporterPorFecha extends ObserverDeBusqueda {
-	private IdObserver id = IdObserver.REPORTERFECHA;
+
+	public ObserverReporterPorFecha() {
+		id = IdObserver.REPORTERFECHA;
+	}
 
 	@Override
 	public void realizarAccion(ResultadoDeBusqueda resultado) {

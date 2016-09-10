@@ -3,8 +3,6 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.Transient;
-
 import org.uqbar.geodds.Point;
 
 import grupo4.ComponentesExternos.BuscadorDePois;

@@ -3,7 +3,16 @@ package grupo4.POIs;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Horario {
+	@Id
+	@GeneratedValue
+	private int idHorario;
+	// preguntar a julieta :) (persistir LocalTime)
 	private LocalTime desde;
 	private LocalTime hasta;
 

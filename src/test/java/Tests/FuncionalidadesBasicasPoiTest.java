@@ -67,10 +67,9 @@ public class FuncionalidadesBasicasPoiTest {
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
-		banco = new Banco(10, hashMapBanco, "Santander Rio", palabrasClavesBanco);
+		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco);
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
-		banco.setCoordenadas();
 
 		List<String> palabrasClavesParada = new ArrayList<>();
 		palabrasClavesParada.add("Bondi");
@@ -79,10 +78,9 @@ public class FuncionalidadesBasicasPoiTest {
 		palabrasClavesParada.add("Rojo");
 		palabrasClavesParada.add("Vidrios polarizados");
 		palabrasClavesParada.add("114");
-		parada114 = new Parada(20, "114", palabrasClavesParada);
+		parada114 = new Parada("114", palabrasClavesParada);
 		parada114.setX(-34.6417364);
 		parada114.setY(-58.4792636);
-		parada114.setCoordenadas();
 
 		rubro = rubro.MUEBLERIA;
 		hashMapLocalComercialManiana = new HashMap<>();
@@ -101,16 +99,14 @@ public class FuncionalidadesBasicasPoiTest {
 		palabrasClavesLocalComercial.add("Carpintero");
 		palabrasClavesLocalComercial.add("Mesa");
 		palabrasClavesLocalComercial.add("Silla");
-		local = new LocalComercial(30, rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
+		local = new LocalComercial(rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
 				palabrasClavesLocalComercial);
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
-		local.setCoordenadas();
 
-		banco2 = new Banco(40, hashMapBanco, "HSBC", palabrasClavesBanco);
+		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
-		banco2.setCoordenadas();
 
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
@@ -131,7 +127,7 @@ public class FuncionalidadesBasicasPoiTest {
 		palabrasClavesCGP.add("Villa Luro");
 		palabrasClavesCGP.add("Villa Real");
 		palabrasClavesCGP.add("All Boys");
-		cgp = new CGP(50, comuna10, "CGP10", palabrasClavesCGP);
+		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
 		dispositivoTactil.agregarPoi(banco);

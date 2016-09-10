@@ -5,7 +5,10 @@ import grupo4.Repositorios.RepositorioDeReportes;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
 public class ObserverReporterTotal extends ObserverDeBusqueda {
-	private IdObserver id = IdObserver.REPORTERTOTAL;
+
+	public ObserverReporterTotal() {
+		id = IdObserver.REPORTERTOTAL;
+	}
 
 	@Override
 	public void realizarAccion(ResultadoDeBusqueda resultado) {

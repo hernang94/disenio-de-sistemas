@@ -15,7 +15,7 @@ public class RepositorioDeBusquedas {
 	//los de ese usuario/terminal y los devuelvo para el reporte
 	//No se si hay que hacer desaparecer el objeto FechaCantReporte y que devuela la busqueda completa
 	//y uso de ese objeto lo que necesito para hacer el reporte
-	private List<ResultadoDeBusqueda> listaBusquedas = new ArrayList<>();;
+	private List<ResultadoDeBusqueda> listaBusquedas = new ArrayList<>();
 	private Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
 	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();
 

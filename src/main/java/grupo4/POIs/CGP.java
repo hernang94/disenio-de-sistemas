@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
@@ -13,10 +14,12 @@ import org.uqbar.geodds.Polygon;
 public class CGP extends Poi {
 	@OneToMany
 	private List<Servicio> servicios = new ArrayList<>();
+	// Preguntar a juliet :)
+	@Transient
 	private Polygon comuna;
 
-	public CGP(int id, Polygon comuna, String nombre, List<String> palabrasClaves) {
-		super(id, nombre, palabrasClaves);
+	public CGP(Polygon comuna, String nombre, List<String> palabrasClaves) {
+		super(nombre, palabrasClaves);
 		this.comuna = comuna;
 	}
 

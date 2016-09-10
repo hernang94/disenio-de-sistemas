@@ -5,19 +5,32 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.MapKeyJoinColumn;
+
 import org.uqbar.geodds.Point;
 
 public class LocalComercial extends Poi {
 	@Enumerated(EnumType.STRING)
 	private Rubro rubro;
+	@ElementCollection
+	@CollectionTable(name = "Horario_Manana")
+	@MapKeyJoinColumn(name = "Dia_de_la_semana")
+	@Column(name = "Horario")
 	private Map<DayOfWeek, Horario> hashManana;
+	@ElementCollection
+	@CollectionTable(name = "Horario_Tarde")
+	@MapKeyJoinColumn(name = "Dia_de_la_semana")
+	@Column(name = "Horario")
 	private Map<DayOfWeek, Horario> hashTarde;
 
-	public LocalComercial(int id, Rubro rubro, Map<DayOfWeek, Horario> horariosManiana,
-			Map<DayOfWeek, Horario> horariosTarde, String nombre, List<String> palabrasClaves) {
-		super(id, nombre, palabrasClaves);
+	public LocalComercial(Rubro rubro, Map<DayOfWeek, Horario> horariosManiana, Map<DayOfWeek, Horario> horariosTarde,
+			String nombre, List<String> palabrasClaves) {
+		super(nombre, palabrasClaves);
 		this.rubro = rubro;
 		this.hashManana = horariosManiana;
 		this.hashTarde = horariosTarde;

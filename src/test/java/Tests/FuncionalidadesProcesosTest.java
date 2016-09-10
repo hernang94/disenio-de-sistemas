@@ -175,10 +175,9 @@ public class FuncionalidadesProcesosTest {
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
-		banco = new Banco(10, hashMapBanco, "Santander Rio", palabrasClavesBanco);
+		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco);
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
-		banco.setCoordenadas();
 
 		palabrasClavesParada = new ArrayList<>();
 		palabrasClavesParada.add("Bondi");
@@ -187,10 +186,9 @@ public class FuncionalidadesProcesosTest {
 		palabrasClavesParada.add("Rojo");
 		palabrasClavesParada.add("Vidrios polarizados");
 		palabrasClavesParada.add("114");
-		parada114 = new Parada(20, "114", palabrasClavesParada);
+		parada114 = new Parada("114", palabrasClavesParada);
 		parada114.setX(-34.6417364);
 		parada114.setY(-58.4792636);
-		parada114.setCoordenadas();
 
 		rubro = rubro.MUEBLERIA;
 		hashMapLocalComercialManiana = new HashMap<>();
@@ -209,16 +207,14 @@ public class FuncionalidadesProcesosTest {
 		palabrasClavesLocalComercial.add("Carpintero");
 		palabrasClavesLocalComercial.add("Mesa");
 		palabrasClavesLocalComercial.add("Silla");
-		local = new LocalComercial(123, rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
+		local = new LocalComercial(rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
 				palabrasClavesLocalComercial);
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
-		local.setCoordenadas();
 
-		banco2 = new Banco(30, hashMapBanco, "HSBC", palabrasClavesBanco);
+		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
-		banco2.setCoordenadas();
 
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
@@ -239,7 +235,7 @@ public class FuncionalidadesProcesosTest {
 		palabrasClavesCGP.add("Villa Luro");
 		palabrasClavesCGP.add("Villa Real");
 		palabrasClavesCGP.add("All Boys");
-		cgp = new CGP(122, comuna10, "CGP10", palabrasClavesCGP);
+		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
 		repoDePois.agregarPoi(banco);
@@ -248,11 +244,11 @@ public class FuncionalidadesProcesosTest {
 		repoDePois.agregarPoi(local);
 		repoDePois.agregarPoi(cgp);
 
-		terminal = new Usuario("Terminal Abasto", repoDePois, 10);
+		terminal = new Usuario("Terminal Abasto",10);
 		terminal.agregarObserver(notificador);
 		terminal.agregarObserver(almacenador);
 
-		terminal2 = new Usuario("Terminal Alto Palermo", repoDePois, 1);
+		terminal2 = new Usuario("Terminal Alto Palermo",1);
 		notificador2 = new ObserverNotificador(1, notificadorMail);
 		terminal2.agregarObserver(notificador2);
 

@@ -6,17 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 
-//import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Banco extends Poi {
+	@ElementCollection
+	@CollectionTable(name = "Horario")
+	@MapKeyJoinColumn(name = "Dia_de_la_semana")
+	@Column(name = "Horario")
 	private Map<DayOfWeek, Horario> hashHorario;
 	@OneToMany
 	private List<Servicio> listaServicios = new ArrayList<>();
 
-	public Banco(int id,Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves) {
-		super(id,nombre, palabrasClaves);
+	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves) {
+		super(nombre, palabrasClaves);
 		this.hashHorario = horarios;
 	}
 

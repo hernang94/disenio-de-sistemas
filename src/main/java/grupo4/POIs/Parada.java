@@ -7,8 +7,8 @@ import org.uqbar.geodds.Point;
 
 public class Parada extends Poi {
 
-	public Parada(int id, String nombre, List<String> palabrasClaves) {
-		super(id, nombre, palabrasClaves);
+	public Parada( String nombre, List<String> palabrasClaves) {
+		super(nombre, palabrasClaves);
 	}
 
 	public boolean estaCerca(Point unPunto) {

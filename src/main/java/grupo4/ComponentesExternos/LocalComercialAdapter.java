@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import DTOexterno.LocalComercialExterno;
-import grupo4.POIs.Poi;
 
 public class LocalComercialAdapter implements Actualizador {
 	private ComponenteLocalComercial componente;

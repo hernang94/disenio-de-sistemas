@@ -3,22 +3,28 @@ package grupo4.Repositorios;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.uqbarproject.jpa.java8.extras.convert.LocalDateConverter;
+
 @Entity
-@Table(name="Busquedas")
+@Table(name = "Busquedas")
 public class ResultadoDeBusqueda {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	private int id;
-	@Column(name="Usuario")
+	@Column(name = "Usuario")
 	private String terminalDeLaBusqueda;
 	private long tiempoDeBusqueda;
-	@Column(name="Descripcion")
+	@Column(name = "Descripcion")
 	private String fraseBuscada;
-	@Column(name="Fecha")
+	@Column(name = "Fecha")
+	@Convert(converter=LocalDateConverter.class)
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 

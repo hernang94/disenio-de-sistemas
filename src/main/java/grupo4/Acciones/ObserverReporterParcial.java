@@ -5,7 +5,10 @@ import grupo4.Repositorios.RepositorioDeReportes;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
 public class ObserverReporterParcial extends ObserverDeBusqueda {
-	private IdObserver id = IdObserver.REPORTERPARCIAL;
+
+	public ObserverReporterParcial() {
+		id = IdObserver.REPORTERPARCIAL;
+	}
 
 	public IdObserver getId() {
 		return id;
