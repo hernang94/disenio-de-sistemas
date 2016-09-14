@@ -14,6 +14,7 @@ import DTOexterno.CentroDTO;
 import DTOexterno.LocalComercialExterno;
 import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
+import grupo4.HerramientasExternas.Poligono;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
 import grupo4.POIs.Poi;
@@ -21,7 +22,7 @@ import grupo4.POIs.Servicio;
 
 public class CGPAdapter implements BuscadorDePois {
 
-	private Map<Integer, Polygon> hashComunas;
+	private Map<Integer, Poligono> hashComunas;
 	private ComponenteCGPS componente;
 
 	public void setComponente(ComponenteCGPS componente) {

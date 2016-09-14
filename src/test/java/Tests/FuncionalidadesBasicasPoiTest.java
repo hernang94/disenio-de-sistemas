@@ -16,6 +16,7 @@ import org.junit.rules.ExpectedException;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
+import grupo4.HerramientasExternas.Poligono;
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
@@ -111,7 +112,7 @@ public class FuncionalidadesBasicasPoiTest {
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
 		hashMapServicio.put(DayOfWeek.FRIDAY, new Horario("12:00", "13:30"));
-		Polygon comuna10 = new Polygon();
+		Poligono comuna10 = new Poligono();
 		comuna10.add(new Point(-34.637466, -58.476939));
 		comuna10.add(new Point(-34.6350677, -58.4810659));
 		comuna10.add(new Point(-34.6417364, -58.4792636));
@@ -137,7 +138,7 @@ public class FuncionalidadesBasicasPoiTest {
 		dispositivoTactil.agregarPoi(cgp);
 
 	}
-
+	
 	@After
 	public void limpiarSingleton() {
 		dispositivoTactil.reset();

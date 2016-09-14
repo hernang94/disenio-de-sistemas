@@ -11,14 +11,16 @@ import javax.persistence.Transient;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
+import grupo4.HerramientasExternas.Poligono;
+
 public class CGP extends Poi {
 	@OneToMany
 	private List<Servicio> servicios = new ArrayList<>();
 	// Preguntar a juliet :)
 	@Transient
-	private Polygon comuna;
+	private Poligono comuna;
 
-	public CGP(Polygon comuna, String nombre, List<String> palabrasClaves) {
+	public CGP(Poligono comuna, String nombre, List<String> palabrasClaves) {
 		super(nombre, palabrasClaves);
 		this.comuna = comuna;
 	}

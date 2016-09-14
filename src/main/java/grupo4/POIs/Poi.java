@@ -3,6 +3,7 @@ package grupo4.POIs;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +12,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import org.uqbar.geodds.Point;
+
+import grupo4.HerramientasExternas.PointConverter;
 
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Puntos de Interes")
@@ -23,7 +26,8 @@ public abstract class Poi {
 	private double y;
 	@ElementCollection
 	private List<String> palabrasClaves;
-
+	@Convert(converter=PointConverter.class)
+	private Point coordenadas;
 	@SuppressWarnings("unused")
 	private Poi() {
 	}
@@ -79,7 +83,7 @@ public abstract class Poi {
 
 	public double calcularDistancia(Point punto) {
 
-		return new Point(x, y).distance(punto);
+		return coordenadas.distance(punto);
 	}
 
 	public boolean estaCerca(Point unPunto) {

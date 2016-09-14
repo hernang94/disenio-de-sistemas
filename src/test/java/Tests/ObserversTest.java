@@ -31,6 +31,7 @@ import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.ComponentesExternos.EmailSender;
+import grupo4.HerramientasExternas.Poligono;
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
@@ -175,7 +176,7 @@ public class ObserversTest {
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
 		hashMapServicio.put(DayOfWeek.FRIDAY, new Horario("12:00", "13:30"));
-		Polygon comuna10 = new Polygon();
+		Poligono comuna10 = new Poligono();
 		comuna10.add(new Point(-34.637466, -58.476939));
 		comuna10.add(new Point(-34.6350677, -58.4810659));
 		comuna10.add(new Point(-34.6417364, -58.4792636));
