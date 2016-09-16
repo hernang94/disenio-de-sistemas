@@ -5,6 +5,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 
 import grupo4.HerramientasExternas.Poligono;
+import grupo4.HerramientasExternas.Punto;
 @Entity
 public class CGP extends Poi {
 	@Id
@@ -23,7 +25,7 @@ public class CGP extends Poi {
 	@OneToMany
 	private List<Servicio> servicios = new ArrayList<>();
 	// Preguntar a juliet :)
-	@Transient
+	@Embedded
 	private Poligono comuna;
 
 	public CGP(Poligono comuna, String nombre, List<String> palabrasClaves) {
@@ -35,7 +37,7 @@ public class CGP extends Poi {
 		this.servicios.add(unServicio);
 	}
 
-	public boolean estaCerca(Point unaCoordenada) {
+	public boolean estaCerca(Punto unaCoordenada) {
 		return comuna.isInsideOld(unaCoordenada);
 	}
 

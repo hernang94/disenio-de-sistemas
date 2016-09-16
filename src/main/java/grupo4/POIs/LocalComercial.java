@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.MapKeyJoinColumn;
 
 import org.uqbar.geodds.Point;
+
+import grupo4.HerramientasExternas.Punto;
 @Entity
 public class LocalComercial extends Poi {
 	@Id
@@ -42,7 +44,7 @@ public class LocalComercial extends Poi {
 		this.hashTarde = horariosTarde;
 	}
 
-	public boolean estaCerca(Point unPunto) {
+	public boolean estaCerca(Punto unPunto) {
 		return (super.calcularDistancia(unPunto) <= rubro.getRadio());
 
 	}

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.uqbar.geodds.Point;
+
+import grupo4.HerramientasExternas.Punto;
 @Entity
 public class Parada extends Poi {
 	@Id
@@ -17,7 +19,7 @@ public class Parada extends Poi {
 		super(nombre, palabrasClaves);
 	}
 
-	public boolean estaCerca(Point unPunto) {
+	public boolean estaCerca(Punto unPunto) {
 		return (super.calcularDistancia(unPunto) <= 0.1);
 	}
 

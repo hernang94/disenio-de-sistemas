@@ -19,9 +19,7 @@ public class Servicio {
 	private int id;
 	private String nombre;
 	@ElementCollection
-	@CollectionTable(name = "Horario")
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
-	@Column(name = "Horario")
 	private Map<DayOfWeek, Horario> hashHorario;
 
 	public Servicio(String unNombre, Map<DayOfWeek, Horario> horarios) {

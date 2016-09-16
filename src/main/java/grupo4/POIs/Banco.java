@@ -22,9 +22,7 @@ public class Banco extends Poi {
 	@GeneratedValue
 	private int id;
 	@ElementCollection
-	@CollectionTable(name = "Horario")
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
-	@Column(name = "Horario")
 	private Map<DayOfWeek, Horario> hashHorario;
 	@OneToMany
 	private List<Servicio> listaServicios = new ArrayList<>();
