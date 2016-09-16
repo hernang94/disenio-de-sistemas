@@ -8,6 +8,20 @@
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	
+    	 <class>grupo4.POIs.Poi</class>  
+    	 <class>grupo4.POIs.Banco</class>  
+    	 <class>grupo4.POIs.LocalComercial</class>  
+    	 <class>grupo4.POIs.Horario</class>  
+    	 <class>grupo4.POIs.Parada</class>  
+    	 <class>grupo4.POIs.CGP</class>  
+    	 <class>grupo4.HerramientasExternas.Punto</class>  
+    	 <class>grupo4.HerramientasExternas.Poligono</class>
+    	 <class>grupo4.Acciones.ObserverAlmacenador</class>
+    	 <class>grupo4.Acciones.ObserverDeBusqueda</class>
+    	 <class>grupo4.Acciones.ObserverNotificador</class>
+    	 <class>grupo4.Acciones.ObserverReporterParcial</class>
+    	 <class>grupo4.Acciones.ObserverReporterPorFecha</class>
+    	 <class>grupo4.Acciones.ObserverReporterTotal</class>
     	 
         <properties> 
 	    <property name="hibernate.archive.autodetection" value="class"/>        
