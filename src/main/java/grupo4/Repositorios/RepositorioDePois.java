@@ -9,6 +9,7 @@ import org.uqbar.geodds.Point;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import grupo4.ComponentesExternos.BuscadorDePois;
+import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
 import java.time.LocalDateTime;
@@ -114,7 +115,7 @@ public class RepositorioDePois {
 		return listaFiltrada;
 	}
 
-	public boolean consultaCercania(String criterio, Point ubicacionSolicitada) {
+	public boolean consultaCercania(String criterio, Punto ubicacionSolicitada) {
 		Poi poi_aux;
 		poi_aux = obtenerSegunCriterio(criterio);
 		return poi_aux.estaCerca(ubicacionSolicitada);

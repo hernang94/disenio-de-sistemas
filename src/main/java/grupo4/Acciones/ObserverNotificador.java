@@ -1,9 +1,12 @@
 package grupo4.Acciones;
 
+
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import grupo4.ComponentesExternos.EmailSender;
 import grupo4.Repositorios.ResultadoDeBusqueda;
@@ -12,6 +15,7 @@ import grupo4.Repositorios.ResultadoDeBusqueda;
 public class ObserverNotificador extends ObserverDeBusqueda {
 
 	private long tiempoEstipulado;
+	@Transient
 	private EmailSender notificador;
 
 	public ObserverNotificador(long tiempoEstipulado, EmailSender notificador) {
