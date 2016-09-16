@@ -23,6 +23,7 @@
     	 <class>grupo4.Acciones.ObserverReporterParcial</class>
     	 <class>grupo4.Acciones.ObserverReporterPorFecha</class>
     	 <class>grupo4.Acciones.ObserverReporterTotal</class>
+    	 <class>grupo4.Repositorios.ResultadoDeBusqueda</class>
     	 
         <properties> 
 	    <property name="hibernate.archive.autodetection" value="class"/>        
