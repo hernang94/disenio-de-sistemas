@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 import org.uqbar.geodds.Point;
 
 import grupo4.HerramientasExternas.PointConverter;
-
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Puntos de Interes")
 public abstract class Poi {

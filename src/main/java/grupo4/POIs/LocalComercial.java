@@ -8,12 +8,13 @@ import java.util.Map;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.MapKeyJoinColumn;
 
 import org.uqbar.geodds.Point;
-
+@Entity
 public class LocalComercial extends Poi {
 	@Enumerated(EnumType.STRING)
 	private Rubro rubro;
