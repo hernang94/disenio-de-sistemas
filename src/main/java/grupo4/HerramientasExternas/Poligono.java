@@ -6,12 +6,17 @@ import java.util.List;
 import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 @Entity
 public class Poligono extends Polygon{
+	@Id
+	@GeneratedValue
+	private int id;
 	@OneToMany
 	@Convert(converter=Punto.class)
 	private List<Point> puntos;

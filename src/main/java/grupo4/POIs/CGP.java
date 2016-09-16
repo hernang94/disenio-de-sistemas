@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -15,6 +17,9 @@ import org.uqbar.geodds.Polygon;
 import grupo4.HerramientasExternas.Poligono;
 @Entity
 public class CGP extends Poi {
+	@Id
+	@GeneratedValue
+	private int id;
 	@OneToMany
 	private List<Servicio> servicios = new ArrayList<>();
 	// Preguntar a juliet :)

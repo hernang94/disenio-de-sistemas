@@ -14,6 +14,7 @@
     	 <class>grupo4.POIs.Horario</class>  
     	 <class>grupo4.POIs.Parada</class>  
     	 <class>grupo4.POIs.CGP</class>  
+    	 <class>grupo4.POIs.Servicio</class>  
     	 <class>grupo4.HerramientasExternas.Punto</class>  
     	 <class>grupo4.HerramientasExternas.Poligono</class>
     	 <class>grupo4.Acciones.ObserverAlmacenador</class>

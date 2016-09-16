@@ -11,11 +11,16 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.MapKeyJoinColumn;
 
 import org.uqbar.geodds.Point;
 @Entity
 public class LocalComercial extends Poi {
+	@Id
+	@GeneratedValue
+	private int id;
 	@Enumerated(EnumType.STRING)
 	private Rubro rubro;
 	@ElementCollection
