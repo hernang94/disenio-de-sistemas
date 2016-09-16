@@ -1,11 +1,14 @@
 package Tests;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.EntityManager;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -41,6 +44,7 @@ import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 
 public class ObserversTest {
 	private List<CentroDTO> listaCentroAAdaptar;
@@ -78,7 +82,8 @@ public class ObserversTest {
 	private RepositorioDeBusquedas repositorioBusquedas;
 	private ObserverNotificador notificadorFalla;
 	private Usuario terminalFalla;
-
+	private EntityManager em;
+	private ResultadoDeBusqueda resultadoPrueba;
 	@SuppressWarnings("static-access")
 
 	@Before
@@ -196,10 +201,10 @@ public class ObserversTest {
 		cgp.addServicio(timbrado);
 
 		repoDePois.agregarPoi(banco);
-		repoDePois.agregarPoi(banco2);
+		/*repoDePois.agregarPoi(banco2);
 		repoDePois.agregarPoi(parada114);
 		repoDePois.agregarPoi(local);
-		repoDePois.agregarPoi(cgp);
+		repoDePois.agregarPoi(cgp);*/
 		terminal = new Usuario("Terminal Abasto",10);
 		terminal.agregarObserver(notificador);
 		terminal.agregarObserver(reporterPorFecha);
@@ -212,6 +217,9 @@ public class ObserversTest {
 		notificadorFalla = new ObserverNotificador(1, notificadorMail);
 		terminalFalla.agregarObserver(notificadorFalla);
 
+		resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5, "Hola que hace?", LocalDate.now(), 3);
+		em.persist(resultadoPrueba);
+		
 	}
 
 	@After

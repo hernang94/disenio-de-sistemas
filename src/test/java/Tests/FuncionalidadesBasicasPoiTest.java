@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,6 +17,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.POIs.Banco;
@@ -43,6 +46,7 @@ public class FuncionalidadesBasicasPoiTest {
 	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
+	private EntityManager em;
 
 	@SuppressWarnings("static-access")
 
@@ -50,6 +54,8 @@ public class FuncionalidadesBasicasPoiTest {
 	public void init() {
 		dispositivoTactil = RepositorioDePois.getInstancia();
 
+		em=PerThreadEntityManagers.getEntityManager();
+		
 		unPuntoABuscar = new Point(-34.638116, -58.4794967);
 
 		horarioBanco = new Horario("10:00", "15:00");
@@ -131,11 +137,12 @@ public class FuncionalidadesBasicasPoiTest {
 		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP);
 		cgp.addServicio(timbrado);
 
+		//em.persist(banco2);
 		dispositivoTactil.agregarPoi(banco);
-		dispositivoTactil.agregarPoi(banco2);
+		/*dispositivoTactil.agregarPoi(banco2);
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
-		dispositivoTactil.agregarPoi(cgp);
+		dispositivoTactil.agregarPoi(cgp);*/
 
 	}
 	
