@@ -1,8 +1,12 @@
 package grupo4.Acciones;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import grupo4.ComponentesExternos.EmailSender;
 import grupo4.Repositorios.ResultadoDeBusqueda;
-
+@Entity
+@DiscriminatorValue("NOTIFICADOR")
 public class ObserverNotificador extends ObserverDeBusqueda {
 
 	private long tiempoEstipulado;
