@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import org.uqbar.geodds.Point;
 
 import grupo4.HerramientasExternas.PointConverter;
-@Entity
+
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Puntos de Interes")
 public abstract class Poi {

@@ -3,8 +3,10 @@ package grupo4.POIs;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.uqbar.geodds.Point;
+import javax.persistence.Entity;
 
+import org.uqbar.geodds.Point;
+@Entity
 public class Parada extends Poi {
 
 	public Parada( String nombre, List<String> palabrasClaves) {

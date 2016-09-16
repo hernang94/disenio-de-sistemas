@@ -3,7 +3,10 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+
 import org.uqbar.geodds.Point;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import grupo4.ComponentesExternos.BuscadorDePois;
 import grupo4.POIs.Poi;
@@ -46,11 +49,13 @@ public class RepositorioDePois {
 	}
 
 	public void agregarPoi(Poi unPoi) {
-		if (!repositorioContienePoi(unPoi.getId())) {
-			listaDePois.add(unPoi);
-		} else {
-			throw new RuntimeException("Poi ya existente");
-		}
+		//if (!repositorioContienePoi(unPoi.getId())) {
+			//listaDePois.add(unPoi);
+		EntityManager manager= PerThreadEntityManagers.getEntityManager();
+		manager.persist(unPoi);
+		//} else {
+			//throw new RuntimeException("Poi ya existente");
+		//}
 	}
 
 	public void bajaPoi(int id) {
