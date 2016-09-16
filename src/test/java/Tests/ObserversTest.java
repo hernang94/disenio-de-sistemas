@@ -19,6 +19,9 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import DTOexterno.CentroDTO;
 import DTOexterno.RangoServicioDTO;
@@ -35,6 +38,7 @@ import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.ComponentesExternos.EmailSender;
 import grupo4.HerramientasExternas.Poligono;
+import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
@@ -46,7 +50,7 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
-public class ObserversTest {
+public class ObserversTest extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois repoDePois;
 	private Parada parada114;
@@ -88,6 +92,7 @@ public class ObserversTest {
 
 	@Before
 	public void init() {
+		em=PerThreadEntityManagers.getEntityManager();
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
@@ -96,7 +101,8 @@ public class ObserversTest {
 		reporterParcial = new ObserverReporterParcial();
 		reporterPorFecha = new ObserverReporterPorFecha();
 		reporterTotal = new ObserverReporterTotal();
-
+		
+		
 		almacenador = new ObserverAlmacenador();
 
 		listaCentroAAdaptar = new ArrayList<>();
@@ -182,11 +188,11 @@ public class ObserversTest {
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
 		hashMapServicio.put(DayOfWeek.FRIDAY, new Horario("12:00", "13:30"));
 		Poligono comuna10 = new Poligono();
-		comuna10.add(new Point(-34.637466, -58.476939));
-		comuna10.add(new Point(-34.6350677, -58.4810659));
-		comuna10.add(new Point(-34.6417364, -58.4792636));
-		comuna10.add(new Point(-34.6409182, -58.4758827));
-		comuna10.add(new Point(-34.6383056, -58.4814007));
+		comuna10.add(new Punto(-34.637466, -58.476939));
+		comuna10.add(new Punto(-34.6350677, -58.4810659));
+		comuna10.add(new Punto(-34.6417364, -58.4792636));
+		comuna10.add(new Punto(-34.6409182, -58.4758827));
+		comuna10.add(new Punto(-34.6383056, -58.4814007));
 		timbrado = new Servicio("timbrado", hashMapServicio);
 		palabrasClavesCGP = new ArrayList<>();
 		palabrasClavesCGP.add("10");

@@ -20,6 +20,7 @@ import org.uqbar.geodds.Polygon;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import grupo4.HerramientasExternas.Poligono;
+import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.Horario;
@@ -39,7 +40,7 @@ public class FuncionalidadesBasicasPoiTest {
 	private Banco banco2;
 	private CGP cgp;
 	private LocalComercial local;
-	private Point unPuntoABuscar;
+	private Punto unPuntoABuscar;
 	private Rubro rubro;
 	private Map<DayOfWeek, Horario> hashMapBanco;
 	private Horario horarioBanco;
@@ -56,7 +57,7 @@ public class FuncionalidadesBasicasPoiTest {
 
 		em=PerThreadEntityManagers.getEntityManager();
 		
-		unPuntoABuscar = new Point(-34.638116, -58.4794967);
+		unPuntoABuscar = new Punto(-34.638116, -58.4794967);
 
 		horarioBanco = new Horario("10:00", "15:00");
 		hashMapBanco = new HashMap<>();
@@ -119,11 +120,11 @@ public class FuncionalidadesBasicasPoiTest {
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
 		hashMapServicio.put(DayOfWeek.FRIDAY, new Horario("12:00", "13:30"));
 		Poligono comuna10 = new Poligono();
-		comuna10.add(new Point(-34.637466, -58.476939));
-		comuna10.add(new Point(-34.6350677, -58.4810659));
-		comuna10.add(new Point(-34.6417364, -58.4792636));
-		comuna10.add(new Point(-34.6409182, -58.4758827));
-		comuna10.add(new Point(-34.6383056, -58.4814007));
+		comuna10.add(new Punto(-34.637466, -58.476939));
+		comuna10.add(new Punto(-34.6350677, -58.4810659));
+		comuna10.add(new Punto(-34.6417364, -58.4792636));
+		comuna10.add(new Punto(-34.6409182, -58.4758827));
+		comuna10.add(new Punto(-34.6383056, -58.4814007));
 		timbrado = new Servicio("timbrado", hashMapServicio);
 		List<String> palabrasClavesCGP = new ArrayList<>();
 		palabrasClavesCGP.add("10");
@@ -188,7 +189,7 @@ public class FuncionalidadesBasicasPoiTest {
 
 	@Test
 	public void noEstaCercaLocalComercial() {
-		Assert.assertFalse(local.estaCerca(new Point(2, 4)));
+		Assert.assertFalse(local.estaCerca(new Punto(2, 4)));
 
 	}
 
@@ -267,7 +268,7 @@ public class FuncionalidadesBasicasPoiTest {
 
 	@Test
 	public void pruebaPoligono() {
-		Assert.assertTrue(cgp.estaCerca(new Point(-34.638116, -58.4794967)));
+		Assert.assertTrue(cgp.estaCerca(new Punto(-34.638116, -58.4794967)));
 
 	}
 
@@ -285,7 +286,7 @@ public class FuncionalidadesBasicasPoiTest {
 
 	@Test
 	public void consultarCercaniaABanco() {
-		Assert.assertFalse(banco.estaCerca(new Point(-40.638116, -58.4794967)));
+		Assert.assertFalse(banco.estaCerca(new Punto(-40.638116, -58.4794967)));
 
 	}
 
@@ -298,7 +299,7 @@ public class FuncionalidadesBasicasPoiTest {
 
 	@Test
 	public void paradaCerca() {
-		Assert.assertTrue(parada114.estaCerca(new Point(-34.6417164, -58.4792636)));
+		Assert.assertTrue(parada114.estaCerca(new Punto(-34.6417164, -58.4792636)));
 
 	}
 
