@@ -1,9 +1,13 @@
 package grupo4.Acciones;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDeReportes;
 import grupo4.Repositorios.ResultadoDeBusqueda;
-
+@Entity
+@DiscriminatorValue("REPORTE_FECHA")
 public class ObserverReporterPorFecha extends ObserverDeBusqueda {
 
 	public ObserverReporterPorFecha() {
