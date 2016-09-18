@@ -224,8 +224,8 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		terminalFalla.agregarObserver(notificadorFalla);
 
 		resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5, "Hola que hace?", LocalDate.now(), 3);
+		//RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoPrueba);
 		em.persist(resultadoPrueba);
-		
 	}
 
 	@After
@@ -234,6 +234,18 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		RepositorioDeBusquedas.getInstancia().reset();
 	}
 
+	@Test
+	public void pruebaBDBusquedas(){
+		ResultadoDeBusqueda resultadoPersistido=em.find(ResultadoDeBusqueda.class,1);
+		Assert.assertEquals(resultadoPersistido.getTerminalDeLaBusqueda(),"Terminal Abasto");
+	}
+	
+	@Test
+	public void testCantidadResultadosDeUnTerminalPersistido(){
+		List<Integer> listaObtenida=RepositorioDeBusquedas.getInstancia().getlistaBusquedas("Terminal Abasto");
+		Assert.assertEquals(listaObtenida.stream().findFirst().get().intValue(),3);
+	}
+	
 	@Test
 	public void notificadorArministrador() {
 		terminal.busquedaLibre("HSBC");

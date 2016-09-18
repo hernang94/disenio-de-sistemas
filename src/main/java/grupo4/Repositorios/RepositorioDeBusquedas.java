@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+
 import grupo4.Acciones.FechaCantReporte;
 
 public class RepositorioDeBusquedas {
@@ -29,7 +33,9 @@ public class RepositorioDeBusquedas {
 	}
 
 	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
-		listaBusquedas.add(newResult);
+		EntityManager em = PerThreadEntityManagers.getEntityManager();
+		em.persist(newResult);
+		//listaBusquedas.add(newResult);
 		actualizarHashTerminales(newResult);
 	}
 
@@ -54,12 +60,15 @@ public class RepositorioDeBusquedas {
 
 	}
 
+	//hago que el método devuelva List<Integer> o solo List para que matchee con lo que devuelve la Query del EM?
 	public List<Integer> getlistaBusquedas(String unTerminal) {
-		List<Integer> lista = new ArrayList<>();
+		/*List<Integer> lista = new ArrayList<>();
 		List<ResultadoDeBusqueda> listaFiltrada = listaBusquedas.stream()
 				.filter(busqueda -> busqueda.esDeTerminal(unTerminal)).collect(Collectors.toList());
 		listaFiltrada.forEach(busqueda -> lista.add(busqueda.getCantidadDeResultados()));
-		return lista;
+		return lista;*/
+		EntityManager em = PerThreadEntityManagers.getEntityManager();
+		return em.createQuery("SELECT b.cantidadDeResultados FROM Busquedas b WHERE b.Usuario LIKE :nombreTerminal").setParameter("nombreTerminal", unTerminal).getResultList();
 	}
 
 	public FechaCantReporte cantidadPorFecha(LocalDate fecha) {
