@@ -20,9 +20,9 @@ import org.uqbar.geodds.Point;
 import grupo4.HerramientasExternas.Punto;
 @Entity
 public class LocalComercial extends Poi {
-	@Id
+	/*@Id
 	@GeneratedValue
-	private int id;
+	private int id;*/
 	@Enumerated(EnumType.STRING)
 	private Rubro rubro;
 	@ElementCollection

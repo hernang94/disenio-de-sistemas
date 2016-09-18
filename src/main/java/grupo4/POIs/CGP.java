@@ -5,6 +5,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +20,10 @@ import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 @Entity
 public class CGP extends Poi {
-	@Id
+	/*@Id
 	@GeneratedValue
-	private int id;
-	@OneToMany
+	private int id;*/
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Servicio> servicios = new ArrayList<>();
 	// Preguntar a juliet :)
 	@Embedded

@@ -17,9 +17,9 @@ import javax.persistence.Transient;
 import org.uqbar.geodds.Point;
 
 import grupo4.HerramientasExternas.Punto;
-
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "Puntos de Interes")
+@Table(name = "Puntos_de_Interes")
 public abstract class Poi {
 	protected String nombre;
 	@Id

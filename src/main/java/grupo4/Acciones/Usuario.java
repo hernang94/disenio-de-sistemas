@@ -5,12 +5,16 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioDePois;
@@ -22,12 +26,12 @@ public class Usuario {
 	@Id
 	@GeneratedValue
 	private long idUsuario;
+	@Column(name="terminal",unique=true)
 	private String terminal;
 	private int comuna;
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "idUsuario")
 	private List<ObserverDeBusqueda> observers = new ArrayList<>();
-
 	@SuppressWarnings("unused")
 	private Usuario() {
 	}

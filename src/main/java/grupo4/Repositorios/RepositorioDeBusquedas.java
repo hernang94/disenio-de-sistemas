@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
@@ -35,6 +36,7 @@ public class RepositorioDeBusquedas {
 	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
 		EntityManager em = PerThreadEntityManagers.getEntityManager();
 		em.persist(newResult);
+		em.flush();
 		//listaBusquedas.add(newResult);
 		actualizarHashTerminales(newResult);
 	}
@@ -68,7 +70,7 @@ public class RepositorioDeBusquedas {
 		listaFiltrada.forEach(busqueda -> lista.add(busqueda.getCantidadDeResultados()));
 		return lista;*/
 		EntityManager em = PerThreadEntityManagers.getEntityManager();
-		return em.createQuery("SELECT b.cantidadDeResultados FROM Busquedas b WHERE b.Usuario LIKE :nombreTerminal").setParameter("nombreTerminal", unTerminal).getResultList();
+		return em.createQuery("SELECT cantidadDeResultados FROM ResultadoDeBusqueda WHERE Usuario=:nombreTerminal").setParameter("nombreTerminal", unTerminal).getResultList();
 	}
 
 	public FechaCantReporte cantidadPorFecha(LocalDate fecha) {
@@ -77,13 +79,21 @@ public class RepositorioDeBusquedas {
 	}
 
 	public List<FechaCantReporte> getListaFechaCant(String terminal) {
-		return busquedasDeCadaTerminal.get(terminal);
+		EntityManager manager=PerThreadEntityManagers.getEntityManager();
+		List<FechaCantReporte>listaADevolver=new ArrayList<>();
+		List<Object[]>listaDeObjetos= manager.createQuery("select distinct fechaDeBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda where Usuario=:terminal group by fechaDeBusqueda").setParameter("terminal", terminal).getResultList();
+		listaDeObjetos.stream().forEach(elemento->listaADevolver.add(new FechaCantReporte((LocalDate)elemento[0], ((Long)elemento[1]).intValue())));
+		//NO SABEMOS COMO UNIR LAS DOS LISTAS O COMO HACER LA QUERY
+		
+		return listaADevolver;
 	}
+
 
 	public Map<String, Integer> reporteTotal() {
 		Map<String, Integer> hashARetornar = new HashMap<>();
-		busquedasDeCadaTerminal
-				.forEach((terminal, lista) -> hashARetornar.put(terminal, cantidadTotalDeBusquedas(lista)));
+		EntityManager manager= PerThreadEntityManagers.getEntityManager();
+		List<Object[]> listaObjetos= manager.createQuery("select distinct terminalDeLaBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda group by terminalDeLaBusqueda").getResultList();
+		listaObjetos.stream().forEach(elemento -> hashARetornar.put((String)elemento[0], ((Long)elemento[1]).intValue()));
 		return hashARetornar;
 	}
 

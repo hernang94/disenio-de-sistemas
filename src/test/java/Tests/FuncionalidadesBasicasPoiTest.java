@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 
 import org.junit.After;
@@ -18,6 +19,8 @@ import org.junit.rules.ExpectedException;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
@@ -31,7 +34,7 @@ import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Repositorios.RepositorioDePois;
 
-public class FuncionalidadesBasicasPoiTest {
+public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	private RepositorioDePois dispositivoTactil;
 	private Parada parada114;
 	private Servicio pagoFacil;
@@ -78,7 +81,8 @@ public class FuncionalidadesBasicasPoiTest {
 		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco);
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
-
+		banco.setCoordenadas(banco.getX(), banco.getY());
+		
 		List<String> palabrasClavesParada = new ArrayList<>();
 		palabrasClavesParada.add("Bondi");
 		palabrasClavesParada.add("UTN");
@@ -89,7 +93,8 @@ public class FuncionalidadesBasicasPoiTest {
 		parada114 = new Parada("114", palabrasClavesParada);
 		parada114.setX(-34.6417364);
 		parada114.setY(-58.4792636);
-
+		parada114.setCoordenadas(parada114.getX(), parada114.getY());
+		
 		rubro = rubro.MUEBLERIA;
 		hashMapLocalComercialManiana = new HashMap<>();
 		hashMapLocalComercialManiana.put(DayOfWeek.MONDAY, new Horario("09:00", "13:00"));
@@ -116,7 +121,8 @@ public class FuncionalidadesBasicasPoiTest {
 		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco);
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
-
+		banco2.setCoordenadas(banco2.getX(), banco2.getY());
+		
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
 		hashMapServicio.put(DayOfWeek.FRIDAY, new Horario("12:00", "13:30"));
@@ -141,10 +147,10 @@ public class FuncionalidadesBasicasPoiTest {
 
 		//em.persist(banco2);
 		dispositivoTactil.agregarPoi(banco);
-		/*dispositivoTactil.agregarPoi(banco2);
+		dispositivoTactil.agregarPoi(banco2);
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
-		dispositivoTactil.agregarPoi(cgp);*/
+		dispositivoTactil.agregarPoi(cgp);
 
 	}
 	
@@ -153,6 +159,8 @@ public class FuncionalidadesBasicasPoiTest {
 		dispositivoTactil.reset();
 	}
 
+	
+	
 	@Test
 	public void cercaniaAParada() {
 		Assert.assertFalse(dispositivoTactil.consultaCercania("114", unPuntoABuscar));
@@ -279,11 +287,11 @@ public class FuncionalidadesBasicasPoiTest {
 
 	}
 
-	@Test
+	/*@Test
 	public void pruebaBusquedaDeServicioCuandoNoTiene() {
 		Assert.assertFalse(banco.estaDisponible(LocalDateTime.of(2016, 04, 19, 11, 00), pagoFacil));
 
-	}
+	}*/
 
 	@Test
 	public void consultarCercaniaABanco() {

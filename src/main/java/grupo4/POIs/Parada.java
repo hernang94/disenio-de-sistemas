@@ -12,9 +12,9 @@ import org.uqbar.geodds.Point;
 import grupo4.HerramientasExternas.Punto;
 @Entity
 public class Parada extends Poi {
-	@Id
+	/*@Id
 	@GeneratedValue
-	private int id;
+	private int id;*/
 	public Parada( String nombre, List<String> palabrasClaves) {
 		super(nombre, palabrasClaves);
 	}

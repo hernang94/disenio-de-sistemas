@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -18,15 +19,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Bancos")
 public class Banco extends Poi {
-	@Id
+	/*@Id
 	@GeneratedValue
-	private int id;
+	private int id;*/
 	@ElementCollection
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
 	private Map<DayOfWeek, Horario> hashHorario;
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Servicio> listaServicios = new ArrayList<>();
 
+	
 	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves) {
 		super(nombre, palabrasClaves);
 		this.hashHorario = horarios;

@@ -3,7 +3,9 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 import org.uqbar.geodds.Point;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
@@ -53,18 +55,25 @@ public class RepositorioDePois {
 		//if (!repositorioContienePoi(unPoi.getId())) {
 			//listaDePois.add(unPoi);
 		EntityManager manager= PerThreadEntityManagers.getEntityManager();
-		manager.persist(unPoi);
-		//} else {
-			//throw new RuntimeException("Poi ya existente");
-		//}
+		try {
+			manager.persist(unPoi);
+			manager.flush();
+		} catch (EntityExistsException e) {
+			throw new RuntimeException("Poi ya existente");
+		}
+		
 	}
 
 	public void bajaPoi(int id) {
-		if (repositorioContienePoi(id)) {
+		/*if (repositorioContienePoi(id)) {
 			listaDePois.remove(obtenerPoi(id));
 		} else {
+			
+		}*/
+		EntityManager manager= PerThreadEntityManagers.getEntityManager();
+		if(manager.createQuery("delete from Poi where idPoi=:id").setParameter("id", id).executeUpdate()<1){
 			throw new RuntimeException("No existe el Poi");
-		}
+		};
 	}
 
 	private boolean repositorioContienePoi(Integer id) {
@@ -105,7 +114,10 @@ public class RepositorioDePois {
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
-		List<Poi> listaFiltrada = listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
+		EntityManager manager= PerThreadEntityManagers.getEntityManager();
+		@SuppressWarnings("unchecked")
+		List<Poi> listaAux = (List<Poi>) manager.createQuery("from Poi").getResultList();
+		List<Poi> listaFiltrada= listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList());
 		if (listaFiltrada.isEmpty()) {
 			origenesExternos.stream()

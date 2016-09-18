@@ -207,10 +207,10 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		cgp.addServicio(timbrado);
 
 		repoDePois.agregarPoi(banco);
-		/*repoDePois.agregarPoi(banco2);
+		repoDePois.agregarPoi(banco2);
 		repoDePois.agregarPoi(parada114);
 		repoDePois.agregarPoi(local);
-		repoDePois.agregarPoi(cgp);*/
+		repoDePois.agregarPoi(cgp);
 		terminal = new Usuario("Terminal Abasto",10);
 		terminal.agregarObserver(notificador);
 		terminal.agregarObserver(reporterPorFecha);
@@ -223,8 +223,11 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		notificadorFalla = new ObserverNotificador(1, notificadorMail);
 		terminalFalla.agregarObserver(notificadorFalla);
 
-		resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5, "Hola que hace?", LocalDate.now(), 3);
-		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoPrueba);
+		/*resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5, "Hola que hace?", LocalDate.now(), 3);
+		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoPrueba);*/
+		
+		//Mover a Nueva clase de tests de persistencia
+		
 		//em.persist(resultadoPrueba);
 	}
 
@@ -233,7 +236,8 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		RepositorioDePois.getInstancia().reset();
 		RepositorioDeBusquedas.getInstancia().reset();
 	}
-
+	//Mover a Nueva clase de tests de persistencia
+	/*
 	@Test
 	public void pruebaBDBusquedas(){
 		ResultadoDeBusqueda resultadoPersistido=em.find(ResultadoDeBusqueda.class,resultadoPrueba.getId());
@@ -245,7 +249,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		List<Integer> listaObtenida=RepositorioDeBusquedas.getInstancia().getlistaBusquedas("Terminal Abasto");
 		Assert.assertEquals(listaObtenida.stream().findFirst().get().intValue(),3);
 	}
-	
+	*/
 	@Test
 	public void notificadorArministrador() {
 		terminal.busquedaLibre("HSBC");
