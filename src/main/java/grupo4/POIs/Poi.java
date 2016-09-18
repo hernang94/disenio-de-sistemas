@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.uqbar.geodds.Point;
 
@@ -24,7 +25,9 @@ public abstract class Poi {
 	@Id
 	@GeneratedValue
 	private int idPoi;
+	@Transient
 	private double x;
+	@Transient
 	private double y;
 	@ElementCollection
 	private List<String> palabrasClaves;
@@ -83,8 +86,11 @@ public abstract class Poi {
 		this.y = y;
 	}
 
+	public void setCoordenadas(double x,double y){
+		coordenadas=new Punto(x,y);
+	}
+	
 	public double calcularDistancia(Punto punto) {
-
 		return coordenadas.distance(punto);
 	}
 

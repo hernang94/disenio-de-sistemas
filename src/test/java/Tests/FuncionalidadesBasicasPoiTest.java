@@ -111,6 +111,7 @@ public class FuncionalidadesBasicasPoiTest {
 				palabrasClavesLocalComercial);
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
+		local.setCoordenadas(local.getX(), local.getY());
 
 		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco);
 		banco2.setX(-34.6383669);
@@ -189,7 +190,7 @@ public class FuncionalidadesBasicasPoiTest {
 
 	@Test
 	public void noEstaCercaLocalComercial() {
-		Assert.assertFalse(local.estaCerca(new Punto(2, 4)));
+		Assert.assertFalse(local.estaCerca(new Punto(2,4)));
 
 	}
 

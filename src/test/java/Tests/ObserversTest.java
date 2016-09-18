@@ -224,8 +224,8 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		terminalFalla.agregarObserver(notificadorFalla);
 
 		resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5, "Hola que hace?", LocalDate.now(), 3);
-		//RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoPrueba);
-		em.persist(resultadoPrueba);
+		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoPrueba);
+		//em.persist(resultadoPrueba);
 	}
 
 	@After
@@ -236,8 +236,8 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 
 	@Test
 	public void pruebaBDBusquedas(){
-		ResultadoDeBusqueda resultadoPersistido=em.find(ResultadoDeBusqueda.class,1);
-		Assert.assertEquals(resultadoPersistido.getTerminalDeLaBusqueda(),"Terminal Abasto");
+		ResultadoDeBusqueda resultadoPersistido=em.find(ResultadoDeBusqueda.class,resultadoPrueba.getId());
+		Assert.assertEquals(resultadoPersistido.getTerminalDeLaBusqueda(),resultadoPrueba.getTerminalDeLaBusqueda());
 	}
 	
 	@Test

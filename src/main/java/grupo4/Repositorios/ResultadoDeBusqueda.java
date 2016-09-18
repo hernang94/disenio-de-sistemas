@@ -64,4 +64,8 @@ public class ResultadoDeBusqueda {
 		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);
 	}
 
+	public int getId() {
+		return id;
+	}
+
 }
