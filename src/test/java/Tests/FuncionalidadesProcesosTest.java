@@ -56,6 +56,8 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.uqbar.geodds.Point;
 import org.uqbar.geodds.Polygon;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import DTOexterno.BajaPoiExterna;
 import DTOexterno.CentroDTO;
@@ -64,7 +66,7 @@ import DTOexterno.ServicioDTO;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class FuncionalidadesProcesosTest {
+public class FuncionalidadesProcesosTest extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois repoDePois;
 	private Parada parada114;
@@ -106,7 +108,6 @@ public class FuncionalidadesProcesosTest {
 	private CriterioPorComuna criterioComuna;
 	private CriterioPorSeleccion criterioSeleccion;
 	private CriterioPorSeleccion criterioSeleccionBad;
-	private RepositorioDeUsuarios repoUsuarios;
 	private List<String> listaTerminales;
 	private List<String> listaTerminalesNoExistentes;
 	private BajaPoiAdapter adaptadorBajaPoiMockeado;
@@ -270,16 +271,15 @@ public class FuncionalidadesProcesosTest {
 		objectMapper = new ObjectMapper();
 		adaptadorBajaPoi = new BajaPoiAdapter(objectMapper);
 
-		accionBajaPoi = new AccionBajaPoi(repoDePois, adaptadorBajaPoi);
+		accionBajaPoi = new AccionBajaPoi(adaptadorBajaPoi);
 
 		adaptadorBajaPoiMockeado = Mockito.mock(BajaPoiAdapter.class);
-		accionBajaPoiConMock = new AccionBajaPoi(repoDePois, adaptadorBajaPoiMockeado);
+		accionBajaPoiConMock = new AccionBajaPoi(adaptadorBajaPoiMockeado);
 
 		adaptadorLocalComercial = new LocalComercialAdapter();
 		adaptadorLocalComercial.setComponente(componenteLocalComercial);
 
 		repoResultadosEjecucion = RepositorioDeResultadosDeEjecucion.getInstancia();
-		repoUsuarios = RepositorioDeUsuarios.getInstancia();
 		adminProcesos = AdministradorDeProcesos.getInstancia();
 
 		criterioTodos = new CriterioATodos();
@@ -292,8 +292,8 @@ public class FuncionalidadesProcesosTest {
 		listaTerminalesNoExistentes.add("Terminal Plaza Miserere");
 		criterioSeleccionBad = new CriterioPorSeleccion(listaTerminalesNoExistentes);
 
-		repoUsuarios.agregarUsuario(terminal);
-		repoUsuarios.agregarUsuario(terminal2);
+		RepositorioDeUsuarios.getInstancia().agregarUsuario(terminal);
+		RepositorioDeUsuarios.getInstancia().agregarUsuario(terminal2);
 
 	}
 
@@ -301,7 +301,7 @@ public class FuncionalidadesProcesosTest {
 	public void limpiarSingleton() {
 		repoDePois.reset();
 		repositorioBusquedas.reset();
-		repoUsuarios.reset();
+		//repoUsuarios.reset();
 		repoResultadosEjecucion.getlistaDeResultados().clear();
 	}
 
@@ -474,7 +474,7 @@ public class FuncionalidadesProcesosTest {
 	
 	@Test
 	public void decoratorReintentarFalla() throws Exception {
-		repoUsuarios.quitarUsuario(terminal);
+		RepositorioDeUsuarios.getInstancia().quitarUsuario(terminal.getIdUsuario());
 		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
 		thrownReintento.expect(RuntimeException.class);

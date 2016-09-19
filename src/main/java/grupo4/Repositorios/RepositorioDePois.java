@@ -5,9 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 
-import org.uqbar.geodds.Point;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import grupo4.ComponentesExternos.BuscadorDePois;
@@ -19,28 +17,15 @@ import java.util.ArrayList;
 
 public class RepositorioDePois {
 	private static RepositorioDePois instancia = new RepositorioDePois();
-	private String nombre;
-	private List<Poi> listaDePois = new ArrayList<>();
 	private List<BuscadorDePois> origenesExternos = new ArrayList<>();
-
-	private RepositorioDePois() {
-	}
+	EntityManager manager= PerThreadEntityManagers.getEntityManager();
 
 	public void reset() {
-		listaDePois.clear();
 		origenesExternos.clear();
 	}
 
 	public static RepositorioDePois getInstancia() {
 		return instancia;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getNombre() {
-		return nombre;
 	}
 
 	public void agregarOrigenExterno(BuscadorDePois origenExterno) {
@@ -54,14 +39,12 @@ public class RepositorioDePois {
 	public void agregarPoi(Poi unPoi) {
 		//if (!repositorioContienePoi(unPoi.getId())) {
 			//listaDePois.add(unPoi);
-		EntityManager manager= PerThreadEntityManagers.getEntityManager();
 		try {
 			manager.persist(unPoi);
 			manager.flush();
 		} catch (EntityExistsException e) {
 			throw new RuntimeException("Poi ya existente");
 		}
-		
 	}
 
 	public void bajaPoi(int id) {
@@ -70,19 +53,18 @@ public class RepositorioDePois {
 		} else {
 			
 		}*/
-		EntityManager manager= PerThreadEntityManagers.getEntityManager();
 		if(manager.createQuery("delete from Poi where idPoi=:id").setParameter("id", id).executeUpdate()<1){
 			throw new RuntimeException("No existe el Poi");
 		};
 	}
 
-	private boolean repositorioContienePoi(Integer id) {
+/*	private boolean repositorioContienePoi(Integer id) {
 		return listaDePois.stream().anyMatch(unPoi -> unPoi.getId() == id);
 	}
 
 	private Poi obtenerPoi(int id) {
 		return listaDePois.stream().filter(poi -> poi.getId() == id).findFirst().get();
-	}
+	}*/
 
 	public List<Poi> busquedaLibre(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();
@@ -114,7 +96,6 @@ public class RepositorioDePois {
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
-		EntityManager manager= PerThreadEntityManagers.getEntityManager();
 		@SuppressWarnings("unchecked")
 		List<Poi> listaAux = (List<Poi>) manager.createQuery("from Poi").getResultList();
 		List<Poi> listaFiltrada= listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
@@ -122,7 +103,8 @@ public class RepositorioDePois {
 		if (listaFiltrada.isEmpty()) {
 			origenesExternos.stream()
 					.forEach(unComponente -> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
-			listaDePois.addAll(listaFiltrada);
+			listaFiltrada.forEach(unPoi->manager.persist(unPoi));
+			manager.flush();
 		}
 		return listaFiltrada;
 	}
@@ -134,17 +116,26 @@ public class RepositorioDePois {
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
-		return listaDePois.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);
+		List<Poi> poisEnBD= this.consultarBD();
+		return poisEnBD.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);
 	}
 
 	public void cambiarPalabrasClaves(String palabraFantasia, List<String> palabrasClaves) {
 		if (repositorioContienePoi(palabraFantasia)) {
-			listaDePois.stream().forEach(poi -> poi.reemplazarPalabrasClaves(palabrasClaves));
+			List<Poi> poisEnBD= this.consultarBD();
+			poisEnBD.stream().forEach(poi -> poi.reemplazarPalabrasClaves(palabrasClaves));
+			poisEnBD.stream().forEach(poi -> manager.merge(poi));
 		}
 	}
 
 	private boolean repositorioContienePoi(String palabraFantasia) {
-		return listaDePois.stream().anyMatch(unPoi -> unPoi.getNombre().equalsIgnoreCase(palabraFantasia));
+		List<Poi> poisEnBD= this.consultarBD();
+		return poisEnBD.stream().anyMatch(unPoi -> unPoi.getNombre().equalsIgnoreCase(palabraFantasia));
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<Poi> consultarBD(){
+		return (List<Poi>) manager.createQuery("from Poi").getResultList();
 	}
 
 }

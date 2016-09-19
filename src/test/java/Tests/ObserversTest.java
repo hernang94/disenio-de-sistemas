@@ -216,10 +216,9 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		terminal.agregarObserver(reporterPorFecha);
 		terminal.agregarObserver(reporterTotal);
 		terminal.agregarObserver(reporterParcial);
-
 		terminal.agregarObserver(almacenador);
 
-		terminalFalla = new Usuario("Terminal Abasto",1);
+		terminalFalla = new Usuario("Terminal Belgrano",1);
 		notificadorFalla = new ObserverNotificador(1, notificadorMail);
 		terminalFalla.agregarObserver(notificadorFalla);
 

@@ -10,11 +10,9 @@ import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.ResultadosDeEjecucion;
 
 public class AccionBajaPoi implements Accion {
-	private RepositorioDePois repo;
 	private BajaPoiAdapter adaptador;
 
-	public AccionBajaPoi(RepositorioDePois repositorio, BajaPoiAdapter adaptador) {
-		this.repo = repositorio;
+	public AccionBajaPoi(BajaPoiAdapter adaptador) {
 		this.adaptador = adaptador;
 	}
 
@@ -31,7 +29,7 @@ public class AccionBajaPoi implements Accion {
 		String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);
 		RepositorioDeResultadosDeEjecucion.getInstancia()
 				.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), "Poi eliminado con exito"));
-		repo.bajaPoi(bajaPoi.getId());
+		RepositorioDePois.getInstancia().bajaPoi(bajaPoi.getId());
 	}
 
 }

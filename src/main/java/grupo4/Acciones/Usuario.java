@@ -25,7 +25,7 @@ import grupo4.Repositorios.ResultadoDeBusqueda;
 public class Usuario {
 	@Id
 	@GeneratedValue
-	private long idUsuario;
+	private int idUsuario;
 	@Column(name="terminal",unique=true)
 	private String terminal;
 	private int comuna;
@@ -39,6 +39,10 @@ public class Usuario {
 	public Usuario(String terminal, int comuna) {
 		this.terminal = terminal;
 		this.comuna = comuna;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
 	}
 
 	public void agregarObserver(ObserverDeBusqueda observer) {
@@ -55,7 +59,7 @@ public class Usuario {
 		listaAux = RepositorioDePois.getInstancia().busquedaLibre(criterio);
 		LocalDateTime tiempoFin = LocalDateTime.now();
 		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
-		ResultadoDeBusqueda resultadoAux = new ResultadoDeBusqueda(terminal, diferencia, criterio,
+		ResultadoDeBusqueda resultadoAux = new ResultadoDeBusqueda(this.getTerminal(), diferencia, criterio,
 				tiempoInicio.toLocalDate(), listaAux.size());
 		observers.stream().forEach(observer -> observer.realizarAccion(resultadoAux));
 	}

@@ -151,6 +151,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
+		em.flush();
 
 	}
 	
@@ -159,8 +160,6 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		dispositivoTactil.reset();
 	}
 
-	
-	
 	@Test
 	public void cercaniaAParada() {
 		Assert.assertFalse(dispositivoTactil.consultaCercania("114", unPuntoABuscar));
@@ -375,7 +374,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Test
 	public void quitarPoiExistente() {
-		dispositivoTactil.bajaPoi(20);
+		dispositivoTactil.bajaPoi(parada114.getId());
 		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
 
 	}
