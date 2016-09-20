@@ -11,9 +11,12 @@ import grupo4.Repositorios.ResultadoDeBusqueda;
 @DiscriminatorValue(value="ALMACENADOR")
 public class ObserverAlmacenador extends ObserverDeBusqueda {
 
+	public ObserverAlmacenador(){
+		super.id=IdObserver.ALMACENADOR;
+	}
+	
 	public void realizarAccion(ResultadoDeBusqueda resultado) {
 		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultado);
-		id = IdObserver.ALMACENADOR;
 	}
 
 	public IdObserver getId() {

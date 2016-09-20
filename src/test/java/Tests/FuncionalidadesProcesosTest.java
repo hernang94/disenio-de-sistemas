@@ -312,11 +312,16 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		Mockito.verify(adaptadorBajaPoiMockeado).obtenerPoisABajar();
 	}
 
+	@Rule
+	public ExpectedException thrownPoiNoExiste = ExpectedException.none();
+	
 	@Test
 	public void accionBajaPoi() throws ParseException, IOException{
+		thrownPoiNoExiste.expect(RuntimeException.class);
+		thrownPoiNoExiste.expectMessage("No existe el Poi");
 		List<BajaPoiExterna> listAux = adaptadorBajaPoi.convertirJson(http.obtenerString());
 		listAux.stream().forEach(poiABajar-> accionBajaPoi.bajarPoi(poiABajar));
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().size());
+		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().size());
 	}
 	
 	@Rule
@@ -475,7 +480,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	
 	@Test
 	public void decoratorReintentarFalla() throws Exception {
-		RepositorioDeUsuarios.getInstancia().quitarUsuario(terminal.getIdUsuario());
+		RepositorioDeUsuarios.getInstancia().quitarUsuario(terminal);
 		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
 		thrownReintento.expect(RuntimeException.class);

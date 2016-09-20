@@ -47,15 +47,20 @@ public class RepositorioDePois {
 		}
 	}
 
-	public void bajaPoi(int id) {
+	public void bajaPoi(Poi unPoi) {
 		/*if (repositorioContienePoi(id)) {
 			listaDePois.remove(obtenerPoi(id));
 		} else {
 			
-		}*/
+		}
 		if(manager.createQuery("delete from Poi where idPoi=:id").setParameter("id", id).executeUpdate()<1){
 			throw new RuntimeException("No existe el Poi");
-		};
+		};*/
+		try{			
+			manager.remove(unPoi);
+		}catch(Exception e){
+			throw new RuntimeException("No existe el Poi");
+		}
 	}
 
 /*	private boolean repositorioContienePoi(Integer id) {
@@ -137,5 +142,4 @@ public class RepositorioDePois {
 	private List<Poi> consultarBD(){
 		return (List<Poi>) manager.createQuery("from Poi").getResultList();
 	}
-
 }

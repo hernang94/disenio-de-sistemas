@@ -29,11 +29,12 @@ public class RepositorioDeUsuarios {
 		}
 	}
 
-	public void quitarUsuario(int id) {
+	public void quitarUsuario(Usuario usuario) {
 		//listaDeUsuarios.remove(usuario);
-		if(manager.createQuery("delete from Usuario where idUsuario=:id").setParameter("id", id).executeUpdate()<1){
+		manager.remove(usuario);
+		/*if(manager.createQuery("delete from Usuario where idUsuario=:id").setParameter("id", id).executeUpdate()<1){
 			throw new RuntimeException("No existe el Usuario");
-		};
+		};*/
 	}
 
 	@SuppressWarnings("unchecked")
