@@ -49,8 +49,11 @@ public class Usuario {
 		observers.add(observer);
 	}
 
-	public void quitarObserver(ObserverDeBusqueda observer) {
-		observers.remove(observer);
+	public void quitarObserver(IdObserver idObserverAQuitar) {
+		if(observers.stream().anyMatch(unObserver->unObserver.getId().equals(idObserverAQuitar))){
+			ObserverDeBusqueda observer=observers.stream().filter(unObserver->unObserver.getId().equals(idObserverAQuitar)).findFirst().get();
+			observers.remove(observer);			
+		}
 	}
 
 	public void busquedaLibre(String criterio) {

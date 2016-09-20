@@ -21,13 +21,8 @@ public class AccionQuitarObserver implements Accion {
 	public void ejecutar() {
 			List<Usuario> usuarios = criterioSeleccion.obtenerLista();
 			usuarios.stream()
-					.forEach(usuario -> usuario.quitarObserver(obtenerObserverSegunTipo(observerAQuitar, usuario)));
+					.forEach(usuario -> usuario.quitarObserver(observerAQuitar));
 			RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(new ResultadosDeEjecucion(
 					usuarios.size(), LocalDateTime.now(), usuarios.size() + " Usuarios afectados"));
-	}
-
-	private ObserverDeBusqueda obtenerObserverSegunTipo(IdObserver observerId, Usuario usuario) {
-		return usuario.getObservers().stream().filter(observer -> observerId.equals(observer.getId())).findFirst()
-				.get();
 	}
 }

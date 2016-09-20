@@ -1,5 +1,6 @@
 package Tests;
 
+import grupo4.Acciones.IdObserver;
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.ObserverNotificador;
 import grupo4.Acciones.Usuario;
@@ -410,7 +411,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 
 	@Test
 	public void quitarAlmacenarPorComuna() {
-		quitarObserver = new AccionQuitarObserver(criterioComuna, almacenador.getId());
+		quitarObserver = new AccionQuitarObserver(criterioComuna, IdObserver.ALMACENADOR);
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioComuna);
 		agregarObserver.ejecutar();
 		quitarObserver.ejecutar();
