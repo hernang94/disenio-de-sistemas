@@ -39,15 +39,23 @@ public class RepositorioDePois {
 	public void agregarPoi(Poi unPoi) {
 		//if (!repositorioContienePoi(unPoi.getId())) {
 			//listaDePois.add(unPoi);
-		try {
+		/*try {
 			manager.persist(unPoi);
 			manager.flush();
 		} catch (EntityExistsException e) {
 			throw new RuntimeException("Poi ya existente");
+		}*/
+		if(manager.find(Poi.class, unPoi.getId())!=null){
+			throw new RuntimeException("Poi ya existente");
 		}
+		else{
+			manager.persist(unPoi);
+			manager.flush();
+		}
+		
 	}
 
-	public void bajaPoi(Poi unPoi) {
+	public void bajaPoi(int id) {
 		/*if (repositorioContienePoi(id)) {
 			listaDePois.remove(obtenerPoi(id));
 		} else {
@@ -57,7 +65,10 @@ public class RepositorioDePois {
 			throw new RuntimeException("No existe el Poi");
 		};*/
 		try{			
-			manager.remove(unPoi);
+			//manager.remove(unPoi);
+			//manager.flush();
+			//manager.createQuery("delete from Poi where idPoi=:id").setParameter("id", id).executeUpdate();
+			manager.remove((Poi)manager.find(Poi.class, id));
 		}catch(Exception e){
 			throw new RuntimeException("No existe el Poi");
 		}

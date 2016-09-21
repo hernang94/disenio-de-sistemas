@@ -374,7 +374,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Test
 	public void quitarPoiExistente() {
-		dispositivoTactil.bajaPoi(parada114);
+		dispositivoTactil.bajaPoi(parada114.getId());
 		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
 
 	}
@@ -386,7 +386,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		thrown.expect(RuntimeException.class);
 		thrown.expectMessage("No existe el Poi");
 		Parada paradaNoPersistida= new Parada("Parada Falsa 1234",palabrasClaves);
-		dispositivoTactil.bajaPoi(paradaNoPersistida);
+		dispositivoTactil.bajaPoi(paradaNoPersistida.getId());
 	}
 
 	@Test
