@@ -25,8 +25,7 @@ public class BajaPoiAdapter {
 	public List<BajaPoiExterna> convertirJson(String jsons) {
 		if (jsons.contains("status_code")) {
 			throw new RuntimeException("Error 400");
-		}
-		else{			
+		} else {
 			List<BajaPoiExterna> lista = new ArrayList<>();
 			try {
 				lista = objectMapper.readValue(jsons,

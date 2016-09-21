@@ -2,12 +2,11 @@ package grupo4.Acciones;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDeReportes;
 import grupo4.Repositorios.ResultadoDeBusqueda;
+
 @Entity
 @DiscriminatorValue("REPORTE_PARCIAL")
 public class ObserverReporterParcial extends ObserverDeBusqueda {

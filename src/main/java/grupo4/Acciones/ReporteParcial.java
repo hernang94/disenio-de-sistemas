@@ -15,4 +15,11 @@ public class ReporteParcial implements Reporte {
 	// aca deberia mostrar por pantalla el reporte
 	// }
 
+	public String getTerminalQueLoSolicito() {
+		return terminalQueLoSolicito;
+	}
+
+	public List<Integer> getCantParciales() {
+		return cantParciales;
+	}
 }

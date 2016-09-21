@@ -8,22 +8,19 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
-import org.uqbar.geodds.Point;
-import org.uqbar.geodds.Polygon;
 
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
+
 @Entity
 public class CGP extends Poi {
-	/*@Id
-	@GeneratedValue
-	private int id;*/
-	@OneToMany(cascade=CascadeType.ALL)
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue private int id;
+	 */
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Servicio> servicios = new ArrayList<>();
 	// Preguntar a juliet :)
 	@Embedded

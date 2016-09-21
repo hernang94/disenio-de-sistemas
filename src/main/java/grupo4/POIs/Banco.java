@@ -7,28 +7,26 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 @Entity
-@Table(name="Bancos")
+@Table(name = "Bancos")
 public class Banco extends Poi {
-	/*@Id
-	@GeneratedValue
-	private int id;*/
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue private int id;
+	 */
 	@ElementCollection
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
 	private Map<DayOfWeek, Horario> hashHorario;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Servicio> listaServicios = new ArrayList<>();
 
-	
 	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves) {
 		super(nombre, palabrasClaves);
 		this.hashHorario = horarios;

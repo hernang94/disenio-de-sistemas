@@ -55,8 +55,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
-import org.uqbar.geodds.Point;
-import org.uqbar.geodds.Polygon;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
@@ -67,7 +65,7 @@ import DTOexterno.ServicioDTO;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class FuncionalidadesProcesosTest extends AbstractPersistenceTest implements WithGlobalEntityManager{
+public class FuncionalidadesProcesosTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois repoDePois;
 	private Parada parada114;
@@ -128,7 +126,6 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 
 	private DecoratorReintentar decoratorReintentar;
 	private DecoratorNotificador decoratorNotificar;
-	
 
 	@SuppressWarnings("static-access")
 	@Before
@@ -248,11 +245,11 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		repoDePois.agregarPoi(local);
 		repoDePois.agregarPoi(cgp);
 
-		terminal = new Usuario("Terminal Abasto",10);
+		terminal = new Usuario("Terminal Abasto", 10);
 		terminal.agregarObserver(notificador);
 		terminal.agregarObserver(almacenador);
 
-		terminal2 = new Usuario("Terminal Alto Palermo",1);
+		terminal2 = new Usuario("Terminal Alto Palermo", 1);
 		notificador2 = new ObserverNotificador(1, notificadorMail);
 		terminal2.agregarObserver(notificador2);
 
@@ -302,7 +299,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	public void limpiarSingleton() {
 		repoDePois.reset();
 		repositorioBusquedas.reset();
-		//repoUsuarios.reset();
+		// repoUsuarios.reset();
 		repoResultadosEjecucion.getlistaDeResultados().clear();
 	}
 
@@ -314,16 +311,16 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 
 	@Rule
 	public ExpectedException thrownPoiNoExiste = ExpectedException.none();
-	
+
 	@Test
-	public void accionBajaPoi() throws ParseException, IOException{
+	public void accionBajaPoi() throws ParseException, IOException {
 		thrownPoiNoExiste.expect(RuntimeException.class);
 		thrownPoiNoExiste.expectMessage("No existe el Poi");
 		List<BajaPoiExterna> listAux = adaptadorBajaPoi.convertirJson(http.obtenerString());
-		listAux.stream().forEach(poiABajar-> accionBajaPoi.bajarPoi(poiABajar));
+		listAux.stream().forEach(poiABajar -> accionBajaPoi.bajarPoi(poiABajar));
 		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().size());
 	}
-	
+
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
@@ -464,7 +461,8 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
 		decoratorReintentar.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
@@ -472,12 +470,13 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
 		decoratorNotificar.ejecutar();
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get().getCantidadDeElementosAfectados());
+		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getCantidadDeElementosAfectados());
 	}
 
 	@Rule
 	public ExpectedException thrownReintento = ExpectedException.none();
-	
+
 	@Test
 	public void decoratorReintentarFalla() throws Exception {
 		RepositorioDeUsuarios.getInstancia().quitarUsuario(terminal);
@@ -487,9 +486,9 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		thrownReintento.expectMessage("Se supero la cantidad de Reintentos y el proceso fallo");
 		decoratorReintentar.ejecutar();
 	}
-	
+
 	@Test
-	public void decoratorNotificaFalla() throws Exception{
+	public void decoratorNotificaFalla() throws Exception {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccionBad);
 		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
 		decoratorNotificar.ejecutar();
