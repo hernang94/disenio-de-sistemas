@@ -53,32 +53,12 @@ public class RepositorioDePois {
 	}
 
 	public void bajaPoi(int id) {
-		/*
-		 * if (repositorioContienePoi(id)) { listaDePois.remove(obtenerPoi(id));
-		 * } else {
-		 * 
-		 * } if(manager.createQuery("delete from Poi where idPoi=:id"
-		 * ).setParameter("id", id).executeUpdate()<1){ throw new
-		 * RuntimeException("No existe el Poi"); };
-		 */
 		try {
-			// manager.remove(unPoi);
-			// manager.flush();
-			// manager.createQuery("delete from Poi where
-			// idPoi=:id").setParameter("id", id).executeUpdate();
 			manager.remove((Poi) manager.find(Poi.class, id));
 		} catch (Exception e) {
 			throw new RuntimeException("No existe el Poi");
 		}
 	}
-
-	/*
-	 * private boolean repositorioContienePoi(Integer id) { return
-	 * listaDePois.stream().anyMatch(unPoi -> unPoi.getId() == id); }
-	 * 
-	 * private Poi obtenerPoi(int id) { return listaDePois.stream().filter(poi
-	 * -> poi.getId() == id).findFirst().get(); }
-	 */
 
 	public List<Poi> busquedaLibre(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();
