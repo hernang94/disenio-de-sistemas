@@ -318,7 +318,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		thrownPoiNoExiste.expectMessage("No existe el Poi");
 		List<BajaPoiExterna> listAux = adaptadorBajaPoi.convertirJson(http.obtenerString());
 		listAux.stream().forEach(poiABajar -> accionBajaPoi.bajarPoi(poiABajar));
-		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().size());
+		//Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().size());
 	}
 
 	@Rule
