@@ -28,12 +28,12 @@ public class LocalComercial extends Poi {
 	@ElementCollection
 	@CollectionTable(name = "Horario_Manana")
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
-	@Column(name = "Horario")
+	@Column(name = "Horario mañana")
 	private Map<DayOfWeek, Horario> hashManana;
 	@ElementCollection
 	@CollectionTable(name = "Horario_Tarde")
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
-	@Column(name = "Horario")
+	@Column(name = "Horario tarde")
 	private Map<DayOfWeek, Horario> hashTarde;
 
 	public LocalComercial(Rubro rubro, Map<DayOfWeek, Horario> horariosManiana, Map<DayOfWeek, Horario> horariosTarde,
