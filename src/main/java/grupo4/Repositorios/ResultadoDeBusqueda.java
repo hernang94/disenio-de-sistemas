@@ -61,9 +61,9 @@ public class ResultadoDeBusqueda {
 		return cantidadDeResultados;
 	}
 
-	public boolean esDeTerminal(String unTerminal) {
+	/*public boolean esDeTerminal(String unTerminal) {
 		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);
-	}
+	}*/
 
 	public int getId() {
 		return id;

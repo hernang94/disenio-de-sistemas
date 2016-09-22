@@ -50,8 +50,7 @@ public class Usuario {
 
 	public void quitarObserver(IdObserver idObserverAQuitar) {
 		if (observers.stream().anyMatch(unObserver -> unObserver.getId().equals(idObserverAQuitar))) {
-			ObserverDeBusqueda observer = observers.stream()
-					.filter(unObserver -> unObserver.getId().equals(idObserverAQuitar)).findFirst().get();
+			ObserverDeBusqueda observer = observers.stream().filter(unObserver -> unObserver.getId().equals(idObserverAQuitar)).findFirst().get();
 			observers.remove(observer);
 		}
 	}

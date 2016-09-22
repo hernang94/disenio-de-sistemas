@@ -293,4 +293,11 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		terminal.quitarObserver(reporterParcial.getId());
 		Assert.assertEquals(4, terminal.getObservers().size());
 	}
+	@Test
+	public void quitarObserverNoEncontrado(){
+		terminal.quitarObserver(reporterParcial.getId());
+		terminal.quitarObserver(reporterParcial.getId());
+		Assert.assertEquals(4, terminal.getObservers().size());
+	}
+
 }
