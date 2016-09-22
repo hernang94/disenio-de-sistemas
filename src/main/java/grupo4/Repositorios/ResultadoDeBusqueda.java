@@ -24,13 +24,14 @@ public class ResultadoDeBusqueda {
 	@Column(name = "Descripcion")
 	private String fraseBuscada;
 	@Column(name = "Fecha")
-	@Convert(converter=LocalDateConverter.class)
+	@Convert(converter = LocalDateConverter.class)
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
 
 	@SuppressWarnings("unused")
-	private ResultadoDeBusqueda(){}
-	
+	private ResultadoDeBusqueda() {
+	}
+
 	public ResultadoDeBusqueda(String terminal, long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
 			int cantidadDeResultados) {
 		this.terminalDeLaBusqueda = terminal;

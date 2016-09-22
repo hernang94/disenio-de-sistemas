@@ -1,14 +1,11 @@
 package Tests;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.EntityManager;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -17,9 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
-import org.uqbar.geodds.Point;
-import org.uqbar.geodds.Polygon;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
@@ -48,9 +42,8 @@ import grupo4.POIs.Rubro;
 import grupo4.POIs.Servicio;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
-import grupo4.Repositorios.ResultadoDeBusqueda;
 
-public class ObserversTest extends AbstractPersistenceTest implements WithGlobalEntityManager{
+public class ObserversTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	private List<CentroDTO> listaCentroAAdaptar;
 	private RepositorioDePois repoDePois;
 	private Parada parada114;
@@ -86,13 +79,11 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 	private RepositorioDeBusquedas repositorioBusquedas;
 	private ObserverNotificador notificadorFalla;
 	private Usuario terminalFalla;
-	private EntityManager em;
-	private ResultadoDeBusqueda resultadoPrueba;
+
 	@SuppressWarnings("static-access")
 
 	@Before
 	public void init() {
-		em=PerThreadEntityManagers.getEntityManager();
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
@@ -101,8 +92,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		reporterParcial = new ObserverReporterParcial();
 		reporterPorFecha = new ObserverReporterPorFecha();
 		reporterTotal = new ObserverReporterTotal();
-		
-		
+
 		almacenador = new ObserverAlmacenador();
 
 		listaCentroAAdaptar = new ArrayList<>();
@@ -211,23 +201,27 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		repoDePois.agregarPoi(parada114);
 		repoDePois.agregarPoi(local);
 		repoDePois.agregarPoi(cgp);
-		terminal = new Usuario("Terminal Abasto",10);
+		terminal = new Usuario("Terminal Abasto", 10);
 		terminal.agregarObserver(notificador);
 		terminal.agregarObserver(reporterPorFecha);
 		terminal.agregarObserver(reporterTotal);
 		terminal.agregarObserver(reporterParcial);
 		terminal.agregarObserver(almacenador);
 
-		terminalFalla = new Usuario("Terminal Belgrano",1);
+		terminalFalla = new Usuario("Terminal Belgrano", 1);
 		notificadorFalla = new ObserverNotificador(1, notificadorMail);
 		terminalFalla.agregarObserver(notificadorFalla);
 
-		/*resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5, "Hola que hace?", LocalDate.now(), 3);
-		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoPrueba);*/
-		
-		//Mover a Nueva clase de tests de persistencia
-		
-		//em.persist(resultadoPrueba);
+		/*
+		 * resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5,
+		 * "Hola que hace?", LocalDate.now(), 3);
+		 * RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoPrueba
+		 * );
+		 */
+
+		// Mover a Nueva clase de tests de persistencia
+
+		// em.persist(resultadoPrueba);
 	}
 
 	@After
@@ -235,20 +229,22 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		RepositorioDePois.getInstancia().reset();
 		RepositorioDeBusquedas.getInstancia().reset();
 	}
-	//Mover a Nueva clase de tests de persistencia
+
+	// Mover a Nueva clase de tests de persistencia
 	/*
-	@Test
-	public void pruebaBDBusquedas(){
-		ResultadoDeBusqueda resultadoPersistido=em.find(ResultadoDeBusqueda.class,resultadoPrueba.getId());
-		Assert.assertEquals(resultadoPersistido.getTerminalDeLaBusqueda(),resultadoPrueba.getTerminalDeLaBusqueda());
-	}
-	
-	@Test
-	public void testCantidadResultadosDeUnTerminalPersistido(){
-		List<Integer> listaObtenida=RepositorioDeBusquedas.getInstancia().getlistaBusquedas("Terminal Abasto");
-		Assert.assertEquals(listaObtenida.stream().findFirst().get().intValue(),3);
-	}
-	*/
+	 * @Test public void pruebaBDBusquedas(){ ResultadoDeBusqueda
+	 * resultadoPersistido=em.find(ResultadoDeBusqueda.class,resultadoPrueba.
+	 * getId());
+	 * Assert.assertEquals(resultadoPersistido.getTerminalDeLaBusqueda(),
+	 * resultadoPrueba.getTerminalDeLaBusqueda()); }
+	 * 
+	 * @Test public void testCantidadResultadosDeUnTerminalPersistido(){
+	 * List<Integer>
+	 * listaObtenida=RepositorioDeBusquedas.getInstancia().getlistaBusquedas(
+	 * "Terminal Abasto");
+	 * Assert.assertEquals(listaObtenida.stream().findFirst().get().intValue(),3
+	 * ); }
+	 */
 	@Test
 	public void notificadorArministrador() {
 		terminal.busquedaLibre("HSBC");

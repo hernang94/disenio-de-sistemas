@@ -3,10 +3,6 @@ package grupo4.ComponentesExternos;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.uqbar.geodds.Point;
-import org.uqbar.geodds.Polygon;
-
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 

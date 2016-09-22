@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.joda.time.LocalTime;
-import org.uqbar.geodds.Polygon;
 
 import DTOexterno.CentroDTO;
 import DTOexterno.LocalComercialExterno;

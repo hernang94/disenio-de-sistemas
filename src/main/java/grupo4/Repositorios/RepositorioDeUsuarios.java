@@ -1,6 +1,5 @@
 package grupo4.Repositorios;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
@@ -11,16 +10,16 @@ import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import grupo4.Acciones.Usuario;
 
 public class RepositorioDeUsuarios {
-	//private List<Usuario> listaDeUsuarios = new ArrayList<>();
+	// private List<Usuario> listaDeUsuarios = new ArrayList<>();
 	private static RepositorioDeUsuarios instancia = new RepositorioDeUsuarios();
-	EntityManager manager= PerThreadEntityManagers.getEntityManager();
+	EntityManager manager = PerThreadEntityManagers.getEntityManager();
 
 	public static RepositorioDeUsuarios getInstancia() {
 		return instancia;
 	}
 
 	public void agregarUsuario(Usuario usuario) {
-		//listaDeUsuarios.add(usuario);
+		// listaDeUsuarios.add(usuario);
 		try {
 			manager.persist(usuario);
 			manager.flush();
@@ -30,11 +29,13 @@ public class RepositorioDeUsuarios {
 	}
 
 	public void quitarUsuario(Usuario usuario) {
-		//listaDeUsuarios.remove(usuario);
+		// listaDeUsuarios.remove(usuario);
 		manager.remove(usuario);
-		/*if(manager.createQuery("delete from Usuario where idUsuario=:id").setParameter("id", id).executeUpdate()<1){
-			throw new RuntimeException("No existe el Usuario");
-		};*/
+		/*
+		 * if(manager.createQuery("delete from Usuario where idUsuario=:id"
+		 * ).setParameter("id", id).executeUpdate()<1){ throw new
+		 * RuntimeException("No existe el Usuario"); };
+		 */
 	}
 
 	@SuppressWarnings("unchecked")
@@ -42,8 +43,8 @@ public class RepositorioDeUsuarios {
 		return (List<Usuario>) manager.createQuery("from Usuario").getResultList();
 	}
 
-	/*public void reset() {
-		listaDeUsuarios.clear();
-	}*/
+	/*
+	 * public void reset() { listaDeUsuarios.clear(); }
+	 */
 
 }

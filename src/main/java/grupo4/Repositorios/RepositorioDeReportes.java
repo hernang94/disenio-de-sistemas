@@ -6,20 +6,19 @@ import java.util.List;
 import grupo4.Acciones.Reporte;
 
 public class RepositorioDeReportes {
-	private List<Reporte> listaDeReportes=new ArrayList<>();
+	private List<Reporte> listaDeReportes = new ArrayList<>();
 	private static RepositorioDeReportes instancia = new RepositorioDeReportes();
 
 	public static RepositorioDeReportes getInstancia() {
 		return instancia;
 	}
-	
-	public void agregarReporte(Reporte unReporte){
+
+	public void agregarReporte(Reporte unReporte) {
 		listaDeReportes.add(unReporte);
 	}
 
 	public List<Reporte> getListaDeReportes() {
 		return listaDeReportes;
 	}
-	
-	
+
 }

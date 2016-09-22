@@ -3,7 +3,6 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 public class RepositorioDePois {
 	private static RepositorioDePois instancia = new RepositorioDePois();
 	private List<BuscadorDePois> origenesExternos = new ArrayList<>();
-	EntityManager manager= PerThreadEntityManagers.getEntityManager();
+	EntityManager manager = PerThreadEntityManagers.getEntityManager();
 
 	public void reset() {
 		origenesExternos.clear();
@@ -37,50 +36,49 @@ public class RepositorioDePois {
 	}
 
 	public void agregarPoi(Poi unPoi) {
-		//if (!repositorioContienePoi(unPoi.getId())) {
-			//listaDePois.add(unPoi);
-		/*try {
-			manager.persist(unPoi);
-			manager.flush();
-		} catch (EntityExistsException e) {
+		// if (!repositorioContienePoi(unPoi.getId())) {
+		// listaDePois.add(unPoi);
+		/*
+		 * try { manager.persist(unPoi); manager.flush(); } catch
+		 * (EntityExistsException e) { throw new RuntimeException(
+		 * "Poi ya existente"); }
+		 */
+		if (manager.find(Poi.class, unPoi.getId()) != null) {
 			throw new RuntimeException("Poi ya existente");
-		}*/
-		if(manager.find(Poi.class, unPoi.getId())!=null){
-			throw new RuntimeException("Poi ya existente");
-		}
-		else{
+		} else {
 			manager.persist(unPoi);
 			manager.flush();
 		}
-		
+
 	}
 
 	public void bajaPoi(int id) {
-		/*if (repositorioContienePoi(id)) {
-			listaDePois.remove(obtenerPoi(id));
-		} else {
-			
-		}
-		if(manager.createQuery("delete from Poi where idPoi=:id").setParameter("id", id).executeUpdate()<1){
-			throw new RuntimeException("No existe el Poi");
-		};*/
-		try{			
-			//manager.remove(unPoi);
-			//manager.flush();
-			//manager.createQuery("delete from Poi where idPoi=:id").setParameter("id", id).executeUpdate();
-			manager.remove((Poi)manager.find(Poi.class, id));
-		}catch(Exception e){
+		/*
+		 * if (repositorioContienePoi(id)) { listaDePois.remove(obtenerPoi(id));
+		 * } else {
+		 * 
+		 * } if(manager.createQuery("delete from Poi where idPoi=:id"
+		 * ).setParameter("id", id).executeUpdate()<1){ throw new
+		 * RuntimeException("No existe el Poi"); };
+		 */
+		try {
+			// manager.remove(unPoi);
+			// manager.flush();
+			// manager.createQuery("delete from Poi where
+			// idPoi=:id").setParameter("id", id).executeUpdate();
+			manager.remove((Poi) manager.find(Poi.class, id));
+		} catch (Exception e) {
 			throw new RuntimeException("No existe el Poi");
 		}
 	}
 
-/*	private boolean repositorioContienePoi(Integer id) {
-		return listaDePois.stream().anyMatch(unPoi -> unPoi.getId() == id);
-	}
-
-	private Poi obtenerPoi(int id) {
-		return listaDePois.stream().filter(poi -> poi.getId() == id).findFirst().get();
-	}*/
+	/*
+	 * private boolean repositorioContienePoi(Integer id) { return
+	 * listaDePois.stream().anyMatch(unPoi -> unPoi.getId() == id); }
+	 * 
+	 * private Poi obtenerPoi(int id) { return listaDePois.stream().filter(poi
+	 * -> poi.getId() == id).findFirst().get(); }
+	 */
 
 	public List<Poi> busquedaLibre(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();
@@ -114,12 +112,12 @@ public class RepositorioDePois {
 	public List<Poi> filtrarPorCriterio(String criterio) {
 		@SuppressWarnings("unchecked")
 		List<Poi> listaAux = (List<Poi>) manager.createQuery("from Poi").getResultList();
-		List<Poi> listaFiltrada= listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
+		List<Poi> listaFiltrada = listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList());
 		if (listaFiltrada.isEmpty()) {
 			origenesExternos.stream()
 					.forEach(unComponente -> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
-			listaFiltrada.forEach(unPoi->manager.persist(unPoi));
+			listaFiltrada.forEach(unPoi -> manager.persist(unPoi));
 			manager.flush();
 		}
 		return listaFiltrada;
@@ -132,25 +130,25 @@ public class RepositorioDePois {
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
-		List<Poi> poisEnBD= this.consultarBD();
+		List<Poi> poisEnBD = this.consultarBD();
 		return poisEnBD.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);
 	}
 
 	public void cambiarPalabrasClaves(String palabraFantasia, List<String> palabrasClaves) {
 		if (repositorioContienePoi(palabraFantasia)) {
-			List<Poi> poisEnBD= this.consultarBD();
+			List<Poi> poisEnBD = this.consultarBD();
 			poisEnBD.stream().forEach(poi -> poi.reemplazarPalabrasClaves(palabrasClaves));
 			poisEnBD.stream().forEach(poi -> manager.merge(poi));
 		}
 	}
 
 	private boolean repositorioContienePoi(String palabraFantasia) {
-		List<Poi> poisEnBD= this.consultarBD();
+		List<Poi> poisEnBD = this.consultarBD();
 		return poisEnBD.stream().anyMatch(unPoi -> unPoi.getNombre().equalsIgnoreCase(palabraFantasia));
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private List<Poi> consultarBD(){
+	private List<Poi> consultarBD() {
 		return (List<Poi>) manager.createQuery("from Poi").getResultList();
 	}
 }

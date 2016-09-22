@@ -9,6 +9,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import grupo4.Repositorios.ResultadoDeBusqueda;
+
 @Entity
 @Table(name = "Observers")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

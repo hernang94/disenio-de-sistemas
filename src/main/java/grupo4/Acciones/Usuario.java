@@ -14,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.ResultadoDeBusqueda;
@@ -26,12 +24,13 @@ public class Usuario {
 	@Id
 	@GeneratedValue
 	private int idUsuario;
-	@Column(name="terminal",unique=true)
+	@Column(name = "terminal", unique = true)
 	private String terminal;
 	private int comuna;
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idUsuario")
 	private List<ObserverDeBusqueda> observers = new ArrayList<>();
+
 	@SuppressWarnings("unused")
 	private Usuario() {
 	}
@@ -50,9 +49,10 @@ public class Usuario {
 	}
 
 	public void quitarObserver(IdObserver idObserverAQuitar) {
-		if(observers.stream().anyMatch(unObserver->unObserver.getId().equals(idObserverAQuitar))){
-			ObserverDeBusqueda observer=observers.stream().filter(unObserver->unObserver.getId().equals(idObserverAQuitar)).findFirst().get();
-			observers.remove(observer);			
+		if (observers.stream().anyMatch(unObserver -> unObserver.getId().equals(idObserverAQuitar))) {
+			ObserverDeBusqueda observer = observers.stream()
+					.filter(unObserver -> unObserver.getId().equals(idObserverAQuitar)).findFirst().get();
+			observers.remove(observer);
 		}
 	}
 
