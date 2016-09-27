@@ -22,7 +22,6 @@ public class CGP extends Poi {
 	 */
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Servicio> servicios = new ArrayList<>();
-	// Preguntar a juliet :)
 	@Embedded
 	private Poligono comuna;
 

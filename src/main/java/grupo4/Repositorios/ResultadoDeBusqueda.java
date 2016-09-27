@@ -1,44 +1,45 @@
 package grupo4.Repositorios;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+import org.mongodb.morphia.annotations.Converters;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Property;
 import org.uqbarproject.jpa.java8.extras.convert.LocalDateConverter;
+import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
-@Table(name = "Busquedas")
 public class ResultadoDeBusqueda {
 
 	@Id
-	@GeneratedValue
 	private int id;
-	@Column(name = "Usuario")
+	@Property("Usuario")
 	private String terminalDeLaBusqueda;
 	private long tiempoDeBusqueda;
-	@Column(name = "Descripcion")
+	@Property("Descripcion")
 	private String fraseBuscada;
-	@Column(name = "Fecha")
-	@Convert(converter = LocalDateConverter.class)
+	@Property("Fecha")
+	//@Converters(value = LocalDateConverter.class)
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
+	private List<PoiDTO> poisObtenidos;
 
 	@SuppressWarnings("unused")
 	private ResultadoDeBusqueda() {
 	}
 
 	public ResultadoDeBusqueda(String terminal, long tiempoDeBusqueda, String fraseBuscada, LocalDate fechaDeBusqueda,
-			int cantidadDeResultados) {
+			int cantidadDeResultados, List<PoiDTO> poisObtenidos) {
 		this.terminalDeLaBusqueda = terminal;
 		this.tiempoDeBusqueda = tiempoDeBusqueda;
 		this.fraseBuscada = fraseBuscada;
 		this.fechaDeBusqueda = fechaDeBusqueda;
 		this.cantidadDeResultados = cantidadDeResultados;
+		this.poisObtenidos = poisObtenidos;
 	}
 
 	public String getTerminalDeLaBusqueda() {
@@ -60,10 +61,18 @@ public class ResultadoDeBusqueda {
 	public int getCantidadDeResultados() {
 		return cantidadDeResultados;
 	}
-
+	
 	/*public boolean esDeTerminal(String unTerminal) {
 		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);
 	}*/
+
+	public List<PoiDTO> getPoisObtenidos() {
+		return poisObtenidos;
+	}
+
+	public void setPoisObtenidos(List<PoiDTO> poisObtenidos) {
+		this.poisObtenidos = poisObtenidos;
+	}
 
 	public int getId() {
 		return id;
