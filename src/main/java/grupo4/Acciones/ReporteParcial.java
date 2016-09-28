@@ -11,10 +11,6 @@ public class ReporteParcial implements Reporte {
 		this.cantParciales = cantParciales;
 	}
 
-	// public void reportar(){
-	// aca deberia mostrar por pantalla el reporte
-	// }
-
 	public String getTerminalQueLoSolicito() {
 		return terminalQueLoSolicito;
 	}

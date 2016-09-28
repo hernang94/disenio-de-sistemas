@@ -8,18 +8,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 
 @Entity
+@MappedSuperclass
 public class CGP extends Poi {
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue private int id;
-	 */
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Servicio> servicios = new ArrayList<>();
 	@Embedded

@@ -21,5 +21,4 @@ public class ReportePorFecha implements Reporte {
 		this.datosReporte = datosReporte;
 	}
 
-	// public void reportar(){}
 }

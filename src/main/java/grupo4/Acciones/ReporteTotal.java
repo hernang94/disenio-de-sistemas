@@ -19,6 +19,4 @@ public class ReporteTotal implements Reporte {
 		this.datos = datos;
 	}
 
-	// public void reportar(){}
-
 }

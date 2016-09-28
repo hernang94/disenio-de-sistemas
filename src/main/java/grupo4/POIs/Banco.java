@@ -10,17 +10,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "Bancos")
+@MappedSuperclass
 public class Banco extends Poi {
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue private int id;
-	 */
 	@ElementCollection
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
 	private Map<DayOfWeek, Horario> hashHorario;

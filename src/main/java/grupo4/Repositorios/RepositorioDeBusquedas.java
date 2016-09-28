@@ -6,23 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import grupo4.Acciones.FechaCantReporte;
 
-public class RepositorioDeBusquedas {
-	//Aca directamente la lista y el map vuelan, porque si yo tengo la tabla de Resultados de Busqueda,
-	//la traigo completa y en caso de querer los de un terminal en especifico hago una query y traigo
-	//los de ese usuario/terminal y los devuelvo para el reporte
-	//No se si hay que hacer desaparecer el objeto FechaCantReporte y que devuela la busqueda completa
-	//y uso de ese objeto lo que necesito para hacer el reporte
+public class RepositorioDeBusquedas implements WithGlobalEntityManager {
 	private List<ResultadoDeBusqueda> listaBusquedas = new ArrayList<>();
 	private Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
 	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();
-	EntityManager em = PerThreadEntityManagers.getEntityManager();
-	
+
 	public static RepositorioDeBusquedas getInstancia() {
 		return instancia;
 	}
@@ -33,9 +25,7 @@ public class RepositorioDeBusquedas {
 	}
 
 	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
-		em.persist(newResult);
-		em.flush();
-		//listaBusquedas.add(newResult);
+		entityManager().persist(newResult);
 		actualizarHashTerminales(newResult);
 	}
 
@@ -60,15 +50,21 @@ public class RepositorioDeBusquedas {
 
 	}
 
-	//hago que el método devuelva List<Integer> o solo List para que matchee con lo que devuelve la Query del EM?
+	// hago que el método devuelva List<Integer> o solo List para que matchee
+	// con lo que devuelve la Query del EM?
 	@SuppressWarnings("unchecked")
 	public List<Integer> getlistaBusquedas(String unTerminal) {
-		/*List<Integer> lista = new ArrayList<>();
-		List<ResultadoDeBusqueda> listaFiltrada = listaBusquedas.stream()
-				.filter(busqueda -> busqueda.esDeTerminal(unTerminal)).collect(Collectors.toList());
-		listaFiltrada.forEach(busqueda -> lista.add(busqueda.getCantidadDeResultados()));
-		return lista;*/
-		return (List<Integer>)em.createQuery("SELECT cantidadDeResultados FROM ResultadoDeBusqueda WHERE terminalDeLaBusqueda=:nombreTerminal").setParameter("nombreTerminal", unTerminal).getResultList();
+		/*
+		 * List<Integer> lista = new ArrayList<>(); List<ResultadoDeBusqueda>
+		 * listaFiltrada = listaBusquedas.stream() .filter(busqueda ->
+		 * busqueda.esDeTerminal(unTerminal)).collect(Collectors.toList());
+		 * listaFiltrada.forEach(busqueda ->
+		 * lista.add(busqueda.getCantidadDeResultados())); return lista;
+		 */
+		return (List<Integer>) entityManager()
+				.createQuery(
+						"SELECT cantidadDeResultados FROM ResultadoDeBusqueda WHERE terminalDeLaBusqueda=:nombreTerminal")
+				.setParameter("nombreTerminal", unTerminal).getResultList();
 	}
 
 	public FechaCantReporte cantidadPorFecha(LocalDate fecha) {
@@ -77,21 +73,26 @@ public class RepositorioDeBusquedas {
 	}
 
 	public List<FechaCantReporte> getListaFechaCant(String terminal) {
-		List<FechaCantReporte>listaADevolver=new ArrayList<>();
+		List<FechaCantReporte> listaADevolver = new ArrayList<>();
 		@SuppressWarnings("unchecked")
-		List<Object[]>listaDeObjetos= (List<Object[]>)em.createQuery("select distinct fechaDeBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda where terminalDeLaBusqueda=:terminal group by fechaDeBusqueda").setParameter("terminal", terminal).getResultList();
-		listaDeObjetos.stream().forEach(elemento->listaADevolver.add(new FechaCantReporte((LocalDate)elemento[0], ((Long)elemento[1]).intValue())));
-		//NO SABEMOS COMO UNIR LAS DOS LISTAS O COMO HACER LA QUERY
-		
+		List<Object[]> listaDeObjetos = (List<Object[]>) entityManager()
+				.createQuery(
+						"select distinct fechaDeBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda where terminalDeLaBusqueda=:terminal group by fechaDeBusqueda")
+				.setParameter("terminal", terminal).getResultList();
+		listaDeObjetos.stream().forEach(elemento -> listaADevolver
+				.add(new FechaCantReporte((LocalDate) elemento[0], ((Long) elemento[1]).intValue())));
 		return listaADevolver;
 	}
-
 
 	public Map<String, Integer> reporteTotal() {
 		Map<String, Integer> hashARetornar = new HashMap<>();
 		@SuppressWarnings("unchecked")
-		List<Object[]> listaObjetos= (List<Object[]>)em.createQuery("select distinct terminalDeLaBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda group by terminalDeLaBusqueda").getResultList();
-		listaObjetos.stream().forEach(elemento -> hashARetornar.put((String)elemento[0], ((Long)elemento[1]).intValue()));
+		List<Object[]> listaObjetos = (List<Object[]>) entityManager()
+				.createQuery(
+						"select distinct terminalDeLaBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda group by terminalDeLaBusqueda")
+				.getResultList();
+		listaObjetos.stream()
+				.forEach(elemento -> hashARetornar.put((String) elemento[0], ((Long) elemento[1]).intValue()));
 		return hashARetornar;
 	}
 

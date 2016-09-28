@@ -7,12 +7,6 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Horario {
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue private int idHorario;
-	 */
-	// preguntar a julieta :) (persistir LocalTime)
 	private LocalTime desde;
 	private LocalTime hasta;
 

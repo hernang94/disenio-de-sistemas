@@ -12,27 +12,24 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.MappedSuperclass;
 
 import grupo4.HerramientasExternas.Punto;
 
 @Entity
+@MappedSuperclass
 public class LocalComercial extends Poi {
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue private int id;
-	 */
 	@Enumerated(EnumType.STRING)
 	private Rubro rubro;
 	@ElementCollection
 	@CollectionTable(name = "Horario_Manana")
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
-	@Column(name = "Horario mañana")
+	@Column(name = " Local_Comercial_Horario_Mañana")
 	private Map<DayOfWeek, Horario> hashManana;
 	@ElementCollection
 	@CollectionTable(name = "Horario_Tarde")
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
-	@Column(name = "Horario tarde")
+	@Column(name = " Local_Comercial_Horario_Tarde")
 	private Map<DayOfWeek, Horario> hashTarde;
 
 	public LocalComercial(Rubro rubro, Map<DayOfWeek, Horario> horariosManiana, Map<DayOfWeek, Horario> horariosTarde,

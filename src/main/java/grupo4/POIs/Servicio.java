@@ -25,6 +25,10 @@ public class Servicio {
 		hashHorario = horarios;
 	}
 
+	@SuppressWarnings("unused")
+	private Servicio() {
+	}
+
 	public boolean estaDisponible(LocalDateTime fechaConsulta) {
 		DayOfWeek dia = fechaConsulta.getDayOfWeek();
 		if (hashHorario.get(dia) != null) {

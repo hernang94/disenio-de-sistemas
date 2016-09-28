@@ -10,14 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import grupo4.HerramientasExternas.Punto;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "Puntos_de_Interes")
 public abstract class Poi {
 	protected String nombre;
 	@Id
