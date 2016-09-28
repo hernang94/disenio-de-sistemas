@@ -27,18 +27,18 @@ public class Punto{
 	}
 
 	public double distance(Punto punto) {
-		return this.puntoAPoint(this).distance(punto.puntoAPoint(punto));
+		return this.puntoAPoint().distance(punto.puntoAPoint());
 	}	
 	
-	public Point puntoAPoint(Punto punto){
-		return new Point(punto.getLatitud(),punto.getLongitud());
+	public Point puntoAPoint(){
+		return new Point(this.getLatitud(),this.getLongitud());
 	}
 	
 	public boolean intersects(Punto punto1, Punto punto2){
-		return this.puntoAPoint(this).intersects(punto1.puntoAPoint(punto1), punto2.puntoAPoint(punto2));
+		return this.puntoAPoint().intersects(punto1.puntoAPoint(), punto2.puntoAPoint());
 	}
 	
 	public String toString(){
-		return this.puntoAPoint(this).toString();
+		return this.puntoAPoint().toString();
 	}
 }

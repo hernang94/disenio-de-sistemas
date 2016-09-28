@@ -177,14 +177,13 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
 		hashMapServicio.put(DayOfWeek.FRIDAY, new Horario("12:00", "13:30"));
-		Poligono comuna10 = new Poligono();
 		List<Punto> coordenadasComuna10 = new ArrayList<>();
 		coordenadasComuna10.add(new Punto(-34.637466, -58.476939));
 		coordenadasComuna10.add(new Punto(-34.6350677, -58.4810659));
 		coordenadasComuna10.add(new Punto(-34.6417364, -58.4792636));
 		coordenadasComuna10.add(new Punto(-34.6409182, -58.4758827));
 		coordenadasComuna10.add(new Punto(-34.6383056, -58.4814007));
-		comuna10.setPuntosPoligono(coordenadasComuna10);
+		Poligono comuna10 = new Poligono(coordenadasComuna10);
 		timbrado = new Servicio("timbrado", hashMapServicio);
 		palabrasClavesCGP = new ArrayList<>();
 		palabrasClavesCGP.add("10");

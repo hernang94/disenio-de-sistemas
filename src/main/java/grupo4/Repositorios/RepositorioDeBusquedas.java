@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import grupo4.Acciones.FechaCantReporte;
+import grupo4.HerramientasExternas.InstanciadorMorphia;
 
-public class RepositorioDeBusquedas implements WithGlobalEntityManager {
+public class RepositorioDeBusquedas {
 	private List<ResultadoDeBusqueda> listaBusquedas = new ArrayList<>();
 	private Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
 	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();
@@ -25,42 +25,11 @@ public class RepositorioDeBusquedas implements WithGlobalEntityManager {
 	}
 
 	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
-		entityManager().persist(newResult);
-		actualizarHashTerminales(newResult);
+		InstanciadorMorphia.getInstancia().getDb()
 	}
 
-	private void actualizarHashTerminales(ResultadoDeBusqueda newResult) {
-		if (busquedasDeCadaTerminal.containsKey(newResult.getTerminalDeLaBusqueda())) {
-			FechaCantReporte fechaAux = busquedasDeCadaTerminal.get(newResult.getTerminalDeLaBusqueda()).stream()
-					.filter(reporte -> reporte.getFecha().equals(newResult.getFechaDeBusqueda())).findFirst().get();
-			if (fechaAux == null) {
-				FechaCantReporte auxAAgregar = new FechaCantReporte(newResult.getFechaDeBusqueda(),
-						newResult.getCantidadDeResultados());
-				busquedasDeCadaTerminal.get(newResult.getTerminalDeLaBusqueda()).add(auxAAgregar);
-			} else {
-				fechaAux.aumentarCantidad(newResult.getCantidadDeResultados());
-			}
-		} else {
-			List<FechaCantReporte> listaAAgregar = new ArrayList<>();
-			FechaCantReporte auxAAgregar = new FechaCantReporte(newResult.getFechaDeBusqueda(),
-					newResult.getCantidadDeResultados());
-			listaAAgregar.add(auxAAgregar);
-			busquedasDeCadaTerminal.put(newResult.getTerminalDeLaBusqueda(), listaAAgregar);
-		}
-
-	}
-
-	// hago que el método devuelva List<Integer> o solo List para que matchee
-	// con lo que devuelve la Query del EM?
 	@SuppressWarnings("unchecked")
 	public List<Integer> getlistaBusquedas(String unTerminal) {
-		/*
-		 * List<Integer> lista = new ArrayList<>(); List<ResultadoDeBusqueda>
-		 * listaFiltrada = listaBusquedas.stream() .filter(busqueda ->
-		 * busqueda.esDeTerminal(unTerminal)).collect(Collectors.toList());
-		 * listaFiltrada.forEach(busqueda ->
-		 * lista.add(busqueda.getCantidadDeResultados())); return lista;
-		 */
 		return (List<Integer>) entityManager()
 				.createQuery(
 						"SELECT cantidadDeResultados FROM ResultadoDeBusqueda WHERE terminalDeLaBusqueda=:nombreTerminal")

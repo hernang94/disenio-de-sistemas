@@ -121,14 +121,13 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
 		hashMapServicio.put(DayOfWeek.FRIDAY, new Horario("12:00", "13:30"));
-		comuna10 = new Poligono();
 		List<Punto> coordenadasComuna10 = new ArrayList<>();
 		coordenadasComuna10.add(new Punto(-34.637466, -58.476939));
 		coordenadasComuna10.add(new Punto(-34.6350677, -58.4810659));
 		coordenadasComuna10.add(new Punto(-34.6417364, -58.4792636));
 		coordenadasComuna10.add(new Punto(-34.6409182, -58.4758827));
 		coordenadasComuna10.add(new Punto(-34.6383056, -58.4814007));
-		comuna10.setPuntosPoligono(coordenadasComuna10);
+		comuna10 = new Poligono(coordenadasComuna10);
 		timbrado = new Servicio("timbrado", hashMapServicio);
 		List<String> palabrasClavesCGP = new ArrayList<>();
 		palabrasClavesCGP.add("10");
@@ -368,14 +367,12 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		thrown.expect(RuntimeException.class);
 		thrown.expectMessage("Poi ya existente");
 		dispositivoTactil.agregarPoi(banco);
-
 	}
 
 	@Test
 	public void quitarPoiExistente() {
 		dispositivoTactil.bajaPoi(parada114.getId());
 		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
-
 	}
 
 	@Test
@@ -409,7 +406,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Test
 	public void isInside() {
-		Assert.assertTrue(comuna10.isInsideOld(new Punto(-34.6409182, -58.4758827)));
+		Assert.assertTrue(comuna10.isInside(new Punto(-34.6409182, -58.4758827)));
 	}
 
 	@Test
