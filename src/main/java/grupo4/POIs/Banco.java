@@ -13,8 +13,9 @@ import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
+import grupo4.PoiDTOs.PoiDTO;
+
 @Entity
-@MappedSuperclass
 public class Banco extends Poi {
 	@ElementCollection
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
@@ -40,4 +41,12 @@ public class Banco extends Poi {
 		return (hashHorario.get(dia) != null) && (hashHorario.get(dia).estaEnHorario(horaConsulta));
 	}
 
+	public PoiDTO instanciaDTO() {
+		PoiDTO bancoDTO= new PoiDTO(super.getNombre(),super.getPalabrasClaves(),super.getCoordenadas(),"Banco");
+		bancoDTO.setHashHorario(hashHorario);
+		bancoDTO.setListaServicios(listaServicios);
+		return bancoDTO;
+	}
+	
+	
 }

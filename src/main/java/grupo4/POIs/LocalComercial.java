@@ -15,9 +15,9 @@ import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.MappedSuperclass;
 
 import grupo4.HerramientasExternas.Punto;
+import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
-@MappedSuperclass
 public class LocalComercial extends Poi {
 	@Enumerated(EnumType.STRING)
 	private Rubro rubro;
@@ -58,5 +58,13 @@ public class LocalComercial extends Poi {
 		boolean criterio1 = (hashManana.get(dia).estaEnHorario(horaConsulta));
 		boolean criterio2 = (hashTarde.get(dia).estaEnHorario(horaConsulta));
 		return (criterio1 || criterio2);
+	}
+
+	public PoiDTO instanciaDTO() {
+		PoiDTO localDTO= new PoiDTO(super.getNombre(),super.getPalabrasClaves(),super.getCoordenadas(),"Local Comercial");
+		localDTO.setRubro(rubro);
+		localDTO.setHashManana(hashManana);
+		localDTO.setHashTarde(hashTarde);
+		return localDTO;
 	}
 }

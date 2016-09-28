@@ -13,9 +13,9 @@ import javax.persistence.OneToMany;
 
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
+import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
-@MappedSuperclass
 public class CGP extends Poi {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Servicio> servicios = new ArrayList<>();
@@ -56,5 +56,12 @@ public class CGP extends Poi {
 	public Servicio encontrarServicio(Servicio servicio) {
 		return servicios.stream().filter(unServicio -> unServicio.getNombre().equalsIgnoreCase((servicio.getNombre())))
 				.findFirst().get();
+	}
+
+	public PoiDTO instanciaDTO() {
+		PoiDTO cgpDTO= new PoiDTO(super.getNombre(),super.getPalabrasClaves(),super.getCoordenadas(),"CGP");
+		cgpDTO.setComuna(comuna);
+		cgpDTO.setListaServicios(servicios);
+		return cgpDTO;
 	}
 }

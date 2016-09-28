@@ -16,9 +16,8 @@ public class ServicioDTO {
 	@Embedded
 	private Map<DayOfWeek, Horario> hashHorario;
 	
-	public ServicioDTO(int id, String nombre, Map<DayOfWeek, Horario> hashHorario) {
+	public ServicioDTO(String nombre, Map<DayOfWeek, Horario> hashHorario) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.hashHorario = hashHorario;
 	}

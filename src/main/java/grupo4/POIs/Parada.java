@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
 import grupo4.HerramientasExternas.Punto;
+import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
-@MappedSuperclass
 public class Parada extends Poi {
 	public Parada(String nombre, List<String> palabrasClaves) {
 		super(nombre, palabrasClaves);
@@ -25,5 +25,9 @@ public class Parada extends Poi {
 
 	public boolean encuentraNombre(String criterio) {
 		return (criterio.equals(super.getNombre()));
+	}
+
+	public PoiDTO instanciaDTO() {
+		return new PoiDTO(super.getNombre(),super.getPalabrasClaves(),super.getCoordenadas(),"Parada");
 	}
 }

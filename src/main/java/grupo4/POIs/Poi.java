@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
 import grupo4.HerramientasExternas.Punto;
+import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -34,9 +35,10 @@ public abstract class Poi {
 	private Poi() {
 	}
 
-	public Poi(String nombre, List<String> palabrasClaves) {
+	public Poi(String nombre, List<String> palabrasClaves,Punto coordenadas) {
 		this.nombre = nombre;
 		this.palabrasClaves = palabrasClaves;
+		this.coordenadas = coordenadas;
 	}
 
 	public void setPalabrasClaves(List<String> palabrasClaves) {
@@ -108,6 +110,8 @@ public abstract class Poi {
 	}
 
 	public abstract boolean estaDisponible(LocalDateTime fechaConsulta);
+	
+	public abstract PoiDTO instanciaDTO();
 
 	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio) {
 		return false;
@@ -120,6 +124,10 @@ public abstract class Poi {
 
 	public int getId() {
 		return idPoi;
+	}
+
+	public Punto getCoordenadas() {
+		return coordenadas;
 	}
 
 }

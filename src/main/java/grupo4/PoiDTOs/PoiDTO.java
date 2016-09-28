@@ -14,10 +14,11 @@ import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Horario;
 import grupo4.POIs.Rubro;
+import grupo4.POIs.Servicio;
 import grupo4.PoiDTOs.ServicioDTO;
 
 @Entity
-public abstract class PoiDTO {
+public class PoiDTO {
 	protected String nombre;
 	@Id
 	private int idPoi;
@@ -36,14 +37,14 @@ public abstract class PoiDTO {
 	@Embedded
 	private Map<DayOfWeek, Horario> hashTarde;
 	private Rubro rubro;
-	private Poligono comuna;
+	private List<String> coordenadasComuna;
 	private String tipo;
 	
 	public PoiDTO(String nombre, List<String> palabrasClaves,Punto ubicacion, String tipo) {
 		this.nombre = nombre;
 		this.palabrasClaves = palabrasClaves;
-		this.setX(ubicacion.latitude());
-		this.setY(ubicacion.longitude());
+		this.setX(ubicacion.getLatitud());
+		this.setY(ubicacion.getLongitud());
 		this.tipo=tipo;
 	}
 
@@ -99,8 +100,10 @@ public abstract class PoiDTO {
 		return listaServicios;
 	}
 
-	public void setListaServicios(List<ServicioDTO> listaServicios) {
-		this.listaServicios = listaServicios;
+	public void setListaServicios(List<Servicio> listaServicios) {
+		List<ServicioDTO> listaDTOs= new ArrayList<>();
+		listaServicios.stream().forEach(servicio->listaDTOs.add(servicio.instanciaDTO()));
+		this.listaServicios = listaDTOs;
 	}
 
 	public Map<DayOfWeek, Horario> getHashManana() {
@@ -127,12 +130,12 @@ public abstract class PoiDTO {
 		this.rubro = rubro;
 	}
 
-	public Poligono getComuna() {
-		return comuna;
+	public List<String> getComuna() {
+		return coordenadasComuna;
 	}
 
 	public void setComuna(Poligono comuna) {
-		this.comuna = comuna;
+		this.coordenadasComuna=comuna.aString();
 	}
 
 	public String getTipo() {
