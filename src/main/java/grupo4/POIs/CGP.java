@@ -22,8 +22,8 @@ public class CGP extends Poi {
 	@Embedded
 	private Poligono comuna;
 
-	public CGP(Poligono comuna, String nombre, List<String> palabrasClaves) {
-		super(nombre, palabrasClaves);
+	public CGP(Poligono comuna, String nombre, List<String> palabrasClaves,Punto coordenadas) {
+		super(nombre, palabrasClaves,coordenadas);
 		this.comuna = comuna;
 	}
 

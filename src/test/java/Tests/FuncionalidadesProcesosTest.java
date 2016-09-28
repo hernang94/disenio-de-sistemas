@@ -176,7 +176,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
-		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco);
+		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
 		banco.setX(-34.6409182);
 		banco.setY(-58.4758827);
 
@@ -187,7 +187,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		palabrasClavesParada.add("Rojo");
 		palabrasClavesParada.add("Vidrios polarizados");
 		palabrasClavesParada.add("114");
-		parada114 = new Parada("114", palabrasClavesParada);
+		parada114 = new Parada("114", palabrasClavesParada,new Punto(-34.6417364,-58.479263));
 		parada114.setX(-34.6417364);
 		parada114.setY(-58.4792636);
 
@@ -209,11 +209,11 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		palabrasClavesLocalComercial.add("Mesa");
 		palabrasClavesLocalComercial.add("Silla");
 		local = new LocalComercial(rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
-				palabrasClavesLocalComercial);
+				palabrasClavesLocalComercial,new Punto(-34.6383056,-58.4814007));
 		local.setX(-34.6383056);
 		local.setY(-58.4814007);
 
-		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco);
+		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco,new Punto(-34.6383669,-58.4773822));
 		banco2.setX(-34.6383669);
 		banco2.setY(-58.4773822);
 
@@ -238,7 +238,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		palabrasClavesCGP.add("Villa Luro");
 		palabrasClavesCGP.add("Villa Real");
 		palabrasClavesCGP.add("All Boys");
-		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP);
+		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
 		cgp.addServicio(timbrado);
 
 		repoDePois.agregarPoi(banco);

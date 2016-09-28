@@ -41,7 +41,7 @@ public class CGPAdapter implements BuscadorDePois {
 		hashComunas = comunaAux.inicializarHashComunas();
 		List<String> palabrasClavesAux = new ArrayList<>();
 		CGP aux = new CGP(hashComunas.get(unCentro.getComuna()), Integer.toString(unCentro.getComuna()),
-				palabrasClavesAux);
+				palabrasClavesAux,hashComunas.get(unCentro.getComuna()).getPuntosPoligono().get(0));
 		unCentro.getServiciosDTO().stream().forEach(servicio -> aux.addServicio(adaptarServicio(servicio)));
 		return aux;
 

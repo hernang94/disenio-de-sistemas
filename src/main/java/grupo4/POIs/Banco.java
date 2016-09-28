@@ -13,6 +13,7 @@ import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
+import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
@@ -23,8 +24,8 @@ public class Banco extends Poi {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Servicio> listaServicios = new ArrayList<>();
 
-	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves) {
-		super(nombre, palabrasClaves);
+	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves,Punto coordenadas) {
+		super(nombre, palabrasClaves,coordenadas);
 		this.hashHorario = horarios;
 	}
 

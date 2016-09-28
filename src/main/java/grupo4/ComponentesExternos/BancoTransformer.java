@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import DTOexterno.BancoExterno;
+import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
@@ -40,7 +41,7 @@ public class BancoTransformer implements BuscadorDePois {
 	private Poi adaptarBanco(BancoExterno bancoExterno) {
 		FactoryHorarioBanco horarioBanco = new FactoryHorarioBanco();
 		List<String> palabrasClavesBanco = new ArrayList<>();
-		Banco banco = new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco);
+		Banco banco = new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco,new Punto(bancoExterno.getX(), bancoExterno.getY()));
 		banco.setX(bancoExterno.getX());
 		banco.setY(bancoExterno.getY());
 		List<Servicio> listaDeServicios = bancoExterno.getServicios().stream()

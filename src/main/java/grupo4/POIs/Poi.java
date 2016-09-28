@@ -3,6 +3,7 @@ package grupo4.POIs;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -29,6 +30,7 @@ public abstract class Poi {
 	@ElementCollection
 	private List<String> palabrasClaves;
 	@Embedded
+	@Column(nullable=true)
 	private Punto coordenadas;
 
 	@SuppressWarnings("unused")

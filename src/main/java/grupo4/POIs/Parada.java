@@ -11,8 +11,8 @@ import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
 public class Parada extends Poi {
-	public Parada(String nombre, List<String> palabrasClaves) {
-		super(nombre, palabrasClaves);
+	public Parada(String nombre, List<String> palabrasClaves,Punto coordenadas) {
+		super(nombre, palabrasClaves,coordenadas);
 	}
 
 	public boolean estaCerca(Punto unPunto) {

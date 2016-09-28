@@ -10,6 +10,9 @@ public class Punto{
 	private double latitud;
 	private double longitud;
 	
+	@SuppressWarnings("unused")
+	private Punto(){}
+	
 	public Punto(double latitud, double longitud) {
 		this.latitud = latitud;
 		this.longitud = longitud;
