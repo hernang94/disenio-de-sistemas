@@ -5,20 +5,28 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
+import org.eclipse.xtend.lib.macro.services.GlobalTypeLookup;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import grupo4.ComponentesExternos.BuscadorDePois;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
+import redis.clients.jedis.JedisPool;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class RepositorioDePois {
+public class RepositorioDePois implements WithGlobalEntityManager {
 	private static RepositorioDePois instancia = new RepositorioDePois();
 	private List<BuscadorDePois> origenesExternos = new ArrayList<>();
-	EntityManager manager = PerThreadEntityManagers.getEntityManager();
-
+	private ObjectMapper objectMapper= new ObjectMapper();
+	
 	public void reset() {
 		origenesExternos.clear();
 	}
@@ -36,25 +44,17 @@ public class RepositorioDePois {
 	}
 
 	public void agregarPoi(Poi unPoi) {
-		// if (!repositorioContienePoi(unPoi.getId())) {
-		// listaDePois.add(unPoi);
-		/*
-		 * try { manager.persist(unPoi); manager.flush(); } catch
-		 * (EntityExistsException e) { throw new RuntimeException(
-		 * "Poi ya existente"); }
-		 */
-		if (manager.find(Poi.class, unPoi.getId()) != null) {
+		if (entityManager().find(Poi.class, unPoi.getId()) != null) {
 			throw new RuntimeException("Poi ya existente");
 		} else {
-			manager.persist(unPoi);
-			manager.flush();
+			entityManager().persist(unPoi);
 		}
 
 	}
 
 	public void bajaPoi(int id) {
 		try {
-			manager.remove((Poi) manager.find(Poi.class, id));
+			entityManager().remove((Poi) entityManager().find(Poi.class, id));
 		} catch (Exception e) {
 			throw new RuntimeException("No existe el Poi");
 		}
@@ -90,17 +90,40 @@ public class RepositorioDePois {
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
-		@SuppressWarnings("unchecked")
-		List<Poi> listaAux = (List<Poi>) manager.createQuery("from Poi").getResultList();
+		List<Poi> listaAux = this.consultarBD();
 		List<Poi> listaFiltrada = listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList());
 		if (listaFiltrada.isEmpty()) {
-			origenesExternos.stream()
-					.forEach(unComponente -> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
-			listaFiltrada.forEach(unPoi -> manager.persist(unPoi));
-			manager.flush();
+			if(poisEstanEnCache(criterio)){
+				listaFiltrada.addAll(getPoisEnCache(criterio));
+			}
+			else{
+				origenesExternos.stream()
+				.forEach(unComponente -> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
+				actualizarCache(criterio,listaFiltrada);
+			}
 		}
 		return listaFiltrada;
+	}
+
+	private void actualizarCache(String criterio, List<Poi> listaFiltrada) {
+		try {
+			String poisDeServiciosExternos = objectMapper.writeValueAsString(listaFiltrada);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	private List<Poi> getPoisEnCache(String criterio) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private boolean poisEstanEnCache(String criterio) {
+		
+		return false;
 	}
 
 	public boolean consultaCercania(String criterio, Punto ubicacionSolicitada) {
@@ -118,7 +141,6 @@ public class RepositorioDePois {
 		if (repositorioContienePoi(palabraFantasia)) {
 			List<Poi> poisEnBD = this.consultarBD();
 			poisEnBD.stream().forEach(poi -> poi.reemplazarPalabrasClaves(palabrasClaves));
-			poisEnBD.stream().forEach(poi -> manager.merge(poi));
 		}
 	}
 
@@ -129,6 +151,6 @@ public class RepositorioDePois {
 
 	@SuppressWarnings("unchecked")
 	private List<Poi> consultarBD() {
-		return (List<Poi>) manager.createQuery("from Poi").getResultList();
+		return (List<Poi>) entityManager().createQuery("from Poi").getResultList();
 	}
 }
