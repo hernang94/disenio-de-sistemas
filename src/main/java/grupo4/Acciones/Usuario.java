@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import grupo4.POIs.Poi;
 import grupo4.PoiDTOs.PoiDTO;
+import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.ResultadoDeBusqueda;
 
@@ -65,6 +66,7 @@ public class Usuario {
 		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
 		ResultadoDeBusqueda resultadoAux = new ResultadoDeBusqueda(this.getTerminal(), diferencia, criterio,
 				tiempoInicio.toLocalDate(), listaAux.size(),this.getPoisDTO(listaAux));
+		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoAux);
 		observers.stream().forEach(observer -> observer.realizarAccion(resultadoAux));
 	}
 

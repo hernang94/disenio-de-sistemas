@@ -15,6 +15,9 @@ public class Poligono{
 	@ElementCollection
 	private List<Punto> puntosPoligono;
 
+	@SuppressWarnings("unused")
+	private Poligono(){}
+	
 	public Poligono(List<Punto> puntosPoligono) {
 		super();
 		this.puntosPoligono = puntosPoligono;

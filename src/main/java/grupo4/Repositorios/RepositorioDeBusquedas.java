@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import org.mongodb.morphia.query.Query;
 
+import com.mongodb.client.model.CreateCollectionOptions;
+
 import grupo4.Acciones.FechaCantReporte;
 import grupo4.HerramientasExternas.InstanciadorMorphia;
 
@@ -27,15 +29,16 @@ public class RepositorioDeBusquedas {
 	}
 
 	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
-		InstanciadorMorphia.getDb().save(newResult);
+		InstanciadorMorphia.getDb().save(newResult,ResultadoDeBusqueda.class);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Integer> getlistaBusquedas(String unTerminal) {
-		Query<ResultadoDeBusqueda> queryListaBusquedas = InstanciadorMorphia.getDb().createQuery(ResultadoDeBusqueda.class)
-				.filter("terminalDeLaBusqueda", unTerminal);
-		List<ResultadoDeBusqueda> resultadosObtenidos = queryListaBusquedas.asList();
-		return resultadosObtenidos.stream().map(unResultado->unResultado.getCantidadDeResultados()).collect(Collectors.toList());
+		Query<Integer> queryListaBusquedas = InstanciadorMorphia.getDb().createQuery(Integer.class).field("terminalDeLaBusqueda").equal(unTerminal).retrievedFields(true, "cantidadDeResultados");
+				//.filter("terminalDeLaBusqueda", unTerminal);
+		List<Integer> resultadosObtenidos = queryListaBusquedas.asList();
+		return resultadosObtenidos;
+		//return resultadosObtenidos.stream().map(unResultado->unResultado.getCantidadDeResultados()).collect(Collectors.toList());
 		/*return (List<Integer>) entityManager()
 				.createQuery(
 						"SELECT cantidadDeResultados FROM ResultadoDeBusqueda WHERE terminalDeLaBusqueda=:nombreTerminal")
@@ -50,10 +53,10 @@ public class RepositorioDeBusquedas {
 	public List<FechaCantReporte> getListaFechaCant(String terminal) {
 		List<FechaCantReporte> listaADevolver = new ArrayList<>();
 		@SuppressWarnings("unchecked")
-		List<Object[]> listaDeObjetos = (List<Object[]>) entityManager()
+		/*List<Object[]> listaDeObjetos = (List<Object[]>) entityManager()
 				.createQuery(
-						"select distinct fechaDeBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda where terminalDeLaBusqueda=:terminal group by fechaDeBusqueda")
-				.setParameter("terminal", terminal).getResultList();
+						"select fechaDeBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda where terminalDeLaBusqueda=:terminal group by fechaDeBusqueda")
+				.setParameter("terminal", terminal).getResultList();*/
 		listaDeObjetos.stream().forEach(elemento -> listaADevolver
 				.add(new FechaCantReporte((LocalDate) elemento[0], ((Long) elemento[1]).intValue())));
 		return listaADevolver;
