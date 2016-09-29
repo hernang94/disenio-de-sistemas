@@ -23,7 +23,6 @@
     	 <class>grupo4.Acciones.ObserverReporterParcial</class>
     	 <class>grupo4.Acciones.ObserverReporterPorFecha</class>
     	 <class>grupo4.Acciones.ObserverReporterTotal</class>
-    	 <class>grupo4.Repositorios.ResultadoDeBusqueda</class>
     	 <class>grupo4.Acciones.Usuario</class>
     	 
         <properties> 

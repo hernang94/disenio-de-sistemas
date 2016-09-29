@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
@@ -101,9 +102,7 @@ public class PoiDTO {
 	}
 
 	public void setListaServicios(List<Servicio> listaServicios) {
-		List<ServicioDTO> listaDTOs= new ArrayList<>();
-		listaServicios.stream().forEach(servicio->listaDTOs.add(servicio.instanciaDTO()));
-		this.listaServicios = listaDTOs;
+		this.listaServicios = listaServicios.stream().map(servicio->servicio.instanciaDTO()).collect(Collectors.toList());
 	}
 
 	public Map<DayOfWeek, Horario> getHashManana() {

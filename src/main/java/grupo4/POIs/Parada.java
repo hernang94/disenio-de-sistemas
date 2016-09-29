@@ -10,7 +10,13 @@ import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
+@org.mongodb.morphia.annotations.Entity("poi")
 public class Parada extends Poi {
+	
+	public Parada(){
+		super();
+	}
+	
 	public Parada(String nombre, List<String> palabrasClaves,Punto coordenadas) {
 		super(nombre, palabrasClaves,coordenadas);
 	}

@@ -11,13 +11,22 @@ import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
+import org.mongodb.morphia.annotations.Transient;
+
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
+@org.mongodb.morphia.annotations.Entity("poi")
 public class CGP extends Poi {
+	
+	public CGP(){
+		super();
+	}
+	
 	@OneToMany(cascade = CascadeType.ALL)
+	@Transient
 	private List<Servicio> servicios = new ArrayList<>();
 	@Embedded
 	private Poligono comuna;

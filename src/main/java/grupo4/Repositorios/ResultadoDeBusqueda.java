@@ -74,7 +74,7 @@ public class ResultadoDeBusqueda {
 		this.poisObtenidos = poisObtenidos;
 	}
 
-	public int getId() {
+	public ObjectId getId() {
 		return id;
 	}
 

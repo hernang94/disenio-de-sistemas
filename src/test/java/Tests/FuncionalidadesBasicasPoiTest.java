@@ -17,6 +17,7 @@ import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
+import grupo4.HerramientasExternas.InstanciadorMorphia;
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
@@ -147,7 +148,6 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
-		em.flush();
 
 	}
 
@@ -184,7 +184,19 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 				dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
 
 	}
+	
+	@Test
+	public void persistoPoi(){
+//		InstanciadorMorphia.getDb().save(parada114);
+//		InstanciadorMorphia.getDb().save(cgp);
+		
+		InstanciadorMorphia.getDb().find(Poi.class).asList().stream().forEach(System.out::println);
+	}
 
+	@Test
+	public void persistoPoi2(){
+	}
+	
 	@Test
 	public void estaDisponibleCGP() {
 		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), timbrado));

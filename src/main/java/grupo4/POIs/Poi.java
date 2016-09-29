@@ -18,14 +18,17 @@ import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@org.mongodb.morphia.annotations.Entity("poi")
 public abstract class Poi {
 	protected String nombre;
 	@Id
 	@GeneratedValue
 	private int idPoi;
 	@Transient
+	@org.mongodb.morphia.annotations.Transient
 	private double x;
 	@Transient
+	@org.mongodb.morphia.annotations.Transient
 	private double y;
 	@ElementCollection
 	private List<String> palabrasClaves;
@@ -34,7 +37,7 @@ public abstract class Poi {
 	private Punto coordenadas;
 
 	@SuppressWarnings("unused")
-	private Poi() {
+	protected Poi() {
 	}
 
 	public Poi(String nombre, List<String> palabrasClaves,Punto coordenadas) {

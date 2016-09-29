@@ -29,15 +29,18 @@ public class RepositorioDeBusquedas {
 	}
 
 	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
-		InstanciadorMorphia.getDb().save(newResult,ResultadoDeBusqueda.class);
+		InstanciadorMorphia.getDb().save(newResult);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Integer> getlistaBusquedas(String unTerminal) {
-		Query<Integer> queryListaBusquedas = InstanciadorMorphia.getDb().createQuery(Integer.class).field("terminalDeLaBusqueda").equal(unTerminal).retrievedFields(true, "cantidadDeResultados");
+		Query<ResultadoDeBusqueda> queryListaBusquedas = InstanciadorMorphia.getDb().createQuery(ResultadoDeBusqueda.class).field("terminalDeLaBusqueda").equal(unTerminal).retrievedFields(true, "cantidadDeResultados");
+		for (ResultadoDeBusqueda resultadoDeBusqueda : queryListaBusquedas) {
+			System.out.println(resultadoDeBusqueda.getCantidadDeResultados());
+		}
 				//.filter("terminalDeLaBusqueda", unTerminal);
-		List<Integer> resultadosObtenidos = queryListaBusquedas.asList();
-		return resultadosObtenidos;
+//		List<Integer> resultadosObtenidos = queryListaBusquedas.asList();
+		return new ArrayList<>();
 		//return resultadosObtenidos.stream().map(unResultado->unResultado.getCantidadDeResultados()).collect(Collectors.toList());
 		/*return (List<Integer>) entityManager()
 				.createQuery(
@@ -53,6 +56,7 @@ public class RepositorioDeBusquedas {
 	public List<FechaCantReporte> getListaFechaCant(String terminal) {
 		List<FechaCantReporte> listaADevolver = new ArrayList<>();
 		@SuppressWarnings("unchecked")
+		List<Object[]> listaDeObjetos = new ArrayList<>();
 		/*List<Object[]> listaDeObjetos = (List<Object[]>) entityManager()
 				.createQuery(
 						"select fechaDeBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda where terminalDeLaBusqueda=:terminal group by fechaDeBusqueda")
@@ -65,10 +69,12 @@ public class RepositorioDeBusquedas {
 	public Map<String, Integer> reporteTotal() {
 		Map<String, Integer> hashARetornar = new HashMap<>();
 		@SuppressWarnings("unchecked")
-		List<Object[]> listaObjetos = (List<Object[]>) entityManager()
-				.createQuery(
-						"select distinct terminalDeLaBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda group by terminalDeLaBusqueda")
-				.getResultList();
+		
+		List<Object[]> listaObjetos = new ArrayList<>();
+//		List<Object[]> listaObjetos = (List<Object[]>) entityManager()
+//				.createQuery(
+//						"select distinct terminalDeLaBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda group by terminalDeLaBusqueda")
+//				.getResultList();
 		listaObjetos.stream()
 				.forEach(elemento -> hashARetornar.put((String) elemento[0], ((Long) elemento[1]).intValue()));
 		return hashARetornar;

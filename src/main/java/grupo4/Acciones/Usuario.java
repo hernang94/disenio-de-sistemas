@@ -35,7 +35,7 @@ public class Usuario {
 	private List<ObserverDeBusqueda> observers = new ArrayList<>();
 
 	@SuppressWarnings("unused")
-	private Usuario() {
+	public Usuario() {
 	}
 
 	public Usuario(String terminal, int comuna) {
