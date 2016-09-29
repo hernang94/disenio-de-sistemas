@@ -90,7 +90,7 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
-		List<Poi> listaAux = this.consultarBD();
+		List<Poi> listaAux = this.obtenerPoisLocales();
 		List<Poi> listaFiltrada = listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList());
 		if (listaFiltrada.isEmpty()) {
@@ -133,24 +133,24 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 	}
 
 	public Poi obtenerSegunCriterio(String criterio) {
-		List<Poi> poisEnBD = this.consultarBD();
+		List<Poi> poisEnBD = this.obtenerPoisLocales();
 		return poisEnBD.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio)).findFirst().orElse(null);
 	}
 
 	public void cambiarPalabrasClaves(String palabraFantasia, List<String> palabrasClaves) {
 		if (repositorioContienePoi(palabraFantasia)) {
-			List<Poi> poisEnBD = this.consultarBD();
+			List<Poi> poisEnBD = this.obtenerPoisLocales();
 			poisEnBD.stream().forEach(poi -> poi.reemplazarPalabrasClaves(palabrasClaves));
 		}
 	}
 
 	private boolean repositorioContienePoi(String palabraFantasia) {
-		List<Poi> poisEnBD = this.consultarBD();
+		List<Poi> poisEnBD = this.obtenerPoisLocales();
 		return poisEnBD.stream().anyMatch(unPoi -> unPoi.getNombre().equalsIgnoreCase(palabraFantasia));
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<Poi> consultarBD() {
+	private List<Poi> obtenerPoisLocales() {
 		return (List<Poi>) entityManager().createQuery("from Poi").getResultList();
 	}
 }

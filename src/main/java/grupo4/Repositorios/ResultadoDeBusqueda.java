@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import org.mongodb.morphia.annotations.Converters;
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Property;
@@ -17,15 +18,12 @@ public class ResultadoDeBusqueda {
 
 	@Id
 	private int id;
-	@Property("Usuario")
 	private String terminalDeLaBusqueda;
 	private long tiempoDeBusqueda;
-	@Property("Descripcion")
 	private String fraseBuscada;
-	@Property("Fecha")
-	//@Converters(value = LocalDateConverter.class)
 	private LocalDate fechaDeBusqueda;
 	private int cantidadDeResultados;
+	@Embedded
 	private List<PoiDTO> poisObtenidos;
 
 	@SuppressWarnings("unused")

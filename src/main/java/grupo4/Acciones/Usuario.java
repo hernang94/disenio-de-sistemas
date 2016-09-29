@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -68,9 +69,7 @@ public class Usuario {
 	}
 
 	private List<PoiDTO> getPoisDTO(List<Poi> listaATransformar) {
-		List<PoiDTO> listaAux = new ArrayList<>();
-		listaATransformar.stream().forEach(unPoi-> listaAux.add(unPoi.instanciaDTO()));
-		return listaAux;
+		return listaATransformar.stream().map(unPoi->unPoi.instanciaDTO()).collect(Collectors.toList());
 	}
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {

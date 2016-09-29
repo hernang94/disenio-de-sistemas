@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.mongodb.morphia.query.Query;
+
 import grupo4.Acciones.FechaCantReporte;
 import grupo4.HerramientasExternas.InstanciadorMorphia;
 
@@ -25,15 +27,19 @@ public class RepositorioDeBusquedas {
 	}
 
 	public void agregarBusqueda(ResultadoDeBusqueda newResult) {
-		InstanciadorMorphia.getInstancia().getDb()
+		InstanciadorMorphia.getDb().save(newResult);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Integer> getlistaBusquedas(String unTerminal) {
-		return (List<Integer>) entityManager()
+		Query<ResultadoDeBusqueda> queryListaBusquedas = InstanciadorMorphia.getDb().createQuery(ResultadoDeBusqueda.class)
+				.filter("terminalDeLaBusqueda", unTerminal);
+		List<ResultadoDeBusqueda> resultadosObtenidos = queryListaBusquedas.asList();
+		return resultadosObtenidos.stream().map(unResultado->unResultado.getCantidadDeResultados()).collect(Collectors.toList());
+		/*return (List<Integer>) entityManager()
 				.createQuery(
 						"SELECT cantidadDeResultados FROM ResultadoDeBusqueda WHERE terminalDeLaBusqueda=:nombreTerminal")
-				.setParameter("nombreTerminal", unTerminal).getResultList();
+				.setParameter("nombreTerminal", unTerminal).getResultList();*/
 	}
 
 	public FechaCantReporte cantidadPorFecha(LocalDate fecha) {
