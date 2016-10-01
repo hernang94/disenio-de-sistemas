@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.MapKeyJoinColumn;
@@ -17,6 +19,7 @@ import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
+@DiscriminatorValue(value = "Banco")
 public class Banco extends Poi {
 	@ElementCollection
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")

@@ -45,7 +45,6 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
-	private EntityManager em;
 	Poligono comuna10;
 
 	@SuppressWarnings("static-access")
@@ -53,9 +52,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	@Before
 	public void init() {
 		dispositivoTactil = RepositorioDePois.getInstancia();
-
-		em = PerThreadEntityManagers.getEntityManager();
-
+		
 		unPuntoABuscar = new Punto(-34.638116, -58.4794967);
 
 		horarioBanco = new Horario("10:00", "15:00");
@@ -156,6 +153,12 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		dispositivoTactil.reset();
 	}
 
+	@Before
+	public void resetEM(){
+		entityManager().flush();
+		entityManager().clear();
+	}
+	
 	@Test
 	public void cercaniaAParada() {
 		Assert.assertFalse(dispositivoTactil.consultaCercania("114", unPuntoABuscar));
@@ -185,7 +188,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	}
 	
-	@Test
+	/*@Test
 	public void persistoPoi(){
 //		InstanciadorMorphia.getDb().save(parada114);
 //		InstanciadorMorphia.getDb().save(cgp);
@@ -195,7 +198,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Test
 	public void persistoPoi2(){
-	}
+	}*/
 	
 	@Test
 	public void estaDisponibleCGP() {
@@ -384,7 +387,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	@Test
 	public void quitarPoiExistente() {
 		dispositivoTactil.bajaPoi(parada114.getId());
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
+		Assert.assertFalse(entityManager().contains(parada114));
 	}
 
 	@Test

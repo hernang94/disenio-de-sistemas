@@ -3,6 +3,7 @@ package grupo4.POIs;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
@@ -10,7 +11,7 @@ import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
-@org.mongodb.morphia.annotations.Entity("poi")
+@DiscriminatorValue(value = "Parada")
 public class Parada extends Poi {
 	
 	public Parada(){

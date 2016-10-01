@@ -11,7 +11,6 @@ import org.uqbar.geodds.Polygon;
 
 @Embeddable
 public class Poligono{
-	
 	@ElementCollection
 	private List<Punto> puntosPoligono;
 

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
@@ -18,15 +20,13 @@ import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
-@org.mongodb.morphia.annotations.Entity("poi")
+@DiscriminatorValue(value = "CGP")
 public class CGP extends Poi {
 	
 	public CGP(){
 		super();
 	}
-	
 	@OneToMany(cascade = CascadeType.ALL)
-	@Transient
 	private List<Servicio> servicios = new ArrayList<>();
 	@Embedded
 	private Poligono comuna;

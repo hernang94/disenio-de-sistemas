@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -17,7 +18,8 @@ import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
 @org.mongodb.morphia.annotations.Entity("poi")
 public abstract class Poi {
 	protected String nombre;
@@ -36,7 +38,6 @@ public abstract class Poi {
 	@Column(nullable=true)
 	private Punto coordenadas;
 
-	@SuppressWarnings("unused")
 	protected Poi() {
 	}
 

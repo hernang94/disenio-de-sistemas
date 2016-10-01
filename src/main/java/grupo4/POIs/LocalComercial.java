@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,6 +19,7 @@ import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
+@DiscriminatorValue(value = "Local_Comercial")
 public class LocalComercial extends Poi {
 	@Enumerated(EnumType.STRING)
 	private Rubro rubro;
