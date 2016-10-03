@@ -68,15 +68,16 @@ public class RepositorioDeBusquedas {
 
 	public Map<String, Integer> reporteTotal() {
 		Map<String, Integer> hashARetornar = new HashMap<>();
-		@SuppressWarnings("unchecked")
 		
-		List<Object[]> listaObjetos = new ArrayList<>();
+		//List<Object[]> listaObjetos = new ArrayList<>();
 //		List<Object[]> listaObjetos = (List<Object[]>) entityManager()
 //				.createQuery(
 //						"select distinct terminalDeLaBusqueda, sum(cantidadDeResultados) from ResultadoDeBusqueda group by terminalDeLaBusqueda")
 //				.getResultList();
-		listaObjetos.stream()
-				.forEach(elemento -> hashARetornar.put((String) elemento[0], ((Long) elemento[1]).intValue()));
+		/*listaObjetos.stream()
+				.forEach(elemento -> hashARetornar.put((String) elemento[0], ((Long) elemento[1]).intValue()));*/
+		List<ResultadoDeBusqueda> queryListaBusquedas = InstanciadorMorphia.getDb().createQuery(ResultadoDeBusqueda.class).asList();
+		queryListaBusquedas.stream().forEach(resultado->hashARetornar.compute(resultado.getTerminalDeLaBusqueda(),(k,v)->(v==null)? resultado.getCantidadDeResultados():v+resultado.getCantidadDeResultados()));
 		return hashARetornar;
 	}
 

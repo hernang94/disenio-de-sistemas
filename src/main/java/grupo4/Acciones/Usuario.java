@@ -65,7 +65,7 @@ public class Usuario {
 		LocalDateTime tiempoFin = LocalDateTime.now();
 		long diferencia = calcularDiferencia(tiempoInicio, tiempoFin);
 		ResultadoDeBusqueda resultadoAux = new ResultadoDeBusqueda(this.getTerminal(), diferencia, criterio,
-				tiempoInicio.toLocalDate(), listaAux.size(),this.getPoisDTO(listaAux));
+				tiempoInicio.toLocalDate(), listaAux.size(),listaAux);
 		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoAux);
 		observers.stream().forEach(observer -> observer.realizarAccion(resultadoAux));
 	}
