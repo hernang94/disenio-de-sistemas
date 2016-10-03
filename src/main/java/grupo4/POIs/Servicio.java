@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.Table;
 
 import grupo4.PoiDTOs.ServicioDTO;
 
@@ -16,7 +17,7 @@ import grupo4.PoiDTOs.ServicioDTO;
 public class Servicio {
 	@Id
 	@GeneratedValue
-	private int id;
+	private int id_Servicio;
 	private String nombre;
 	@ElementCollection
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")

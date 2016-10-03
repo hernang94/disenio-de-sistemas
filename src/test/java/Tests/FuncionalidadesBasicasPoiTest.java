@@ -145,6 +145,8 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		dispositivoTactil.agregarPoi(parada114);
 		dispositivoTactil.agregarPoi(local);
 		dispositivoTactil.agregarPoi(cgp);
+		entityManager().flush();
+		entityManager().clear();
 
 	}
 

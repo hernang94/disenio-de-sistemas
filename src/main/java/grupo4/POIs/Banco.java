@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
@@ -25,7 +27,11 @@ public class Banco extends Poi {
 	@MapKeyJoinColumn(name = "Dia_de_la_semana")
 	private Map<DayOfWeek, Horario> hashHorario;
 	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="idPoi")
 	private List<Servicio> listaServicios = new ArrayList<>();
+	
+	@SuppressWarnings("unused")
+	private Banco(){}
 
 	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves,Punto coordenadas) {
 		super(nombre, palabrasClaves,coordenadas);

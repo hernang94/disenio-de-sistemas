@@ -212,6 +212,8 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		terminalFalla = new Usuario("Terminal Belgrano", 1);
 		notificadorFalla = new ObserverNotificador(1, notificadorMail);
 		terminalFalla.agregarObserver(notificadorFalla);
+		entityManager().flush();
+		entityManager().clear();
 
 		/*
 		 * resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5,
