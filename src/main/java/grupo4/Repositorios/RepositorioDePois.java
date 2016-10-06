@@ -90,6 +90,7 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
+		
 		List<Poi> listaAux = this.obtenerPoisLocales();
 		List<Poi> listaFiltrada = listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList());

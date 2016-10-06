@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import DTOexterno.BancoExterno;
+import grupo4.HerramientasExternas.ManejadorCache;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
 import grupo4.POIs.Poi;
@@ -52,6 +53,7 @@ public class BancoTransformer implements BuscadorDePois {
 
 	public List<Poi> buscarPois(String criterio) {
 		String jsons = componente.getJsonBanco(criterio);
+		ManejadorCache.getInstancia().actualizarCache(criterio, jsons);
 		return convertirJson(jsons);
 	}
 
