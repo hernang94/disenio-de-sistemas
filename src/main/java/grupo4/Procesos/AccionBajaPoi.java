@@ -27,9 +27,9 @@ public class AccionBajaPoi implements Accion {
 
 	public void bajarPoi(BajaPoiExterna bajaPoi) {
 		String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);
-		RepositorioDeResultadosDeEjecucion.getInstancia()
-				.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), "Poi eliminado con exito"));
 		RepositorioDePois.getInstancia().bajaPoi(bajaPoi.getId());
+		RepositorioDeResultadosDeEjecucion.getInstancia()
+		.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), "Poi eliminado con exito"));
 	}
 
 }

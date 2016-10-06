@@ -23,15 +23,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class RepositorioDePois implements WithGlobalEntityManager {
-	private static RepositorioDePois instancia = new RepositorioDePois();
+	private static RepositorioDePois instancia;
 	private List<BuscadorDePois> origenesExternos = new ArrayList<>();
-	private ObjectMapper objectMapper= new ObjectMapper();
 	
 	public void reset() {
 		origenesExternos.clear();
 	}
 
 	public static RepositorioDePois getInstancia() {
+		if(instancia==null){
+			instancia=new RepositorioDePois();
+		}
 		return instancia;
 	}
 
@@ -95,36 +97,15 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 		List<Poi> listaFiltrada = listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList());
 		if (listaFiltrada.isEmpty()) {
-			if(poisEstanEnCache(criterio)){
+			/*if(poisEstanEnCache(criterio)){
 				listaFiltrada.addAll(getPoisEnCache(criterio));
 			}
-			else{
+			else{*/
 				origenesExternos.stream()
 				.forEach(unComponente -> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
-				actualizarCache(criterio,listaFiltrada);
-			}
+			//}
 		}
 		return listaFiltrada;
-	}
-
-	private void actualizarCache(String criterio, List<Poi> listaFiltrada) {
-		try {
-			String poisDeServiciosExternos = objectMapper.writeValueAsString(listaFiltrada);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
-	private List<Poi> getPoisEnCache(String criterio) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private boolean poisEstanEnCache(String criterio) {
-		
-		return false;
 	}
 
 	public boolean consultaCercania(String criterio, Punto ubicacionSolicitada) {

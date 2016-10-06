@@ -152,7 +152,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@After
 	public void limpiarSingleton() {
-		dispositivoTactil.reset();
+		RepositorioDePois.getInstancia().reset();
 	}
 
 	@Before
@@ -163,30 +163,30 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	
 	@Test
 	public void cercaniaAParada() {
-		Assert.assertFalse(dispositivoTactil.consultaCercania("114", unPuntoABuscar));
+		Assert.assertFalse(RepositorioDePois.getInstancia().consultaCercania("114", unPuntoABuscar));
 
 	}
 
 	@Test
 	public void cercaniaABanco() {
-		Assert.assertTrue(dispositivoTactil.consultaCercania("santander rio", unPuntoABuscar));
+		Assert.assertTrue(RepositorioDePois.getInstancia().consultaCercania("santander rio", unPuntoABuscar));
 	}
 
 	@Test
 	public void cercaniaALocal() {
-		Assert.assertTrue(dispositivoTactil.consultaCercania("Blaisten", unPuntoABuscar));
+		Assert.assertTrue(RepositorioDePois.getInstancia().consultaCercania("Blaisten", unPuntoABuscar));
 	}
 
 	@Test
 	public void estaDisponibleColectivo() {
-		Assert.assertTrue(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
+		Assert.assertTrue(RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "114"));
 
 	}
 
 	@Test
 	public void estaDisponibleBanco() {
 		Assert.assertTrue(
-				dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
+				RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
 
 	}
 	
@@ -204,7 +204,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	
 	@Test
 	public void estaDisponibleCGP() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), timbrado));
+		Assert.assertFalse(RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00), timbrado));
 
 	}
 
@@ -240,20 +240,20 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Test
 	public void estaDisponibleCGPSinServicio() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00)));
+		Assert.assertFalse(RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 04, 29, 10, 00)));
 
 	}
 
 	@Test
 	public void estaDisponibleLocal() {
-		boolean a = dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 17, 00), "Blaisten");
+		boolean a = RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 17, 00), "Blaisten");
 		Assert.assertTrue(a);
 
 	}
 
 	@Test
 	public void estaDisponibleLocalManana() {
-		boolean a = dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "Blaisten");
+		boolean a = RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "Blaisten");
 		Assert.assertTrue(a);
 
 	}
@@ -267,23 +267,23 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Test
 	public void pruebaBusquedaLibrexRubro() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("muebleria"), "Blaisten"));
+		Assert.assertTrue(coincideCon(RepositorioDePois.getInstancia().busquedaLibre("muebleria"), "Blaisten"));
 	}
 
 	@Test
 	public void pruebaBusquedaLibrexLinea() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("114"), "114"));
+		Assert.assertTrue(coincideCon(RepositorioDePois.getInstancia().busquedaLibre("114"), "114"));
 	}
 
 	@Test
 	public void pruebaBusquedaLibrexCGPxServicio() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("timbrado"), "CGP10"));
+		Assert.assertTrue(coincideCon(RepositorioDePois.getInstancia().busquedaLibre("timbrado"), "CGP10"));
 
 	}
 
 	@Test
 	public void pruebaBusquedaLibrexBanco() {
-		Assert.assertTrue(coincideCon(dispositivoTactil.busquedaLibre("santander rio"), "Santander rio"));
+		Assert.assertTrue(coincideCon(RepositorioDePois.getInstancia().busquedaLibre("santander rio"), "Santander rio"));
 
 	}
 
@@ -316,7 +316,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	@Test
 	public void bancoNoDisponible() {
 		Assert.assertFalse(
-				dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 05, 8, 11, 00), "santander rio"));
+				RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 05, 8, 11, 00), "santander rio"));
 
 	}
 
@@ -383,12 +383,12 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	public void agregarUnPoiExistente() {
 		thrown.expect(RuntimeException.class);
 		thrown.expectMessage("Poi ya existente");
-		dispositivoTactil.agregarPoi(banco);
+		RepositorioDePois.getInstancia().agregarPoi(banco);
 	}
 
 	@Test
 	public void quitarPoiExistente() {
-		dispositivoTactil.bajaPoi(parada114.getId());
+		RepositorioDePois.getInstancia().bajaPoi(parada114.getId());
 		Assert.assertFalse(entityManager().contains(parada114));
 	}
 
@@ -399,25 +399,25 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		thrown.expect(RuntimeException.class);
 		thrown.expectMessage("No existe el Poi");
 		Parada paradaNoPersistida = new Parada("Parada Falsa 1234", palabrasClaves,null);
-		dispositivoTactil.bajaPoi(paradaNoPersistida.getId());
+		RepositorioDePois.getInstancia().bajaPoi(paradaNoPersistida.getId());
 	}
 
 	@Test
 	public void fallaConsultaDisponibilidadPorCriterio() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00), ""));
+		Assert.assertFalse(RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00), ""));
 
 	}
 
 	@Test
 	public void fallaConsultaDisponibilidadPorSerivicio() {
 		Servicio plomeria = new Servicio("plomeria", hashMapServicio);
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00), plomeria));
+		Assert.assertFalse(RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00), plomeria));
 
 	}
 
 	@Test
 	public void fallaConsultaDisponibilidadPorFecha() {
-		Assert.assertFalse(dispositivoTactil.consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00)));
+		Assert.assertFalse(RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 06, 19, 10, 00)));
 
 	}
 

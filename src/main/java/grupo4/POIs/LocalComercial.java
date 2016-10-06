@@ -34,9 +34,9 @@ public class LocalComercial extends Poi {
 	@Column(name = " Local_Comercial_Horario_Tarde")
 	private Map<DayOfWeek, Horario> hashTarde;
 
-	@SuppressWarnings("unused")
-	private LocalComercial(){}
-	
+	public LocalComercial(){
+		super();
+	}
 	public LocalComercial(Rubro rubro, Map<DayOfWeek, Horario> horariosManiana, Map<DayOfWeek, Horario> horariosTarde,
 			String nombre, List<String> palabrasClaves,Punto coordenadas) {
 		super(nombre, palabrasClaves,coordenadas);

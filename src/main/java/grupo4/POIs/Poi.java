@@ -17,10 +17,10 @@ import javax.persistence.Transient;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.PoiDTOs.PoiDTO;
 
+@org.mongodb.morphia.annotations.Embedded
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo")
-@org.mongodb.morphia.annotations.Entity("poi")
 public abstract class Poi {
 	protected String nombre;
 	@Id

@@ -24,8 +24,6 @@ public class ObserverNotificador extends ObserverDeBusqueda {
 	public void evaluarNotificacion(long diferencia) {
 		if (diferencia > tiempoEstipulado) {
 			notificador.enviarMail("Tiempo de busqueda mayor al estipulado");
-		} else {
-			throw new RuntimeException("Tiempo de busqueda menor al estipulado");
 		}
 	}
 

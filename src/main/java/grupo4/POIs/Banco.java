@@ -30,9 +30,9 @@ public class Banco extends Poi {
 	@JoinColumn(name="idPoi")
 	private List<Servicio> listaServicios = new ArrayList<>();
 	
-	@SuppressWarnings("unused")
-	private Banco(){}
-
+	public Banco(){
+		super();
+	}
 	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves,Punto coordenadas) {
 		super(nombre, palabrasClaves,coordenadas);
 		this.hashHorario = horarios;

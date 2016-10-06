@@ -194,7 +194,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 
 	@After
 	public void limpiarSingleton() {
-		dispositivoTactil.reset();
+		RepositorioDePois.getInstancia().reset();
 	}
 
 	@Test
@@ -208,7 +208,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 
 	@Test
 	public void busquedaExterna() {
-		dispositivoTactil.busquedaLibre("Patagonia");
+		RepositorioDePois.getInstancia().busquedaLibre("Patagonia");
 		Mockito.verify(megatron).buscarPois("Patagonia");
 	}
 
