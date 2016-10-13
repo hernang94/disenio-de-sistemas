@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import grupo4.ComponentesExternos.BuscadorDePois;
+import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
@@ -92,20 +93,17 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 	}
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
-		
-		List<Poi> listaAux = this.obtenerPoisLocales();
-		List<Poi> listaFiltrada = listaAux.stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
-				.collect(Collectors.toList());
-		if (listaFiltrada.isEmpty()) {
-			/*if(poisEstanEnCache(criterio)){
-				listaFiltrada.addAll(getPoisEnCache(criterio));
-			}
-			else{*/
-				origenesExternos.stream()
-				.forEach(unComponente -> listaFiltrada.addAll((unComponente.buscarPois(criterio))));
-			//}
+		List<Poi> listaAux = new ArrayList<>();
+		if(Cache.getInstancia().criterioEstaEnCache(criterio)){
+			listaAux.addAll(Cache.getInstancia().obtenerPois(criterio));
 		}
-		return listaFiltrada;
+		listaAux.addAll(this.obtenerPoisLocales().stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
+				.collect(Collectors.toList())); 
+		if (listaAux.isEmpty()) {
+				origenesExternos.stream()
+				.forEach(unComponente -> listaAux.addAll((unComponente.buscarPois(criterio))));
+		}
+		return listaAux;
 	}
 
 	public boolean consultaCercania(String criterio, Punto ubicacionSolicitada) {
