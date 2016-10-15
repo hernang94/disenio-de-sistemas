@@ -31,6 +31,7 @@ import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.ComponentesExternos.EmailSender;
+import grupo4.HerramientasExternas.InstanciadorMorphia;
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
@@ -231,6 +232,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 	public void limpiarSingleton() {
 		RepositorioDePois.getInstancia().reset();
 		RepositorioDeBusquedas.getInstancia().reset();
+		InstanciadorMorphia.getDb().getDB().dropDatabase();
 	}
 
 	// Mover a Nueva clase de tests de persistencia
@@ -257,13 +259,6 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
-	@Test
-	public void notificadorAdministradorFalla() {
-		thrown.expect(RuntimeException.class);
-		thrown.expectMessage("Tiempo de busqueda menor al estipulado");
-		terminalFalla.busquedaLibre("HSBC");
-
-	}
 
 	@Test
 	public void calcularDiferencia() {

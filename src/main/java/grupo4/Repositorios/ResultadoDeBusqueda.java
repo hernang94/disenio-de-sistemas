@@ -16,14 +16,16 @@ import org.uqbarproject.jpa.java8.extras.convert.LocalDateConverter;
 
 import com.mongodb.DBObject;
 
+import grupo4.HerramientasExternas.LocalDateConverterMorphia;
 import grupo4.POIs.Poi;
 import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
+@Converters(LocalDateConverterMorphia.class)
 public class ResultadoDeBusqueda {
 	@Id
 	@GeneratedValue
-	private ObjectId id;
+	private ObjectId id= ObjectId.get();
 	private String terminalDeLaBusqueda;
 	private Long tiempoDeBusqueda;
 	private String fraseBuscada;
