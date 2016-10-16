@@ -31,6 +31,7 @@ import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.ComponentesExternos.EmailSender;
+import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.InstanciadorMorphia;
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
@@ -215,6 +216,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		terminalFalla.agregarObserver(notificadorFalla);
 		entityManager().flush();
 		entityManager().clear();
+		Cache.getInstancia().activarCache();
 
 		/*
 		 * resultadoPrueba= new ResultadoDeBusqueda("Terminal Abasto", 5,

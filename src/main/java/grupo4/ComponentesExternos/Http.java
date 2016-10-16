@@ -11,7 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 @SuppressWarnings("deprecation")
-public class Http {
+public class Http implements ComponenteBanco{
 	private HttpClient cliente;
 	private HttpGet get;
 	private HttpResponse response;
@@ -20,8 +20,7 @@ public class Http {
 		cliente = new DefaultHttpClient();
 		get = new HttpGet(direccion);
 		response = null;
-	}
-
+	} 
 	public String obtenerString() throws ParseException, IOException {
 		obtenerDataHttp();
 		return EntityUtils.toString(response.getEntity());
@@ -37,5 +36,20 @@ public class Http {
 		}
 
 	}
+	@Override
+	public String getJsonBanco(String criterio) {
+		
+		try {
+			return obtenerString();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 }

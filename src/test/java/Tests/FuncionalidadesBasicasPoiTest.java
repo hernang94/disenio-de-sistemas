@@ -17,6 +17,7 @@ import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
+import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.InstanciadorMorphia;
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
@@ -51,6 +52,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Before
 	public void init() {
+		Cache.getInstancia().activarCache();
 		dispositivoTactil = RepositorioDePois.getInstancia();
 		
 		unPuntoABuscar = new Punto(-34.638116, -58.4794967);

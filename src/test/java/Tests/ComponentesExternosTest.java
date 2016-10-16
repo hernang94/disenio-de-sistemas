@@ -27,6 +27,7 @@ import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.ComponentesExternos.Http;
+import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
@@ -73,6 +74,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 
 	@Before
 	public void init() {
+		Cache.getInstancia().activarCache();
 		listaCentroAAdaptar = new ArrayList<>();
 
 		rangoPrueba = new RangoServicioDTO(DayOfWeek.MONDAY, 9, 0, 18, 0);
@@ -93,11 +95,12 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 
 		componenteBanco = Mockito.mock(ComponenteBanco.class);
 		optimus = new BancoTransformer();
-		optimus.setComponente(componenteBanco);
+		//optimus.setComponente(componenteBanco);
 
 		dispositivoTactil = RepositorioDePois.getInstancia();
 		dispositivoTactil.agregarOrigenExterno(adaptador);
 		dispositivoTactil.agregarOrigenExterno(megatron);
+		dispositivoTactil.agregarOrigenExterno(optimus);
 		horarioBanco = new Horario("10:00", "15:00");
 
 		hashMapBanco = new HashMap<>();
@@ -188,6 +191,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		dispositivoTactil.agregarPoi(cgp);
 
 		http = new Http("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
+		optimus.setComponente(http);
 		entityManager().flush();
 		entityManager().clear();
 	}
@@ -207,9 +211,13 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 	}
 
 	@Test
-	public void busquedaExterna() {
+	public void busquedaExterna() throws org.apache.http.ParseException, IOException {
 		RepositorioDePois.getInstancia().busquedaLibre("Patagonia");
 		Mockito.verify(megatron).buscarPois("Patagonia");
+	}
+	@Test
+	public void busquedaCacheada(){
+		RepositorioDePois.getInstancia().busquedaLibre("Banco de la Plaza");
 	}
 
 	@Test
@@ -223,7 +231,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 	@Test
 	public void pruebaConvertirJson() throws ParseException, IOException {
 		List<Poi> listAux = new ArrayList<>();
-		listAux.addAll(optimus.convertirJson(http.obtenerString()));
+		listAux.addAll(optimus.buscarPois("Banco de la Plaza"));
 		Assert.assertEquals("Banco de la Plaza", listAux.get(0).getNombre());
 	}
 

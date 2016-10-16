@@ -45,7 +45,9 @@ public class Cache {
 	
 	public void actualizarCache(String key,String value){
 		if(jedis!=null){
+			if(value!=null){
 			jedis.setex(key,duracionXKey, value);			
+			}
 		}
 	}
 	

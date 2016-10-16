@@ -13,6 +13,7 @@ import grupo4.ComponentesExternos.ComponenteLocalComercial;
 import grupo4.ComponentesExternos.EmailSender;
 import grupo4.ComponentesExternos.Http;
 import grupo4.ComponentesExternos.LocalComercialAdapter;
+import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
@@ -130,6 +131,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	@SuppressWarnings("static-access")
 	@Before
 	public void init() throws IOException {
+		Cache.getInstancia().activarCache();
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
