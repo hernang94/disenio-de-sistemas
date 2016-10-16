@@ -83,7 +83,6 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		servicioPrueba.agregarRango(rangoPrueba);
 
 		megatron = Mockito.mock(BancoTransformer.class);
-		megatron.setComponente(componenteBanco);
 
 		centroPrueba = new CentroDTO(9, "Mataderos,Parque Avellaneda", "Mauro Corvaro", "Calle Falsa 123", "4597-9684");
 		centroPrueba.agregarServicio(servicioPrueba);
@@ -94,6 +93,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		adaptador.setComponente(componente);
 
 		componenteBanco = Mockito.mock(ComponenteBanco.class);
+		megatron.setComponente(componenteBanco);
 		optimus = new BancoTransformer();
 		//optimus.setComponente(componenteBanco);
 
@@ -217,7 +217,8 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 	}
 	@Test
 	public void busquedaCacheada(){
-		RepositorioDePois.getInstancia().busquedaLibre("Banco de la Plaza");
+		Assert.assertEquals("Banco de la Plaza", RepositorioDePois.getInstancia().busquedaLibre("Banco de la Plaza").get(0).getNombre());
+		
 	}
 
 	@Test
