@@ -19,7 +19,7 @@ public class AdministradorDeProcesos {
 	}
 
 	public Runnable ejecutarProceso(Proceso proceso) throws Exception {
-		proceso.ejecutar();
+		proceso.run();
 		return proceso;
 	}
 

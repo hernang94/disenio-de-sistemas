@@ -16,20 +16,18 @@ public class AccionBajaPoi implements Accion {
 		this.adaptador = adaptador;
 	}
 
-	public void ejecutar() {
-		bajarPois();
+	public ResultadosDeEjecucion ejecutar() {
+		return bajarPois();
 	}
 
-	public void bajarPois() {
+	public ResultadosDeEjecucion bajarPois() {
 		List<BajaPoiExterna> lista = adaptador.obtenerPoisABajar();
 		lista.stream().forEach(elemento -> bajarPoi(elemento));
+		return new ResultadosDeEjecucion(lista.size(), LocalDateTime.now(), "Pois eliminados con exito");
 	}
 
 	public void bajarPoi(BajaPoiExterna bajaPoi) {
-		String fecha = bajaPoi.getFecha().substring(0, (bajaPoi.getFecha().length()) - 1);
 		RepositorioDePois.getInstancia().bajaPoi(bajaPoi.getId());
-		RepositorioDeResultadosDeEjecucion.getInstancia()
-		.agregarResultado(new ResultadosDeEjecucion(1, LocalDateTime.parse(fecha), "Poi eliminado con exito"));
 	}
 
 }

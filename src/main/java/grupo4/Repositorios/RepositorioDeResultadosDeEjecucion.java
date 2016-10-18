@@ -1,5 +1,6 @@
 package grupo4.Repositorios;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +11,13 @@ public class RepositorioDeResultadosDeEjecucion {
 	public static RepositorioDeResultadosDeEjecucion getInstancia() {
 		return instancia;
 	}
+	
+	public List<ResultadosDeEjecucion> getlistaDeResultados() {
+		return listaDeResultados;
+	}
 
 	public void agregarResultado(ResultadosDeEjecucion resultado) {
 		listaDeResultados.add(resultado);
-	}
-
-	public List<ResultadosDeEjecucion> getlistaDeResultados() {
-		return listaDeResultados;
 	}
 
 }

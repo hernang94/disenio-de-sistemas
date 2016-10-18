@@ -2,6 +2,9 @@ package grupo4.Procesos;
 
 import java.time.LocalDateTime;
 
+import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
+import grupo4.Repositorios.ResultadosDeEjecucion;
+
 public class Proceso implements Runnable {
 	private LocalDateTime horaYFecha;
 	private long periodicidad;
@@ -12,17 +15,19 @@ public class Proceso implements Runnable {
 		this.periodicidad = periodicidad;
 		this.accion = accion;
 	}
-
-	public void ejecutar() throws RuntimeException {
+	
+	@Override
+	public void run() {
+		ResultadosDeEjecucion resultado;
 		try {
-			accion.ejecutar();
+			resultado = accion.ejecutar();
 		} catch (Exception e) {
 			throw new RuntimeException("No se pudo ejecutar el proceso");
 		}
-	}
-
-	@Override
-	public void run() {
+		if(resultado==null){
+			resultado = new ResultadosDeEjecucion(0, LocalDateTime.now(), "fallo el proceso");
+		}
+		RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(resultado);
 	}
 
 	public LocalDateTime getHoraYFecha() {

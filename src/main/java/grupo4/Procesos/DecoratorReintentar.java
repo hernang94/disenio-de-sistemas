@@ -1,5 +1,7 @@
 package grupo4.Procesos;
 
+import grupo4.Repositorios.ResultadosDeEjecucion;
+
 public class DecoratorReintentar implements Accion {
 	private int cantidadReintentos;
 	private int intentosRealizados;
@@ -24,10 +26,11 @@ public class DecoratorReintentar implements Accion {
 		return cantidadReintentos;
 	}
 
-	public void ejecutar() throws Exception{//lo hago void y en el catch mi fijo lo del reintento
+	public ResultadosDeEjecucion ejecutar(){//lo hago void y en el catch mi fijo lo del reintento
+		ResultadosDeEjecucion resultado = null;
 		try{
 			this.setIntentosRealizados(this.getIntentosRealizados()+1);
-			decorado.ejecutar();
+			resultado=decorado.ejecutar();
 		}
 		catch(Exception e){
 			if(this.getIntentosRealizados()>this.getCantidadReintentos()){
@@ -37,5 +40,6 @@ public class DecoratorReintentar implements Accion {
 				this.ejecutar();
 			}
 		}
+		return resultado;
 	}
 }

@@ -17,10 +17,9 @@ public class AccionQuitarObserver implements Accion {
 		this.observerAQuitar = observerAQuitar;
 	}
 
-	public void ejecutar() {
+	public ResultadosDeEjecucion ejecutar() {
 		List<Usuario> usuarios = criterioSeleccion.obtenerLista();
 		usuarios.stream().forEach(usuario -> usuario.quitarObserver(observerAQuitar));
-		RepositorioDeResultadosDeEjecucion.getInstancia().agregarResultado(new ResultadosDeEjecucion(usuarios.size(),
-				LocalDateTime.now(), usuarios.size() + " Usuarios afectados"));
+		return new ResultadosDeEjecucion(usuarios.size(),LocalDateTime.now(), usuarios.size() + " Usuarios afectados");
 	}
 }

@@ -1,5 +1,7 @@
 package grupo4.Procesos;
 
+import grupo4.Repositorios.ResultadosDeEjecucion;
+
 public interface Accion {
-	public void ejecutar() throws Exception;
+	public ResultadosDeEjecucion ejecutar();
 }

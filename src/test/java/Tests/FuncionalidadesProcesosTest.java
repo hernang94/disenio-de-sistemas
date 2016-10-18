@@ -38,6 +38,8 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.RepositorioDeUsuarios;
+import grupo4.Repositorios.ResultadoDeBusqueda;
+import grupo4.Repositorios.ResultadosDeEjecucion;
 
 import java.io.File;
 import java.io.IOException;
@@ -365,7 +367,8 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	@Test
 	public void agregarAlmacenarATodos() {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
-		agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado=agregarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
@@ -373,7 +376,8 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	@Test
 	public void agregarAlmacenarPorComuna() {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioComuna);
-		agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado=agregarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado);
 		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
@@ -381,16 +385,17 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	@Test
 	public void agregarAlmacenarSeleccion() {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioSeleccion);
-		agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado=agregarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
-	public void procesoAgregarAlmacenarTodos() throws Exception {
+	public void procesoAgregarAlmacenarTodos() {
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
 		proceso = new Proceso(LocalDateTime.now(), 0, agregarObserver);
-		proceso.ejecutar();
+		proceso.run();
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
@@ -437,7 +442,8 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	@Test
 	public void agregarNotificarATodos() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
-		agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado=agregarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
@@ -445,7 +451,8 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	@Test
 	public void agregarNotificarPorComuna() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioComuna);
-		agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado=agregarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado);
 		Assert.assertEquals(1, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
@@ -453,16 +460,18 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	@Test
 	public void agregarNotificarSeleccion() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioSeleccion);
-		agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado=agregarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
 
 	@Test
-	public void decoratorReintentarEjecutar() throws Exception {
+	public void decoratorReintentarEjecutar() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
-		decoratorReintentar.ejecutar();
+		ResultadosDeEjecucion resultado=decoratorReintentar.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
@@ -471,7 +480,8 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	public void decoratorNotificarEjecutar() {
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorNotificar = new DecoratorNotificador(agregarObserver, notificadorMail);
-		decoratorNotificar.ejecutar();
+		ResultadosDeEjecucion resultado=decoratorNotificar.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado);
 		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
 				.getCantidadDeElementosAfectados());
 	}
