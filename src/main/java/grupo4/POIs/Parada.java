@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
 import grupo4.HerramientasExternas.Punto;
-import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
 @DiscriminatorValue(value = "Parada")
@@ -32,9 +31,5 @@ public class Parada extends Poi {
 
 	public boolean encuentraNombre(String criterio) {
 		return (criterio.equals(super.getNombre()));
-	}
-
-	public PoiDTO instanciaDTO() {
-		return new PoiDTO(super.getNombre(),super.getPalabrasClaves(),super.getCoordenadas(),"Parada");
 	}
 }

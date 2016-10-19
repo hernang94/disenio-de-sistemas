@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import grupo4.POIs.Poi;
-import grupo4.PoiDTOs.PoiDTO;
 import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.ResultadoDeBusqueda;
@@ -68,10 +67,6 @@ public class Usuario {
 				tiempoInicio.toLocalDate(), listaAux.size(),listaAux);
 		RepositorioDeBusquedas.getInstancia().agregarBusqueda(resultadoAux);
 		observers.stream().forEach(observer -> observer.realizarAccion(resultadoAux));
-	}
-
-	private List<PoiDTO> getPoisDTO(List<Poi> listaATransformar) {
-		return listaATransformar.stream().map(unPoi->unPoi.instanciaDTO()).collect(Collectors.toList());
 	}
 
 	public long calcularDiferencia(LocalDateTime tiempoinicio, LocalDateTime tiempofin) {

@@ -412,8 +412,10 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	public void quitarAlmacenarATodos() {
 		quitarObserver = new AccionQuitarObserver(criterioTodos, almacenador.getId());
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioTodos);
-		agregarObserver.ejecutar();
-		quitarObserver.ejecutar();
+		ResultadosDeEjecucion resultado1=agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado2=quitarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado1);
+		repoResultadosEjecucion.agregarResultado(resultado2);
 		Assert.assertTrue(repoResultadosEjecucion.getlistaDeResultados().stream()
 				.allMatch(x -> (x.getCantidadDeElementosAfectados()) == 2));
 	}
@@ -422,8 +424,10 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	public void quitarAlmacenarPorComuna() {
 		quitarObserver = new AccionQuitarObserver(criterioComuna, IdObserver.ALMACENADOR);
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioComuna);
-		agregarObserver.ejecutar();
-		quitarObserver.ejecutar();
+		ResultadosDeEjecucion resultado1=agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado2=quitarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado1);
+		repoResultadosEjecucion.agregarResultado(resultado2);
 		Assert.assertTrue(repoResultadosEjecucion.getlistaDeResultados().stream()
 				.allMatch(x -> (x.getCantidadDeElementosAfectados()) == 1));
 
@@ -433,8 +437,10 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	public void quitarAlmacenarSeleccion() {
 		quitarObserver = new AccionQuitarObserver(criterioSeleccion, almacenador.getId());
 		agregarObserver = new AccionAgregarObserver(almacenador, criterioSeleccion);
-		agregarObserver.ejecutar();
-		quitarObserver.ejecutar();
+		ResultadosDeEjecucion resultado1=agregarObserver.ejecutar();
+		ResultadosDeEjecucion resultado2=quitarObserver.ejecutar();
+		repoResultadosEjecucion.agregarResultado(resultado1);
+		repoResultadosEjecucion.agregarResultado(resultado2);
 		Assert.assertTrue(repoResultadosEjecucion.getlistaDeResultados().stream()
 				.allMatch(x -> (x.getCantidadDeElementosAfectados()) == 2));
 	}

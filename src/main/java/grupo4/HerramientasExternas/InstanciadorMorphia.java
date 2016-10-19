@@ -18,5 +18,4 @@ public class InstanciadorMorphia {
 	public static InstanciadorMorphia getInstancia() {
 		return instancia;
 	}
-	
 }

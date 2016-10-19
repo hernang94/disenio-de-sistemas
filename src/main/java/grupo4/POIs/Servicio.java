@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
 
-import grupo4.PoiDTOs.ServicioDTO;
 
 @Entity
 public class Servicio {
@@ -44,7 +43,4 @@ public class Servicio {
 		return nombre;
 	}
 
-	public ServicioDTO instanciaDTO() {
-		return new ServicioDTO(nombre, hashHorario);
-	}
 }

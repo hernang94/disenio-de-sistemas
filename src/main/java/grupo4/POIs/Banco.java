@@ -18,7 +18,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
 import grupo4.HerramientasExternas.Punto;
-import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
 @DiscriminatorValue(value = "Banco")
@@ -50,13 +49,5 @@ public class Banco extends Poi {
 		DayOfWeek dia = horaConsulta.getDayOfWeek();
 		return (hashHorario.get(dia) != null) && (hashHorario.get(dia).estaEnHorario(horaConsulta));
 	}
-
-	public PoiDTO instanciaDTO() {
-		PoiDTO bancoDTO= new PoiDTO(super.getNombre(),super.getPalabrasClaves(),super.getCoordenadas(),"Banco");
-		bancoDTO.setHashHorario(hashHorario);
-		bancoDTO.setListaServicios(listaServicios);
-		return bancoDTO;
-	}
-	
 	
 }

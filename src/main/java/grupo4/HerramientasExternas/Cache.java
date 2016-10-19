@@ -8,7 +8,7 @@ import grupo4.POIs.Poi;
 import redis.clients.jedis.Jedis;
 
 public class Cache {
-	private static Jedis jedis;
+	private static Jedis jedis= new Jedis();
 	private static Cache instancia;
 	//Por Jedis equivale a segundos. Sirve para setear el tiempo que la key es valida y existe, despues de este tiempo la libera
 	private static int duracionXKey= 60;
@@ -35,19 +35,12 @@ public class Cache {
 	}
 	
 	public boolean criterioEstaEnCache(String criterio){
-		if(jedis==null){
-			return false;
-		}
-		else{			
-			return jedis.exists(criterio);
-		}
+			return jedis!=null&&jedis.exists(criterio);
 	}
 	
 	public void actualizarCache(String key,String value){
-		if(jedis!=null){
-			if(value!=null){
+		if(jedis!=null&&value!=null){
 			jedis.setex(key,duracionXKey, value);			
-			}
 		}
 	}
 	

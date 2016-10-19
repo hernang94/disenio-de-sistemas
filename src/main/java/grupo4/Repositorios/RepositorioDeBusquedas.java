@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import org.mongodb.morphia.query.Query;
 
-import com.mongodb.client.model.CreateCollectionOptions;
 
 import grupo4.Acciones.FechaCantReporte;
 import grupo4.HerramientasExternas.InstanciadorMorphia;
@@ -38,20 +37,6 @@ public class RepositorioDeBusquedas {
 		List<ResultadoDeBusqueda> resultadosObtenidos = queryListaBusquedas.asList();
 		return resultadosObtenidos.stream().map(unResultado->unResultado.getCantidadDeResultados()).collect(Collectors.toList());
 		}
-	/*public List<Integer> getlistaBusquedas(String unTerminal) {
-		Query<ResultadoDeBusqueda> queryListaBusquedas = InstanciadorMorphia.getDb().createQuery(ResultadoDeBusqueda.class).field("terminalDeLaBusqueda").equal(unTerminal).retrievedFields(true, "cantidadDeResultados");
-		for (ResultadoDeBusqueda resultadoDeBusqueda : queryListaBusquedas) {
-			System.out.println(resultadoDeBusqueda.getCantidadDeResultados());
-		}
-				//.filter("terminalDeLaBusqueda", unTerminal);
-//		List<Integer> resultadosObtenidos = queryListaBusquedas.asList();
-		return new ArrayList<>();
-		//return resultadosObtenidos.stream().map(unResultado->unResultado.getCantidadDeResultados()).collect(Collectors.toList());
-		/*return (List<Integer>) entityManager()
-				.createQuery(
-						"SELECT cantidadDeResultados FROM ResultadoDeBusqueda WHERE terminalDeLaBusqueda=:nombreTerminal")
-				.setParameter("nombreTerminal", unTerminal).getResultList();*/
-	
 
 	public FechaCantReporte cantidadPorFecha(LocalDate fecha) {
 		return new FechaCantReporte(fecha, listaBusquedas.stream()
@@ -60,12 +45,8 @@ public class RepositorioDeBusquedas {
 
 	public List<FechaCantReporte> getListaFechaCant(String terminal) {
 		List<FechaCantReporte> listaADevolver = new ArrayList<>();
-		@SuppressWarnings("unchecked")
-		List<Object[]> listaDeObjetos = new ArrayList<>();
 		List<ResultadoDeBusqueda> queryListaBusquedas = InstanciadorMorphia.getDb()
 				.createQuery(ResultadoDeBusqueda.class).field("terminalDeLaBusqueda").equal(terminal).asList();
-		/*queryListaBusquedas.stream().forEach(elemento -> listaADevolver
-				.add(new FechaCantReporte(elemento.getFechaDeBusqueda(), elemento.getCantidadDeResultados())));*/
 		Map<LocalDate,Integer>mapAuxiliar=new HashMap<>();
 		mapAuxiliar=armarHash(queryListaBusquedas);
 		mapAuxiliar.forEach((fecha,cantidad)->listaADevolver.add(new FechaCantReporte(fecha,cantidad)));

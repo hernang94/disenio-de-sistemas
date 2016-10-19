@@ -15,7 +15,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
 import grupo4.HerramientasExternas.Punto;
-import grupo4.PoiDTOs.PoiDTO;
 
 @org.mongodb.morphia.annotations.Embedded
 @Entity
@@ -117,7 +116,6 @@ public abstract class Poi {
 
 	public abstract boolean estaDisponible(LocalDateTime fechaConsulta);
 	
-	public abstract PoiDTO instanciaDTO();
 
 	public boolean estaDisponible(LocalDateTime fecha, Servicio servicio) {
 		return false;

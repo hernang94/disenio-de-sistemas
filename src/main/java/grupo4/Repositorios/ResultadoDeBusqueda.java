@@ -1,7 +1,6 @@
 package grupo4.Repositorios;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.GeneratedValue;
@@ -11,14 +10,9 @@ import org.mongodb.morphia.annotations.Converters;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Property;
-import org.uqbarproject.jpa.java8.extras.convert.LocalDateConverter;
-
-import com.mongodb.DBObject;
 
 import grupo4.HerramientasExternas.LocalDateConverterMorphia;
 import grupo4.POIs.Poi;
-import grupo4.PoiDTOs.PoiDTO;
 
 @Entity
 @Converters(LocalDateConverterMorphia.class)
@@ -68,10 +62,6 @@ public class ResultadoDeBusqueda {
 		return cantidadDeResultados;
 	}
 	
-	/*public boolean esDeTerminal(String unTerminal) {
-		return unTerminal.equalsIgnoreCase(terminalDeLaBusqueda);
-	}*/
-
 	public List<Poi> getPoisObtenidos() {
 		return poisObtenidos;
 	}
