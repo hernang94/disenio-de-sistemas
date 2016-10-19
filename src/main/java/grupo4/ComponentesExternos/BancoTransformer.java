@@ -1,21 +1,8 @@
 package grupo4.ComponentesExternos;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.http.ParseException;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-
-import DTOexterno.BancoExterno;
 import grupo4.HerramientasExternas.Cache;
-import grupo4.HerramientasExternas.Punto;
-import grupo4.POIs.Banco;
 import grupo4.POIs.Poi;
-import grupo4.POIs.Servicio;
 
 public class BancoTransformer implements BuscadorDePois {
 	private ComponenteBanco componente;

@@ -38,7 +38,6 @@ import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.RepositorioDeUsuarios;
-import grupo4.Repositorios.ResultadoDeBusqueda;
 import grupo4.Repositorios.ResultadosDeEjecucion;
 
 import java.io.File;

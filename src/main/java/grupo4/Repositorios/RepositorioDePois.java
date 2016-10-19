@@ -3,22 +3,13 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-
-import org.eclipse.xtend.lib.macro.services.GlobalTypeLookup;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import grupo4.ComponentesExternos.BuscadorDePois;
 import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;
-import redis.clients.jedis.JedisPool;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

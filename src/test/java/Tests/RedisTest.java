@@ -12,7 +12,7 @@ import grupo4.ComponentesExternos.Http;
 import grupo4.HerramientasExternas.Cache;
 import grupo4.POIs.Poi;
 
-public class RedisTests {
+public class RedisTest {
 	private Http http;
 	
 	@Before

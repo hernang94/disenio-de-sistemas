@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import grupo4.Acciones.IdObserver;
 import grupo4.Acciones.Usuario;
-import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.ResultadosDeEjecucion;
 
 public class AccionQuitarObserver implements Accion {

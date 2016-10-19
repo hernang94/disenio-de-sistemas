@@ -7,14 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
 import grupo4.HerramientasExternas.Punto;

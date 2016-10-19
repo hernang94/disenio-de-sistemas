@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
 
 import grupo4.HerramientasExternas.Punto;
 

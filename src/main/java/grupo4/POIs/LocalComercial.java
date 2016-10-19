@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.MappedSuperclass;
-
 import grupo4.HerramientasExternas.Punto;
 
 @Entity

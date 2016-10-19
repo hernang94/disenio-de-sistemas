@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,7 +32,6 @@ public class Usuario {
 	@JoinColumn(name = "idUsuario")
 	private List<ObserverDeBusqueda> observers = new ArrayList<>();
 
-	@SuppressWarnings("unused")
 	public Usuario() {
 	}
 

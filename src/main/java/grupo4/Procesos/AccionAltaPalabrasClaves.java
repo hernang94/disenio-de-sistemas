@@ -6,7 +6,6 @@ import java.util.List;
 import DTOexterno.LocalComercialExterno;
 import grupo4.ComponentesExternos.LocalComercialAdapter;
 import grupo4.Repositorios.RepositorioDePois;
-import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.ResultadosDeEjecucion;
 
 public class AccionAltaPalabrasClaves implements Accion {

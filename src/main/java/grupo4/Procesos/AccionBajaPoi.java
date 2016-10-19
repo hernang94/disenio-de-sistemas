@@ -6,7 +6,6 @@ import java.util.List;
 import DTOexterno.BajaPoiExterna;
 import grupo4.ComponentesExternos.BajaPoiAdapter;
 import grupo4.Repositorios.RepositorioDePois;
-import grupo4.Repositorios.RepositorioDeResultadosDeEjecucion;
 import grupo4.Repositorios.ResultadosDeEjecucion;
 
 public class AccionBajaPoi implements Accion {
