@@ -5,6 +5,7 @@ jdk:
   
 services:
   - mongodb
+  - redis-server
 
 install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -Dcobertura.skip=true -B -V
 
