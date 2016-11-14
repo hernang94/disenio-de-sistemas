@@ -1,0 +1,48 @@
+<html>
+<head>
+	<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  	<link rel="stylesheet"  href="principal.css">
+  	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand"href="/principalAdmin">Repo de Pois</a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav">
+        <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">POIs
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/pois">Listar</a></li>
+          <li><a href="/pois/agregar">Agregar</a></li> 
+          <li><a href="/pois/eliminar">Eliminar</a></li>
+          <li><a href="/pois/editar">Editar</a></li> 
+        </ul>
+      </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+       <li><a href="/logout">Cerrar Sesion</a></li> 
+    </ul>
+      </div>
+      
+    </div>
+  </nav>
+
+<div class="container">
+	{{#block "contenido"}}
+	{{/block}}
+</div>
+
+<footer class="footer">
+    <p class="text-center">
+      &copy; 2016 DDS-UTN.Grupo4
+    </p>
+</footer>
+</body>
+</html>
