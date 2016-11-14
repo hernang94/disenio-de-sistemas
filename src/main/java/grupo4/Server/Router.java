@@ -14,11 +14,13 @@ public class Router {
 			.withDefaultHelpers()
 			.withHelper("isTrue", BooleanHelper.isTrue)
 			.build();
-
+	Controller controlador= new Controller();
 	Spark.staticFiles.location("/public");
 	Spark.get("/", HomeController::home,engine);
-	Spark.get("/login", Controller::logeo, engine);
-	Spark.post("/login", Controller::Ingreso);
-	Spark.get("/principalAdmin", Controller::mostrarPrincipalAdmin,engine);
+	Spark.get("/login", controlador::logeo, engine);
+	Spark.post("/login", controlador::Ingreso);
+	Spark.get("/logout", controlador::logout);
+	Spark.get("/principalAdmin", controlador::mostrarPrincipalAdmin,engine);
+	Spark.get("/logueoIncorrecto", controlador::mostrarLogueoIncorrecto,engine);
 	}
 }
