@@ -21,6 +21,7 @@ public class Router {
 	Spark.post("/login", controlador::Ingreso);
 	Spark.get("/logout", controlador::logout);
 	Spark.get("/principalAdmin", controlador::mostrarPrincipalAdmin,engine);
+	Spark.get("/principalTerminal", controlador::mostrarPrincipalTerminal,engine);
 	Spark.get("/logueoIncorrecto", controlador::mostrarLogueoIncorrecto,engine);
 	}
 }

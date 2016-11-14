@@ -39,4 +39,10 @@ public class Controller {
 		res.redirect("/");
 		return null;
 	}
+	public  ModelAndView mostrarPrincipalTerminal(Request req, Response res){
+		Map<String, Users> model= new HashMap<String, Users>();
+		model.put("user", u1);
+		return new ModelAndView(model, "principalTerminal.hbs");
+	}	
+
 }
