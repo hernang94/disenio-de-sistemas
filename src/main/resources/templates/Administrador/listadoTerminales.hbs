@@ -1,0 +1,22 @@
+{{#partial "contenido"}}
+<h1>Pois</h1>
+<table class="table table-stripped">
+	<tr>
+		<th>Nombre</th>
+		<th>Comuna</th>
+		<th></th>
+	</tr>
+	
+	{{#each terminales}}
+		<tr>
+			<td>{{terminal}}</td>
+			<td>{{comuna}}</td>
+		</tr>
+	{{/each}}
+</table>
+<form action="/administrador/buscarTerminal" method="GET">
+		<input class="btn btn-primary btn-lg" type="submit" value="Volver">
+</form>
+{{/partial}}
+
+{{>layoutAdministrador.hbs}}

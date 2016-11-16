@@ -1,0 +1,21 @@
+{{#partial "contenido"}}
+<h1>Pois</h1>
+<div class="jumbotron">
+<form action="/administrador/listar" method="POST">
+  <div class="form-group">
+			<label for="nombrePoi">Nombre</label>
+			<input type="text" placeholder="NombrePoi" name="nombrePoi">
+		</div>
+			<label for="Tipos">Tipo</label>
+			<select name="Tipos">
+			<option value="todos">Todos</option>
+  			<option value="banco">Banco</option>
+  			<option value="local_comercial">Local Comercial</option>
+  			<option value="cgp">CGP</option>
+  			<option value="parada">Parada</option>
+</select>
+		<input class="btn btn-primary btn-lg" type="submit" value="Listar">
+</form>
+{{/partial}}
+
+{{>layoutAdministrador.hbs}}
