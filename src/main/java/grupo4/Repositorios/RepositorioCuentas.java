@@ -8,11 +8,10 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import grupo4.HerramientasExternas.InstanciadorMorphia;
 import grupo4.POIs.Poi;
-import grupo4.POIs.Users;
+import grupo4.Usuarios.Users;
 
 public class RepositorioCuentas implements WithGlobalEntityManager{
 	private static RepositorioCuentas instancia = new RepositorioCuentas();
-	private List<Users> cuentas= new ArrayList<>();
 	public static RepositorioCuentas getInstancia() {
 		return instancia;
 	}

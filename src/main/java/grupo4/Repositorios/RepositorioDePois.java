@@ -59,6 +59,12 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 		listaAux = filtrarPorCriterio(criterio);
 		return listaAux;
 	}
+	public List<Poi> busquedaPorNombre(String nombre){
+		return filtrarPorCriterio(nombre).stream().filter(poi->poi.getNombre().contains(nombre)).collect(Collectors.toList());
+	}
+	public List<Poi> busquedaPorTipo(String tipo){
+		return filtrarPorCriterio(tipo).stream().filter(poi->poi.getTipo().equalsIgnoreCase(tipo)).collect(Collectors.toList());
+	}
 
 	public boolean consultaDisponibilidad(LocalDateTime fecha, String criterio) {
 		Poi poiAux;

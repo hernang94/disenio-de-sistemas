@@ -14,7 +14,6 @@ import grupo4.Acciones.FechaCantReporte;
 import grupo4.HerramientasExternas.InstanciadorMorphia;
 
 public class RepositorioDeBusquedas {
-	private List<ResultadoDeBusqueda> listaBusquedas = new ArrayList<>();
 	private Map<String, List<FechaCantReporte>> busquedasDeCadaTerminal = new HashMap<>();
 	private static RepositorioDeBusquedas instancia = new RepositorioDeBusquedas();
 
@@ -23,7 +22,6 @@ public class RepositorioDeBusquedas {
 	}
 
 	public void reset() {
-		listaBusquedas.clear();
 		busquedasDeCadaTerminal.clear();
 	}
 
@@ -32,23 +30,14 @@ public class RepositorioDeBusquedas {
 	}
 
 	 public List<Integer> getlistaBusquedas(String unTerminal) {
-		@SuppressWarnings("deprecation")
-		Query<ResultadoDeBusqueda> queryListaBusquedas = InstanciadorMorphia.getDb().createQuery(ResultadoDeBusqueda.class).field("terminalDeLaBusqueda").equal(unTerminal).retrievedFields(true, "cantidadDeResultados");
-		List<ResultadoDeBusqueda> resultadosObtenidos = queryListaBusquedas.asList();
-		return resultadosObtenidos.stream().map(unResultado->unResultado.getCantidadDeResultados()).collect(Collectors.toList());
+		return obtenerListaBusquedas(unTerminal).stream().map(unResultado->unResultado.getCantidadDeResultados()).collect(Collectors.toList());
 		}
 
-	public FechaCantReporte cantidadPorFecha(LocalDate fecha) {
-		return new FechaCantReporte(fecha, listaBusquedas.stream()
-				.filter(busqueda -> busqueda.getFechaDeBusqueda().equals(fecha)).collect(Collectors.toList()).size());
-	}
 
 	public List<FechaCantReporte> getListaFechaCant(String terminal) {
 		List<FechaCantReporte> listaADevolver = new ArrayList<>();
-		List<ResultadoDeBusqueda> queryListaBusquedas = InstanciadorMorphia.getDb()
-				.createQuery(ResultadoDeBusqueda.class).field("terminalDeLaBusqueda").equal(terminal).asList();
 		Map<LocalDate,Integer>mapAuxiliar=new HashMap<>();
-		mapAuxiliar=armarHash(queryListaBusquedas);
+		mapAuxiliar=armarHash(obtenerListaBusquedas(terminal));
 		mapAuxiliar.forEach((fecha,cantidad)->listaADevolver.add(new FechaCantReporte(fecha,cantidad)));
 		return listaADevolver;
 	}
@@ -68,6 +57,11 @@ public class RepositorioDeBusquedas {
 
 	public Integer cantidadTotalDeBusquedas(List<FechaCantReporte> lista) {
 		return lista.stream().mapToInt(elemento -> elemento.getCantidad()).sum();
+	}
+	
+	private List<ResultadoDeBusqueda> obtenerListaBusquedas(String terminal){
+		return InstanciadorMorphia.getDb()
+				.createQuery(ResultadoDeBusqueda.class).field("terminalDeLaBusqueda").equal(terminal).asList();
 	}
 
 }

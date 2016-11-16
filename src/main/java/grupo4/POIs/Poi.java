@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -25,17 +26,13 @@ public abstract class Poi {
 	@Id
 	@GeneratedValue
 	private int idPoi;
-	@Transient
-	@org.mongodb.morphia.annotations.Transient
-	private double x;
-	@Transient
-	@org.mongodb.morphia.annotations.Transient
-	private double y;
 	@ElementCollection
 	private List<String> palabrasClaves;
 	@Embedded
 	@Column(nullable=true)
 	private Punto coordenadas;
+	@Transient
+	private String tipo=this.getDecriminatorValue();
 
 	protected Poi() {
 	}
@@ -74,22 +71,6 @@ public abstract class Poi {
 		}
 	}
 
-	public double getX() {
-		return x;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-
 	public void setCoordenadas(double x, double y) {
 		coordenadas = new Punto(x, y);
 	}
@@ -103,7 +84,7 @@ public abstract class Poi {
 	}
 
 	public boolean cumpleCriterio(String criterio) {
-		return ((criterio.equalsIgnoreCase(nombre)) || (esUnaPalabraClave(criterio)));
+		return (nombre.contains(criterio) || (esUnaPalabraClave(criterio)||criterio.equalsIgnoreCase(tipo)));
 	}
 
 	private boolean esUnaPalabraClave(String criterio) {
@@ -132,6 +113,12 @@ public abstract class Poi {
 
 	public Punto getCoordenadas() {
 		return coordenadas;
+	}
+	public String getDecriminatorValue() {
+	    return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+	}
+	public String getTipo(){
+		return tipo;
 	}
 
 }

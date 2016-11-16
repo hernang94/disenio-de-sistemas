@@ -1,5 +1,6 @@
 package grupo4.POIs;
 
+
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import grupo4.HerramientasExternas.Punto;
 
