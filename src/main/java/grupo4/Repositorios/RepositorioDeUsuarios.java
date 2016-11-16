@@ -1,6 +1,8 @@
 package grupo4.Repositorios;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityExistsException;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
@@ -28,6 +30,9 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager {
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getListaDeUsuarios() {
 		return (List<Usuario>) entityManager().createQuery("from Usuario").getResultList();
+	}
+	public List<Usuario>getListaDeUsuariosXComuna(int comuna){
+		return getListaDeUsuarios().stream().filter(terminal->terminal.getComuna()==comuna).collect(Collectors.toList());
 	}
 
 }

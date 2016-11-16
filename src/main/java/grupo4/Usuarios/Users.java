@@ -1,29 +1,32 @@
-package grupo4.POIs;
+package grupo4.Usuarios;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 
 import grupo4.Acciones.Usuario;
 
 @Entity
-public class Users {
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="TIPO")
+public abstract class Users {
 	@Id
 	@GeneratedValue
 	private int id_User;
 	private String usuario;
 	private String contrasenia;
-	@OneToOne
-	private Usuario terminal;
 	@SuppressWarnings("unused")
-	private Users(){}
+	protected Users(){}
 	
-	public Users(String usuario, String contrasenia,Usuario terminal) {
+	public Users(String usuario, String contrasenia) {
 		super();
 		this.usuario = usuario;
 		this.contrasenia = contrasenia;
-		this.terminal=terminal;
 	}
 	public int getId() {
 		return id_User;
@@ -34,7 +37,7 @@ public class Users {
 	public String getContrasenia() {
 		return contrasenia;
 	}
-	public Usuario getTerminal(){
-		return terminal;
+	public String getDecriminatorValue() {
+	    return this.getClass().getAnnotation(DiscriminatorValue.class).value();
 	}
 }
