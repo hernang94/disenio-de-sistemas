@@ -1,0 +1,13 @@
+{{#partial "contenido"}}
+<h1>Pois</h1>
+<div class="jumbotron">
+<form action="/terminal/buscarPois" method="POST">
+  <div class="form-group">
+			<label for="criterio">Criterio de Busqueda</label>
+			<input type="text" placeholder="Criterio" name="criterio">
+		</div>
+		<input class="btn btn-primary btn-lg" type="submit" value="Buscar">
+</form>
+{{/partial}}
+
+{{>layoutTerminal.hbs}}
