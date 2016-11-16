@@ -40,8 +40,6 @@ public class JsonABancoMapper {
 		FactoryHorarioBanco horarioBanco = new FactoryHorarioBanco();
 		List<String> palabrasClavesBanco = new ArrayList<>();
 		Banco banco = new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco,new Punto(bancoExterno.getX(), bancoExterno.getY()));
-		banco.setX(bancoExterno.getX());
-		banco.setY(bancoExterno.getY());
 		List<Servicio> listaDeServicios = bancoExterno.getServicios().stream()
 				.map(nombre -> new Servicio(nombre, horarioBanco.dameHorarioBanco())).collect(Collectors.toList());
 		banco.setListaServicios(listaDeServicios);
