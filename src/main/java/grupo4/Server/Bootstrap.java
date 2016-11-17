@@ -31,7 +31,7 @@ public class Bootstrap implements WithGlobalEntityManager,EntityManagerOps, Tran
 		withTransaction(()->{
 		Usuario terminal=new Usuario("Abasto", 9);
 		entityManager().persist(terminal);
-		Users u1= new UsuarioTerminal("hernan", "gallo", terminal);
+		Users u1= new UsuarioTerminal(terminal.getTerminal(), "terminal", terminal);
 		Users u2= new UsuarioAdministrador("admin", "w23e");
 		RepositorioCuentas.getInstancia().agregarUsuario(u1);
 		RepositorioCuentas.getInstancia().agregarUsuario(u2);
