@@ -46,9 +46,14 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 
 	}
 
+	public Poi obtenerPoi(int idPoi){
+		return entityManager().find(Poi.class, idPoi);
+	}
 	public void bajaPoi(int id) {
 		try {
+			entityManager().getTransaction().begin();
 			entityManager().remove((Poi) entityManager().find(Poi.class, id));
+			entityManager().getTransaction().commit();
 		} catch (Exception e) {
 			throw new RuntimeException("No existe el Poi");
 		}

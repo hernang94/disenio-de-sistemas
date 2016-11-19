@@ -11,7 +11,10 @@
 		<tr>
 			<td>{{nombre}}</td>
 			<td>{{tipo}}</td>
-			<td><a href="{{url}}">Ver</a><td>
+			<td><a href="{{url}}">Editar</a><td>
+			<form class="form-inline" action="eliminar/{{url}}" method="POST">
+			<button type="submit" class="btn btn-default">Eliminar</button>
+			</form>
 		</tr>
 	{{/each}}
 </table>

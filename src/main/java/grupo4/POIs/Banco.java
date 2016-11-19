@@ -4,6 +4,7 @@ package grupo4.POIs;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +45,21 @@ public class Banco extends Poi {
 		this.listaServicios = listaServicios;
 	}
 
+	public List<String> getServicios(){
+		List<String> nombreServicios=new ArrayList<>();
+		Map<String,List<String>> servicios=new HashMap<>();
+		listaServicios.stream().forEach(servicio->nombreServicios.add(servicio.getNombre()));
+		return nombreServicios;
+	}
+	
+	public List<String> getHorarios(){
+		List<String> horarios=new ArrayList<>();
+		hashHorario.forEach((K,V)->horarios.add("Dia: "+K+" Desde: "+V.getDesde()+" Hasta: "+V.getHasta()+"\n"));
+		return horarios;
+		
+	}
 	public boolean estaDisponible(LocalDateTime horaConsulta) {
 		DayOfWeek dia = horaConsulta.getDayOfWeek();
 		return (hashHorario.get(dia) != null) && (hashHorario.get(dia).estaEnHorario(horaConsulta));
 	}
-	
 }

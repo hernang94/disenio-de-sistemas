@@ -18,6 +18,7 @@ import grupo4.POIs.Banco;
 import grupo4.POIs.Horario;
 import grupo4.POIs.Parada;
 import grupo4.POIs.Poi;
+import grupo4.POIs.Servicio;
 import grupo4.Repositorios.RepositorioCuentas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Usuarios.Users;
@@ -27,6 +28,7 @@ import grupo4.Usuarios.UsuarioTerminal;
 public class Bootstrap implements WithGlobalEntityManager,EntityManagerOps, TransactionalOps{
 	private Poi banco;
 	private Poi parada114;
+	private List<Servicio> servicios;
 	public void init(){
 		withTransaction(()->{
 		Usuario terminal=new Usuario("Abasto", 9);
@@ -53,6 +55,8 @@ public class Bootstrap implements WithGlobalEntityManager,EntityManagerOps, Tran
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
+		servicios=new ArrayList<>();
+		servicios.add(new Servicio("Cajero", null));
 		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
 		RepositorioDePois.getInstancia().agregarPoi(banco);
 		parada114 = new Parada("114", null,new Punto(-34.6417364,-58.4792636));

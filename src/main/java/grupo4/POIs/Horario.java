@@ -24,4 +24,12 @@ public class Horario {
 		return (fechaConsulta.toLocalTime().isAfter(desde) && fechaConsulta.toLocalTime().isBefore(hasta));
 
 	}
+	public LocalTime getDesde() {
+		return desde;
+	}
+
+	public LocalTime getHasta() {
+		return hasta;
+	}
+
 }

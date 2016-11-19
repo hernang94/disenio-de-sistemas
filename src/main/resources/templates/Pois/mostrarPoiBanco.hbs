@@ -1,0 +1,12 @@
+{{#partial "contenido"}}
+
+{{#with poi}}
+	<h1> Poi {{nombre}} </h1>
+	
+	<p><strong>Coordenadas:</strong> {{coordenadas}}</p>
+	<p><strong>Horarios:</strong> {{horarios}}</p>
+	<p><strong>Servicios:</strong>{{servicios}}</p>
+{{/with}}
+{{/partial}}
+
+{{>layoutAdministrador.hbs}}

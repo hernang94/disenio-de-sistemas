@@ -120,5 +120,7 @@ public abstract class Poi {
 	public String getTipo(){
 		return tipo;
 	}
-
+	public String getUrl(){
+		  return "pois/" + getId();
+	  }
 }
