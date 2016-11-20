@@ -15,8 +15,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
+import org.mozilla.javascript.tools.shell.JSConsole;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import DTOexterno.BancoExterno;
 import DTOexterno.CentroDTO;
@@ -27,6 +30,7 @@ import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.ComponentesExternos.Http;
+import grupo4.ComponentesExternos.JsonABancoMapper;
 import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
@@ -75,6 +79,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 
 	@Before
 	public void init() {
+		JsonABancoMapper.getInstancia().setObjectMapper(new ObjectMapper());
 		Cache.getInstancia().activarCache();
 		listaCentroAAdaptar = new ArrayList<>();
 

@@ -15,6 +15,9 @@ import org.junit.rules.ExpectedException;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import grupo4.ComponentesExternos.JsonABancoMapper;
 import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.Poligono;
 import grupo4.HerramientasExternas.Punto;
@@ -50,6 +53,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Before
 	public void init() {
+		JsonABancoMapper.getInstancia().setObjectMapper(new ObjectMapper());
 		direccion="Direccion de Prueba";
 		Cache.getInstancia().activarCache();
 		dispositivoTactil = RepositorioDePois.getInstancia();
@@ -157,7 +161,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 
 	@Test
 	public void cercaniaABanco() {
-		Assert.assertTrue(RepositorioDePois.getInstancia().consultaCercania("santander rio", unPuntoABuscar));
+		Assert.assertTrue(RepositorioDePois.getInstancia().consultaCercania("santander", unPuntoABuscar));
 	}
 
 	@Test
@@ -174,7 +178,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	@Test
 	public void estaDisponibleBanco() {
 		Assert.assertTrue(
-				RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander rio"));
+				RepositorioDePois.getInstancia().consultaDisponibilidad(LocalDateTime.of(2016, 04, 19, 11, 00), "santander"));
 
 	}
 	

@@ -15,7 +15,7 @@ import grupo4.POIs.Servicio;
 
 public class JsonABancoMapper {
 	private static JsonABancoMapper instancia;
-	private static ObjectMapper objectMapper = new ObjectMapper();
+	private static ObjectMapper objectMapper;
 	
 	public static JsonABancoMapper getInstancia() {
 		if(instancia==null){
@@ -24,6 +24,10 @@ public class JsonABancoMapper {
 		return instancia;
 	}
 	
+	public static void setObjectMapper(ObjectMapper objectMapper) {
+		JsonABancoMapper.objectMapper = objectMapper;
+	}
+
 	public List<Poi> adaptarListaBancosExternos(String jsons) {
 		List<Poi> listaDeBancos;
 		try {

@@ -17,6 +17,8 @@ import org.mockito.Mockito;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import DTOexterno.CentroDTO;
 import DTOexterno.RangoServicioDTO;
 import DTOexterno.ServicioDTO;
@@ -31,6 +33,7 @@ import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.ComponentesExternos.EmailSender;
+import grupo4.ComponentesExternos.JsonABancoMapper;
 import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.InstanciadorMorphia;
 import grupo4.HerramientasExternas.Poligono;
@@ -82,6 +85,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 	private ObserverNotificador notificadorFalla;
 	private Usuario terminalFalla;
 	private String direccion;
+	private JsonABancoMapper jsonMapperMocked;
 
 	@SuppressWarnings("static-access")
 

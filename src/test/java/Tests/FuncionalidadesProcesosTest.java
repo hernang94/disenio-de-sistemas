@@ -467,13 +467,13 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 	}
 
 	@Test
-	public void decoratorReintentarEjecutar() {
+	public void decoratorReintentarEjecutar(){
 		agregarObserver = new AccionAgregarObserver(notificador, criterioTodos);
 		decoratorReintentar = new DecoratorReintentar(2, agregarObserver);
 		ResultadosDeEjecucion resultado=decoratorReintentar.ejecutar();
 		repoResultadosEjecucion.agregarResultado(resultado);
-		Assert.assertEquals(2, repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
-				.getCantidadDeElementosAfectados());
+		Assert.assertEquals("2 Usuarios afectados", repoResultadosEjecucion.getlistaDeResultados().stream().findFirst().get()
+				.getResultado());
 	}
 
 	@Test
