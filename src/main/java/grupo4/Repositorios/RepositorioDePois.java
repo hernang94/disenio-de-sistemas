@@ -97,15 +97,9 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 
 	public List<Poi> filtrarPorCriterio(String criterio) {
 		List<Poi> listaAux = new ArrayList<>();
-		if(Cache.getInstancia().criterioEstaEnCache(criterio)){
-			listaAux.addAll(Cache.getInstancia().obtenerPois(criterio));
-		}
 		listaAux.addAll(this.obtenerPoisLocales().stream().filter(unPoi -> unPoi.cumpleCriterio(criterio))
 				.collect(Collectors.toList())); 
-		if (listaAux.isEmpty()) {
-				origenesExternos.stream()
-				.forEach(unComponente -> listaAux.addAll((unComponente.buscarPois(criterio))));
-		}
+		origenesExternos.stream().forEach(unComponente -> listaAux.addAll((unComponente.buscarPois(criterio))));
 		return listaAux;
 	}
 

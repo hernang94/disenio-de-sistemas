@@ -69,6 +69,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 	private List<String> palabrasClavesLocalComercial;
 	private BancoExterno bancoExterno;
 	private Http http;
+	private String direccion;
 
 	@SuppressWarnings("static-access")
 
@@ -101,8 +102,10 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		dispositivoTactil.agregarOrigenExterno(adaptador);
 		dispositivoTactil.agregarOrigenExterno(megatron);
 		dispositivoTactil.agregarOrigenExterno(optimus);
+		
+		direccion="Direccion de Prueba";
+		
 		horarioBanco = new Horario("10:00", "15:00");
-
 		hashMapBanco = new HashMap<>();
 		hashMapBanco.put(DayOfWeek.MONDAY, horarioBanco);
 		hashMapBanco.put(DayOfWeek.TUESDAY, horarioBanco);
@@ -118,7 +121,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
-		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco, new Punto(-34.6409182, -58.4758827));
+		banco = new Banco(hashMapBanco, "Santander Rio",direccion, palabrasClavesBanco, new Punto(-34.6409182, -58.4758827));
 
 		palabrasClavesParada = new ArrayList<>();
 		palabrasClavesParada.add("Bondi");
@@ -127,7 +130,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		palabrasClavesParada.add("Rojo");
 		palabrasClavesParada.add("Vidrios polarizados");
 		palabrasClavesParada.add("114");
-		parada114 = new Parada("114", palabrasClavesParada,new Punto(-34.6417364, -58.4792636));
+		parada114 = new Parada("114",direccion, palabrasClavesParada,new Punto(-34.6417364, -58.4792636));
 
 		rubro = rubro.MUEBLERIA;
 		// local = new LocalComercial(rubro, "09:00", "13:00", "14:00", "18:00",
@@ -148,10 +151,10 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		palabrasClavesLocalComercial.add("Carpintero");
 		palabrasClavesLocalComercial.add("Mesa");
 		palabrasClavesLocalComercial.add("Silla");
-		local = new LocalComercial(rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
+		local = new LocalComercial(direccion,rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
 				palabrasClavesLocalComercial,new Punto(-34.6383056, -58.4814007));
 
-		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco,new Punto(-34.6383669, -58.4773822));
+		banco2 = new Banco(hashMapBanco, "HSBC", direccion, palabrasClavesBanco,new Punto(-34.6383669, -58.4773822));
 
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
@@ -173,7 +176,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		palabrasClavesCGP.add("Villa Luro");
 		palabrasClavesCGP.add("Villa Real");
 		palabrasClavesCGP.add("All Boys");
-		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
+		cgp = new CGP(comuna10, "CGP10",direccion, palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
 		cgp.addServicio(timbrado);
 
 		dispositivoTactil.agregarPoi(banco);

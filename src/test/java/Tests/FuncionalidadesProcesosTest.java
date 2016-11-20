@@ -128,10 +128,13 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 
 	private DecoratorReintentar decoratorReintentar;
 	private DecoratorNotificador decoratorNotificar;
+	
+	private String direccion;
 
 	@SuppressWarnings("static-access")
 	@Before
 	public void init() throws IOException {
+		direccion="Direccion de Prueba";
 		Cache.getInstancia().activarCache();
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
@@ -179,7 +182,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
-		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
+		banco = new Banco(hashMapBanco, "Santander Rio", direccion,palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
 
 		palabrasClavesParada = new ArrayList<>();
 		palabrasClavesParada.add("Bondi");
@@ -188,7 +191,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		palabrasClavesParada.add("Rojo");
 		palabrasClavesParada.add("Vidrios polarizados");
 		palabrasClavesParada.add("114");
-		parada114 = new Parada("114", palabrasClavesParada,new Punto(-34.6417364,-58.479263));
+		parada114 = new Parada("114",direccion, palabrasClavesParada,new Punto(-34.6417364,-58.479263));
 
 		rubro = rubro.MUEBLERIA;
 		hashMapLocalComercialManiana = new HashMap<>();
@@ -207,10 +210,10 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		palabrasClavesLocalComercial.add("Carpintero");
 		palabrasClavesLocalComercial.add("Mesa");
 		palabrasClavesLocalComercial.add("Silla");
-		local = new LocalComercial(rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
+		local = new LocalComercial(direccion,rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
 				palabrasClavesLocalComercial,new Punto(-34.6383056,-58.4814007));
 
-		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco,new Punto(-34.6383669,-58.4773822));
+		banco2 = new Banco(hashMapBanco, "HSBC",direccion, palabrasClavesBanco,new Punto(-34.6383669,-58.4773822));
 
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
@@ -232,7 +235,7 @@ public class FuncionalidadesProcesosTest extends AbstractPersistenceTest impleme
 		palabrasClavesCGP.add("Villa Luro");
 		palabrasClavesCGP.add("Villa Real");
 		palabrasClavesCGP.add("All Boys");
-		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
+		cgp = new CGP(comuna10, "CGP10",direccion, palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
 		cgp.addServicio(timbrado);
 
 		repoDePois.agregarPoi(banco);

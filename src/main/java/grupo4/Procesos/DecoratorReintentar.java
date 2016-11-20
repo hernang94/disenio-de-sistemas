@@ -26,7 +26,7 @@ public class DecoratorReintentar implements Accion {
 		return cantidadReintentos;
 	}
 
-	public ResultadosDeEjecucion ejecutar(){//lo hago void y en el catch mi fijo lo del reintento
+	public ResultadosDeEjecucion ejecutar(){
 		ResultadosDeEjecucion resultado = null;
 		try{
 			this.setIntentosRealizados(this.getIntentosRealizados()+1);
@@ -37,7 +37,7 @@ public class DecoratorReintentar implements Accion {
 				throw new RuntimeException("Se supero la cantidad de Reintentos y el proceso fallo");
 			}
 			else{
-				this.ejecutar();
+				resultado=this.ejecutar();
 			}
 		}
 		return resultado;

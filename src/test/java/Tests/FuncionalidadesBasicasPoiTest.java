@@ -43,12 +43,14 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 	private Map<DayOfWeek, Horario> hashMapLocalComercialManiana;
 	private Map<DayOfWeek, Horario> hashMapLocalComercialTarde;
 	private Map<DayOfWeek, Horario> hashMapServicio;
-	Poligono comuna10;
+	private Poligono comuna10;
+	private String direccion;
 
 	@SuppressWarnings("static-access")
 
 	@Before
 	public void init() {
+		direccion="Direccion de Prueba";
 		Cache.getInstancia().activarCache();
 		dispositivoTactil = RepositorioDePois.getInstancia();
 		
@@ -70,7 +72,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
-		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
+		banco = new Banco(hashMapBanco, "Santander Rio",direccion, palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
 
 		List<String> palabrasClavesParada = new ArrayList<>();
 		palabrasClavesParada.add("Bondi");
@@ -79,7 +81,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		palabrasClavesParada.add("Rojo");
 		palabrasClavesParada.add("Vidrios polarizados");
 		palabrasClavesParada.add("114");
-		parada114 = new Parada("114", palabrasClavesParada,new Punto(-34.6417364,-58.4792636));
+		parada114 = new Parada("114",direccion, palabrasClavesParada,new Punto(-34.6417364,-58.4792636));
 		rubro = rubro.MUEBLERIA;
 		hashMapLocalComercialManiana = new HashMap<>();
 		hashMapLocalComercialManiana.put(DayOfWeek.MONDAY, new Horario("09:00", "13:00"));
@@ -97,10 +99,10 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		palabrasClavesLocalComercial.add("Carpintero");
 		palabrasClavesLocalComercial.add("Mesa");
 		palabrasClavesLocalComercial.add("Silla");
-		local = new LocalComercial(rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
+		local = new LocalComercial(direccion,rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
 				palabrasClavesLocalComercial,new Punto(-34.6383056,-58.4814007));
 
-		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco,new Punto(-34.6383669,-58.4773822));
+		banco2 = new Banco(hashMapBanco, "HSBC",direccion, palabrasClavesBanco,new Punto(-34.6383669,-58.4773822));
 
 		hashMapServicio = new HashMap<>();
 		hashMapServicio.put(DayOfWeek.THURSDAY, new Horario("12:00", "13:30"));
@@ -122,7 +124,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		palabrasClavesCGP.add("Villa Luro");
 		palabrasClavesCGP.add("Villa Real");
 		palabrasClavesCGP.add("All Boys");
-		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
+		cgp = new CGP(comuna10, "CGP10",direccion, palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
 		cgp.addServicio(timbrado);
 
 		// em.persist(banco2);
@@ -384,7 +386,7 @@ public class FuncionalidadesBasicasPoiTest extends AbstractPersistenceTest imple
 		palabrasClaves.add("Ramal Quilmes");
 		thrown.expect(RuntimeException.class);
 		thrown.expectMessage("No existe el Poi");
-		Parada paradaNoPersistida = new Parada("Parada Falsa 1234", palabrasClaves,null);
+		Parada paradaNoPersistida = new Parada("Parada Falsa 1234",direccion, palabrasClaves,null);
 		RepositorioDePois.getInstancia().bajaPoi(paradaNoPersistida.getId());
 	}
 

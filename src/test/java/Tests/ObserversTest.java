@@ -81,11 +81,13 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 	private RepositorioDeBusquedas repositorioBusquedas;
 	private ObserverNotificador notificadorFalla;
 	private Usuario terminalFalla;
+	private String direccion;
 
 	@SuppressWarnings("static-access")
 
 	@Before
 	public void init() {
+		direccion="Direccion de Prueba";
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
@@ -135,7 +137,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		palabrasClavesBanco.add("Prestamo");
 		palabrasClavesBanco.add("Cuenta corriente");
 		palabrasClavesBanco.add("Cajero");
-		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
+		banco = new Banco(hashMapBanco, "Santander Rio",direccion, palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
 
 		palabrasClavesParada = new ArrayList<>();
 		palabrasClavesParada.add("Bondi");
@@ -144,7 +146,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		palabrasClavesParada.add("Rojo");
 		palabrasClavesParada.add("Vidrios polarizados");
 		palabrasClavesParada.add("114");
-		parada114 = new Parada("114", palabrasClavesParada,new Punto(-34.6417364,-58.4792636));
+		parada114 = new Parada("114",direccion, palabrasClavesParada,new Punto(-34.6417364,-58.4792636));
 
 		rubro = rubro.MUEBLERIA;
 		hashMapLocalComercialManiana = new HashMap<>();
@@ -163,10 +165,10 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		palabrasClavesLocalComercial.add("Carpintero");
 		palabrasClavesLocalComercial.add("Mesa");
 		palabrasClavesLocalComercial.add("Silla");
-		local = new LocalComercial(rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
+		local = new LocalComercial(direccion,rubro, hashMapLocalComercialManiana, hashMapLocalComercialTarde, "Blaisten",
 				palabrasClavesLocalComercial,new Punto(-34.6383056,-58.4814007));
 
-		banco2 = new Banco(hashMapBanco, "HSBC", palabrasClavesBanco,new Punto(-34.6383669,-58.4773822));
+		banco2 = new Banco(hashMapBanco, "HSBC",direccion, palabrasClavesBanco,new Punto(-34.6383669,-58.4773822));
 
 
 		hashMapServicio = new HashMap<>();
@@ -189,7 +191,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		palabrasClavesCGP.add("Villa Luro");
 		palabrasClavesCGP.add("Villa Real");
 		palabrasClavesCGP.add("All Boys");
-		cgp = new CGP(comuna10, "CGP10", palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
+		cgp = new CGP(comuna10, "CGP10",direccion, palabrasClavesCGP,comuna10.getPuntosPoligono().get(0));
 		cgp.addServicio(timbrado);
 
 		repoDePois.agregarPoi(banco);
