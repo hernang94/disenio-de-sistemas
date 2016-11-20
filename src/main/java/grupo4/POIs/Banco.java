@@ -3,9 +3,11 @@ package grupo4.POIs;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -15,7 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+
 
 import grupo4.HerramientasExternas.Punto;
 
@@ -32,8 +34,8 @@ public class Banco extends Poi {
 	public Banco(){
 		super();
 	}
-	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, List<String> palabrasClaves,Punto coordenadas) {
-		super(nombre, palabrasClaves,coordenadas);
+	public Banco(Map<DayOfWeek, Horario> horarios, String nombre, String direccion, List<String> palabrasClaves,Punto coordenadas) {
+		super(nombre,direccion, palabrasClaves,coordenadas);
 		this.hashHorario = horarios;
 	}
 
@@ -47,14 +49,13 @@ public class Banco extends Poi {
 
 	public List<String> getServicios(){
 		List<String> nombreServicios=new ArrayList<>();
-		Map<String,List<String>> servicios=new HashMap<>();
 		listaServicios.stream().forEach(servicio->nombreServicios.add(servicio.getNombre()));
 		return nombreServicios;
 	}
 	
 	public List<String> getHorarios(){
 		List<String> horarios=new ArrayList<>();
-		hashHorario.forEach((K,V)->horarios.add("Dia: "+K+" Desde: "+V.getDesde()+" Hasta: "+V.getHasta()+"\n"));
+		hashHorario.forEach((K,V)->horarios.add("Dia: "+K.getDisplayName(TextStyle.FULL_STANDALONE, new Locale("es", "ES"))+" Desde: "+V.getDesde()+" Hasta: "+V.getHasta()+"\n"));
 		return horarios;
 		
 	}

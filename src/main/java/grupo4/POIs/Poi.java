@@ -28,6 +28,7 @@ public abstract class Poi {
 	private int idPoi;
 	@ElementCollection
 	private List<String> palabrasClaves;
+	private String direccion;
 	@Embedded
 	@Column(nullable=true)
 	private Punto coordenadas;
@@ -37,8 +38,9 @@ public abstract class Poi {
 	protected Poi() {
 	}
 
-	public Poi(String nombre, List<String> palabrasClaves,Punto coordenadas) {
+	public Poi(String nombre,String direccion, List<String> palabrasClaves,Punto coordenadas) {
 		this.nombre = nombre;
+		this.direccion=direccion;
 		this.palabrasClaves = palabrasClaves;
 		this.coordenadas = coordenadas;
 	}
@@ -55,6 +57,10 @@ public abstract class Poi {
 		return palabrasClaves;
 	}
 
+	public String getDireccion(){
+		return direccion;
+	}
+	
 	public void agregarPalabraClave(String palabraClave) {
 		if (!palabrasClaves.contains(palabraClave)) {
 			palabrasClaves.add(palabraClave);
@@ -74,7 +80,12 @@ public abstract class Poi {
 	public void setCoordenadas(double x, double y) {
 		coordenadas = new Punto(x, y);
 	}
-
+	public double getLatitud(){
+		return coordenadas.getLatitud();
+	}
+	public double getLongitud(){
+		return coordenadas.getLongitud();
+	}
 	public double calcularDistancia(Punto punto) {
 		return coordenadas.distance(punto);
 	}
@@ -93,6 +104,9 @@ public abstract class Poi {
 
 	public String getNombre() {
 		return nombre;
+	}
+	public void setDireccion(String direccion){
+		this.direccion=direccion;
 	}
 
 	public abstract boolean estaDisponible(LocalDateTime fechaConsulta);

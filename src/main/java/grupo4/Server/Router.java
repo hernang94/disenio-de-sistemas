@@ -33,6 +33,8 @@ public class Router {
 	Spark.get("administrador/buscarTerminal", controladorAdmin::mostrarPantallaParaListarTerminales,engine);
 	Spark.post("administrador/buscarTerminal", controladorAdmin::listarTerminales,engine);
 	Spark.post("administrador/eliminar/pois/:id", controladorAdmin::eliminarPoi,engine);
+	Spark.get("administrador/editar/pois/:id", controladorAdmin::mostarEditarPoi,engine);
+	Spark.post("administrador/editar/pois/:id", controladorAdmin::editarPoi,engine);
 	Spark.get("/terminal/principal", controladorTerminal::mostrarPrincipalTerminal,engine);
 	Spark.get("/terminal/buscarPois", controladorTerminal::mostrarBusquedaPois,engine);
 	Spark.post("/terminal/buscarPois", controladorTerminal::buscarPoisTerminal,engine);

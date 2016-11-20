@@ -3,6 +3,7 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.geojson.Point;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import grupo4.ComponentesExternos.BuscadorDePois;
@@ -125,6 +126,21 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 			poisEnBD.stream().forEach(poi -> poi.reemplazarPalabrasClaves(palabrasClaves));
 		}
 	}
+	public void actualizarPoi(int id,String nombre, String direccion, double latitud, double longitud){
+		Poi poi= entityManager().find(Poi.class, id);
+		poi.setNombre(nombre);
+		poi.setDireccion(direccion);
+		poi.setCoordenadas(latitud, longitud);
+		try{
+		entityManager().getTransaction().begin();
+		entityManager().merge(poi);
+		entityManager().getTransaction().commit();
+		}
+		catch(Exception e){
+			throw new RuntimeException("No se pudo editar el poi");
+		}
+	}
+	
 
 	private boolean repositorioContienePoi(String palabraFantasia) {
 		List<Poi> poisEnBD = this.obtenerPoisLocales();

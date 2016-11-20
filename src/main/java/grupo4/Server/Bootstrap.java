@@ -57,9 +57,9 @@ public class Bootstrap implements WithGlobalEntityManager,EntityManagerOps, Tran
 		palabrasClavesBanco.add("Cajero");
 		servicios=new ArrayList<>();
 		servicios.add(new Servicio("Cajero", null));
-		banco = new Banco(hashMapBanco, "Santander Rio", palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
+		banco = new Banco(hashMapBanco, "Santander Rio","Calle falsa 123" , palabrasClavesBanco,new Punto(-34.6409182,-58.4758827));
 		RepositorioDePois.getInstancia().agregarPoi(banco);
-		parada114 = new Parada("114", null,new Punto(-34.6417364,-58.4792636));
+		parada114 = new Parada("114","Tandil y Lacarra" ,null,new Punto(-34.6417364,-58.4792636));
 		RepositorioDePois.getInstancia().agregarPoi(parada114);
 		entityManager().flush();
 		entityManager().clear();});

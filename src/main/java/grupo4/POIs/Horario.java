@@ -1,9 +1,13 @@
 package grupo4.POIs;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import javax.persistence.Convert;
 import javax.persistence.Embeddable;
+
+import org.uqbarproject.jpa.java8.extras.convert.LocalDateTimeConverter;
 
 @Embeddable
 public class Horario {

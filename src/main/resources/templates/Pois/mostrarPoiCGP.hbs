@@ -2,7 +2,7 @@
 {{#with poi}}
 	<h1> Poi {{nombre}} </h1>
 	
-	<h3>Ubicacion</h3>
+		<h3>Ubicacion</h3>
 	<style>
 	   #map {
         height: 400px;
@@ -27,10 +27,6 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMsV0UaRboqdTWSR13EV0d_xgsi8Qjbsg&callback=initMap">
     </script>
     
-	<strong>Horarios:</strong>
-	<li style="list-style: none">{{#each horarios}}</li>
- 	<li>{{this}}</li>
- 	<li style="list-style: none">{{/each}}</li>
 	<strong>Servicios:</strong>
 	<li style="list-style: none">{{#each servicios}}</li>
  	<li>{{this}}</li>
@@ -38,4 +34,5 @@
 {{/with}}
 <a href="/terminal/buscarPois" class="btn btn-info" role="button">Volver</a>
 {{/partial}}
+
 {{>layoutAdministrador.hbs}}

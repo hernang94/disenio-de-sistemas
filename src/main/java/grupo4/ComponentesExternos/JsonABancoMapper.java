@@ -39,7 +39,7 @@ public class JsonABancoMapper {
 	private Poi adaptarBanco(BancoExterno bancoExterno) {
 		FactoryHorarioBanco horarioBanco = new FactoryHorarioBanco();
 		List<String> palabrasClavesBanco = new ArrayList<>();
-		Banco banco = new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), palabrasClavesBanco,new Punto(bancoExterno.getX(), bancoExterno.getY()));
+		Banco banco = new Banco(horarioBanco.dameHorarioBanco(), bancoExterno.getBanco(), "N/C",palabrasClavesBanco,new Punto(bancoExterno.getX(), bancoExterno.getY()));
 		List<Servicio> listaDeServicios = bancoExterno.getServicios().stream()
 				.map(nombre -> new Servicio(nombre, horarioBanco.dameHorarioBanco())).collect(Collectors.toList());
 		banco.setListaServicios(listaDeServicios);

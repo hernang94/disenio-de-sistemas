@@ -16,8 +16,8 @@ public class Parada extends Poi {
 		super();
 	}
 	
-	public Parada(String nombre, List<String> palabrasClaves,Punto coordenadas) {
-		super(nombre, palabrasClaves,coordenadas);
+	public Parada(String nombre,String direccion, List<String> palabrasClaves,Punto coordenadas) {
+		super(nombre,direccion, palabrasClaves,coordenadas);
 	}
 
 	public boolean estaCerca(Punto unPunto) {

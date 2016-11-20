@@ -68,8 +68,26 @@ public class AdminController {
 		} catch (Exception e) {
 			Map<String,String> model= new HashMap<>();
 			model.put("error", e.getMessage());
-			e.printStackTrace();
 			return new ModelAndView(model, "Administrador/eliminarError.hbs");
+		}
+	}
+	public ModelAndView mostarEditarPoi(Request req,Response res){
+		int id= Integer.parseInt(req.params("id"));
+		Poi poi= RepositorioDePois.getInstancia().obtenerPoi(id);
+		Map<String,Poi> model=new HashMap<>();
+		model.put("poi", poi);
+		return new ModelAndView(model, "Administrador/formEditarPoi.hbs");
+	}
+	public ModelAndView editarPoi(Request req,Response res){
+		int id= Integer.parseInt(req.params("id"));
+		try {
+			RepositorioDePois.getInstancia().actualizarPoi(id, req.queryParams("nombre").toString(), req.queryParams("direccion").toString(), 
+					Double.parseDouble(req.queryParams("latitud").toString()), Double.parseDouble(req.queryParams("longitud").toString()));
+			return new ModelAndView(null, "Administrador/editarExito.hbs");
+		} catch (Exception e) {
+			Map<String,String> model= new HashMap<>();
+			model.put("error", e.getMessage());
+			return new ModelAndView(model, "Administrador/editarError.hbs");
 		}
 	}
 private List<Poi> evaluarRetorno(String nombre,String tipo){

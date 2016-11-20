@@ -2,6 +2,7 @@ package grupo4.POIs;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,9 +35,9 @@ public class LocalComercial extends Poi {
 	public LocalComercial(){
 		super();
 	}
-	public LocalComercial(Rubro rubro, Map<DayOfWeek, Horario> horariosManiana, Map<DayOfWeek, Horario> horariosTarde,
+	public LocalComercial(String direccion,Rubro rubro, Map<DayOfWeek, Horario> horariosManiana, Map<DayOfWeek, Horario> horariosTarde,
 			String nombre, List<String> palabrasClaves,Punto coordenadas) {
-		super(nombre, palabrasClaves,coordenadas);
+		super(nombre,direccion, palabrasClaves,coordenadas);
 		this.rubro = rubro;
 		this.local_Comercial_Horario_Mañana = horariosManiana;
 		this.local_Comercial_Horario_Tarde = horariosTarde;
@@ -46,7 +47,21 @@ public class LocalComercial extends Poi {
 		return (super.calcularDistancia(unPunto) <= rubro.getRadio());
 
 	}
-
+	public String getRubro(){
+		return rubro.getNombre();
+	}
+	public List<String> getHorariosmaniana(){
+		List<String> horarios=new ArrayList<>();
+		local_Comercial_Horario_Mañana.forEach((K,V)->horarios.add("Dia: "+K+" Desde: "+V.getDesde()+" Hasta: "+V.getHasta()+"\n"));
+		return horarios;
+		
+	}
+	public List<String> getHorariostarde(){
+		List<String> horarios=new ArrayList<>();
+		local_Comercial_Horario_Tarde.forEach((K,V)->horarios.add("Dia: "+K+" Desde: "+V.getDesde()+" Hasta: "+V.getHasta()+"\n"));
+		return horarios;
+		
+	}
 	public boolean encuentraNombre(String criterio) {
 		return ((criterio.equalsIgnoreCase(rubro.getNombre())) || super.cumpleCriterio(criterio));
 	}

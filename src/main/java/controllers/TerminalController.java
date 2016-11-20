@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import grupo4.POIs.Banco;
+import grupo4.POIs.CGP;
+import grupo4.POIs.LocalComercial;
+import grupo4.POIs.Parada;
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Server.Router;
@@ -30,9 +33,29 @@ public class TerminalController {
 	}
 	public ModelAndView mostrarDetallePoi(Request req, Response res){
 		int idPoi=Integer.parseInt(req.params("id"));
-		Banco poi=(Banco) RepositorioDePois.getInstancia().obtenerPoi(idPoi);
-		Map<String, Poi> model= new HashMap<String, Poi>();
-		model.put("poi",poi);
-		return new ModelAndView(model, "Pois/mostrarPoiBanco.hbs");
+		Poi poi=RepositorioDePois.getInstancia().obtenerPoi(idPoi);
+		
+		return evaluarRetorno(poi);
+	}
+	private ModelAndView evaluarRetorno(Poi poi){
+		if(poi.getDecriminatorValue().equalsIgnoreCase("banco")){
+			Map<String, Poi> model= new HashMap<String, Poi>();
+			model.put("poi",(Banco)poi);
+			return  new ModelAndView(model, "Pois/mostrarPoiBanco.hbs");
+		}
+		if(poi.getDecriminatorValue().equalsIgnoreCase("cgp")){
+			Map<String, Poi> model= new HashMap<String, Poi>();
+			model.put("poi",(CGP)poi);
+			return  new ModelAndView(model, "Pois/mostrarPoiCGP.hbs");
+		}
+		if(poi.getDecriminatorValue().equalsIgnoreCase("parada")){
+			Map<String, Poi> model= new HashMap<String, Poi>();
+			model.put("poi",(Parada)poi);
+			return  new ModelAndView(model, "Pois/mostrarPoiParada.hbs");
+		}
+			Map<String, Poi> model= new HashMap<String, Poi>();
+			model.put("poi",(LocalComercial)poi);
+			return  new ModelAndView(model, "Pois/mostrarPoiLocalComercial.hbs");
+			
 	}
 }

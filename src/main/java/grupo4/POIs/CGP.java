@@ -3,7 +3,9 @@ package grupo4.POIs;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -27,8 +29,8 @@ public class CGP extends Poi {
 	@Embedded
 	private Poligono comuna;
 
-	public CGP(Poligono comuna, String nombre, List<String> palabrasClaves,Punto coordenadas) {
-		super(nombre, palabrasClaves,coordenadas);
+	public CGP(Poligono comuna, String nombre,String direccion, List<String> palabrasClaves,Punto coordenadas) {
+		super(nombre, direccion,palabrasClaves,coordenadas);
 		this.comuna = comuna;
 	}
 
@@ -39,7 +41,16 @@ public class CGP extends Poi {
 	public boolean estaCerca(Punto unaCoordenada) {
 		return comuna.isInsideOld(unaCoordenada);
 	}
+	
+	public List<String> getServicios(){
+		List<String> nombreServicios=new ArrayList<>();
+		servicios.stream().forEach(servicio->nombreServicios.add(servicio.getNombre()));
+		return nombreServicios;
+	}
 
+	public Poligono getComuna(){
+		return comuna;
+	}
 	public boolean estaDisponible(LocalDateTime fechaConsulta) {
 		return servicios.stream().anyMatch(servicio -> servicio.estaDisponible(fechaConsulta));
 	}
