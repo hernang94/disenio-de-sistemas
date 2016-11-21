@@ -33,6 +33,7 @@ import grupo4.ComponentesExternos.CGPAdapter;
 import grupo4.ComponentesExternos.ComponenteBanco;
 import grupo4.ComponentesExternos.ComponenteCGPS;
 import grupo4.ComponentesExternos.EmailSender;
+import grupo4.ComponentesExternos.Http;
 import grupo4.ComponentesExternos.JsonABancoMapper;
 import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.InstanciadorMorphia;
@@ -86,6 +87,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 	private Usuario terminalFalla;
 	private String direccion;
 	private JsonABancoMapper jsonMapperMocked;
+	private Http componenteHttp;
 
 	@SuppressWarnings("static-access")
 
@@ -120,7 +122,6 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 
 		componenteBanco = Mockito.mock(ComponenteBanco.class);
 		optimus = new BancoTransformer();
-		optimus.setComponente(componenteBanco);
 		repoDePois.agregarOrigenExterno(adaptador);
 		repoDePois.agregarOrigenExterno(optimus);
 
@@ -215,6 +216,8 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		terminalFalla.agregarObserver(notificadorFalla);
 		entityManager().flush();
 		entityManager().clear();
+		componenteHttp = new Http("http://private-96b476-ddsutn.apiary-mock.com/banks?banco=banco&servicio=servicio");
+		optimus.setComponente(componenteHttp);
 		Cache.getInstancia().activarCache();
 
 		/*

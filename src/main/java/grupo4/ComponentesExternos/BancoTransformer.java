@@ -2,6 +2,8 @@ package grupo4.ComponentesExternos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import grupo4.HerramientasExternas.Cache;
 import grupo4.POIs.Poi;
 
@@ -22,7 +24,7 @@ public class BancoTransformer implements BuscadorDePois {
 		Cache.getInstancia().actualizarCache(criterio, jsons);
 		listaARetornar.addAll(convertirJson(jsons));
 		}
-		return listaARetornar;
+		return listaARetornar.stream().filter(banco->banco.cumpleCriterio(criterio)).collect(Collectors.toList());
 	}
 
 	public void setComponente(ComponenteBanco componenteBanco) {
