@@ -52,9 +52,7 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 	}
 	public void bajaPoi(int id) {
 		try {
-			entityManager().getTransaction().begin();
 			entityManager().remove((Poi) entityManager().find(Poi.class, id));
-			entityManager().getTransaction().commit();
 		} catch (Exception e) {
 			throw new RuntimeException("No existe el Poi");
 		}
@@ -126,9 +124,7 @@ public class RepositorioDePois implements WithGlobalEntityManager {
 		poi.setDireccion(direccion);
 		poi.setCoordenadas(latitud, longitud);
 		try{
-		entityManager().getTransaction().begin();
 		entityManager().merge(poi);
-		entityManager().getTransaction().commit();
 		}
 		catch(Exception e){
 			throw new RuntimeException("No se pudo editar el poi");

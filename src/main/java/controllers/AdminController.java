@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import grupo4.Acciones.Usuario;
 import grupo4.POIs.Banco;
@@ -22,7 +23,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 //#FFBF00;
-public class AdminController {
+public class AdminController implements WithGlobalEntityManager{
 
 	public ModelAndView mostrarPantallaParaListarPois(Request req, Response res){
 		return new ModelAndView(null,"Administrador/formListarPois.hbs");
@@ -63,7 +64,9 @@ public class AdminController {
 		Poi poi= RepositorioDePois.getInstancia().obtenerPoi(id);
 		System.out.println(id);
 		try {
+			entityManager().getTransaction().begin();
 			RepositorioDePois.getInstancia().bajaPoi(poi.getId());
+			entityManager().getTransaction().commit();
 			return new ModelAndView(null, "Administrador/eliminarExito.hbs");
 		} catch (Exception e) {
 			Map<String,String> model= new HashMap<>();
@@ -81,8 +84,10 @@ public class AdminController {
 	public ModelAndView editarPoi(Request req,Response res){
 		int id= Integer.parseInt(req.params("id"));
 		try {
+			entityManager().getTransaction().begin();
 			RepositorioDePois.getInstancia().actualizarPoi(id, req.queryParams("nombre").toString(), req.queryParams("direccion").toString(), 
 					Double.parseDouble(req.queryParams("latitud").toString()), Double.parseDouble(req.queryParams("longitud").toString()));
+			entityManager().getTransaction().commit();
 			return new ModelAndView(null, "Administrador/editarExito.hbs");
 		} catch (Exception e) {
 			Map<String,String> model= new HashMap<>();

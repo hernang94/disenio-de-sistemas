@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
 import grupo4.POIs.Banco;
 import grupo4.POIs.CGP;
 import grupo4.POIs.LocalComercial;
@@ -16,7 +18,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-public class TerminalController {
+public class TerminalController implements WithGlobalEntityManager{
 	public  ModelAndView mostrarPrincipalTerminal(Request req, Response res){
 		Map<String, Users> model= new HashMap<String, Users>();
 		model.put("user", Router.getUser());

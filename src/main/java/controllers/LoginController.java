@@ -1,5 +1,7 @@
 package controllers;
 
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
 import grupo4.Repositorios.RepositorioCuentas;
 import grupo4.Server.Router;
 import grupo4.Usuarios.Users;
@@ -7,7 +9,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-public class LoginController {
+public class LoginController implements WithGlobalEntityManager {
 	Users u1;
 	public  ModelAndView logeo(Request req, Response res){
 		return new ModelAndView(null, "login.hbs");
