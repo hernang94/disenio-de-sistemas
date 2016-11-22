@@ -101,7 +101,7 @@ public class ComponentesExternosTest extends AbstractPersistenceTest implements 
 		componenteBanco = Mockito.mock(ComponenteBanco.class);
 		megatron.setComponente(componenteBanco);
 		optimus = new BancoTransformer();
-		//optimus.setComponente(componenteBanco);
+		optimus.setComponente(componenteBanco);
 
 		dispositivoTactil = RepositorioDePois.getInstancia();
 		dispositivoTactil.agregarOrigenExterno(adaptador);

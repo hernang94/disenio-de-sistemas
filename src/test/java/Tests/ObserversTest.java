@@ -88,6 +88,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 	private String direccion;
 	private JsonABancoMapper jsonMapperMocked;
 	private Http componenteHttp;
+	private ObjectMapper mapeador;
 
 	@SuppressWarnings("static-access")
 
@@ -97,7 +98,8 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 		repoDePois = RepositorioDePois.getInstancia();
 		notificadorMail = Mockito.mock(EmailSender.class);
 		repositorioBusquedas = RepositorioDeBusquedas.getInstancia();
-
+		mapeador=new ObjectMapper();
+		jsonMapperMocked.getInstancia().setObjectMapper(mapeador);
 		notificador = new ObserverNotificador(-1, notificadorMail);// tiempoEstipulado=-1
 		reporterParcial = new ObserverReporterParcial();
 		reporterPorFecha = new ObserverReporterPorFecha();
