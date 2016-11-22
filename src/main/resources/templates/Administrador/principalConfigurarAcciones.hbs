@@ -1,0 +1,21 @@
+{{#partial "contenido"}}
+<h1>Pois</h1>
+<div class="jumbotron">
+  {{#with terminal}}
+   <div class="form-group">
+			<label for="nombre">Nombre: {{terminal}}</label>
+		</div>
+	
+		<div class="form-group2">		
+			<label for="direccion">Acciones Actuales:</label>
+			<li style="list-style: none">{{#each acciones}}</li>
+ 			<li>{{this}}</li>
+ 			<li style="list-style: none">{{/each}}</li>
+		</div>
+		<a href="/administrador/configurarAcciones/agregar/{{url}}" class="btn btn-default btn-sm">Agregar Acciones</a>
+		<a href="/administrador/configurarAcciones/eliminar/{{url}}" class="btn btn-default btn-sm">Eliminar Acciones</a>
+		
+  {{/with}}
+{{/partial}}
+
+{{>layoutAdministrador.hbs}}

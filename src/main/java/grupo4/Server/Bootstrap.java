@@ -8,11 +8,17 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import org.mockito.Mockito;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.Usuario;
+import grupo4.ComponentesExternos.BancoTransformer;
+import grupo4.ComponentesExternos.CGPAdapter;
+import grupo4.ComponentesExternos.ComponenteCGPS;
+import grupo4.ComponentesExternos.Http;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
 import grupo4.POIs.Horario;
@@ -32,6 +38,7 @@ public class Bootstrap implements WithGlobalEntityManager,EntityManagerOps, Tran
 	public void init(){
 		withTransaction(()->{
 		Usuario terminal=new Usuario("Abasto", 9);
+		terminal.agregarObserver(new ObserverAlmacenador());
 		entityManager().persist(terminal);
 		Users u1= new UsuarioTerminal(terminal.getTerminal(), "terminal", terminal);
 		Users u2= new UsuarioAdministrador("admin", "w23e");

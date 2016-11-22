@@ -2,6 +2,7 @@ package grupo4.Repositorios;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
 import javax.persistence.EntityManager;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -25,6 +26,22 @@ public class RepositorioCuentas implements WithGlobalEntityManager{
 			entityManager().persist(usuario);
 			
 		}
+	}
+	public void quitarUsuario(Users usuario){
+		try{
+			entityManager().remove(usuario);
+		}
+		catch(Exception e){
+			throw new RuntimeException("No se pudo eliminar el usuario");
+	}
+	}
+	public void actualizarUsuario(int id,String nombre)
+	{	
+		Users usuarioAux=entityManager().find(Users.class, id);
+		usuarioAux.setUsuario(nombre);
+		entityManager().merge(usuarioAux);
+		entityManager().flush();
+		entityManager().clear();
 	}
 	public Users buscarUsuario(String usuario,String password){
 		List<Users>usuariosEnBD=actualizarLista();

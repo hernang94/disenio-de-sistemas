@@ -25,5 +25,7 @@ public class ObserverReporterTotal extends ObserverDeBusqueda {
 	public IdObserver getId() {
 		return id;
 	}
-
+	public String getTipo(){
+		return "Reporte Total";
+	}
 }

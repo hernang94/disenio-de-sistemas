@@ -15,6 +15,11 @@ public class ObserverNotificador extends ObserverDeBusqueda {
 	@Transient
 	private EmailSender notificador;
 
+	@SuppressWarnings("unused")
+	private ObserverNotificador(){
+		id = IdObserver.NOTIFICADOR;
+	}
+	
 	public ObserverNotificador(long tiempoEstipulado, EmailSender notificador) {
 		this.tiempoEstipulado = tiempoEstipulado;
 		this.notificador = notificador;
@@ -34,5 +39,8 @@ public class ObserverNotificador extends ObserverDeBusqueda {
 	@Override
 	public void realizarAccion(ResultadoDeBusqueda resultado) {
 		evaluarNotificacion(resultado.getTiempoDeBusqueda());
+	}
+	public String getTipo(){
+		return "Notificador";
 	}
 }

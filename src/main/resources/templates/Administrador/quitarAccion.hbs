@@ -1,0 +1,19 @@
+{{#partial "contenido"}}
+<h1>Pois</h1>
+<div class="jumbotron">
+{{#with terminal}}
+<form action="/administrador/configurarAcciones/eliminar/{{url}}" method="POST">
+		<div class="form-group2">		
+			<label for="acciones">Acciones:</label>
+			<select name="acciones">
+    		{{#each acciones}}
+    		<option value="{{this}}">{{this}}</option>
+    		{{/each}}
+</select>
+		</div>
+		<input class="btn btn-primary btn-lg" type="submit" value="Confirmar">
+</form>
+  {{/with}}
+{{/partial}}
+
+{{>layoutAdministrador.hbs}}

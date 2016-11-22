@@ -25,5 +25,7 @@ public class ObserverReporterPorFecha extends ObserverDeBusqueda {
 	public IdObserver getId() {
 		return id;
 	}
-
+	public String getTipo(){
+		return "Reporte por Fecha";
+	}
 }

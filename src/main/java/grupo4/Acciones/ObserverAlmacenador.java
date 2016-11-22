@@ -21,5 +21,8 @@ public class ObserverAlmacenador extends ObserverDeBusqueda {
 	public IdObserver getId() {
 		return id;
 	}
+	public String getTipo(){
+		return "Almacenador";
+	}
 
 }

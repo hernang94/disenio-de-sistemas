@@ -11,6 +11,15 @@
 		<tr>
 			<td>{{terminal}}</td>
 			<td>{{comuna}}</td>
+			<td><form class="form-inline" action="editar/{{url}}" method="GET">
+			<button type="submit" class="btn btn-default btn-sm">Editar</button>
+			</form></td>
+			<td><form class="form-inline" action="eliminar/{{url}}" method="POST">
+			<button type="submit" class="btn btn-default btn-sm">Eliminar</button>
+			</form></td>
+			<td><form class="form-inline" action="configurarAcciones/{{url}}" method="GET">
+			<button type="submit" class="btn btn-default btn-sm">Configurar Acciones</button>
+			</form></td>
 		</tr>
 	{{/each}}
 </table>

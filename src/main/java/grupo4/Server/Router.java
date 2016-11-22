@@ -23,7 +23,6 @@ public class Router {
 	TerminalController controladorTerminal= new TerminalController();
 	Spark.staticFiles.location("/public");
 	Spark.get("/", HomeController::home,engine);
-	Spark.get("/login", controladorLogueo::logeo, engine);
 	Spark.post("/login", controladorLogueo::Ingreso);
 	Spark.get("/logout", controladorLogueo::logout);
 	Spark.get("/login/logueoIncorrecto", controladorLogueo::mostrarLogueoIncorrecto,engine);
@@ -35,6 +34,16 @@ public class Router {
 	Spark.post("administrador/eliminar/pois/:id", controladorAdmin::eliminarPoi,engine);
 	Spark.get("administrador/editar/pois/:id", controladorAdmin::mostarEditarPoi,engine);
 	Spark.post("administrador/editar/pois/:id", controladorAdmin::editarPoi,engine);
+	Spark.post("administrador/eliminar/terminales/:id", controladorAdmin::eliminarTerminal,engine);
+	Spark.get("administrador/editar/terminales/:id", controladorAdmin::mostarEditarTerminal,engine);
+	Spark.post("administrador/editar/terminales/:id", controladorAdmin::editarTerminal,engine);
+	Spark.get("administrador/configurarAcciones/terminales/:id", controladorAdmin::mostrarPrincipalConfigurarAcciones,engine);
+	Spark.get("administrador/configurarAcciones/agregar/terminales/:id", controladorAdmin::mostrarAgregarAccion,engine);
+	Spark.post("administrador/configurarAcciones/agregar/terminales/:id", controladorAdmin::agregarAccion,engine);
+	Spark.get("administrador/configurarAcciones/eliminar/terminales/:id", controladorAdmin::mostrarEliminarAccion,engine);
+	Spark.post("administrador/configurarAcciones/eliminar/terminales/:id", controladorAdmin::eliminarAccion,engine);
+	Spark.get("/administrador/agregarTerminal", controladorAdmin::mostrarAgregarTerminal,engine);
+	Spark.post("/administrador/agregarTerminal", controladorAdmin::agregarTerminal,engine);
 	Spark.get("/terminal/principal", controladorTerminal::mostrarPrincipalTerminal,engine);
 	Spark.get("/terminal/buscarPois", controladorTerminal::mostrarBusquedaPois,engine);
 	Spark.post("/terminal/buscarPois", controladorTerminal::buscarPoisTerminal,engine);

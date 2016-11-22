@@ -1,6 +1,7 @@
 package grupo4.Acciones;
 
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,4 +24,6 @@ public abstract class ObserverDeBusqueda {
 	public abstract void realizarAccion(ResultadoDeBusqueda resultado);
 
 	public abstract IdObserver getId();
+	
+	public abstract String getTipo();
 }

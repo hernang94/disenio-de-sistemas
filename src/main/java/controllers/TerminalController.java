@@ -29,6 +29,7 @@ public class TerminalController implements WithGlobalEntityManager{
 	}
 	public ModelAndView buscarPoisTerminal(Request req, Response res){
 		List<Poi> pois=RepositorioDePois.getInstancia().busquedaLibre(req.queryParams("criterio").toString());
+		Router.getUser().getTerminal().busquedaLibre(req.queryParams("criterio").toString());
 		Map<String, List<Poi>> model=new HashMap<>();
 		model.put("pois", pois);
 		return new ModelAndView(model, "Terminal/mostrarResultadosBusqueda.hbs");

@@ -24,7 +24,7 @@ public class LoginController implements WithGlobalEntityManager {
 				res.redirect("/terminal/principal");
 			}
 		}
-		res.redirect("/logueoIncorrecto");
+		res.redirect("/login/logueoIncorrecto");
 		return null;
 	}
 	public Void logout(Request req, Response res){

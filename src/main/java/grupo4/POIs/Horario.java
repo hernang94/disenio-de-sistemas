@@ -9,9 +9,13 @@ import javax.persistence.Embeddable;
 
 import org.uqbarproject.jpa.java8.extras.convert.LocalDateTimeConverter;
 
+import grupo4.HerramientasExternas.LocalTimeConverter;
+
 @Embeddable
 public class Horario {
+	@Convert(converter=LocalTimeConverter.class)
 	private LocalTime desde;
+	@Convert(converter=LocalTimeConverter.class)
 	private LocalTime hasta;
 
 	@SuppressWarnings("unused")

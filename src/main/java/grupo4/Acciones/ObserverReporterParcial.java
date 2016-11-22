@@ -10,7 +10,7 @@ import grupo4.Repositorios.ResultadoDeBusqueda;
 @Entity
 @DiscriminatorValue("REPORTE_PARCIAL")
 public class ObserverReporterParcial extends ObserverDeBusqueda {
-
+	
 	public ObserverReporterParcial() {
 		id = IdObserver.REPORTERPARCIAL;
 	}
@@ -25,4 +25,7 @@ public class ObserverReporterParcial extends ObserverDeBusqueda {
 		RepositorioDeReportes.getInstancia().agregarReporte(reporteParcial);
 	}
 
+	public String getTipo(){
+		return "Reporte Parcial";
+	}
 }

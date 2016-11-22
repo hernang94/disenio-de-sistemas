@@ -11,12 +11,19 @@
 <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand"href="/administrador/principal">Repo de Pois</a>
+        <a class="navbar-brand"href="/administrador/principal">POIS</a>
       </div>
       <div>
         <ul class="nav navbar-nav">
         <li><a href="/administrador/listar">Pois</a></li> 
-      <li><a href="/administrador/buscarTerminal">Terminales</a></li> 
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Terminales
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/administrador/agregarTerminal">Agregar</a></li> 
+          <li><a href="/administrador/buscarTerminal">Listar</a></li>
+        </ul>
+      </li>
         <li><a href="/administrador/historico">Historico Consultas</a></li> 
         </ul>
         
@@ -34,6 +41,9 @@
 </div>
 
 <footer class="footer">
+ <p class="text-center">
+      Logueado como: Administrador
+    </p>
     <p class="text-center">
       &copy; 2016 DDS-UTN.Grupo4
     </p>

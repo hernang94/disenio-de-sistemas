@@ -19,7 +19,12 @@ public abstract class Users {
 	@GeneratedValue
 	private int id_User;
 	private String usuario;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 	private String contrasenia;
+	@OneToOne
+	Usuario terminal;
 	@SuppressWarnings("unused")
 	protected Users(){}
 	
@@ -39,5 +44,8 @@ public abstract class Users {
 	}
 	public String getDecriminatorValue() {
 	    return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+	}
+	public Usuario getTerminal() {
+		return terminal;
 	}
 }
