@@ -64,6 +64,7 @@ public class ObserversTest extends AbstractPersistenceTest implements WithGlobal
 	private Rubro rubro;
 	private ComponenteCGPS componente;
 	private CGPAdapter adaptador;
+	@SuppressWarnings("unused")
 	private ComponenteBanco componenteBanco;
 	private BancoTransformer optimus;
 	private Map<DayOfWeek, Horario> hashMapBanco;

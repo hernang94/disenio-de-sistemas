@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.mongodb.morphia.query.Query;
 
 
 import grupo4.Acciones.FechaCantReporte;
@@ -59,7 +58,7 @@ public class RepositorioDeBusquedas {
 		return lista.stream().mapToInt(elemento -> elemento.getCantidad()).sum();
 	}
 	
-	private List<ResultadoDeBusqueda> obtenerListaBusquedas(String terminal){
+	public List<ResultadoDeBusqueda> obtenerListaBusquedas(String terminal){
 		return InstanciadorMorphia.getDb()
 				.createQuery(ResultadoDeBusqueda.class).field("terminalDeLaBusqueda").equal(terminal).asList();
 	}

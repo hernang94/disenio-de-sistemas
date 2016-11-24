@@ -16,11 +16,12 @@ public class LoginController implements WithGlobalEntityManager {
 	}
 	public  Void Ingreso(Request req, Response res){
 		u1= RepositorioCuentas.getInstancia().buscarUsuario(req.queryParams("usuario").toString(), req.queryParams("contrasenia").toString());
-		Router.setUser(u1);
 		if (u1!=null){
+			Router.setUser(req.session().id(),u1);
 			if(u1.getDecriminatorValue().equalsIgnoreCase("ADMINISTRADOR"))
 			res.redirect("/administrador/principal");
 			else{
+				Router.setUser(req.session().id(),u1);
 				res.redirect("/terminal/principal");
 			}
 		}
@@ -28,7 +29,7 @@ public class LoginController implements WithGlobalEntityManager {
 		return null;
 	}
 	public Void logout(Request req, Response res){
-		Router.setUser(null);
+		Router.deleteUser(req.session().id());;
 		res.redirect("/");
 		return null;
 	}

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value="ADMINISTRADOR")
 public class UsuarioAdministrador extends Users{
 
+	@SuppressWarnings("unused")
 	private UsuarioAdministrador(){
 		super();
 	}

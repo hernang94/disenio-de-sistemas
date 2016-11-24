@@ -1,14 +1,11 @@
 package grupo4.Repositorios;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-import javax.persistence.EntityManager;
+
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
-import grupo4.HerramientasExternas.InstanciadorMorphia;
-import grupo4.POIs.Poi;
+
 import grupo4.Usuarios.Users;
 
 public class RepositorioCuentas implements WithGlobalEntityManager{

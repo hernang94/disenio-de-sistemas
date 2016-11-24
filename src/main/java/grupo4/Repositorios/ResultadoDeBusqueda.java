@@ -57,15 +57,22 @@ public class ResultadoDeBusqueda {
 	public LocalDate getFechaDeBusqueda() {
 		return fechaDeBusqueda;
 	}
+	public String getFecha(){
+		return fechaDeBusqueda.toString();
+	}
 
 	public int getCantidadDeResultados() {
 		return cantidadDeResultados;
 	}
-	
+	public String getCantidad() {
+		return cantidadDeResultados.toString();
+	}
+	public String getTerminal() {
+		return terminalDeLaBusqueda.toString();
+	}
 	public List<Poi> getPoisObtenidos() {
 		return poisObtenidos;
 	}
-
 	public void setPoisObtenidos(List<Poi> poisObtenidos) {
 		this.poisObtenidos = poisObtenidos;
 	}

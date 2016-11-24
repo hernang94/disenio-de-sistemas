@@ -1,5 +1,7 @@
 package grupo4.Server;
 
+import java.util.HashMap;
+import java.util.Map;
 import controllers.AdminController;
 import controllers.HomeController;
 import controllers.LoginController;
@@ -11,7 +13,7 @@ import spark.utils.BooleanHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
 
 public class Router {
-	private static Users u1;
+	private static Map<String,Users> mapSesiones=new HashMap<>();
 	public static void configure(){
 	HandlebarsTemplateEngine engine = HandlebarsTemplateEngineBuilder
 			.create()
@@ -44,15 +46,21 @@ public class Router {
 	Spark.post("administrador/configurarAcciones/eliminar/terminales/:id", controladorAdmin::eliminarAccion,engine);
 	Spark.get("/administrador/agregarTerminal", controladorAdmin::mostrarAgregarTerminal,engine);
 	Spark.post("/administrador/agregarTerminal", controladorAdmin::agregarTerminal,engine);
+	Spark.get("/administrador/historicoConsultas",controladorAdmin::mostrarPantallaParaListarHistorico,engine);
+	Spark.post("/administrador/historicoConsultas",controladorAdmin::listarHistorico,engine);
+	Spark.get("/administrador/historicoConsultas/:id", controladorAdmin::mostrarPoisDeResultado,engine);
 	Spark.get("/terminal/principal", controladorTerminal::mostrarPrincipalTerminal,engine);
 	Spark.get("/terminal/buscarPois", controladorTerminal::mostrarBusquedaPois,engine);
 	Spark.post("/terminal/buscarPois", controladorTerminal::buscarPoisTerminal,engine);
 	Spark.get("/terminal/pois/:id", controladorTerminal::mostrarDetallePoi,engine);
 	}
-	public static Users getUser() {
-		return u1;
+	public static Users getSesion(String sesion) {
+		return mapSesiones.get(sesion);
 	}
-	public static void setUser(Users u1) {
-		Router.u1 = u1;
+	public static void setUser(String sesion,Users u1) {
+		mapSesiones.put(sesion, u1);
+	}
+	public static void deleteUser(String sesion) {
+		mapSesiones.remove(sesion);
 	}
 }

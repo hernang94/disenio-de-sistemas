@@ -1,15 +1,14 @@
 package controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
 
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.bson.types.ObjectId;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import grupo4.Acciones.IdObserver;
@@ -21,11 +20,13 @@ import grupo4.Acciones.ObserverReporterPorFecha;
 import grupo4.Acciones.ObserverReporterTotal;
 import grupo4.Acciones.Usuario;
 import grupo4.ComponentesExternos.EmailSender;
-import grupo4.POIs.Banco;
+import grupo4.HerramientasExternas.InstanciadorMorphia;
 import grupo4.POIs.Poi;
 import grupo4.Repositorios.RepositorioCuentas;
+import grupo4.Repositorios.RepositorioDeBusquedas;
 import grupo4.Repositorios.RepositorioDePois;
 import grupo4.Repositorios.RepositorioDeUsuarios;
+import grupo4.Repositorios.ResultadoDeBusqueda;
 import grupo4.Server.Router;
 import grupo4.Usuarios.Users;
 import grupo4.Usuarios.UsuarioTerminal;
@@ -41,7 +42,7 @@ public class AdminController implements WithGlobalEntityManager {
 
 	public ModelAndView mostrarPrincipalAdmin(Request req, Response res) {
 		Map<String, Users> model = new HashMap<String, Users>();
-		model.put("user", Router.getUser());
+		model.put("user", Router.getSesion(req.session().id()));
 		return new ModelAndView(model, "Administrador/principalAdmin.hbs");
 	}
 
@@ -251,6 +252,63 @@ public class AdminController implements WithGlobalEntityManager {
 		}
 	}
 	
+	public ModelAndView mostrarPantallaParaListarHistorico(Request req, Response res) {
+		return new ModelAndView(null, "Administrador/formHistoricoConsultas.hbs");
+	}
+	
+	public ModelAndView listarHistorico(Request req, Response res){
+		List<ResultadoDeBusqueda> resultados;
+		if(req.queryParams("terminal").isEmpty()){
+			resultados=InstanciadorMorphia.getDb().find(ResultadoDeBusqueda.class).asList();
+		}
+		else{
+			resultados=RepositorioDeBusquedas.getInstancia().obtenerListaBusquedas(req.queryParams("terminal"));
+		}
+		resultados=filtrarListaporCantidad(resultados, Integer.parseInt(req.queryParams("cantPois")));
+		resultados=filtrarListaporFecha(req.queryParams("fechaDesde").toString(), req.queryParams("fechaHasta").toString(), resultados);
+		Map<String,List<ResultadoDeBusqueda>> model=new HashMap<>();
+		model.put("resultados", resultados);
+		return new ModelAndView(model, "Administrador/listadoResultados.hbs");
+	}
+	
+	public ModelAndView mostrarPoisDeResultado(Request req, Response res){
+		System.out.println(req.params("id"));
+		ResultadoDeBusqueda resultado= InstanciadorMorphia.getDb().createQuery(ResultadoDeBusqueda.class).field("_id").equal(new ObjectId(req.params("id"))).get();
+		System.out.println(resultado.getCantidadDeResultados());
+		Map<String,List<Poi>> model=new HashMap<>();
+		model.put("pois", resultado.getPoisObtenidos());
+		return new ModelAndView(model, "Administrador/listadoPoisHistorico.hbs");
+	}
+	
+	private List<ResultadoDeBusqueda> filtrarListaporCantidad(List<ResultadoDeBusqueda> lista,int cantidad){
+		List<ResultadoDeBusqueda>lista2;
+		lista2=lista.stream().filter(resultado->resultado.getCantidadDeResultados()>=cantidad).collect(Collectors.toList());
+		return lista2;
+	}
+	private List<ResultadoDeBusqueda> filtrarListaporFecha(String fechaDesde,String fechaHasta,List<ResultadoDeBusqueda> lista){
+	List<ResultadoDeBusqueda>lista2;
+		if(!fechaDesde.isEmpty()&&!fechaHasta.isEmpty()){
+			LocalDate dateDesde=LocalDate.parse(fechaDesde);
+			LocalDate dateHasta=LocalDate.parse(fechaHasta);
+			lista2=lista.stream().filter(resultado->resultado.getFechaDeBusqueda().isBefore(dateHasta)&&resultado.getFechaDeBusqueda().isAfter(dateDesde)).collect(Collectors.toList());
+			return lista2;
+		}
+		if(fechaDesde.isEmpty()&&!fechaHasta.isEmpty()){
+			LocalDate dateHasta=LocalDate.parse(fechaHasta);
+			System.out.println(dateHasta.toString());
+			lista.stream().forEach(resultado->System.out.println(resultado.getFechaDeBusqueda().toString()));
+			lista.stream().forEach(resultado->System.out.println(resultado.getFechaDeBusqueda().isBefore(dateHasta)));
+			lista2=lista.stream().filter(resultado->resultado.getFechaDeBusqueda().isBefore(dateHasta)).collect(Collectors.toList());
+			return lista2;
+		}
+		if(fechaHasta.isEmpty()&&!fechaDesde.isEmpty()){
+			LocalDate dateDesde=LocalDate.parse(fechaDesde);
+			lista2=lista.stream().filter(resultado->resultado.getFechaDeBusqueda().isAfter(dateDesde)).collect(Collectors.toList());
+			return lista2;
+		}
+		lista2=lista;
+		return lista2;
+	}
 	private ObserverDeBusqueda evaluarObserverParaAgregar(String queryParams) {
 		if (queryParams.equalsIgnoreCase("almacenador")) {
 			return new ObserverAlmacenador();
@@ -288,6 +346,7 @@ public class AdminController implements WithGlobalEntityManager {
 	}
 	
 
+	
 	private List<Poi> evaluarRetorno(String nombre, String tipo) {
 		
 		if (tipo.equalsIgnoreCase("Todos")) {

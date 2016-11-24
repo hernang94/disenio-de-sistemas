@@ -25,7 +25,6 @@ public abstract class Users {
 	private String contrasenia;
 	@OneToOne
 	Usuario terminal;
-	@SuppressWarnings("unused")
 	protected Users(){}
 	
 	public Users(String usuario, String contrasenia) {

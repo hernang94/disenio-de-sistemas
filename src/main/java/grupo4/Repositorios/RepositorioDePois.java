@@ -3,11 +3,9 @@ package grupo4.Repositorios;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.geojson.Point;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import grupo4.ComponentesExternos.BuscadorDePois;
-import grupo4.HerramientasExternas.Cache;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Poi;
 import grupo4.POIs.Servicio;

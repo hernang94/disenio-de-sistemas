@@ -1,0 +1,27 @@
+{{#partial "contenido"}}
+<h1>Historico de Consultas</h1>
+<table class="table table-stripped">
+	<tr>
+		<th>Fecha</th>
+		<th>Terminal</th>
+		<th>Cantidad de Resultados</th>
+		<th></th>
+	</tr>
+	
+	{{#each resultados}}
+		<tr>
+			<td>{{fecha}}</td>
+			<td>{{terminal}}</td>
+			<td>{{cantidad}}</td>
+			<td><form class="form-inline" action="/administrador/historicoConsultas/{{id}}" method="GET">
+			<button type="submit" class="btn btn-primary btn-sm">Ver Pois</button>
+			</form></td>
+		</tr>
+	{{/each}}
+</table>
+<form action="/administrador/historicoConsultas" method="GET">
+		<input class="btn btn-primary btn-lg" type="submit" value="Volver">
+</form>
+{{/partial}}
+
+{{>layoutAdministrador.hbs}}

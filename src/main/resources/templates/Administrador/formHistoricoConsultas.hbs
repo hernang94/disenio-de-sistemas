@@ -1,0 +1,25 @@
+{{#partial "contenido"}}
+<h1>Historico de Consultas</h1>
+<div class="jumbotron">
+<form action="/administrador/historicoConsultas" method="POST">
+ 		<div class="form-group">
+			<label for="fechaDesde">Fecha Desde:</label>
+			<input type="date"  name="fechaDesde">
+		</div>
+		 <div class="form-group">
+			<label for="fechaHasta">Fecha Hasta:</label>
+			<input type="date"  name="fechaHasta">
+		</div>
+		 <div class="form-group">
+			<label for="cantPois">Cantidad minima de Pois:</label>
+			<input type="number"  value="0" name="cantPois">
+		</div>
+		 <div class="form-group">
+			<label for="terminal">Nombre del Terminal:</label>
+			<input type="text"  name="terminal">
+		</div>
+		<input class="btn btn-primary btn-lg" type="submit" value="Listar" >
+</form>
+{{/partial}}
+
+{{>layoutAdministrador.hbs}}

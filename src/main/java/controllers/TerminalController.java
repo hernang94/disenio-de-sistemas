@@ -21,7 +21,7 @@ import spark.Response;
 public class TerminalController implements WithGlobalEntityManager{
 	public  ModelAndView mostrarPrincipalTerminal(Request req, Response res){
 		Map<String, Users> model= new HashMap<String, Users>();
-		model.put("user", Router.getUser());
+		model.put("user", Router.getSesion(req.session().id()));
 		return new ModelAndView(model, "Terminal/principalTerminal.hbs");
 	}	
 	public ModelAndView mostrarBusquedaPois(Request req, Response res){
@@ -29,7 +29,7 @@ public class TerminalController implements WithGlobalEntityManager{
 	}
 	public ModelAndView buscarPoisTerminal(Request req, Response res){
 		List<Poi> pois=RepositorioDePois.getInstancia().busquedaLibre(req.queryParams("criterio").toString());
-		Router.getUser().getTerminal().busquedaLibre(req.queryParams("criterio").toString());
+		Router.getSesion(req.session().id()).getTerminal().busquedaLibre(req.queryParams("criterio").toString());
 		Map<String, List<Poi>> model=new HashMap<>();
 		model.put("pois", pois);
 		return new ModelAndView(model, "Terminal/mostrarResultadosBusqueda.hbs");

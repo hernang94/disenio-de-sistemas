@@ -5,20 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.EntityManager;
-
-import org.mockito.Mockito;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
-
 import grupo4.Acciones.ObserverAlmacenador;
 import grupo4.Acciones.Usuario;
-import grupo4.ComponentesExternos.BancoTransformer;
-import grupo4.ComponentesExternos.CGPAdapter;
-import grupo4.ComponentesExternos.ComponenteCGPS;
-import grupo4.ComponentesExternos.Http;
+import grupo4.HerramientasExternas.InstanciadorMorphia;
 import grupo4.HerramientasExternas.Punto;
 import grupo4.POIs.Banco;
 import grupo4.POIs.Horario;
@@ -36,6 +28,7 @@ public class Bootstrap implements WithGlobalEntityManager,EntityManagerOps, Tran
 	private Poi parada114;
 	private List<Servicio> servicios;
 	public void init(){
+		InstanciadorMorphia.getDb().getDB().dropDatabase();
 		withTransaction(()->{
 		Usuario terminal=new Usuario("Abasto", 9);
 		terminal.agregarObserver(new ObserverAlmacenador());

@@ -2,7 +2,6 @@ package Tests;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 
 import org.junit.Assert;
 import org.junit.Before;

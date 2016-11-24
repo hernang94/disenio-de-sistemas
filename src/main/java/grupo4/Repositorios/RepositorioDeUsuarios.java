@@ -7,7 +7,6 @@ import javax.persistence.EntityExistsException;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import grupo4.Acciones.Usuario;
-import grupo4.Usuarios.Users;
 
 public class RepositorioDeUsuarios implements WithGlobalEntityManager {
 	private static RepositorioDeUsuarios instancia = new RepositorioDeUsuarios();
